@@ -170,6 +170,43 @@ CollectionAssert.AllItemsAreInstancesOfType(theCollection, typeof(T)) => theColl
 ```
 
 
+## [ExpectedException]
+```csharp
+[ExpectedException(typeof(InvalidOperationException))]
+public void MyTest()
+{
+    func();
+}
+
+=>
+
+public void MyTest()
+{
+    Action act = () => func();
+
+    act.ShouldThrowExactly<InvalidOperationException>();
+}
+```
+
+```csharp
+[ExpectedException(typeof(SystemException), AllowDerivedTypes = true)]
+public void MyTest()
+{
+    func();
+}
+
+=>
+
+public void MyTest()
+{
+    Action act = () => func();
+
+    act.ShouldThrow<InvalidOperationException>();
+}
+```
+
+
+
 # Best Practices
 
 ## Numerics / Comparable
