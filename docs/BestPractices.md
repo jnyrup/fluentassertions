@@ -212,7 +212,51 @@ public void MyTest()
 }
 ```
 
+```csharp
+[ExpectedException(typeof(InvalidOperationException))]
+public void MyTest()
+{
+    try
+    {
+        func();
+    }
+    catch (InvalidOperationException ex)
+    {
+        ex.Message.Should().Be(errorMessage)
+        throw ex;
+    }
+}
 
+=>
+
+public void MyTest()
+{
+    Action act = () => func();
+
+    act.ShouldThrowExactly<InvalidOperationException>()
+        .WithMessage(errorMessage);
+}
+```
+
+```csharp
+public void MyTest()
+{
+    Action act = () => func();
+
+    act.ShouldThrowExactly<InvalidOperationException>()
+        .Which.Message.Should().Contain(errorMessage);
+}
+
+=>
+
+public void MyTest()
+{
+    Action act = () => func();
+
+    act.ShouldThrowExactly<InvalidOperationException>()
+        .WithMessage(*errorMessage*); // wildcards
+}
+```
 
 # Best Practices
 
