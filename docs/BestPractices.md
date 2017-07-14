@@ -268,11 +268,11 @@ theEnumerable.Count().Should().BeLessOrEqualTo(k) => theEnumerable.Should().Have
 ```
 
 ```csharp
-theEnumerable.Count().Should().HaveCount(1) => theEnumerable.Should().ContainSingle()
+theEnumerable.Should().HaveCount(1) => theEnumerable.Should().ContainSingle()
 ```
 
 ```csharp
-theEnumerable.Count().Should().HaveCount(0) => theEnumerable.Should().BeEmpty()
+theEnumerable.Should().HaveCount(0) => theEnumerable.Should().BeEmpty()
 ```
 
 ```csharp
@@ -292,7 +292,7 @@ theEnumerable.Where(x => x.SomeProperty).Should().BeEmpty() => theEnumerable.Sho
 ```
 
 ```csharp
-theEnumerable.Where(x => x.SomeProperty).Should().HavingCount(1) => theEnumerable.Should().ContainSingle(x => x.SomeProperty)
+theEnumerable.Where(x => x.SomeProperty).Should().HaveCount(1) => theEnumerable.Should().ContainSingle(x => x.SomeProperty)
 ```
 
 ```csharp
