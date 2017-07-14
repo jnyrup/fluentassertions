@@ -1,12 +1,19 @@
+# Refactorings
+This is a collection of refactorings to improve the usage of Fluent Assertions.
+
+If your favourite refactoring is missing, please consider to submit it.
+
+For each example the `=>` between the two expressions reads as "can be replaced with", i.e. the left hand side can be replaced with the right hand side.
+
 # MSTest
 
 ## Assert
 ```csharp
-Assert.IsTrue(theBoolean) => theBoolean.Should().BeTrue();
+Assert.IsTrue(theBoolean) => theBoolean.Should().BeTrue()
 ```
 
 ```csharp
-Assert.IsFalse(theBoolean) => theBoolean.Should().BeFalse();
+Assert.IsFalse(theBoolean) => theBoolean.Should().BeFalse()
 ```
 
 ```csharp
