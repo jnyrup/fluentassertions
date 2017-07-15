@@ -137,7 +137,7 @@ theObject.Should().NotBeSameAs(otherObject);
 Assert.IsInstanceOfType(theObject, typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeOfType<T>();
+theObject.Should().BeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -151,7 +151,7 @@ theObject.Should().BeOfType<T>();
 Assert.IsNotInstanceOfType(theObject, typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBeOfType<T>();
+theObject.Should().NotBeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -567,7 +567,7 @@ theCollection.Should().NotContainNulls();
 CollectionAssert.AllItemsAreInstancesOfType(theCollection, typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-theCollection.ContainItemsAssignableTo<T>();
+theCollection.ContainItemsAssignableTo&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -734,7 +734,7 @@ theInt.Should().BeInRange(lower, upper);
 theObject.GetType().Should().Be(typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeOfType<T>();
+theObject.Should().BeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -748,7 +748,7 @@ theObject.Should().BeOfType<T>();
 theObject.GetType().Should().NotBe(typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBeOfType<T>();
+theObject.Should().NotBeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -762,7 +762,7 @@ theObject.Should().NotBeOfType<T>();
 (theObject is T).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeAssignableTo<T>();
+theObject.Should().BeAssignableTo&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -776,7 +776,7 @@ theObject.Should().BeAssignableTo<T>();
 (theObject as T).Should().NotBeNull();
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeAssignableTo<T>();
+theObject.Should().BeAssignableTo&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
