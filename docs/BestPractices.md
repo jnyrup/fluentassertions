@@ -636,7 +636,7 @@ public void MyTest()
     catch (InvalidOperationException ex)
     {
         ex.Message.Should().Be(errorMessage);
-        throw ex;
+        throw;
     }
 }
 </pre></td>
