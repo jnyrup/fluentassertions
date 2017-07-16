@@ -525,7 +525,7 @@ actual.Should().NotContain(expected);
 CollectionAssert.IsSubsetOf(actual, expectedSuperset);
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().BeSubset(expectedSuperset);
+actual.Should().BeSubsetOf(expectedSuperset);
 </pre></td>
 </tr><tr>
 <td>
@@ -539,7 +539,7 @@ actual.Should().BeSubset(expectedSuperset);
 CollectionAssert.IsNotSubsetOf(actual, expectedSuperset);
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().NotBeSubset(expectedSuperset);
+actual.Should().NotBeSubsetOf(expectedSuperset);
 </pre></td>
 </tr><tr>
 <td>
