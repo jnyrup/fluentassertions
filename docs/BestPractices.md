@@ -8,24 +8,10 @@ If your favourite refactoring is missing, please consider to submit it.
 ## Assert
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsTrue(theBoolean);
+Assert.IsTrue(actual);
 </pre></td>
 <td><pre lang="csharp">
-theBoolean.Should().BeTrue();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.IsFalse(theBoolean);
-</pre></td>
-<td><pre lang="csharp">
-theBoolean.Should().BeFalse();
+actual.Should().BeTrue();
 </pre></td>
 </tr><tr>
 <td>
@@ -36,24 +22,10 @@ theBoolean.Should().BeFalse();
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsNull(theObject);
+Assert.IsFalse(actual);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeNull();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.IsNotNull(theObject);
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().NotBeNull();
+actual.Should().BeFalse();
 </pre></td>
 </tr><tr>
 <td>
@@ -64,24 +36,10 @@ theObject.Should().NotBeNull();
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.AreEqual(otherObject, theObject);
+Assert.IsNull(actual);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().Be(otherObject);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.AreEqual(otherNumeric, theNumeric, delta);
-</pre></td>
-<td><pre lang="csharp">
-theNumeric.Should().BeApproximately(otherNumeric, delta);
+actual.Should().BeNull();
 </pre></td>
 </tr><tr>
 <td>
@@ -92,24 +50,10 @@ theNumeric.Should().BeApproximately(otherNumeric, delta);
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.AreNotEqual(otherObject, theObject);
+Assert.IsNotNull(actual);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBe(otherObject);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.AreSame(otherObject, theObject);
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().BeSameAs(otherObject);
+actual.Should().NotBeNull();
 </pre></td>
 </tr><tr>
 <td>
@@ -120,24 +64,10 @@ theObject.Should().BeSameAs(otherObject);
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.AreNotSame(otherObject, theObject);
+Assert.AreEqual(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBeSameAs(otherObject);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.IsInstanceOfType(theObject, typeof(T));
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().BeOfType&lt;T&gt;();
+actual.Should().Be(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -148,10 +78,10 @@ theObject.Should().BeOfType&lt;T&gt;();
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsNotInstanceOfType(theObject, typeof(T));
+Assert.AreEqual(expected, actual, delta);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBeOfType&lt;T&gt;();
+actual.Should().BeApproximately(expected, delta);
 </pre></td>
 </tr><tr>
 <td>
@@ -162,17 +92,12 @@ theObject.Should().NotBeOfType&lt;T&gt;();
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsTrue(theObject == otherObject);
+Assert.AreNotEqual(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().Be(otherObject); // functionally equal
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().BeSameAs(otherObject); // refer to the exact same object in memory
+actual.Should().NotBe(expected);
 </pre></td>
 </tr><tr>
-<td>
-</td>
 <td>
 </td>
 <td>
@@ -181,13 +106,69 @@ theObject.Should().BeSameAs(otherObject); // refer to the exact same object in m
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsFalse(theObject == otherObject);
+Assert.AreSame(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBe(otherObject); // functionally unequal
+actual.Should().BeSameAs(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.AreNotSame(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBeSameAs(otherObject); // refer to the different object in memory
+actual.Should().NotBeSameAs(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsInstanceOfType(actual, typeof(T));
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeOfType&lt;T&gt;();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsNotInstanceOfType(actual, typeof(T));
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeOfType&lt;T&gt;();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsTrue(actual == expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().Be(expected); // functionally equal
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeSameAs(expected); // refer to the exact same object in memory
 </pre></td>
 </tr><tr>
 <td>
@@ -200,32 +181,13 @@ theObject.Should().NotBeSameAs(otherObject); // refer to the different object in
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsTrue(theObject != otherObject);
+Assert.IsFalse(actual == expected);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBe(otherObject); // functionally unequal
+actual.Should().NotBe(expected); // functionally unequal
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().NotBeSameAs(otherObject); // refer to the different object in memory
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.IsFalse(theObject != otherObject);
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().Be(otherObject); // functionally equal
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().BeSameAs(otherObject) // refer to the exact same object in memory
+actual.Should().NotBeSameAs(expected); // refer to the different object in memory
 </pre></td>
 </tr><tr>
 <td>
@@ -238,10 +200,48 @@ theObject.Should().BeSameAs(otherObject) // refer to the exact same object in me
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsTrue(theObject > otherObject);
+Assert.IsTrue(actual != expected);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeGreaterThan(otherObject);
+actual.Should().NotBe(expected); // functionally unequal
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeSameAs(expected); // refer to the different object in memory
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsFalse(actual != expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().Be(expected); // functionally equal
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeSameAs(expected) // refer to the exact same object in memory
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsTrue(actual > expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeGreaterThan(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -252,24 +252,10 @@ theObject.Should().BeGreaterThan(otherObject);
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsFalse(theObject > otherObject);
+Assert.IsFalse(actual > expected);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeLessOrEqualTo(otherObject);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.IsTrue(theObject >= otherObject);
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().BeGreaterOrEqualTo(otherObject);
+actual.Should().BeLessOrEqualTo(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -280,24 +266,10 @@ theObject.Should().BeGreaterOrEqualTo(otherObject);
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsFalse(theObject >= otherObject);
+Assert.IsTrue(actual >= expected);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeLessThan(otherObject);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.IsTrue(theObject < otherObject);
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().BeLessThan(otherObject);
+actual.Should().BeGreaterOrEqualTo(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -308,24 +280,10 @@ theObject.Should().BeLessThan(otherObject);
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsFalse(theObject < otherObject);
+Assert.IsFalse(actual >= expected);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeGreaterOrEqualTo(otherObject);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-Assert.IsTrue(theObject <= otherObject);
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().BeLessOrEqualTo(otherObject);
+actual.Should().BeLessThan(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -336,10 +294,52 @@ theObject.Should().BeLessOrEqualTo(otherObject);
 
 <table><tr>
 <td><pre lang="csharp">
-Assert.IsFalse(theObject <= otherObject);
+Assert.IsTrue(actual < expected);
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeGreaterThan(otherObject);
+actual.Should().BeLessThan(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsFalse(actual < expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeGreaterOrEqualTo(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsTrue(actual <= expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeLessOrEqualTo(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+Assert.IsFalse(actual <= expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeGreaterThan(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -352,24 +352,10 @@ theObject.Should().BeGreaterThan(otherObject);
 ## StringAssert
 <table><tr>
 <td><pre lang="csharp">
-StringAssert.Contains(theString, substr);
+StringAssert.Contains(actual, expectedSubstring);
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().Contain(substr);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-StringAssert.StartWith(theString, prefix);
-</pre></td>
-<td><pre lang="csharp">
-theString.Should().StartWith(prefix);
+actual.Should().Contain(expectedSubstring);
 </pre></td>
 </tr><tr>
 <td>
@@ -380,24 +366,10 @@ theString.Should().StartWith(prefix);
 
 <table><tr>
 <td><pre lang="csharp">
-StringAssert.EndsWith(theString, suffix);
+StringAssert.StartWith(actual, expectedPrefix);
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().EndWith(suffix);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-StringAssert.Matches(theString, pattern);
-</pre></td>
-<td><pre lang="csharp">
-theString.Should().MatchRegex(pattern);
+actual.Should().StartWith(expectedPrefix);
 </pre></td>
 </tr><tr>
 <td>
@@ -408,10 +380,38 @@ theString.Should().MatchRegex(pattern);
 
 <table><tr>
 <td><pre lang="csharp">
-StringAssert.DoesNotMatch(theString, pattern);
+StringAssert.EndsWith(actual, expectedSuffix);
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().NotMatchRegex(pattern);
+actual.Should().EndWith(expectedSuffix);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+StringAssert.Matches(actual, expectedPattern);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().MatchRegex(expectedPattern);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+StringAssert.DoesNotMatch(actual, expectedPattern);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotMatchRegex(expectedPattern);
 </pre></td>
 </tr><tr>
 <td>
@@ -424,24 +424,10 @@ theString.Should().NotMatchRegex(pattern);
 ## CollectionAssert
 <table><tr>
 <td><pre lang="csharp">
-CollectionAssert.AllItemsAreUnique(theCollection);
+CollectionAssert.AllItemsAreUnique(actual);
 </pre></td>
 <td><pre lang="csharp">
-theCollection.Should().OnlyHaveUniqueItems();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-CollectionAssert.AreEqual(otherCollection, theCollection);
-</pre></td>
-<td><pre lang="csharp">
-theCollection.Should().Equal(otherCollection);
+actual.Should().OnlyHaveUniqueItems();
 </pre></td>
 </tr><tr>
 <td>
@@ -452,24 +438,10 @@ theCollection.Should().Equal(otherCollection);
 
 <table><tr>
 <td><pre lang="csharp">
-CollectionAssert.AreNotEqual(otherCollection, theCollection);
+CollectionAssert.AreEqual(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-theCollection.Should().NotEqual(otherCollection);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-CollectionAssert.AreEquivalent(otherCollection, theCollection);
-</pre></td>
-<td><pre lang="csharp">
-theCollection.Should().BeEquivalentTo(otherCollection);
+actual.Should().Equal(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -480,24 +452,10 @@ theCollection.Should().BeEquivalentTo(otherCollection);
 
 <table><tr>
 <td><pre lang="csharp">
-CollectionAssert.AreNotEquivalent(otherCollection, theCollection);
+CollectionAssert.AreNotEqual(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-theCollection.Should().NotBeEquivalentTo(otherCollection);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-CollectionAssert.Contains(theCollection, element);
-</pre></td>
-<td><pre lang="csharp">
-theCollection.Should().Contain(element);
+actual.Should().NotEqual(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -508,24 +466,10 @@ theCollection.Should().Contain(element);
 
 <table><tr>
 <td><pre lang="csharp">
-CollectionAssert.DoesNotContain(theCollection, element);
+CollectionAssert.AreEquivalent(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-theCollection.Should().NotContain(element);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-CollectionAssert.IsSubsetOf(subset, superset);
-</pre></td>
-<td><pre lang="csharp">
-subset.Should().BeSubset(superset);
+actual.Should().BeEquivalentTo(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -536,24 +480,10 @@ subset.Should().BeSubset(superset);
 
 <table><tr>
 <td><pre lang="csharp">
-CollectionAssert.IsNotSubsetOf(subset, superset);
+CollectionAssert.AreNotEquivalent(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
-subset.Should().NotBeSubset(superset);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-CollectionAssert.AllItemsAreNotNull(theCollection);
-</pre></td>
-<td><pre lang="csharp">
-theCollection.Should().NotContainNulls();
+actual.Should().NotBeEquivalentTo(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -564,10 +494,80 @@ theCollection.Should().NotContainNulls();
 
 <table><tr>
 <td><pre lang="csharp">
-CollectionAssert.AllItemsAreInstancesOfType(theCollection, typeof(T));
+CollectionAssert.Contains(actual, expected);
 </pre></td>
 <td><pre lang="csharp">
-theCollection.ContainItemsAssignableTo&lt;T&gt;();
+actual.Should().Contain(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+CollectionAssert.DoesNotContain(actual, element);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotContain(element);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+CollectionAssert.IsSubsetOf(actual, expectedSuperset);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeSubset(expectedSuperset);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+CollectionAssert.IsNotSubsetOf(actual, expectedSuperset);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeSubset(expectedSuperset);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+CollectionAssert.AllItemsAreNotNull(actual);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotContainNulls();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+CollectionAssert.AllItemsAreInstancesOfType(actual, typeof(T));
+</pre></td>
+<td><pre lang="csharp">
+actual.ContainItemsAssignableTo&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -663,7 +663,7 @@ public void MyTest()
     Action act = () => func();
 
     act.ShouldThrowExactly<InvalidOperationException>()
-        .Which.Message.Should().Contain(errorMessage);
+        .Which.Message.Should().Contain("expectedMessage");
 }
 </pre></td>
 <td><pre lang="csharp">
@@ -672,7 +672,7 @@ public void MyTest()
     Action act = () => func();
 
     act.ShouldThrowExactly<InvalidOperationException>()
-        .WithMessage(*errorMessage*); // wildcards
+        .WithMessage("*expectedMessage*"); // wildcards
 }
 </pre></td>
 </tr><tr>
@@ -687,24 +687,10 @@ public void MyTest()
 ## Numerics / Comparable
 <table><tr>
 <td><pre lang="csharp">
-theInt.Should().BeGreaterThan(0);
+actual.Should().BeGreaterThan(0);
 </pre></td>
 <td><pre lang="csharp">
-theInt.Should().BePositive();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theInt.Should().BeLessThan(0);
-</pre></td>
-<td><pre lang="csharp">
-theInt.Should().BeNegative();
+actual.Should().BePositive();
 </pre></td>
 </tr><tr>
 <td>
@@ -715,10 +701,24 @@ theInt.Should().BeNegative();
 
 <table><tr>
 <td><pre lang="csharp">
-(lower <= theInt && theInt <= upper).Should().BeTrue();
+actual.Should().BeLessThan(0);
 </pre></td>
 <td><pre lang="csharp">
-theInt.Should().BeInRange(lower, upper);
+actual.Should().BeNegative();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+(lower <= actual && actual <= upper).Should().BeTrue();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeInRange(lower, upper);
 </pre></td>
 </tr><tr>
 <td>
@@ -731,24 +731,10 @@ theInt.Should().BeInRange(lower, upper);
 ## Types
 <table><tr>
 <td><pre lang="csharp">
-theObject.GetType().Should().Be(typeof(T));
+actual.GetType().Should().Be(typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeOfType&lt;T&gt;();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theObject.GetType().Should().NotBe(typeof(T));
-</pre></td>
-<td><pre lang="csharp">
-theObject.Should().NotBeOfType&lt;T&gt;();
+actual.Should().BeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -759,10 +745,10 @@ theObject.Should().NotBeOfType&lt;T&gt;();
 
 <table><tr>
 <td><pre lang="csharp">
-(theObject is T).Should().BeTrue();
+actual.GetType().Should().NotBe(typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeAssignableTo&lt;T&gt;();
+actual.Should().NotBeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -773,10 +759,24 @@ theObject.Should().BeAssignableTo&lt;T&gt;();
 
 <table><tr>
 <td><pre lang="csharp">
-(theObject as T).Should().NotBeNull();
+(actual is T).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theObject.Should().BeAssignableTo&lt;T&gt;();
+actual.Should().BeAssignableTo&lt;T&gt;();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+(actual as T).Should().NotBeNull();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeAssignableTo&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
@@ -819,24 +819,10 @@ theObject.Should().BeAssignableTo&lt;T&gt;();
 ## Enumerables
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Any().Should().BeTrue();
+actual.Any().Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().NotBeEmpty();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Any().Should().BeFalse();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().BeEmpty();
+actual.Should().NotBeEmpty();
 </pre></td>
 </tr><tr>
 <td>
@@ -847,24 +833,10 @@ theEnumerable.Should().BeEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Any(x => x.SomeProperty).Should().BeTrue();
+actual.Any().Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().Contain(x => x.SomeProperty);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Any(x => x.SomeProperty).Should().BeFalse();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().NotContain(x => x.SomeProperty);
+actual.Should().BeEmpty();
 </pre></td>
 </tr><tr>
 <td>
@@ -875,24 +847,10 @@ theEnumerable.Should().NotContain(x => x.SomeProperty);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.All(x => x.SomeProperty).Should().BeTrue();
+actual.Any(x => x.SomeProperty).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().OnlyContain(x => x.SomeProperty) // now fails on empty collection;
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Contains(e).Should().BeTrue();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().Contain(e);
+actual.Should().Contain(x => x.SomeProperty);
 </pre></td>
 </tr><tr>
 <td>
@@ -903,24 +861,10 @@ theEnumerable.Should().Contain(e);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Contains(e).Should().BeFalse();
+actual.Any(x => x.SomeProperty).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().NotContain(e);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Any(e).Should().BeFalse();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().NotContain(e);
+actual.Should().NotContain(x => x.SomeProperty);
 </pre></td>
 </tr><tr>
 <td>
@@ -931,24 +875,10 @@ theEnumerable.Should().NotContain(e);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Count().Should().Be(k);
+actual.All(x => x.SomeProperty).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().HaveCount(k);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Count().Should().BeGreaterThan(k);
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().HaveCount(c => c > k);
+actual.Should().OnlyContain(x => x.SomeProperty) // now fails on empty collection;
 </pre></td>
 </tr><tr>
 <td>
@@ -959,24 +889,10 @@ theEnumerable.Should().HaveCount(c => c > k);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Count().Should().BeGreaterOrEqualTo(k);
+actual.Contains(e).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().HaveCount(c => c >= k);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Count().Should().BeLessThan(k);
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().HaveCount(c => c < k);
+actual.Should().Contain(e);
 </pre></td>
 </tr><tr>
 <td>
@@ -987,24 +903,10 @@ theEnumerable.Should().HaveCount(c => c < k);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Count().Should().BeLessOrEqualTo(k);
+actual.Contains(e).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().HaveCount(c => c <= k);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Should().HaveCount(1);
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().ContainSingle();
+actual.Should().NotContain(e);
 </pre></td>
 </tr><tr>
 <td>
@@ -1015,24 +917,10 @@ theEnumerable.Should().ContainSingle();
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Should().HaveCount(0);
+actual.Any(e).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().BeEmpty();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Contains(element).Should().BeTrue();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().Contain(element);
+actual.Should().NotContain(e);
 </pre></td>
 </tr><tr>
 <td>
@@ -1043,24 +931,10 @@ theEnumerable.Should().Contain(element);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Contains(element).Should().BeFalse();
+actual.Count().Should().Be(k);
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().NotContain(element);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Where(x => x.SomeProperty).Should().NotBeEmpty();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().Contain(x => x.SomeProperty);
+actual.Should().HaveCount(k);
 </pre></td>
 </tr><tr>
 <td>
@@ -1071,24 +945,10 @@ theEnumerable.Should().Contain(x => x.SomeProperty);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Where(x => x.SomeProperty).Should().BeEmpty();
+actual.Count().Should().BeGreaterThan(k);
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().NotContain(x => x.SomeProperty);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Where(x => x.SomeProperty).Should().HaveCount(1);
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().ContainSingle(x => x.SomeProperty);
+actual.Should().HaveCount(c => c > k);
 </pre></td>
 </tr><tr>
 <td>
@@ -1099,24 +959,10 @@ theEnumerable.Should().ContainSingle(x => x.SomeProperty);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Should().OnlyContain(e => !e.SomeProperty);
+actual.Count().Should().BeGreaterOrEqualTo(k);
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().NotContain(x => x.SomeProperty);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Should().NotBeNull().And.NotBeEmpty();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().NotBeNullOrEmpty();
+actual.Should().HaveCount(c => c >= k);
 </pre></td>
 </tr><tr>
 <td>
@@ -1127,24 +973,10 @@ theEnumerable.Should().NotBeNullOrEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.ElementAt(k).Should().Be(element);
+actual.Count().Should().BeLessThan(k);
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().HaveElementAt(k, element);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Skip(k).First().Should().Be(element);
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().HaveElementAt(k + 1, element);
+actual.Should().HaveCount(c => c < k);
 </pre></td>
 </tr><tr>
 <td>
@@ -1155,24 +987,10 @@ theEnumerable.Should().HaveElementAt(k + 1, element);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.OrderBy(x => x.SomeProperty).Should().Equal(theEnumerable);
+actual.Count().Should().BeLessOrEqualTo(k);
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().BeInAscendingOrder(x => x.SomeProperty);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.OrderByDescending(x => x.SomeProperty).Should().Equal(theEnumerable);
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().BeInDescendingOrder(x => x.SomeProperty);
+actual.Should().HaveCount(c => c <= k);
 </pre></td>
 </tr><tr>
 <td>
@@ -1183,24 +1001,10 @@ theEnumerable.Should().BeInDescendingOrder(x => x.SomeProperty);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Select(e1 => e1.SomeProperty).Equal(otherEnumerable.Select(e2 => e2.SomeProperty)) => theEnumerable.Should().Equal(otherEnumerable, (e1, e2);
+actual.Should().HaveCount(1);
 </pre></td>
 <td><pre lang="csharp">
-e1.SomeProperty == e2.SomeProperty);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theEnumerable.Intersect(otherEnumerable).Should().BeEmpty();
-</pre></td>
-<td><pre lang="csharp">
-theEnumerable.Should().NotIntersectWith(otherEnumerable);
+actual.Should().ContainSingle();
 </pre></td>
 </tr><tr>
 <td>
@@ -1211,10 +1015,10 @@ theEnumerable.Should().NotIntersectWith(otherEnumerable);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Intersect(otherEnumerable).Should().NotBeEmpty();
+actual.Should().HaveCount(0);
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Should().IntersectWith(otherEnumerable);
+actual.Should().BeEmpty();
 </pre></td>
 </tr><tr>
 <td>
@@ -1225,10 +1029,206 @@ theEnumerable.Should().IntersectWith(otherEnumerable);
 
 <table><tr>
 <td><pre lang="csharp">
-theEnumerable.Select(x => x.SomeProperty).Should().NotContainNulls();
+actual.Contains(element).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theEnumerable.Select(e).Should().NotContain(x => x.SomeProperty == null) // Debatable;
+actual.Should().Contain(element);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Contains(element).Should().BeFalse();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotContain(element);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Where(x => x.SomeProperty).Should().NotBeEmpty();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().Contain(x => x.SomeProperty);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Where(x => x.SomeProperty).Should().BeEmpty();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotContain(x => x.SomeProperty);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Where(x => x.SomeProperty).Should().HaveCount(1);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().ContainSingle(x => x.SomeProperty);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Should().OnlyContain(e => !e.SomeProperty);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotContain(x => x.SomeProperty);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Should().NotBeNull().And.NotBeEmpty();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeNullOrEmpty();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.ElementAt(k).Should().Be(expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().HaveElementAt(k, expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Skip(k).First().Should().Be(expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().HaveElementAt(k + 1, expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.OrderBy(x => x.SomeProperty).Should().Equal(actual);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeInAscendingOrder(x => x.SomeProperty);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.OrderByDescending(x => x.SomeProperty).Should().Equal(actual);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeInDescendingOrder(x => x.SomeProperty);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Select(e1 => e1.SomeProperty).Equal(expected.Select(e2 => e2.SomeProperty));
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().Equal(expected, (e1, e2) => e1.SomeProperty == e2.SomeProperty);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Intersect(expected).Should().BeEmpty();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotIntersectWith(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Intersect(expected).Should().NotBeEmpty();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().IntersectWith(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Select(x => x.SomeProperty).Should().NotContainNulls();
+</pre></td>
+<td><pre lang="csharp">
+actual.Select(e).Should().NotContain(x => x.SomeProperty == null) // Debatable;
 </pre></td>
 </tr><tr>
 <td>
@@ -1241,10 +1241,10 @@ theEnumerable.Select(e).Should().NotContain(x => x.SomeProperty == null) // Deba
 ## Lists
 <table><tr>
 <td><pre lang="csharp">
-theList[k].Should().Be(element);
+actual[k].Should().Be(expected);
 </pre></td>
 <td><pre lang="csharp">
-theList.Should().HaveElementAt(k, element);
+actual.Should().HaveElementAt(k, expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -1257,24 +1257,10 @@ theList.Should().HaveElementAt(k, element);
 ## Dictionaries
 <table><tr>
 <td><pre lang="csharp">
-theDictionary.ContainsKey(key).Should().BeTrue();
+actual.ContainsKey(expected).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theDictionary.Should().ContainKey(key);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theDictionary.ContainsKey(key).Should().BeFalse();
-</pre></td>
-<td><pre lang="csharp">
-theDictionary.Should().NotContainKey(key);
+actual.Should().ContainKey(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -1285,24 +1271,10 @@ theDictionary.Should().NotContainKey(key);
 
 <table><tr>
 <td><pre lang="csharp">
-theDictionary.ContainsValue(value).Should().BeTrue();
+actual.ContainsKey(expected).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-theDictionary.Should().ContainValue(value);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theDictionary.ContainsValue(value).Should().BeFalse();
-</pre></td>
-<td><pre lang="csharp">
-theDictionary.Should().NotContainValue(value);
+actual.Should().NotContainKey(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -1313,10 +1285,10 @@ theDictionary.Should().NotContainValue(value);
 
 <table><tr>
 <td><pre lang="csharp">
-theDictionary.Should().ContainKey(key).And.ContainValue(value);
+actual.ContainsValue(expected).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theDictionary.Should().Contain(key, value);
+actual.Should().ContainValue(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -1327,10 +1299,38 @@ theDictionary.Should().Contain(key, value);
 
 <table><tr>
 <td><pre lang="csharp">
-theDictionary.Should().ContainKey(KeyValuePair.Key).And.ContainValue(KeyValuePair.value);
+actual.ContainsValue(expected).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-theDictionary.Should().Contain(KeyValuePair);
+actual.Should().NotContainValue(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Should().ContainKey(expectedKey).And.ContainValue(expectedValue);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().Contain(expectedKey, expectedValue);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Should().ContainKey(KeyValuePair.Key).And.ContainValue(KeyValuePair.value);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().Contain(KeyValuePair);
 </pre></td>
 </tr><tr>
 <td>
@@ -1343,24 +1343,10 @@ theDictionary.Should().Contain(KeyValuePair);
 ## Strings
 <table><tr>
 <td><pre lang="csharp">
-theString.StartsWith(prefix).Should().BeTrue();
+actual.StartsWith(expectedPrefix).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().StartWith(prefix);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-theString.EndsWith(suffix).Should().BeTrue();
-</pre></td>
-<td><pre lang="csharp">
-theString.Should().EndWith(suffix);
+actual.Should().StartWith(expectedPrefix);
 </pre></td>
 </tr><tr>
 <td>
@@ -1371,24 +1357,10 @@ theString.Should().EndWith(suffix);
 
 <table><tr>
 <td><pre lang="csharp">
-theString.Should().NotBeNull().And.NotBeEmpty();
+actual.EndsWith(expectedSuffix).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().NotBeNullOrEmpty();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-string.NullOrEmpty(theString).Should().BeTrue();
-</pre></td>
-<td><pre lang="csharp">
-theString.Should().BeNullOrEmpty();
+actual.Should().EndWith(expectedexpectedSuffix);
 </pre></td>
 </tr><tr>
 <td>
@@ -1399,24 +1371,10 @@ theString.Should().BeNullOrEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
-string.NullOrEmpty(theString).Should().BeFalse();
+actual.Should().NotBeNull().And.NotBeEmpty();
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().NotBeNullOrEmpty();
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-string.NullOrWhiteSpace(theString).Should().BeTrue();
-</pre></td>
-<td><pre lang="csharp">
-theString.Should().BeNullOrWhiteSpace();
+actual.Should().NotBeNullOrEmpty();
 </pre></td>
 </tr><tr>
 <td>
@@ -1427,10 +1385,10 @@ theString.Should().BeNullOrWhiteSpace();
 
 <table><tr>
 <td><pre lang="csharp">
-string.NullOrWhiteSpace(theString).Should().BeFalse();
+string.NullOrEmpty(actual).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().NotBeNullOrWhiteSpace();
+actual.Should().BeNullOrEmpty();
 </pre></td>
 </tr><tr>
 <td>
@@ -1441,10 +1399,52 @@ theString.Should().NotBeNullOrWhiteSpace();
 
 <table><tr>
 <td><pre lang="csharp">
-theString.Should().HaveCount(k);
+string.NullOrEmpty(actual).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-theString.Should().HaveLength(k);
+actual.Should().NotBeNullOrEmpty();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+string.NullOrWhiteSpace(actual).Should().BeTrue();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeNullOrWhiteSpace();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+string.NullOrWhiteSpace(actual).Should().BeFalse();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeNullOrWhiteSpace();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Should().HaveCount(k);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().HaveLength(k);
 </pre></td>
 </tr><tr>
 <td>
