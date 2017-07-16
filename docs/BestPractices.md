@@ -567,7 +567,7 @@ actual.Should().NotContainNulls();
 CollectionAssert.AllItemsAreInstancesOfType(actual, typeof(T));
 </pre></td>
 <td><pre lang="csharp">
-actual.ContainItemsAssignableTo&lt;T&gt;();
+actual.Should().ContainItemsAssignableTo&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
