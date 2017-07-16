@@ -508,10 +508,10 @@ actual.Should().Contain(expected);
 
 <table><tr>
 <td><pre lang="csharp">
-CollectionAssert.DoesNotContain(actual, element);
+CollectionAssert.DoesNotContain(actual, expected);
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().NotContain(element);
+actual.Should().NotContain(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -1029,10 +1029,10 @@ actual.Should().BeEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Contains(element).Should().BeTrue();
+actual.Contains(expected).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().Contain(element);
+actual.Should().Contain(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -1043,10 +1043,10 @@ actual.Should().Contain(element);
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Contains(element).Should().BeFalse();
+actual.Contains(expected).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().NotContain(element);
+actual.Should().NotContain(expected);
 </pre></td>
 </tr><tr>
 <td>
