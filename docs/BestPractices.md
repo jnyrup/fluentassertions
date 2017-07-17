@@ -1327,10 +1327,10 @@ actual.Should().Contain(expectedKey, expectedValue);
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Should().ContainKey(KeyValuePair.Key).And.ContainValue(KeyValuePair.value);
+actual.Should().ContainKey(expected.Key).And.ContainValue(expected.Value);
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().Contain(KeyValuePair);
+actual.Should().Contain(expected);
 </pre></td>
 </tr><tr>
 <td>
