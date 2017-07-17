@@ -789,10 +789,10 @@ actual.Should().BeAssignableTo&lt;T&gt;();
 ## Nullables
 <table><tr>
 <td><pre lang="csharp">
-(struct?).HasValue().Should().BeTrue();
+actuak.HasValue.Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-(struct?).Should().HaveValue();
+actual.Should().HaveValue();
 </pre></td>
 </tr><tr>
 <td>
@@ -803,10 +803,10 @@ actual.Should().BeAssignableTo&lt;T&gt;();
 
 <table><tr>
 <td><pre lang="csharp">
-(struct?).HasValue().Should().BeFalse();
+actual.HasValue.Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-(struct?).Should().NotHaveValue();
+actual.Should().NotHaveValue();
 </pre></td>
 </tr><tr>
 <td>
