@@ -1237,6 +1237,24 @@ actual.Select(e).Should().NotContain(x => x.SomeProperty == null) // Debatable;
 </td>
 </tr></table>
 
+<table><tr>
+<td><pre lang="csharp">
+actual.FirstOrDefault().Should().BeNull(); // From the assertion it is unclear what is being tested.
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().BeEmpty(); // The enumerable is empty.
+</pre></td>
+<td><pre lang="csharp">
+actual.First().Should().BeNull(); // The first element is null.
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
 
 ## Lists
 <table><tr>
