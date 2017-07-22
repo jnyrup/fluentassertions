@@ -1214,7 +1214,21 @@ actual.Should().IntersectWith(expected);
 actual.Select(x => x.SomeProperty).Should().NotContainNulls();
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().NotContain(x => x.SomeProperty == null) // Debatable;
+actual.Should().NotContain(x => x.SomeProperty == null); // Debatable
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Should().HaveSameCount(actual.Distinct());
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().OnlyHaveUniqueItems();
 </pre></td>
 </tr><tr>
 <td>
