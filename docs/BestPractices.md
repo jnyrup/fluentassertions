@@ -1029,6 +1029,20 @@ actual.Should().BeEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
+actual.Should().HaveCount(expected.Count());
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().HaveSameCount(expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
 actual.Contains(expected).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
