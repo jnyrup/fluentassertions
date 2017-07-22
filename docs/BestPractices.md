@@ -1043,34 +1043,6 @@ actual.Should().HaveSameCount(expected);
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Contains(expected).Should().BeTrue();
-</pre></td>
-<td><pre lang="csharp">
-actual.Should().Contain(expected);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-actual.Contains(expected).Should().BeFalse();
-</pre></td>
-<td><pre lang="csharp">
-actual.Should().NotContain(expected);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
 actual.Where(x => x.SomeProperty).Should().NotBeEmpty();
 </pre></td>
 <td><pre lang="csharp">
