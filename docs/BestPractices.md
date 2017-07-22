@@ -889,24 +889,10 @@ actual.Should().OnlyContain(x => x.SomeProperty) // now fails on empty collectio
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Contains(e).Should().BeTrue();
+actual.Contains(expected).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().Contain(e);
-</pre></td>
-</tr><tr>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-<table><tr>
-<td><pre lang="csharp">
-actual.Contains(e).Should().BeFalse();
-</pre></td>
-<td><pre lang="csharp">
-actual.Should().NotContain(e);
+actual.Should().Contain(expected);
 </pre></td>
 </tr><tr>
 <td>
@@ -917,10 +903,24 @@ actual.Should().NotContain(e);
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Any(e).Should().BeFalse();
+actual.Contains(unexpected).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().NotContain(e);
+actual.Should().NotContain(unexpected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+actual.Any(x => x == unexpected).Should().BeFalse();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotContain(unexpected);
 </pre></td>
 </tr><tr>
 <td>
@@ -1228,7 +1228,7 @@ actual.Should().IntersectWith(expected);
 actual.Select(x => x.SomeProperty).Should().NotContainNulls();
 </pre></td>
 <td><pre lang="csharp">
-actual.Select(e).Should().NotContain(x => x.SomeProperty == null) // Debatable;
+actual.Should().NotContain(x => x.SomeProperty == null) // Debatable;
 </pre></td>
 </tr><tr>
 <td>
