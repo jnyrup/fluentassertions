@@ -816,7 +816,7 @@ actual.Should().NotHaveValue();
 </tr></table>
 
 
-## Enumerables
+## Collections
 <table><tr>
 <td><pre lang="csharp">
 actual.Any().Should().BeTrue();
@@ -1127,6 +1127,20 @@ actual.Should().HaveElementAt(k, expected);
 
 <table><tr>
 <td><pre lang="csharp">
+actual[k].Should().Be(expected);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().HaveElementAt(k, expected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
 actual.Skip(k).First().Should().Be(expected);
 </pre></td>
 <td><pre lang="csharp">
@@ -1250,21 +1264,6 @@ actual.First().Should().BeNull(); // The first element is null.
 </tr><tr>
 <td>
 </td>
-<td>
-</td>
-<td>
-</td>
-</tr></table>
-
-## Lists
-<table><tr>
-<td><pre lang="csharp">
-actual[k].Should().Be(expected);
-</pre></td>
-<td><pre lang="csharp">
-actual.Should().HaveElementAt(k, expected);
-</pre></td>
-</tr><tr>
 <td>
 </td>
 <td>
