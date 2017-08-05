@@ -106,6 +106,20 @@ actual.Should().NotBe(expected);
 
 <table><tr>
 <td><pre lang="csharp">
+Assert.AreNotEqual(expected, actual, delta);
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeApproximately(expected, delta); // FA 5.0
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
 Assert.AreSame(expected, actual);
 </pre></td>
 <td><pre lang="csharp">
@@ -727,6 +741,20 @@ actual.Should().BeInRange(lower, upper);
 </td>
 </tr></table>
 
+<table><tr>
+<td><pre lang="csharp">
+(lower <= actual && actual <= upper).Should().BeFalse();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeInRange(lower, upper); // FA 5.0
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
 
 ## Types
 <table><tr>
@@ -777,6 +805,34 @@ actual.Should().BeAssignableTo&lt;T&gt;();
 </pre></td>
 <td><pre lang="csharp">
 actual.Should().BeAssignableTo&lt;T&gt;();
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+(actual is T).Should().BeFalse();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeAssignableTo&lt;T&gt;(); // FA 5.0
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+(actual as T).Should().BeNull();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotBeAssignableTo&lt;T&gt;(); // FA 5.0
 </pre></td>
 </tr><tr>
 <td>
@@ -1043,6 +1099,20 @@ actual.Should().HaveSameCount(expected);
 
 <table><tr>
 <td><pre lang="csharp">
+actual.Count().Should().NotBe(unexpected.Count());
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().NotHaveSameCount(unexpected);
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
 actual.Where(x => x.SomeProperty).Should().NotBeEmpty();
 </pre></td>
 <td><pre lang="csharp">
@@ -1228,7 +1298,7 @@ actual.Should().IntersectWith(expected);
 actual.Select(x => x.SomeProperty).Should().NotContainNulls();
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().NotContain(x => x.SomeProperty == null); // Debatable
+actual.Should().NotContainNulls(e => e.OtherProperty); // FA 5.0
 </pre></td>
 </tr><tr>
 <td>
