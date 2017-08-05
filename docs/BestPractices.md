@@ -1459,7 +1459,7 @@ actual.Should().NotBeNullOrWhiteSpace();
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Should().HaveCount(k);
+actual.Length.Should().Be(k);
 </pre></td>
 <td><pre lang="csharp">
 actual.Should().HaveLength(k);
