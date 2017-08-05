@@ -1403,7 +1403,7 @@ actual.Should().NotBeNullOrEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
-string.NullOrEmpty(actual).Should().BeTrue();
+string.IsNullOrEmpty(actual).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
 actual.Should().BeNullOrEmpty();
@@ -1417,7 +1417,7 @@ actual.Should().BeNullOrEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
-string.NullOrEmpty(actual).Should().BeFalse();
+string.IsNullOrEmpty(actual).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
 actual.Should().NotBeNullOrEmpty();
@@ -1431,7 +1431,7 @@ actual.Should().NotBeNullOrEmpty();
 
 <table><tr>
 <td><pre lang="csharp">
-string.NullOrWhiteSpace(actual).Should().BeTrue();
+string.IsNullOrWhiteSpace(actual).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
 actual.Should().BeNullOrWhiteSpace();
@@ -1445,7 +1445,7 @@ actual.Should().BeNullOrWhiteSpace();
 
 <table><tr>
 <td><pre lang="csharp">
-string.NullOrWhiteSpace(actual).Should().BeFalse();
+string.IsNullOrWhiteSpace(actual).Should().BeFalse();
 </pre></td>
 <td><pre lang="csharp">
 actual.Should().NotBeNullOrWhiteSpace();
