@@ -1169,7 +1169,7 @@ actual.Should().BeInDescendingOrder(x => x.SomeProperty);
 
 <table><tr>
 <td><pre lang="csharp">
-actual.Select(e1 => e1.SomeProperty).Equal(expected.Select(e2 => e2.SomeProperty));
+actual.Select(e1 => e1.SomeProperty).Should().Equal(expected.Select(e2 => e2.SomeProperty));
 </pre></td>
 <td><pre lang="csharp">
 actual.Should().Equal(expected, (e1, e2) => e1.SomeProperty == e2.SomeProperty);
