@@ -1378,7 +1378,7 @@ actual.Should().StartWith(expectedPrefix);
 actual.EndsWith(expectedSuffix).Should().BeTrue();
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().EndWith(expectedexpectedSuffix);
+actual.Should().EndWith(expectedSuffix);
 </pre></td>
 </tr><tr>
 <td>
