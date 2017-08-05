@@ -1130,7 +1130,7 @@ actual.Should().HaveElementAt(k, expected);
 actual.Skip(k).First().Should().Be(expected);
 </pre></td>
 <td><pre lang="csharp">
-actual.Should().HaveElementAt(k + 1, expected);
+actual.Should().HaveElementAt(k, expected);
 </pre></td>
 </tr><tr>
 <td>
