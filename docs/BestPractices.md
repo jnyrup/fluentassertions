@@ -1253,6 +1253,20 @@ actual.Should().OnlyHaveUniqueItems();
 
 <table><tr>
 <td><pre lang="csharp">
+actual.Select(x => x.SomeProperty).Should().OnlyHaveUniqueItems();
+</pre></td>
+<td><pre lang="csharp">
+actual.Should().OnlyHaveUniqueItems(x => x.SomeProperty); // FA 5.0
+</pre></td>
+</tr><tr>
+<td>
+</td>
+<td>
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
 actual.FirstOrDefault().Should().BeNull(); // From the assertion it is unclear what is being tested.
 </pre></td>
 <td><pre lang="csharp">
