@@ -31,7 +31,7 @@ actual.Should().BeFalse();
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsFalse failed. 
+Assert.IsFalse failed.
 </td>
 <td>
 Expected False, but found True.
@@ -63,7 +63,7 @@ actual.Should().NotBeNull();
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsNotNull failed. 
+Assert.IsNotNull failed.
 </td>
 <td>
 Expected object not to be <null>.
@@ -79,7 +79,7 @@ actual.Should().Be(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreEqual failed. Expected:<SomeProperty: 2, OtherProperty: expected>. Actual:<SomeProperty: 1, OtherProperty: actual>. 
+Assert.AreEqual failed. Expected:<SomeProperty: 2, OtherProperty: expected>. Actual:<SomeProperty: 1, OtherProperty: actual>.
 </td>
 <td>
 Expected object to be SomeProperty: 2, OtherProperty: expected, but found SomeProperty: 1, OtherProperty: actual.
@@ -95,7 +95,7 @@ actual.Should().BeApproximately(expected, delta);
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreEqual failed. Expected a difference no greater than <0.5> between expected value <2> and actual value <1.25>. 
+Assert.AreEqual failed. Expected a difference no greater than <0.5> between expected value <2> and actual value <1.25>.
 </td>
 <td>
 Expected value 1.25 to approximate 2.0 +/- 0.5, but it differed by 0.75.
@@ -111,7 +111,7 @@ actual.Should().NotBe(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreNotEqual failed. Expected any value except:<SomeProperty: 1, OtherProperty: expected>. Actual:<SomeProperty: 1, OtherProperty: expected>. 
+Assert.AreNotEqual failed. Expected any value except:<SomeProperty: 1, OtherProperty: expected>. Actual:<SomeProperty: 1, OtherProperty: expected>.
 </td>
 <td>
 Did not expect object to be equal to SomeProperty: 1, OtherProperty: expected.
@@ -127,10 +127,10 @@ actual.Should().NotBeApproximately(expected, delta); // Will be available in Flu
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreNotEqual failed. Expected a difference greater than <0.5> between expected value <2> and actual value <2>. 
+Assert.AreNotEqual failed. Expected a difference greater than <0.5> between expected value <2> and actual value <2>.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected value 2.0 to not approximate 2.0 +/- 0.5, but it only differed by 0.0.
 </td>
 </tr></table>
 
@@ -143,7 +143,7 @@ actual.Should().BeSameAs(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreSame failed. 
+Assert.AreSame failed.
 </td>
 <td>
 Expected object to refer to 
@@ -161,7 +161,7 @@ actual.Should().NotBeSameAs(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreNotSame failed. 
+Assert.AreNotSame failed.
 </td>
 <td>
 Did not expect reference to object SomeProperty: 1, OtherProperty: actual.
@@ -193,7 +193,7 @@ actual.Should().NotBeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsNotInstanceOfType failed. Wrong Type:<UnitTests2.MyClass>. Actual type:<UnitTests2.MyClass>. 
+Assert.IsNotInstanceOfType failed. Wrong Type:<UnitTests2.MyClass>. Actual type:<UnitTests2.MyClass>.
 </td>
 <td>
 Expected type not to be [UnitTests2.MyClass, UnitTests2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null], but it is.
@@ -212,7 +212,7 @@ actual.Should().BeSameAs(expected); // refer to the exact same object in memory
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsTrue failed. 
+Assert.IsTrue failed.
 </td>
 <td>
 Expected value to be 2, but found 1.
@@ -236,7 +236,7 @@ actual.Should().NotBeSameAs(expected); // refer to the different object in memor
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsFalse failed. 
+Assert.IsFalse failed.
 </td>
 <td>
 Did not expect 1.
@@ -259,7 +259,7 @@ actual.Should().NotBeSameAs(expected); // refer to the different object in memor
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsTrue failed. 
+Assert.IsTrue failed.
 </td>
 <td>
 Did not expect 1.
@@ -303,7 +303,7 @@ actual.Should().BeGreaterThan(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsTrue failed. 
+Assert.IsTrue failed.
 </td>
 <td>
 Expected a value greater than 2, but found 1.
@@ -319,7 +319,7 @@ actual.Should().BeLessOrEqualTo(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsFalse failed. 
+Assert.IsFalse failed.
 </td>
 <td>
 Expected a value less or equal to 1, but found 2.
@@ -335,7 +335,7 @@ actual.Should().BeGreaterOrEqualTo(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsTrue failed. 
+Assert.IsTrue failed.
 </td>
 <td>
 Expected a value greater or equal to 2, but found 1.
@@ -351,7 +351,7 @@ actual.Should().BeLessThan(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsFalse failed. 
+Assert.IsFalse failed.
 </td>
 <td>
 Expected a value less than 1, but found 2.
@@ -367,7 +367,7 @@ actual.Should().BeLessThan(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsTrue failed. 
+Assert.IsTrue failed.
 </td>
 <td>
 Expected a value less than 1, but found 2.
@@ -383,7 +383,7 @@ actual.Should().BeGreaterOrEqualTo(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsFalse failed. 
+Assert.IsFalse failed.
 </td>
 <td>
 Expected a value greater or equal to 2, but found 1.
@@ -399,7 +399,7 @@ actual.Should().BeLessOrEqualTo(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsTrue failed. 
+Assert.IsTrue failed.
 </td>
 <td>
 Expected a value less or equal to 1, but found 2.
@@ -415,7 +415,7 @@ actual.Should().BeGreaterThan(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsFalse failed. 
+Assert.IsFalse failed.
 </td>
 <td>
 Expected a value greater than 2, but found 1.
@@ -521,7 +521,7 @@ actual.Should().OnlyHaveUniqueItems();
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.AllItemsAreUnique failed. Duplicate item found:<SomeProperty: 1, OtherProperty: item>. 
+CollectionAssert.AllItemsAreUnique failed. Duplicate item found:<SomeProperty: 1, OtherProperty: item>.
 </td>
 <td>
 Expected collection to only have unique items, but item SomeProperty: 1, OtherProperty: item is not unique.
@@ -569,7 +569,7 @@ actual.Should().BeEquivalentTo(expected);
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.AreEquivalent failed. The expected collection contains 1 occurrence(s) of <SomeProperty: 2, OtherProperty: other>. The actual collection contains 0 occurrence(s). 
+CollectionAssert.AreEquivalent failed. The expected collection contains 1 occurrence(s) of <SomeProperty: 2, OtherProperty: other>. The actual collection contains 0 occurrence(s).
 </td>
 <td>
 Expected collection {SomeProperty: 1, OtherProperty: item, SomeProperty: 2, OtherProperty: item} to be equivalent to {SomeProperty: 1, OtherProperty: item, SomeProperty: 2, OtherProperty: other}, but it misses {SomeProperty: 2, OtherProperty: other}.
@@ -585,7 +585,7 @@ actual.Should().NotBeEquivalentTo(expected);
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.AreNotEquivalent failed. Both collections contain the same elements. 
+CollectionAssert.AreNotEquivalent failed. Both collections contain the same elements.
 </td>
 <td>
 Expected collection {SomeProperty: 1, OtherProperty: item, SomeProperty: 2, OtherProperty: other} not be equivalent with collection {SomeProperty: 1, OtherProperty: item, SomeProperty: 2, OtherProperty: other}.
@@ -601,7 +601,7 @@ actual.Should().Contain(expected);
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.Contains failed. 
+CollectionAssert.Contains failed.
 </td>
 <td>
 Expected collection {SomeProperty: 2, OtherProperty: other} to contain SomeProperty: 1, OtherProperty: item.
@@ -617,7 +617,7 @@ actual.Should().NotContain(expected);
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.DoesNotContain failed. 
+CollectionAssert.DoesNotContain failed.
 </td>
 <td>
 Expected collection {SomeProperty: 1, OtherProperty: item} to not contain SomeProperty: 1, OtherProperty: item.
@@ -633,7 +633,7 @@ actual.Should().BeSubsetOf(expectedSuperset);
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.IsSubsetOf failed. 
+CollectionAssert.IsSubsetOf failed.
 </td>
 <td>
 Expected collection to be a subset of {SomeProperty: 1, OtherProperty: item}, but items {SomeProperty: 2, OtherProperty: other} are not part of the superset.
@@ -649,7 +649,7 @@ actual.Should().NotBeSubsetOf(expectedSuperset);
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.IsNotSubsetOf failed. 
+CollectionAssert.IsNotSubsetOf failed.
 </td>
 <td>
 Did not expect collection {SomeProperty: 1, OtherProperty: item} to be a subset of {SomeProperty: 1, OtherProperty: item}.
@@ -665,7 +665,7 @@ actual.Should().NotContainNulls();
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.AllItemsAreNotNull failed. 
+CollectionAssert.AllItemsAreNotNull failed.
 </td>
 <td>
 Expected collection not to contain nulls, but found one at index 0.
@@ -879,7 +879,7 @@ actual.Should().NotBeInRange(lower, upper); // Will be available in Fluent Asser
 Expected False, but found True.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected value to not be between 1 and 5, but found 4.
 </td>
 </tr></table>
 
@@ -961,7 +961,7 @@ actual.Should().NotBeAssignableTo&lt;T&gt;(); // Will be available in Fluent Ass
 Expected False, but found True.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected object to not be assignable to UnitTests2.MyClass, but UnitTests2.MyClass is
 </td>
 </tr></table>
 
@@ -977,7 +977,7 @@ actual.Should().NotBeAssignableTo&lt;T&gt;(); // Will be available in Fluent Ass
 Expected object to be <null>, but found SomeProperty: 1, OtherProperty: actual.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected object to not be assignable to UnitTests2.MyClass, but UnitTests2.MyClass is
 </td>
 </tr></table>
 
@@ -1173,7 +1173,7 @@ actual.Should().HaveCountGreaterThan(k); // Will be available in Fluent Assertio
 Expected a value greater than 4, but found 3.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection to contain more than 4 item(s), but found 3.
 </td>
 </tr></table>
 
@@ -1189,7 +1189,7 @@ actual.Should().HaveCountGreaterOrEqualTo(k); // Will be available in Fluent Ass
 Expected a value greater or equal to 4, but found 3.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection to contain at least 4 item(s), but found 3.
 </td>
 </tr></table>
 
@@ -1205,7 +1205,7 @@ actual.Should().HaveCountLessThan(k); // Will be available in Fluent Assertions 
 Expected a value less than 2, but found 3.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection to contain fewer than 2 item(s), but found 3.
 </td>
 </tr></table>
 
@@ -1221,7 +1221,7 @@ actual.Should().HaveCountLessOrEqualTo(k); // Will be available in Fluent Assert
 Expected a value less or equal to 2, but found 3.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection to contain at most 2 item(s), but found 3.
 </td>
 </tr></table>
 
@@ -1237,7 +1237,7 @@ actual.Should().NotHaveCount(k); // Will be available in Fluent Assertions 5.0
 Did not expect 3.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection to not contain 3 item(s), but found 3.
 </td>
 </tr></table>
 
@@ -1301,7 +1301,7 @@ actual.Should().NotHaveSameCount(unexpected); // Will be available in Fluent Ass
 Did not expect 2.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection to not have 2 item(s), but found 2.
 </td>
 </tr></table>
 
@@ -1531,7 +1531,7 @@ actual.Should().NotContainNulls(e => e.OtherProperty); // Will be available in F
 Expected collection not to contain nulls, but found one at index 0.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection not to contain <null>s on e.OtherProperty, but found {SomeProperty: 1, OtherProperty: }.
 </td>
 </tr></table>
 
@@ -1563,7 +1563,7 @@ actual.Should().OnlyHaveUniqueItems(x => x.SomeProperty); // Will be available i
 Expected collection to only have unique items, but item 1 is not unique.
 </td>
 <td>
-Assert.Fail failed. Not available until FluentAssertions 5.0
+Expected collection to only have unique items on x.SomeProperty, but item SomeProperty: 1, OtherProperty:  is not unique.
 </td>
 </tr></table>
 
