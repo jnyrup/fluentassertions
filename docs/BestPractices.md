@@ -929,7 +929,7 @@ actual.Should().BeAssignableTo&lt;T&gt;();
 Expected True, but found False.
 </td>
 <td>
-Expected object to be assignable to UnitTests2.MyClass, but UnitTests2.MyIdenticalClass is not
+Expected object to be assignable to UnitTests2.MyClass, but UnitTests2.MyIdenticalClass is not.
 </td>
 </tr></table>
 
@@ -945,7 +945,7 @@ actual.Should().BeAssignableTo&lt;T&gt;();
 Expected object not to be <null>.
 </td>
 <td>
-Expected object to be assignable to UnitTests2.MyClass, but UnitTests2.MyIdenticalClass is not
+Expected object to be assignable to UnitTests2.MyClass, but UnitTests2.MyIdenticalClass is not.
 </td>
 </tr></table>
 
@@ -961,7 +961,7 @@ actual.Should().NotBeAssignableTo&lt;T&gt;(); // Will be available in Fluent Ass
 Expected False, but found True.
 </td>
 <td>
-Expected object to not be assignable to UnitTests2.MyClass, but UnitTests2.MyClass is
+Expected object to not be assignable to UnitTests2.MyClass, but UnitTests2.MyClass is.
 </td>
 </tr></table>
 
@@ -977,7 +977,7 @@ actual.Should().NotBeAssignableTo&lt;T&gt;(); // Will be available in Fluent Ass
 Expected object to be <null>, but found SomeProperty: 1, OtherProperty: actual.
 </td>
 <td>
-Expected object to not be assignable to UnitTests2.MyClass, but UnitTests2.MyClass is
+Expected object to not be assignable to UnitTests2.MyClass, but UnitTests2.MyClass is.
 </td>
 </tr></table>
 
