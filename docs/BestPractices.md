@@ -714,7 +714,7 @@ Test method threw exception System.InvalidCastException, but exception System.Ar
 Expected a <System.ArgumentNullException> to be thrown, but found a <System.InvalidCastException>: System.InvalidCastException with message "Specified cast is not valid."
      at UnitTests2.ExceptionTests.<>c.<Snippet01_New>b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
      at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.<Snippet01_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
-     at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception() in C:\projects\fluentassertions-vf06b\Src\Core\Specialized\ActionAssertions.cs:line 108
+     at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
 .
 </td>
 </tr></table>
@@ -743,7 +743,7 @@ Test method threw exception System.InvalidCastException, but exception System.Ar
 Expected a <System.ArgumentException> to be thrown, but found a <System.InvalidCastException>: System.InvalidCastException with message "Specified cast is not valid."
      at UnitTests2.ExceptionTests.<>c.<Snippet02_New>b__3_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 57
      at UnitTests2.ExceptionTests.<>c__DisplayClass3_0.<Snippet02_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 60
-     at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception() in C:\projects\fluentassertions-vf06b\Src\Core\Specialized\ActionAssertions.cs:line 108
+     at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
 .
 </td>
 </tr></table>
