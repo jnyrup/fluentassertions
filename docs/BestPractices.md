@@ -711,7 +711,42 @@ public void MyTest()
 Test method threw exception System.InvalidCastException, but exception System.ArgumentNullException was expected. Exception System.InvalidCastException: Specified cast is not valid.
 </td>
 <td>
-Expected a <System.ArgumentNullException> to be thrown, but found a <System.InvalidCastException>: System.InvalidCastException with message "Specified cast is not valid."
+Expected a &lt;System.ArgumentNullException&gt; to be thrown, but found a &lt;System.InvalidCastException&gt;: System.InvalidCastException with message "Specified cast is not valid."
+     at UnitTests2.ExceptionTests.<>c.<Snippet01_New>b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
+     at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.<Snippet01_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
+     at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
+.
+</td>
+</tr></table>
+
+<table><tr>
+<td><pre lang="csharp">
+public void MyTest()
+{
+    Action act = () => func();
+    
+    // MSTest V2
+    Assert.ThrowsException<InvalidOperationException>(act);
+}
+</pre></td>
+<td><pre lang="csharp">
+public void MyTest()
+{
+    Action act = () => func();
+    
+    act.ShouldThrowExactly<InvalidOperationException>();
+}
+</pre></td>
+</tr><tr>
+<td>
+Assert.ThrowsException failed. Threw exception InvalidCastException, but exception ArgumentNullException was expected. 
+Exception Message: Specified cast is not valid.
+Stack Trace:    at UnitTests2.ExceptionTests.<>c.<Snippet01v2_Old>b__2_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 44
+   at UnitTests2.ExceptionTests.<>c__DisplayClass2_0.<Snippet01v2_Old>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 47
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsException[T](Action action, String message, Object[] parameters)
+</td>
+<td>
+Expected a &lt;System.ArgumentNullException&gt; to be thrown, but found a &lt;System.InvalidCastException&gt;: System.InvalidCastException with message "Specified cast is not valid."
      at UnitTests2.ExceptionTests.<>c.<Snippet01_New>b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
      at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.<Snippet01_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
      at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
@@ -740,7 +775,7 @@ public void MyTest()
 Test method threw exception System.InvalidCastException, but exception System.ArgumentException or a type derived from it was expected. Exception System.InvalidCastException: Specified cast is not valid.
 </td>
 <td>
-Expected a <System.ArgumentException> to be thrown, but found a <System.InvalidCastException>: System.InvalidCastException with message "Specified cast is not valid."
+Expected a &lt;System.ArgumentException&gt; to be thrown, but found a &lt;System.InvalidCastException&gt;: System.InvalidCastException with message "Specified cast is not valid."
      at UnitTests2.ExceptionTests.<>c.<Snippet02_New>b__3_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 57
      at UnitTests2.ExceptionTests.<>c__DisplayClass3_0.<Snippet02_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 60
      at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
