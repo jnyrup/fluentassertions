@@ -79,7 +79,7 @@ actual.Should().Be(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreEqual failed. Expected:<SomeProperty: 2, OtherProperty: expected>. Actual:<SomeProperty: 1, OtherProperty: actual>.
+Assert.AreEqual failed. Expected:&lt;SomeProperty: 2, OtherProperty: expected&gt;. Actual:&lt;SomeProperty: 1, OtherProperty: actual&gt;.
 </td>
 <td>
 Expected object to be SomeProperty: 2, OtherProperty: expected, but found SomeProperty: 1, OtherProperty: actual.
@@ -111,7 +111,7 @@ actual.Should().NotBe(expected);
 </pre></td>
 </tr><tr>
 <td>
-Assert.AreNotEqual failed. Expected any value except:<SomeProperty: 1, OtherProperty: expected>. Actual:<SomeProperty: 1, OtherProperty: expected>.
+Assert.AreNotEqual failed. Expected any value except:&lt;SomeProperty: 1, OtherProperty: expected&gt;. Actual:&lt;SomeProperty: 1, OtherProperty: expected&gt;.
 </td>
 <td>
 Did not expect object to be equal to SomeProperty: 1, OtherProperty: expected.
@@ -177,7 +177,7 @@ actual.Should().BeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsInstanceOfType failed.  Expected type:<UnitTests2.MyIdenticalClass>. Actual type:<UnitTests2.MyClass>.
+Assert.IsInstanceOfType failed.  Expected type:&lt;UnitTests2.MyIdenticalClass&gt;. Actual type:&lt;UnitTests2.MyClass&gt;.
 </td>
 <td>
 Expected type to be UnitTests2.MyIdenticalClass, but found UnitTests2.MyClass.
@@ -193,7 +193,7 @@ actual.Should().NotBeOfType&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
-Assert.IsNotInstanceOfType failed. Wrong Type:<UnitTests2.MyClass>. Actual type:<UnitTests2.MyClass>.
+Assert.IsNotInstanceOfType failed. Wrong Type:&lt;UnitTests2.MyClass&gt;. Actual type:&lt;UnitTests2.MyClass&gt;.
 </td>
 <td>
 Expected type not to be [UnitTests2.MyClass, UnitTests2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null], but it is.
@@ -521,7 +521,7 @@ actual.Should().OnlyHaveUniqueItems();
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.AllItemsAreUnique failed. Duplicate item found:<SomeProperty: 1, OtherProperty: item>.
+CollectionAssert.AllItemsAreUnique failed. Duplicate item found:&lt;SomeProperty: 1, OtherProperty: item>.
 </td>
 <td>
 Expected collection to only have unique items, but item SomeProperty: 1, OtherProperty: item is not unique.
@@ -569,7 +569,7 @@ actual.Should().BeEquivalentTo(expected);
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.AreEquivalent failed. The expected collection contains 1 occurrence(s) of <SomeProperty: 2, OtherProperty: other>. The actual collection contains 0 occurrence(s).
+CollectionAssert.AreEquivalent failed. The expected collection contains 1 occurrence(s) of &lt;SomeProperty: 2, OtherProperty: other>. The actual collection contains 0 occurrence(s).
 </td>
 <td>
 Expected collection {SomeProperty: 1, OtherProperty: item, SomeProperty: 2, OtherProperty: item} to be equivalent to {SomeProperty: 1, OtherProperty: item, SomeProperty: 2, OtherProperty: other}, but it misses {SomeProperty: 2, OtherProperty: other}.
@@ -681,7 +681,7 @@ actual.Should().ContainItemsAssignableTo&lt;T&gt;();
 </pre></td>
 </tr><tr>
 <td>
-CollectionAssert.AllItemsAreInstancesOfType failed. Element at index 0 is not of expected type. Expected type:<UnitTests2.MyIdenticalClass>. Actual type:<UnitTests2.MyClass>.
+CollectionAssert.AllItemsAreInstancesOfType failed. Element at index 0 is not of expected type. Expected type:&lt;UnitTests2.MyIdenticalClass&gt;. Actual type:&lt;UnitTests2.MyClass&gt;.
 </td>
 <td>
 Expected collection to contain only items of type UnitTests2.MyIdenticalClass, but item SomeProperty: 1, OtherProperty: item at index 0 is of type UnitTests2.MyClass.
@@ -712,8 +712,8 @@ Test method threw exception System.InvalidCastException, but exception System.Ar
 </td>
 <td>
 Expected a &lt;System.ArgumentNullException&gt; to be thrown, but found a &lt;System.InvalidCastException&gt;: System.InvalidCastException with message "Specified cast is not valid."
-     at UnitTests2.ExceptionTests.<>c.<Snippet01_New>b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
-     at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.<Snippet01_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
+     at UnitTests2.ExceptionTests.<>c.&lt;Snippet01_New&gt;b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
+     at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.&lt;Snippet01_New&gt;b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
      at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
 .
 </td>
@@ -741,14 +741,14 @@ public void MyTest()
 <td>
 Assert.ThrowsException failed. Threw exception InvalidCastException, but exception ArgumentNullException was expected. 
 Exception Message: Specified cast is not valid.
-Stack Trace:    at UnitTests2.ExceptionTests.<>c.<Snippet01v2_Old>b__2_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 44
-   at UnitTests2.ExceptionTests.<>c__DisplayClass2_0.<Snippet01v2_Old>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 47
+Stack Trace:    at UnitTests2.ExceptionTests.<>c.&lt;Snippet01v2_Old&gt;b__2_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 44
+   at UnitTests2.ExceptionTests.<>c__DisplayClass2_0.&lt;Snippet01v2_Old&gt;b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 47
    at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsException[T](Action action, String message, Object[] parameters)
 </td>
 <td>
 Expected a &lt;System.ArgumentNullException&gt; to be thrown, but found a &lt;System.InvalidCastException&gt;: System.InvalidCastException with message "Specified cast is not valid."
-     at UnitTests2.ExceptionTests.<>c.<Snippet01_New>b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
-     at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.<Snippet01_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
+     at UnitTests2.ExceptionTests.<>c.&lt;Snippet01_New&gt;b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
+     at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.&lt;Snippet01_New&gt;b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
      at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
 .
 </td>
@@ -776,8 +776,8 @@ Test method threw exception System.InvalidCastException, but exception System.Ar
 </td>
 <td>
 Expected a &lt;System.ArgumentException&gt; to be thrown, but found a &lt;System.InvalidCastException&gt;: System.InvalidCastException with message "Specified cast is not valid."
-     at UnitTests2.ExceptionTests.<>c.<Snippet02_New>b__3_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 57
-     at UnitTests2.ExceptionTests.<>c__DisplayClass3_0.<Snippet02_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 60
+     at UnitTests2.ExceptionTests.<>c.&lt;Snippet02_New&gt;b__3_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 57
+     at UnitTests2.ExceptionTests.<>c__DisplayClass3_0.&lt;Snippet02_New&gt;b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 60
      at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
 .
 </td>
