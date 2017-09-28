@@ -1,7 +1,7 @@
 ## {{ include.caption }}
 
 {% for example in include.examples %}
-<table>
+<table class="code-table">
 <thead>
 <tr>
 	<th>
@@ -11,19 +11,9 @@
 		New
 	</th>
 </tr>
-<!--
-<tr>
-	<th>
-		Failure Message
-	</th>
-	<th>
-		Failure Message
-	</th>
-</tr>
---->
 </thead>
 <tbody>
-<tr>
+<tr class="code-row">
 <td markdown="1">
 ```c#
 {{ example.old }}
@@ -35,15 +25,15 @@
 ```
 </td>
 </tr>
-<tr>
+<tr class="code-row">
 <td markdown="1">
 ```text
-{{ example.old-message }}
+{{ example.old-message | replace: '.', '. ' }}
 ```
 </td>
 <td markdown="1">
 ```text
-{{ example.new-message }}
+{{ example.new-message | replace: '.', '. ' }}
 ```
 </td>
 </tr>
