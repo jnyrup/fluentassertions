@@ -47,7 +47,8 @@
     Dictionary {[0, expected]} should not contain value "expected", but found it anyhow.
 
 - old: |
-    actual.Should().ContainKey(expectedKey).And.ContainValue(expectedValue);
+    actual.Should().ContainKey(expectedKey)
+        .And.ContainValue(expectedValue);
 
   new: |
     actual.Should().Contain(expectedKey, expectedValue);
@@ -59,7 +60,8 @@
     Expected dictionary to contain value "expected" at key 0, but found "".
 
 - old: |
-    actual.Should().ContainKey(expected.Key).And.ContainValue(expected.Value);
+    actual.Should().ContainKey(expected.Key)
+        .And.ContainValue(expected.Value);
 
   new: |
     actual.Should().Contain(expected);

@@ -38,7 +38,8 @@
     (lower <= actual && actual <= upper).Should().BeFalse();
 
   new: |
-    actual.Should().NotBeInRange(lower, upper); // Will be available in Fluent Assertions 5.0
+    // Will be available in Fluent Assertions 5.0
+    actual.Should().NotBeInRange(lower, upper);
 
   old-message: |
     Expected False, but found True.

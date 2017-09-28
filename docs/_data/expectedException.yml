@@ -24,21 +24,15 @@
     .
 
 - old: |
-    public void MyTest()
-    {
-        Action act = () => func();
-        
-        // MSTest V2
-        Assert.ThrowsException<InvalidOperationException>(act);
-    }
+    Action act = () => func();
+    
+    // MSTest V2
+    Assert.ThrowsException<InvalidOperationException>(act);
 
   new: |
-    public void MyTest()
-    {
-        Action act = () => func();
-        
-        act.ShouldThrowExactly<InvalidOperationException>();
-    }
+    Action act = () => func();
+    
+    act.ShouldThrowExactly<InvalidOperationException>();
 
   old-message: |
     Assert.ThrowsException failed. Threw exception InvalidCastException, but exception ArgumentNullException was expected. 
@@ -55,7 +49,8 @@
     .
 
 - old: |
-    [ExpectedException(typeof(SystemException), AllowDerivedTypes = true)]
+    [ExpectedException(typeof(SystemException),
+                       AllowDerivedTypes = true)]
     public void MyTest()
     {
         func();
@@ -114,22 +109,17 @@
     "actualMessage" does not.
 
 - old: |
-    public void MyTest()
-    {
-        Action act = () => func();
+    Action act = () => func();
     
-        act.ShouldThrowExactly<InvalidOperationException>()
-            .Which.Message.Should().Contain("expectedMessage");
-    }
+    act.ShouldThrowExactly<InvalidOperationException>()
+        .Which.Message.Should().Contain("expectedMessage");
 
   new: |
-    public void MyTest()
-    {
-        Action act = () => func();
+    Action act = () => func();
     
-        act.ShouldThrowExactly<InvalidOperationException>()
-            .WithMessage("*expectedMessage*"); // wildcards
-    }
+    // using wildcards
+    act.ShouldThrowExactly<InvalidOperationException>()
+        .WithMessage("*expectedMessage*");
 
   old-message: |
     Expected string "Problems, errorCode2 and more Problems" to contain "errorCode1".

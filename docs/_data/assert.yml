@@ -86,7 +86,8 @@
     Assert.AreNotEqual(expected, actual, delta);
 
   new: |
-    actual.Should().NotBeApproximately(expected, delta); // Will be available in Fluent Assertions 5.0
+    // Will be available in Fluent Assertions 5.0
+    actual.Should().NotBeApproximately(expected, delta);
 
   old-message: |
     Assert.AreNotEqual failed. Expected a difference greater than <0.5> between expected value <2> and actual value <2>.
@@ -148,10 +149,12 @@
     Assert.IsTrue(actual == expected);
 
   new: |
-    actual.Should().Be(expected); // functionally equal
+    // functionally equal
+    actual.Should().Be(expected);
 
   new: |
-    actual.Should().BeSameAs(expected); // refer to the exact same object in memory
+    // refer to the exact same object in memory
+    actual.Should().BeSameAs(expected);
 
   old-message: |
     Assert.IsTrue failed.
@@ -168,10 +171,12 @@
     Assert.IsFalse(actual == expected);
 
   new: |
-    actual.Should().NotBe(expected); // functionally unequal
+    // functionally unequal
+    actual.Should().NotBe(expected);
 
   new: |
-    actual.Should().NotBeSameAs(expected); // refer to the different object in memory
+    // refer to the different object in memory
+    actual.Should().NotBeSameAs(expected);
 
   old-message: |
     Assert.IsFalse failed.
@@ -187,10 +192,12 @@
     Assert.IsTrue(actual != expected);
 
   new: |
-    actual.Should().NotBe(expected); // functionally unequal
+    // functionally unequal
+    actual.Should().NotBe(expected);
 
   new: |
-    actual.Should().NotBeSameAs(expected); // refer to the different object in memory
+    // refer to the different object in memory
+    actual.Should().NotBeSameAs(expected);
 
   old-message: |
     Assert.IsTrue failed.
@@ -206,10 +213,12 @@
     Assert.IsFalse(actual != expected);
 
   new: |
-    actual.Should().Be(expected); // functionally equal
+    // functionally equal
+    actual.Should().Be(expected);
 
   new: |
-    actual.Should().BeSameAs(expected) // refer to the exact same object in memory
+    // refer to the exact same object in memory
+    actual.Should().BeSameAs(expected)
 
   old-message: |
     Assert.IsFalse failed.

@@ -50,7 +50,8 @@
     (actual is T).Should().BeFalse();
 
   new: |
-    actual.Should().NotBeAssignableTo<T>(); // Will be available in Fluent Assertions 5.0
+    // Will be available in Fluent Assertions 5.0
+    actual.Should().NotBeAssignableTo<T>();
 
   old-message: |
     Expected False, but found True.
@@ -62,7 +63,8 @@
     (actual as T).Should().BeNull();
 
   new: |
-    actual.Should().NotBeAssignableTo<T>(); // Will be available in Fluent Assertions 5.0
+    // Will be available in Fluent Assertions 5.0
+    actual.Should().NotBeAssignableTo<T>();
 
   old-message: |
     Expected object to be <null>, but found SomeProperty: 1, OtherProperty: actual.
