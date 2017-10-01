@@ -3,6 +3,11 @@ title: Examples
 layout: page
 ---
 
+<link href="/assets/css/syntax.css" rel="stylesheet" >
+
+Fluent Assertions is a set of .NET extension methods that allow you to more naturally specify the expected outcome of a TDD or BDD-style test.  This enables, simple intuitive syntax like in the examples below.
+
+
 To verify that a string begins, ends and contains a particular phrase.
 
 ```c#
@@ -42,5 +47,25 @@ someObject.Should().BeOfType<Exception>().Which.Message.Should().Be("Other Messa
 xDocument.Should().HaveElement("child").Which.Should().BeOfType<XElement>().And.HaveAttribute("attr", "1");
 ```
 
-I've run into quite a few of these scenarios in which this chaining would make the unit test a lot easier to read.
+This sort of chaining can make your unit tests a lot easier to read.
 
+## MSTest Migration
+{:.no_toc}
+
+The examples below show how you might write equivalent MSTest assertions using FluentAssertions including the failure message from each case.
+We think this is both a useful migration guide and a convincing argument for switching.
+If you see something missing, please consider submitting a pull request.
+
+* TOC
+{:toc}
+
+{% include template.html caption="Assert"                    examples=site.data.assert %}
+{% include template.html caption="CollectionAssert"          examples=site.data.collectionAssert %}
+{% include template.html caption="StringAssert"              examples=site.data.stringAssert %}
+{% include template.html caption="Collections"               examples=site.data.collections %}
+{% include template.html caption="Comparable and Numerics"   examples=site.data.comparable %}
+{% include template.html caption="Dictionaries"              examples=site.data.dictionaries %}
+{% include template.html caption="Exceptions"                examples=site.data.expectedException %}
+{% include template.html caption="Nullables"                 examples=site.data.nullables %}
+{% include template.html caption="Strings"                   examples=site.data.strings %}
+{% include template.html caption="Types"                     examples=site.data.types %}
