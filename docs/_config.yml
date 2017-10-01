@@ -11,7 +11,7 @@ header_pages:
   - documentation.md
   - examples.md
   - releases.md
-  - BestPractices.md
+  - tips.md
 
 theme: minima
 gems:

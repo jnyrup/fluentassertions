@@ -20,7 +20,8 @@
     Expected a <System.ArgumentNullException> to be thrown, but found a <System.InvalidCastException>: System.InvalidCastException with message "Specified cast is not valid."
          at UnitTests2.ExceptionTests.<>c.<Snippet01_New>b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
          at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.<Snippet01_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
-         at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
+         at FluentAssertions.Specialized.ActionAssertions
+           .InvokeSubjectWithInterception()
     .
 
 - old: |
@@ -39,13 +40,15 @@
     Exception Message: Specified cast is not valid.
     Stack Trace:    at UnitTests2.ExceptionTests.<>c.<Snippet01v2_Old>b__2_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 44
        at UnitTests2.ExceptionTests.<>c__DisplayClass2_0.<Snippet01v2_Old>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 47
-       at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsException[T](Action action, String message, Object[] parameters)
+       at Microsoft.VisualStudio.TestTools.UnitTesting.Assert
+         .ThrowsException[T](Action action, String message, Object[] parameters)
 
   new-message: |
     Expected a <System.ArgumentNullException> to be thrown, but found a <System.InvalidCastException>: System.InvalidCastException with message "Specified cast is not valid."
          at UnitTests2.ExceptionTests.<>c.<Snippet01_New>b__1_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 31
          at UnitTests2.ExceptionTests.<>c__DisplayClass1_0.<Snippet01_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 34
-         at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
+         at FluentAssertions.Specialized.ActionAssertions
+           .InvokeSubjectWithInterception()
     .
 
 - old: |
@@ -71,8 +74,8 @@
     Expected a <System.ArgumentException> to be thrown, but found a <System.InvalidCastException>: System.InvalidCastException with message "Specified cast is not valid."
          at UnitTests2.ExceptionTests.<>c.<Snippet02_New>b__3_0() in C:\Path\To\UnitTests\ExceptionTests.cs:line 57
          at UnitTests2.ExceptionTests.<>c__DisplayClass3_0.<Snippet02_New>b__1() in C:\Path\To\UnitTests\ExceptionTests.cs:line 60
-         at FluentAssertions.Specialized.ActionAssertions.InvokeSubjectWithInterception()
-    .
+         at FluentAssertions.Specialized
+            .ActionAssertions.InvokeSubjectWithInterception().
 
 - old: |
     [ExpectedException(typeof(InvalidOperationException))]
@@ -107,24 +110,3 @@
     Expected exception message to match the equivalent of 
     "expectedMessage", but 
     "actualMessage" does not.
-
-- old: |
-    Action act = () => func();
-    
-    act.ShouldThrowExactly<InvalidOperationException>()
-        .Which.Message.Should().Contain("expectedMessage");
-
-  new: |
-    Action act = () => func();
-    
-    // using wildcards
-    act.ShouldThrowExactly<InvalidOperationException>()
-        .WithMessage("*expectedMessage*");
-
-  old-message: |
-    Expected string "Problems, errorCode2 and more Problems" to contain "errorCode1".
-
-  new-message: |
-    Expected exception message to match the equivalent of 
-    "*errorCode1*", but 
-    "Problems, errorCode2 and more Problems" does not.

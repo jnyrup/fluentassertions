@@ -5,10 +5,10 @@
 <thead>
 <tr>
 	<th>
-		Old
+		{{ include.header1 }}
 	</th>
 	<th>
-		New
+		{{ include.header2 }}
 	</th>
 </tr>
 </thead>
@@ -28,12 +28,12 @@
 <tr>
 <td markdown="1">
 ```text
-{{ example.old-message | replace: '.', '. ' }}
+{{ example.old-message }}
 ```
 </td>
 <td markdown="1">
 ```text
-{{ example.new-message | replace: '.', '. ' }}
+{{ example.new-message }}
 ```
 </td>
 </tr>
