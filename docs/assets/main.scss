@@ -50,6 +50,5 @@ h2, h3, h4, h5, h6 { color: $fluent-assertions-blue }
   width: 100%;
   table-layout: fixed;
   td { padding-right: 30px; width: 50%}
-  .highlight .lineno { border: none; border-radius: 0; border-right: solid 1px; color: #aaa; }
-  pre.highlight code { border: none; white-space: pre-wrap; }
+  pre.highlight code { white-space: pre-wrap; }
 }
