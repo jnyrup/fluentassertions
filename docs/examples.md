@@ -47,7 +47,7 @@ I've run into quite a few of these scenarios in which this chaining would make t
 ## MSTest Migration
 {:.no_toc}
 
-The examples below show how you might write equivalent MSTest assertions using FluentAssertions including the failure message from each case.
+The examples below show how you might write equivalent MSTest assertions using Fluent Assertions including the failure message from each case.
 We think this is both a useful migration guide and a convincing argument for switching.
 
 If you see something missing, please consider submitting a pull request.
@@ -55,7 +55,7 @@ If you see something missing, please consider submitting a pull request.
 * TOC
 {:toc}
 
-{% include template.html header1="MSTest" header2="Fluent Assertions" caption="Assert"            examples=site.data.mstest-migration.assert %}
-{% include template.html header1="MSTest" header2="Fluent Assertions" caption="CollectionAssert"  examples=site.data.mstest-migration.collectionAssert %}
-{% include template.html header1="MSTest" header2="Fluent Assertions" caption="StringAssert"      examples=site.data.mstest-migration.stringAssert %}
-{% include template.html header1="MSTest" header2="Fluent Assertions" caption="Exceptions"        examples=site.data.mstest-migration.exceptions %}
+{% include assertion-comparison.html header1="MSTest" header2="Fluent Assertions" caption="Assert"            examples=site.data.mstest-migration.assert %}
+{% include assertion-comparison.html header1="MSTest" header2="Fluent Assertions" caption="CollectionAssert"  examples=site.data.mstest-migration.collectionAssert %}
+{% include assertion-comparison.html header1="MSTest" header2="Fluent Assertions" caption="StringAssert"      examples=site.data.mstest-migration.stringAssert %}
+{% include assertion-comparison.html header1="MSTest" header2="Fluent Assertions" caption="Exceptions"        examples=site.data.mstest-migration.exceptions %}
