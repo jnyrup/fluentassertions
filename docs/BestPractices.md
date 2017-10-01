@@ -3,8 +3,6 @@ title: "Best Practices"
 layout: page
 ---
 
-<link href="/assets/css/syntax.css" rel="stylesheet" >
-
 This is a collection of refactorings to improve the usage of Fluent Assertions.
 
 If your favourite refactoring is missing, please consider to submit it.
