@@ -332,6 +332,15 @@ namespace FluentAssertions.Equivalency
             return new Restriction<TProperty>((TSelf)this, action);
         }
 
+        /// <summary></summary>
+        /// <param name="action">
+        ///     The assertion to execute when the predicate is met.
+        /// </param>
+        public Restriction<TSubject, TExpectation> Using<TSubject, TExpectation>(Action<IAssertionContext<TSubject, TExpectation>> action)
+        {
+            return new Restriction<TSubject, TExpectation>((TSelf)this, action);
+        }
+
         /// <summary>
         ///     Causes the structural equality check to include nested collections and complex types.
         /// </summary>
@@ -641,6 +650,45 @@ namespace FluentAssertions.Equivalency
             public TSelf When(Expression<Func<IMemberInfo, bool>> predicate)
             {
                 options.Using(new AssertionRule<TMember>(predicate, action));
+                return options;
+            }
+        }
+
+        /// <summary>
+        ///     Defines additional overrides when used with <see cref="EquivalencyAssertionOptions.When" />
+        /// </summary>
+        public class Restriction<TSubject, TExpectation>
+        {
+            private readonly Action<IAssertionContext<TSubject, TExpectation>> action;
+            private readonly TSelf options;
+
+            public Restriction(TSelf options, Action<IAssertionContext<TSubject, TExpectation>> action)
+            {
+                this.options = options;
+                this.action = action;
+            }
+
+            /// <summary>
+            ///     Allows overriding the way structural equality is applied to (nested) objects of type
+            ///     <typeparamref name="TMemberType" />
+            /// </summary>
+            public TSelf WhenTypeIs<TMemberType>()
+            {
+                When(info => info.RuntimeType.IsSameOrInherits(typeof(TMemberType)));
+                return options;
+            }
+
+            /// <summary>
+            ///     Allows overriding the way structural equality is applied to particular members.
+            /// </summary>
+            /// <param name="predicate">
+            ///     A predicate based on the <see cref="IMemberInfo" /> of the subject that is used to identify the property for which
+            ///     the
+            ///     override applies.
+            /// </param>
+            public TSelf When(Expression<Func<IMemberInfo, bool>> predicate)
+            {
+                options.Using(new AssertionRule<TSubject, TExpectation>(predicate, action));
                 return options;
             }
         }

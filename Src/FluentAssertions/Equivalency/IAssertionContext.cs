@@ -4,7 +4,16 @@ namespace FluentAssertions.Equivalency
     /// Provides the required information for executing an equality assertion between a subject and an expectation.
     /// </summary>
     /// <typeparam name="TSubject">The type of the subject.</typeparam>
-    public interface IAssertionContext<TSubject>
+    public interface IAssertionContext<TSubject> : IAssertionContext<TSubject, TSubject>
+    {
+    }
+
+    /// <summary>
+    /// Provides the required information for executing an equality assertion between a subject and an expectation.
+    /// </summary>
+    /// <typeparam name="TSubject">The type of the subject.</typeparam>
+    /// <typeparam name="TExpectation">The type of the expectation.</typeparam>
+    public interface IAssertionContext<TSubject, TExpectation>
     {
         /// <summary>
         /// Gets the <see cref="FluentAssertions.Equivalency.SelectedMemberInfo"/> of the member that returned the current object, or <c>null</c> if the current
@@ -20,7 +29,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets the value of the expectation object that was matched with the subject using a <see cref="IMemberMatchingRule"/>.
         /// </summary>
-        TSubject Expectation { get; }
+        TExpectation Expectation { get; }
 
         /// <summary>
         /// A formatted phrase as is supported by <see cref="string.Format(string,object[])"/> explaining why the assertion 

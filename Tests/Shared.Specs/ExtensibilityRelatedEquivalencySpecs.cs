@@ -182,6 +182,19 @@ namespace FluentAssertions.Specs
         #region Assertion Rules
 
         [Fact]
+        public void lol()
+        {
+            Guid guid = Guid.NewGuid();
+
+            var expected = new { Id = guid };
+            var actual = new { Id = guid.ToString() };
+
+            actual.Should().BeEquivalentTo(expected, options => options
+                .Using<string, Guid>(ctx => ctx.Subject.Should().Be(ctx.Expectation.ToString()))
+                .When(info => info.SelectedMemberPath.EndsWith("Id")));
+        }
+
+        [Fact]
         public void When_property_of_other_is_incompatible_with_generic_type_the_message_should_include_generic_type()
         {
             //-----------------------------------------------------------------------------------------------------------
