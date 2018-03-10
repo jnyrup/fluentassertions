@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using FluentAssertions.Common;
 using FluentAssertions.Equivalency.Matching;
@@ -626,7 +627,9 @@ namespace FluentAssertions.Equivalency
             /// </summary>
             public TSelf WhenTypeIs<TMemberType>()
             {
-                When(info => info.RuntimeType.IsSameOrInherits(typeof(TMemberType)));
+                When(info => ((info.CompileTimeType.GetTypeInfo().IsValueType || info.RuntimeType.GetTypeInfo().IsValueType) && info.CompileTimeType.IsSameOrInherits(typeof(TMemberType)))
+                          || (!(info.CompileTimeType.GetTypeInfo().IsValueType || info.RuntimeType.GetTypeInfo().IsValueType) && info.RuntimeType.IsSameOrInherits(typeof(TMemberType))));
+
                 return options;
             }
 

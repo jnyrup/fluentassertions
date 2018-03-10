@@ -625,6 +625,74 @@ namespace FluentAssertions.Specs
                 "a different assertion rule should handle the comparison before the exception throwing assertion rule is hit");
         }
 
+        [Fact]
+        public void When_a_member_is_nullable_using_should_not_match_with_underlying_type()
+        {
+            var obj1 = new { date = (DateTime?)null };
+            var obj2 = new { date = (DateTime?)default(DateTime) };
+            var actual = new[] { obj1, obj2 };
+            var expected = new[] { obj2, obj1 };
+
+            Action action = () => actual.Should().BeEquivalentTo(expected, options => options
+                .Using<DateTime>(_ => throw new Exception())
+                .WhenTypeIs<DateTime>());
+
+            action.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_a_member_is_nullable_using_should_match_with_nullable_type()
+        {
+            var obj1 = new { date = (DateTime?)null };
+            var obj2 = new { date = (DateTime?)default(DateTime) };
+            var actual = new[] { obj1, obj2 };
+            var expected = new[] { obj2, obj1 };
+
+            Action act = () => actual.Should().BeEquivalentTo(expected, options => options
+                .Using<DateTime?>(_ => throw new Exception())
+                .WhenTypeIs<DateTime?>());
+
+            act.Should().Throw<Exception>();
+        }
+
+        private interface IStructType
+        {
+        }
+
+        private struct StructType : IStructType
+        {
+        }
+
+        [Fact]
+        public void When_a_struct_implements_an_interface_using_should_match_with_interface()
+        {
+            var obj1 = new { date = (IStructType)null };
+            var obj2 = new { date = (IStructType)default(StructType) };
+            var actual = new[] { obj1, obj2 };
+            var expected = new[] { obj2, obj1 };
+
+            Action act = () => actual.Should().BeEquivalentTo(expected, options => options
+                .Using<IStructType>(_ => throw new Exception())
+                .WhenTypeIs<IStructType>());
+
+            act.Should().Throw<Exception>();
+        }
+
+        [Fact]
+        public void When_a_struct_implements_an_interface_using_should_not_match_with_struct_type()
+        {
+            var obj1 = new { date = (IStructType)null };
+            var obj2 = new { date = (IStructType)default(StructType) };
+            var actual = new[] { obj1, obj2 };
+            var expected = new[] { obj2, obj1 };
+
+            Action act = () => actual.Should().BeEquivalentTo(expected, options => options
+                .Using<StructType>(_ => throw new Exception())
+                .WhenTypeIs<StructType>());
+
+            act.Should().NotThrow();
+        }
+
         #endregion
 
         #region Equivalency Steps
