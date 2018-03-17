@@ -464,10 +464,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">Zero or more objects to format using the placeholders in <see cref="!:because"/>.</param>
         public AndConstraint<TypeAssertions> BeDerivedFrom(Type baseType, string because = "", params object[] becauseArgs)
         {
-            if (baseType.GetTypeInfo().IsInterface)
-            {
-                throw new ArgumentException("Must not be an interface Type.", nameof(baseType));
-            }
+            AssertThatArgumentIsDerivable(baseType);
 
             Execute.Assertion.ForCondition(Subject.GetTypeInfo().IsSubclassOf(baseType))
                 .BecauseOf(because, becauseArgs)
@@ -497,10 +494,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">Zero or more objects to format using the placeholders in <see cref="!:because"/>.</param>
         public AndConstraint<TypeAssertions> NotBeDerivedFrom(Type baseType, string because = "", params object[] becauseArgs)
         {
-            if (baseType.GetTypeInfo().IsInterface)
-            {
-                throw new ArgumentException("Must not be an interface Type.", nameof(baseType));
-            }
+            AssertThatArgumentIsDerivable(baseType);
 
             Execute.Assertion
                 .ForCondition(!Subject.GetTypeInfo().IsSubclassOf(baseType))
@@ -969,6 +963,11 @@ namespace FluentAssertions.Types
         /// <param name="parameterTypes">The parameter types for the indexer.</param>
         public AndWhichConstraint<TypeAssertions, ConstructorInfo> HaveConstructor(IEnumerable<Type> parameterTypes, string because = "", params object[] becauseArgs)
         {
+            if (Subject.GetTypeInfo().IsInterface)
+            {
+                throw new InvalidOperationException("Cannot be an interface Type.");
+            }
+
             ConstructorInfo constructorInfo = Subject.GetConstructor(parameterTypes);
 
             Execute.Assertion.ForCondition(constructorInfo != null)
@@ -988,6 +987,11 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">Zero or more objects to format using the placeholders in <see cref="!:because"/>.</param>
         public AndWhichConstraint<TypeAssertions, ConstructorInfo> HaveDefaultConstructor(string because = "", params object[] becauseArgs)
         {
+            if (Subject.GetTypeInfo().IsValueType)
+            {
+                throw new InvalidOperationException("Value types will always have a default constructor.");
+            }
+
             return HaveConstructor(new Type[] { }, because, becauseArgs);
         }
 
@@ -1000,6 +1004,11 @@ namespace FluentAssertions.Types
         /// <param name="parameterTypes">The parameter types for the indexer.</param>
         public AndWhichConstraint<TypeAssertions, ConstructorInfo> NotHaveConstructor(IEnumerable<Type> parameterTypes, string because = "", params object[] becauseArgs)
         {
+            if (Subject.GetTypeInfo().IsInterface)
+            {
+                throw new InvalidOperationException("Cannot be an interface Type.");
+            }
+
             ConstructorInfo constructorInfo = Subject.GetConstructor(parameterTypes);
 
             Execute.Assertion
@@ -1020,6 +1029,11 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">Zero or more objects to format using the placeholders in <see cref="!:because"/>.</param>
         public AndWhichConstraint<TypeAssertions, ConstructorInfo> NotHaveDefaultConstructor(string because = "", params object[] becauseArgs)
         {
+            if (Subject.GetTypeInfo().IsValueType)
+            {
+                throw new InvalidOperationException("Value types will always have a default constructor.");
+            }
+
             return NotHaveConstructor(new Type[] { }, because, becauseArgs);
         }
 
@@ -1222,7 +1236,22 @@ namespace FluentAssertions.Types
             var typeInfo = Subject.GetTypeInfo();
             if (typeInfo.IsInterface || typeInfo.IsValueType || typeof(Delegate).IsAssignableFrom(typeInfo.BaseType))
             {
-               throw new InvalidOperationException($"{Subject} must be a class.");
+                throw new InvalidOperationException($"{Subject} must be a class.");
+            }
+        }
+
+        private static void AssertThatArgumentIsDerivable(Type baseType)
+        {
+            var typeInfo = baseType.GetTypeInfo();
+
+            if (typeInfo.IsInterface)
+            {
+                throw new ArgumentException("Must not be an interface Type.", nameof(baseType));
+            }
+
+            if (typeInfo.IsValueType)
+            {
+                throw new ArgumentException("Must not be a value Type.", nameof(baseType));
             }
         }
     }
