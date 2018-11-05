@@ -41,9 +41,7 @@ namespace FluentAssertions.Collections
         /// </remarks>
         public AndConstraint<StringCollectionAssertions> BeEquivalentTo(params string[] expectation)
         {
-            BeEquivalentTo(expectation, config => config);
-
-            return new AndConstraint<StringCollectionAssertions>(this);
+            return BeEquivalentTo(expectation, config => config);
         }
 
         /// <summary>
@@ -61,9 +59,7 @@ namespace FluentAssertions.Collections
         /// </param>
         public AndConstraint<StringCollectionAssertions> BeEquivalentTo(IEnumerable<string> expectation, string because = "", params object[] becauseArgs)
         {
-            BeEquivalentTo(expectation, config => config, because, becauseArgs);
-
-            return new AndConstraint<StringCollectionAssertions>(this);
+            return BeEquivalentTo(expectation, config => config, because, becauseArgs);
         }
 
         /// <summary>

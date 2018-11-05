@@ -326,9 +326,7 @@ namespace FluentAssertions.Collections
         public AndConstraint<TAssertions> BeEquivalentTo<TExpectation>(IEnumerable<TExpectation> expectation,
             string because = "", params object[] becauseArgs)
         {
-            BeEquivalentTo(expectation, config => config, because, becauseArgs);
-
-            return new AndConstraint<TAssertions>((TAssertions)this);
+            return BeEquivalentTo(expectation, config => config, because, becauseArgs);
         }
 
         /// <summary>
@@ -344,9 +342,7 @@ namespace FluentAssertions.Collections
         /// </remarks>
         public AndConstraint<TAssertions> BeEquivalentTo(params object[] expectations)
         {
-            BeEquivalentTo(expectations, config => config, string.Empty);
-
-            return new AndConstraint<TAssertions>((TAssertions)this);
+            return BeEquivalentTo(expectations, config => config, string.Empty);
         }
 
         /// <summary>
