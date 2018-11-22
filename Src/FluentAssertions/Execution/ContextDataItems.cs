@@ -74,9 +74,9 @@ namespace FluentAssertions.Execution
                 this.reportability = reportability;
             }
 
-            public string Key { get; private set; }
+            public string Key { get; }
 
-            public object Value { get; private set; }
+            public object Value { get; }
 
             public bool Reportable => reportability == Reportability.Reportable;
 

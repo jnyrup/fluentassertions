@@ -24,7 +24,7 @@ namespace FluentAssertions.Specialized
         /// <summary>
         /// Gets the <see cref="Func{Task}"/> that is being asserted.
         /// </summary>
-        public Func<Task> Subject { get; private set; }
+        public Func<Task> Subject { get; }
 
         /// <summary>
         /// Asserts that the current <see cref="Func{Task}"/> throws an exception of type <typeparamref name="TException"/>.
