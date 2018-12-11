@@ -10,14 +10,14 @@ namespace FluentAssertions.Primitives
     {
         #region Private Definition
 
-        protected readonly string subject;
-        protected readonly string expected;
+        protected readonly string? subject;
+        protected readonly string? expected;
         protected IAssertionScope assertion;
         private const int HumanReadableLength = 8;
 
         #endregion
 
-        protected StringValidator(string subject, string expected, string because, object[] becauseArgs)
+        protected StringValidator(string? subject, string? expected, string? because, object?[] becauseArgs)
         {
             assertion = Execute.Assertion.BecauseOf(because, becauseArgs);
 

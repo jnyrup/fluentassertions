@@ -5,7 +5,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets a value indicating whether this step can handle the current subject and/or expectation.
         /// </summary>
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             return !config.IsRecursive && !context.IsRoot;
         }
@@ -20,7 +20,7 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// May throw when preconditions are not met or if it detects mismatching data.
         /// </remarks>
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator structuralEqualityValidator, IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? structuralEqualityValidator, IEquivalencyAssertionOptions? config)
         {
             context.Subject.Should().Be(context.Expectation, context.Because, context.BecauseArgs);
 

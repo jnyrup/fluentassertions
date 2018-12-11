@@ -18,7 +18,7 @@ namespace FluentAssertions.Equivalency
             this.fieldInfo = fieldInfo;
         }
 
-        public override object GetValue(object obj, object[] index)
+        public override object GetValue(object obj, object[]? index)
         {
             if (index?.Any() == true)
             {

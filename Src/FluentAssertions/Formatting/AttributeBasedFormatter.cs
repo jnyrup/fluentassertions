@@ -13,7 +13,7 @@ namespace FluentAssertions.Formatting
     /// </summary>
     public class AttributeBasedFormatter : IValueFormatter
     {
-        private MethodInfo[] formatters;
+        private MethodInfo[]? formatters;
         private ValueFormatterDetectionMode detectionMode = ValueFormatterDetectionMode.Disabled;
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace FluentAssertions.Formatting
         /// <returns>
         /// <c>true</c> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <c>false</c>.
         /// </returns>
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return IsScanningEnabled && (value != null) && (GetFormatter(value) != null);
         }
@@ -34,7 +34,7 @@ namespace FluentAssertions.Formatting
         }
 
         /// <inheritdoc />
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             MethodInfo method = GetFormatter(value);
 

@@ -11,11 +11,11 @@ namespace FluentAssertions.Numeric
     /// Contains a number of methods to assert that an <see cref="IComparable{T}"/> is in the expected state.
     /// </summary>
     [DebuggerNonUserCode]
-    public class ComparableTypeAssertions<T> : ReferenceTypeAssertions<IComparable<T>, ComparableTypeAssertions<T>>
+    public class ComparableTypeAssertions<T> : ReferenceTypeAssertions<IComparable<T>?, ComparableTypeAssertions<T>>
     {
         private const int Equal = 0;
 
-        public ComparableTypeAssertions(IComparable<T> value) : base(value)
+        public ComparableTypeAssertions(IComparable<T>? value) : base(value)
         {
         }
 
@@ -32,7 +32,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> Be(T expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> Be(T expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(ReferenceEquals(Subject, expected) || (Subject.CompareTo(expected) == Equal))
@@ -59,8 +59,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public void BeEquivalentTo<TExpectation>(TExpectation expectation, string because = "",
-            params object[] becauseArgs)
+        public void BeEquivalentTo<TExpectation>(TExpectation expectation, string? because = "",
+            params object?[] becauseArgs)
         {
             BeEquivalentTo(expectation, config => config, because, becauseArgs);
         }
@@ -88,8 +88,8 @@ namespace FluentAssertions.Numeric
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public void BeEquivalentTo<TExpectation>(TExpectation expectation,
-            Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>> config, string because = "",
-            params object[] becauseArgs)
+            Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>? config, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(config, nameof(config));
 
@@ -122,7 +122,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> NotBe(T unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> NotBe(T unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.CompareTo(unexpected) != Equal)
@@ -145,7 +145,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> BeLessThan(T expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> BeLessThan(T expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.CompareTo(expected) < Equal)
@@ -168,7 +168,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> BeLessOrEqualTo(T expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> BeLessOrEqualTo(T expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.CompareTo(expected) <= Equal)
@@ -191,7 +191,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> BeGreaterThan(T expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> BeGreaterThan(T expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.CompareTo(expected) > Equal)
@@ -214,7 +214,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> BeGreaterOrEqualTo(T expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> BeGreaterOrEqualTo(T expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.CompareTo(expected) >= Equal)
@@ -243,8 +243,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> BeInRange(T minimumValue, T maximumValue, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> BeInRange(T minimumValue, T maximumValue, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition((Subject.CompareTo(minimumValue) >= Equal) && (Subject.CompareTo(maximumValue) <= Equal))
@@ -274,8 +274,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<ComparableTypeAssertions<T>> NotBeInRange(T minimumValue, T maximumValue, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<ComparableTypeAssertions<T>> NotBeInRange(T minimumValue, T maximumValue, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!((Subject.CompareTo(minimumValue) >= Equal) && (Subject.CompareTo(maximumValue) <= Equal)))

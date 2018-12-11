@@ -16,7 +16,7 @@ namespace FluentAssertions.Types
         {
         }
 
-        public MethodInfoAssertions(MethodInfo methodInfo) : base(methodInfo)
+        public MethodInfoAssertions(MethodInfo? methodInfo) : base(methodInfo)
         {
         }
 
@@ -31,7 +31,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<MethodInfoAssertions> BeVirtual(
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
         {
             string failureMessage = "Expected method " +
                                     SubjectDescription +
@@ -55,7 +55,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodInfoAssertions> NotBeVirtual(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodInfoAssertions> NotBeVirtual(string? because = "", params object?[] becauseArgs)
         {
             string failureMessage = "Expected method " + SubjectDescription + " not to be virtual{reason}, but it is.";
 
@@ -73,7 +73,7 @@ namespace FluentAssertions.Types
         /// <param name="because">A formatted phrase as is supported by <see cref="string.Format(string,object[])"/> explaining why the assertion
         /// is needed. If the phrase does not start with the word <i>because</i>, it is prepended automatically.</param>
         /// <param name="becauseArgs">Zero or more objects to format using the placeholders in <see cref="because" />.</param>
-        public AndConstraint<MethodInfoAssertions> BeAsync(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodInfoAssertions> BeAsync(string? because = "", params object?[] becauseArgs)
         {
             string failureMessage = "Expected method " +
                         SubjectDescription +
@@ -93,7 +93,7 @@ namespace FluentAssertions.Types
         /// <param name="because">A formatted phrase as is supported by <see cref="string.Format(string,object[])"/> explaining why the assertion
         /// is needed. If the phrase does not start with the word <i>because</i>, it is prepended automatically.</param>
         /// <param name="becauseArgs">Zero or more objects to format using the placeholders in <see cref="because" />.</param>
-        public AndConstraint<MethodInfoAssertions> NotBeAsync(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodInfoAssertions> NotBeAsync(string? because = "", params object?[] becauseArgs)
         {
             string failureMessage = "Expected method " + SubjectDescription + " not to be async{reason}, but it is.";
 
@@ -115,7 +115,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> ReturnVoid(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> ReturnVoid(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion.ForCondition(typeof(void) == Subject.ReturnType)
                 .BecauseOf(because, becauseArgs)
@@ -136,7 +136,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> Return(Type returnType, string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> Return(Type? returnType, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion.ForCondition(returnType == Subject.ReturnType)
                 .BecauseOf(because, becauseArgs)
@@ -157,7 +157,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> Return<TReturn>(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> Return<TReturn>(string? because = "", params object?[] becauseArgs)
         {
             return Return(typeof(TReturn), because, becauseArgs);
         }
@@ -172,7 +172,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> NotReturnVoid(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> NotReturnVoid(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(typeof(void) != Subject.ReturnType)
@@ -193,7 +193,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> NotReturn(Type returnType, string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> NotReturn(Type? returnType, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(returnType != Subject.ReturnType)
@@ -214,7 +214,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> NotReturn<TReturn>(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodBaseAssertions<MethodInfo, MethodInfoAssertions>> NotReturn<TReturn>(string? because = "", params object?[] becauseArgs)
         {
             return NotReturn(typeof(TReturn), because, becauseArgs);
         }

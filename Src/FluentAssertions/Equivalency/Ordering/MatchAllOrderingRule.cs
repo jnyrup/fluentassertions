@@ -8,7 +8,7 @@ namespace FluentAssertions.Equivalency.Ordering
         /// <summary>
         /// Determines if ordering of the member referred to by the current <paramref name="memberInfo"/> is relevant.
         /// </summary>
-        public OrderStrictness Evaluate(IMemberInfo memberInfo)
+        public OrderStrictness Evaluate(IMemberInfo? memberInfo)
         {
             return OrderStrictness.Strict;
         }

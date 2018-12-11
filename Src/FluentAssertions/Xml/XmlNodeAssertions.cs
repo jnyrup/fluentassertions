@@ -11,7 +11,7 @@ namespace FluentAssertions.Xml
     [DebuggerNonUserCode]
     public class XmlNodeAssertions : XmlNodeAssertions<XmlNode, XmlNodeAssertions>
     {
-        public XmlNodeAssertions(XmlNode xmlNode)
+        public XmlNodeAssertions(XmlNode? xmlNode)
             : base(xmlNode)
         { }
     }

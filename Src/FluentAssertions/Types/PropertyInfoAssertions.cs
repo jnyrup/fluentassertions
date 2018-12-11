@@ -13,7 +13,7 @@ namespace FluentAssertions.Types
     public class PropertyInfoAssertions :
         MemberInfoAssertions<PropertyInfo, PropertyInfoAssertions>
     {
-        public PropertyInfoAssertions(PropertyInfo propertyInfo) : base(propertyInfo)
+        public PropertyInfoAssertions(PropertyInfo? propertyInfo) : base(propertyInfo)
         {
         }
 
@@ -28,7 +28,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<PropertyInfoAssertions> BeVirtual(
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
         {
             string failureMessage = "Expected property " +
                                     GetDescriptionFor(Subject) +
@@ -52,7 +52,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> NotBeVirtual(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> NotBeVirtual(string? because = "", params object?[] becauseArgs)
         {
             string failureMessage = "Expected property " + GetDescriptionFor(Subject) + " not to be virtual{reason}, but it is.";
 
@@ -75,7 +75,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<PropertyInfoAssertions> BeWritable(
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.CanWrite)
@@ -98,7 +98,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> BeWritable(CSharpAccessModifier accessModifier, string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> BeWritable(CSharpAccessModifier accessModifier, string? because = "", params object?[] becauseArgs)
         {
             Subject.Should().BeWritable(because, becauseArgs);
 
@@ -118,7 +118,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<PropertyInfoAssertions> NotBeWritable(
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.CanWrite)
@@ -140,7 +140,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> BeReadable(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> BeReadable(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion.ForCondition(Subject.CanRead)
                 .BecauseOf(because, becauseArgs)
@@ -160,7 +160,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> BeReadable(CSharpAccessModifier accessModifier, string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> BeReadable(CSharpAccessModifier accessModifier, string? because = "", params object?[] becauseArgs)
         {
             Subject.Should().BeReadable(because, becauseArgs);
 
@@ -180,7 +180,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<PropertyInfoAssertions> NotBeReadable(
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.CanRead)
@@ -203,8 +203,8 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> Return(Type propertyType,
-            string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> Return(Type? propertyType,
+            string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion.ForCondition(Subject.PropertyType == propertyType)
                 .BecauseOf(because, becauseArgs)
@@ -224,7 +224,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> Return<TReturn>(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> Return<TReturn>(string? because = "", params object?[] becauseArgs)
         {
             return Return(typeof(TReturn), because, becauseArgs);
         }
@@ -240,7 +240,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> NotReturn(Type propertyType, string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> NotReturn(Type? propertyType, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.PropertyType != propertyType)
@@ -261,7 +261,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoAssertions> NotReturn<TReturn>(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoAssertions> NotReturn<TReturn>(string? because = "", params object?[] becauseArgs)
         {
             return NotReturn(typeof(TReturn), because, becauseArgs);
         }

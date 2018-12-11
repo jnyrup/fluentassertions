@@ -11,13 +11,13 @@ namespace FluentAssertions.Formatting
         /// <returns>
         /// <c>true</c> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <c>false</c>.
         /// </returns>
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return value is ushort;
         }
 
         /// <inheritdoc />
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             return ((ushort)value).ToString(CultureInfo.InvariantCulture) + "us";
         }

@@ -22,7 +22,7 @@ namespace FluentAssertions.Equivalency.Selection
 
         public bool IncludesMembers => true;
 
-        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo> selectedMembers, IMemberInfo context, IEquivalencyAssertionOptions config)
+        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo?>? selectedMembers, IMemberInfo? context, IEquivalencyAssertionOptions? config)
         {
             var members = new List<SelectedMemberInfo>(selectedMembers);
 

@@ -26,14 +26,14 @@ namespace FluentAssertions.Execution
         private readonly IAssertionStrategy assertionStrategy;
         private readonly ContextDataItems contextData = new ContextDataItems();
 
-        private Func<string> reason;
+        private Func<string>? reason;
         private bool useLineBreaks;
 
 #if !NET45
         private static readonly AsyncLocal<AssertionScope> current = new AsyncLocal<AssertionScope>();
 #endif
-        private AssertionScope parent;
-        private Func<string> expectation;
+        private AssertionScope? parent;
+        private Func<string>? expectation;
         private string fallbackIdentifier = "object";
         private bool? succeeded;
 
@@ -81,7 +81,7 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Starts a named scope within which multiple assertions can be executed and which will not throw until the scope is disposed.
         /// </summary>
-        public AssertionScope(string context)
+        public AssertionScope(string? context)
             : this()
         {
             Context = context;
@@ -118,7 +118,7 @@ namespace FluentAssertions.Execution
             get => succeeded == true;
         }
 
-        public AssertionScope BecauseOf(string because, params object[] becauseArgs)
+        public AssertionScope BecauseOf(string? because, params object?[] becauseArgs)
         {
             reason = () =>
             {
@@ -151,14 +151,14 @@ namespace FluentAssertions.Execution
         /// </remarks>
         /// <param name="message">The format string that represents the failure message.</param>
         /// <param name="args">Optional arguments to any numbered placeholders.</param>
-        public AssertionScope WithExpectation(string message, params object[] args)
+        public AssertionScope WithExpectation(string? message, params object?[] args)
         {
             Func<string> localReason = reason;
             expectation = () =>
             {
                 var messageBuilder = new MessageBuilder(useLineBreaks);
                 string reason = localReason?.Invoke() ?? "";
-                string identifier = GetIdentifier();
+                string? identifier = GetIdentifier();
 
                 return messageBuilder.Build(message, args, reason, contextData, identifier, fallbackIdentifier);
             };
@@ -179,7 +179,7 @@ namespace FluentAssertions.Execution
             return new Continuation(this, !succeeded.HasValue || succeeded.Value);
         }
 
-        public GivenSelector<T> Given<T>(Func<T> selector)
+        public GivenSelector<T> Given<T>(Func<T>? selector)
         {
             return new GivenSelector<T>(selector, !succeeded.HasValue || succeeded.Value, this);
         }
@@ -191,7 +191,7 @@ namespace FluentAssertions.Execution
             return this;
         }
 
-        public Continuation FailWith(Func<FailReason> failReasonFunc)
+        public Continuation FailWith(Func<FailReason>? failReasonFunc)
         {
             return FailWith(() =>
             {
@@ -233,12 +233,12 @@ namespace FluentAssertions.Execution
             }
         }
 
-        public Continuation FailWith(string message, params object[] args)
+        public Continuation FailWith(string? message, params object?[] args)
         {
             return FailWith(() => new FailReason(message, args));
         }
 
-        private string GetIdentifier()
+        private string? GetIdentifier()
         {
             if (!string.IsNullOrEmpty(Context))
             {
@@ -251,7 +251,7 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Adds a pre-formatted failure message to the current scope.
         /// </summary>
-        public void AddPreFormattedFailure(string formattedFailureMessage)
+        public void AddPreFormattedFailure(string? formattedFailureMessage)
         {
             assertionStrategy.HandleFailure(formattedFailureMessage);
         }
@@ -259,7 +259,7 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Tracks a keyed object in the current scope that is excluded from the failure message in case an assertion fails.
         /// </summary>
-        public void AddNonReportable(string key, object value)
+        public void AddNonReportable(string? key, object? value)
         {
             contextData.Add(new ContextDataItems.DataItem(key, value, reportable: false, requiresFormatting: false));
         }
@@ -268,7 +268,7 @@ namespace FluentAssertions.Execution
         /// Adds some information to the assertion scope that will be included in the message
         /// that is emitted if an assertion fails.
         /// </summary>
-        public void AddReportable(string key, string value)
+        public void AddReportable(string? key, string? value)
         {
             contextData.Add(new ContextDataItems.DataItem(key, value, reportable: true, requiresFormatting: false));
         }
@@ -286,7 +286,7 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Gets data associated with the current scope and identified by <paramref name="key"/>.
         /// </summary>
-        public T Get<T>(string key)
+        public T Get<T>(string? key)
         {
             return contextData.Get<T>(key);
         }
@@ -313,7 +313,7 @@ namespace FluentAssertions.Execution
             }
         }
 
-        public AssertionScope WithDefaultIdentifier(string identifier)
+        public AssertionScope WithDefaultIdentifier(string? identifier)
         {
             fallbackIdentifier = identifier;
             return this;
@@ -341,11 +341,11 @@ namespace FluentAssertions.Execution
 
         IAssertionScope IAssertionScope.ForCondition(bool condition) => ForCondition(condition);
 
-        IAssertionScope IAssertionScope.BecauseOf(string because, params object[] becauseArgs) => BecauseOf(because, becauseArgs);
+        IAssertionScope IAssertionScope.BecauseOf(string? because, params object?[] becauseArgs) => BecauseOf(because, becauseArgs);
 
-        IAssertionScope IAssertionScope.WithExpectation(string message, params object[] args) => WithExpectation(message, args);
+        IAssertionScope IAssertionScope.WithExpectation(string? message, params object?[] args) => WithExpectation(message, args);
 
-        IAssertionScope IAssertionScope.WithDefaultIdentifier(string identifier) => WithDefaultIdentifier(identifier);
+        IAssertionScope IAssertionScope.WithDefaultIdentifier(string? identifier) => WithDefaultIdentifier(identifier);
 
         IAssertionScope IAssertionScope.UsingLineBreaks => UsingLineBreaks;
 

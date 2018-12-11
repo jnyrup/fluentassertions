@@ -11,7 +11,7 @@ namespace FluentAssertions.Execution
 
         #endregion
 
-        public ContinuationOfGiven(GivenSelector<TSubject> parent, bool succeeded)
+        public ContinuationOfGiven(GivenSelector<TSubject>? parent, bool succeeded)
         {
             Then = parent;
             this.succeeded = succeeded;

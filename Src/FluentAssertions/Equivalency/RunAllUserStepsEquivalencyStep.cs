@@ -8,13 +8,13 @@ namespace FluentAssertions.Equivalency
     /// </summary>
     public class RunAllUserStepsEquivalencyStep : IEquivalencyStep
     {
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             return config.GetUserEquivalencySteps(config.ConversionSelector).Any(s => s.CanHandle(context, config));
         }
 
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent,
-            IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent,
+            IEquivalencyAssertionOptions? config)
         {
             foreach (IEquivalencyStep step in config.GetUserEquivalencySteps(config.ConversionSelector))
             {

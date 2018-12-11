@@ -7,7 +7,7 @@ namespace FluentAssertions.Common
 {
     internal class NullReflector : IReflector
     {
-        public IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool> predicate)
+        public IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool>? predicate)
         {
             return new Type[0];
         }

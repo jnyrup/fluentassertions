@@ -2,6 +2,6 @@
 {
     public interface IConfigurationStore
     {
-        string GetSetting(string name);
+        string? GetSetting(string? name);
     }
 }

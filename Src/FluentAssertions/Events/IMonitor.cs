@@ -28,7 +28,7 @@ namespace FluentAssertions.Events
         /// <summary>
         /// Gets an object that tracks the occurrences of a particular <paramref name="eventName"/>.
         /// </summary>
-        IEventRecorder GetEventRecorder(string eventName);
+        IEventRecorder GetEventRecorder(string? eventName);
 
         /// <summary>
         /// Gets the metadata of all the events that are currently being monitored.
@@ -71,14 +71,14 @@ namespace FluentAssertions.Events
         /// <summary>
         /// The name of the event member on the monitored object
         /// </summary>
-        public string EventName { get; }
+        public string? EventName { get; }
 
         /// <summary>
         /// The type of the event handler and event args.
         /// </summary>
-        public Type HandlerType { get; }
+        public Type? HandlerType { get; }
 
-        public EventMetadata(string eventName, Type handlerType)
+        public EventMetadata(string? eventName, Type? handlerType)
         {
             EventName = eventName;
             HandlerType = handlerType;

@@ -4,7 +4,7 @@ namespace FluentAssertions.Common
 {
     public static class ObjectExtensions
     {
-        public static bool IsSameOrEqualTo(this object actual, object expected)
+        public static bool IsSameOrEqualTo(this object? actual, object? expected)
         {
             if (actual is null && expected is null)
             {

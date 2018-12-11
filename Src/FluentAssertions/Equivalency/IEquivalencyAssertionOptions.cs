@@ -53,7 +53,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets an ordered collection of Equivalency steps how a subject is compared with the expectation.
         /// </summary>
-        IEnumerable<IEquivalencyStep> GetUserEquivalencySteps(ConversionSelector conversionSelector);
+        IEnumerable<IEquivalencyStep> GetUserEquivalencySteps(ConversionSelector? conversionSelector);
 
         /// <summary>
         /// Gets a value indicating whether the runtime type of the expectation should be used rather than the declared type.
@@ -78,7 +78,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Determines the right strategy for evaluating the equality of objects of this type.
         /// </summary>
-        EqualityStrategy GetEqualityStrategy(Type type);
+        EqualityStrategy GetEqualityStrategy(Type? type);
     }
 
     public enum EqualityStrategy

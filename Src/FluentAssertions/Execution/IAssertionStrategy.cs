@@ -15,7 +15,7 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Instructs the strategy to handle a assertion failure.
         /// </summary>
-        void HandleFailure(string message);
+        void HandleFailure(string? message);
 
         /// <summary>
         /// Discards and returns the failure messages that happened up to now.
@@ -25,6 +25,6 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Will throw a combined exception for any failures have been collected since <see cref="StartCollecting"/> was called.
         /// </summary>
-        void ThrowIfAny(IDictionary<string, object> context);
+        void ThrowIfAny(IDictionary<string, object>? context);
     }
 }

@@ -10,7 +10,7 @@ namespace FluentAssertions.Common
 {
     internal class FullFrameworkReflector : IReflector
     {
-        public IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool> predicate)
+        public IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool>? predicate)
         {
             return AppDomain.CurrentDomain
                 .GetAssemblies()

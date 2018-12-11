@@ -15,7 +15,7 @@ namespace FluentAssertions.Collections
     [DebuggerNonUserCode]
     public class NonGenericCollectionAssertions : CollectionAssertions<IEnumerable, NonGenericCollectionAssertions>
     {
-        public NonGenericCollectionAssertions(IEnumerable collection) : base(collection)
+        public NonGenericCollectionAssertions(IEnumerable? collection) : base(collection)
         {
         }
 
@@ -30,7 +30,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> HaveCount(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> HaveCount(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -60,7 +60,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> NotHaveCount(int unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> NotHaveCount(int unexpected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -90,7 +90,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> HaveCountGreaterThan(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> HaveCountGreaterThan(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -120,7 +120,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> HaveCountGreaterOrEqualTo(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> HaveCountGreaterOrEqualTo(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -150,7 +150,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> HaveCountLessThan(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> HaveCountLessThan(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -180,7 +180,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> HaveCountLessOrEqualTo(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> HaveCountLessOrEqualTo(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -210,8 +210,8 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> HaveCount(Expression<Func<int, bool>> countPredicate, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> HaveCount(Expression<Func<int, bool>>? countPredicate, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(countPredicate, nameof(countPredicate), "Cannot compare collection count against a <null> predicate.");
 
@@ -261,8 +261,8 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> Contain(object expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> Contain(object? expected, string? because = "",
+            params object?[] becauseArgs)
         {
             if (expected is IEnumerable enumerable)
             {
@@ -284,8 +284,8 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NonGenericCollectionAssertions> NotContain(object unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NonGenericCollectionAssertions> NotContain(object? unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             if (unexpected is IEnumerable enumerable)
             {

@@ -4,13 +4,13 @@ namespace FluentAssertions.Formatting
 {
     public class XDocumentValueFormatter : IValueFormatter
     {
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return (value is XDocument);
         }
 
         /// <inheritdoc />
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             var document = (XDocument)value;
 

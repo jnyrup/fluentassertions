@@ -37,8 +37,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> Be(DateTimeOffset expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> Be(DateTimeOffset expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue && (Subject.Value == expected))
@@ -60,8 +60,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBe(DateTimeOffset unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBe(DateTimeOffset unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.HasValue || (Subject.Value != unexpected))
@@ -93,8 +93,8 @@ namespace FluentAssertions.Primitives
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<DateTimeOffsetAssertions> BeCloseTo(DateTimeOffset nearbyTime, int precision = 20,
-            string because = "",
-            params object[] becauseArgs)
+            string? because = "",
+            params object?[] becauseArgs)
         {
             return BeCloseTo(nearbyTime, TimeSpan.FromMilliseconds(precision), because, becauseArgs);
         }
@@ -121,8 +121,8 @@ namespace FluentAssertions.Primitives
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<DateTimeOffsetAssertions> BeCloseTo(DateTimeOffset nearbyTime, TimeSpan precision,
-            string because = "",
-            params object[] becauseArgs)
+            string? because = "",
+            params object?[] becauseArgs)
         {
             long distanceToMinInTicks = (nearbyTime - DateTimeOffset.MinValue).Ticks;
             DateTimeOffset minimumValue = nearbyTime.AddTicks(-Math.Min(precision.Ticks, distanceToMinInTicks));
@@ -161,8 +161,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBeCloseTo(DateTimeOffset distantTime, int precision = 20, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBeCloseTo(DateTimeOffset distantTime, int precision = 20, string? because = "",
+            params object?[] becauseArgs)
         {
             return NotBeCloseTo(distantTime, TimeSpan.FromMilliseconds(precision), because, becauseArgs);
         }
@@ -188,8 +188,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBeCloseTo(DateTimeOffset distantTime, TimeSpan precision, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBeCloseTo(DateTimeOffset distantTime, TimeSpan precision, string? because = "",
+            params object?[] becauseArgs)
         {
             long distanceToMinInTicks = (distantTime - DateTimeOffset.MinValue).Ticks;
             DateTimeOffset minimumValue = distantTime.AddTicks(-Math.Min(precision.Ticks, distanceToMinInTicks));
@@ -219,8 +219,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeBefore(DateTimeOffset expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> BeBefore(DateTimeOffset expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue && Subject.Value.CompareTo(expected) < 0)
@@ -242,8 +242,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBeBefore(DateTimeOffset unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBeBefore(DateTimeOffset unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             return BeOnOrAfter(unexpected, because, becauseArgs);
         }
@@ -259,8 +259,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeOnOrBefore(DateTimeOffset expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> BeOnOrBefore(DateTimeOffset expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue && Subject.Value.CompareTo(expected) <= 0)
@@ -282,8 +282,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBeOnOrBefore(DateTimeOffset unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBeOnOrBefore(DateTimeOffset unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             return BeAfter(unexpected, because, becauseArgs);
         }
@@ -299,8 +299,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeAfter(DateTimeOffset expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> BeAfter(DateTimeOffset expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue && Subject.Value.CompareTo(expected) > 0)
@@ -322,8 +322,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBeAfter(DateTimeOffset unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBeAfter(DateTimeOffset unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             return BeOnOrBefore(unexpected, because, becauseArgs);
         }
@@ -339,8 +339,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeOnOrAfter(DateTimeOffset expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> BeOnOrAfter(DateTimeOffset expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue && Subject.Value.CompareTo(expected) >= 0)
@@ -362,8 +362,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBeOnOrAfter(DateTimeOffset unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBeOnOrAfter(DateTimeOffset unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             return BeBefore(unexpected, because, becauseArgs);
         }
@@ -379,8 +379,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> HaveYear(int expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> HaveYear(int expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Expected the year part of {context:the date} to be {0}{reason}, ", expected)
@@ -408,7 +408,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotHaveYear(int unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotHaveYear(int unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Did not expect the year part of {context:the date} to be {0}{reason}, ", unexpected)
@@ -436,8 +436,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> HaveMonth(int expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> HaveMonth(int expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Expected the month part of {context:the date} to be {0}{reason}, ", expected)
@@ -465,7 +465,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotHaveMonth(int unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotHaveMonth(int unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Did not expect the month part of {context:the date} to be {0}{reason}, ", unexpected)
@@ -493,8 +493,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> HaveDay(int expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> HaveDay(int expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Expected the day part of {context:the date} to be {0}{reason}, ", expected)
@@ -522,7 +522,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotHaveDay(int unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotHaveDay(int unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Did not expect the day part of {context:the date} to be {0}{reason}, ", unexpected)
@@ -550,8 +550,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> HaveHour(int expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> HaveHour(int expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Expected the hour part of {context:the time} to be {0}{reason}, ", expected)
@@ -579,7 +579,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotHaveHour(int unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotHaveHour(int unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Did not expect the hour part of {context:the time} to be {0}{reason}, ", unexpected)
@@ -607,8 +607,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> HaveMinute(int expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> HaveMinute(int expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Expected the minute part of {context:the time} to be {0}{reason}, ", expected)
@@ -636,8 +636,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotHaveMinute(int unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotHaveMinute(int unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Did not expect the minute part of {context:the time} to be {0}{reason}, ", unexpected)
@@ -665,8 +665,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> HaveSecond(int expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> HaveSecond(int expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Expected the seconds part of {context:the time} to be {0}{reason}, ", expected)
@@ -694,8 +694,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotHaveSecond(int unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotHaveSecond(int unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Did not expect the seconds part of {context:the time} to be {0}{reason}, ", unexpected)
@@ -723,8 +723,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> HaveOffset(TimeSpan expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> HaveOffset(TimeSpan expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Expected the offset of {context:the date} to be {0}{reason}, ", expected)
@@ -752,8 +752,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotHaveOffset(TimeSpan unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotHaveOffset(TimeSpan unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .WithExpectation("Did not expect the offset of {context:the date} to be {0}{reason}, ", unexpected)
@@ -842,8 +842,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeSameDateAs(DateTimeOffset expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> BeSameDateAs(DateTimeOffset expected, string? because = "",
+            params object?[] becauseArgs)
         {
             DateTime expectedDate = expected.Date;
 
@@ -873,8 +873,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> NotBeSameDateAs(DateTimeOffset unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> NotBeSameDateAs(DateTimeOffset unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             DateTime unexpectedDate = unexpected.Date;
 
@@ -928,7 +928,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(IEnumerable<DateTimeOffset> validValues, string because = "", params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(IEnumerable<DateTimeOffset>? validValues, string? because = "", params object?[] becauseArgs)
         {
             return BeOneOf(validValues.Cast<DateTimeOffset?>(), because, becauseArgs);
         }
@@ -946,7 +946,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(IEnumerable<DateTimeOffset?> validValues, string because = "", params object[] becauseArgs)
+        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(IEnumerable<DateTimeOffset?>? validValues, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(validValues.Contains(Subject))

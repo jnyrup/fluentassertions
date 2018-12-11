@@ -26,7 +26,7 @@ namespace FluentAssertions.Execution
             ["fallback"] = new FallbackTestFramework()
         };
 
-        private static ITestFramework testFramework;
+        private static ITestFramework? testFramework;
 
         #endregion
 
@@ -48,9 +48,9 @@ namespace FluentAssertions.Execution
             return detectedFramework;
         }
 
-        private static ITestFramework AttemptToDetectUsingAppSetting()
+        private static ITestFramework? AttemptToDetectUsingAppSetting()
         {
-            string frameworkName = Services.Configuration.TestFrameworkName;
+            string? frameworkName = Services.Configuration.TestFrameworkName;
             if (string.IsNullOrEmpty(frameworkName)
                 || !frameworks.TryGetValue(frameworkName, out ITestFramework framework))
             {

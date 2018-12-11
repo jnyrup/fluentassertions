@@ -39,7 +39,7 @@ namespace FluentAssertions.Equivalency
 
         public ConversionSelector ConversionSelector => inner.ConversionSelector;
 
-        public IEnumerable<IEquivalencyStep> GetUserEquivalencySteps(ConversionSelector conversionSelector)
+        public IEnumerable<IEquivalencyStep> GetUserEquivalencySteps(ConversionSelector? conversionSelector)
         {
             return inner.GetUserEquivalencySteps(conversionSelector).Select(step => new CollectionMemberAssertionRuleDecorator(step)).ToArray();
         }
@@ -58,7 +58,7 @@ namespace FluentAssertions.Equivalency
 
         public bool IncludeFields => inner.IncludeFields;
 
-        public EqualityStrategy GetEqualityStrategy(Type type)
+        public EqualityStrategy GetEqualityStrategy(Type? type)
         {
             return inner.GetEqualityStrategy(type);
         }

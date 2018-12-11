@@ -60,8 +60,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public AndConstraint<DateTimeAssertions> Before(DateTime target, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeAssertions> Before(DateTime target, string? because = "",
+            params object?[] becauseArgs)
         {
             bool success = Execute.Assertion
                 .ForCondition(subject.HasValue)
@@ -101,8 +101,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public AndConstraint<DateTimeAssertions> After(DateTime target, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<DateTimeAssertions> After(DateTime target, string? because = "",
+            params object?[] becauseArgs)
         {
             bool success = Execute.Assertion
                 .ForCondition(subject.HasValue)

@@ -17,7 +17,7 @@ namespace FluentAssertions.Specialized
         /// Initializes a new instance of the <see cref="ExecutionTime"/> class.
         /// </summary>
         /// <param name="executionTime">The execution on which time must be asserted.</param>
-        public ExecutionTimeAssertions(ExecutionTime executionTime)
+        public ExecutionTimeAssertions(ExecutionTime? executionTime)
         {
             execution = executionTime;
         }
@@ -68,7 +68,7 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public void BeLessOrEqualTo(TimeSpan maxDuration, string because = "", params object[] becauseArgs)
+        public void BeLessOrEqualTo(TimeSpan maxDuration, string? because = "", params object?[] becauseArgs)
         {
             bool Condition(TimeSpan duration) => duration.CompareTo(maxDuration) <= 0;
             (bool isRunning, TimeSpan elapsed) = PollUntil(Condition, expectedResult: false, rate: maxDuration);
@@ -96,7 +96,7 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public void BeLessThan(TimeSpan maxDuration, string because = "", params object[] becauseArgs)
+        public void BeLessThan(TimeSpan maxDuration, string? because = "", params object?[] becauseArgs)
         {
             bool Condition(TimeSpan duration) => duration.CompareTo(maxDuration) < 0;
             (bool isRunning, TimeSpan elapsed) = PollUntil(Condition, expectedResult: false, rate: maxDuration);
@@ -124,7 +124,7 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public void BeGreaterOrEqualTo(TimeSpan minDuration, string because = "", params object[] becauseArgs)
+        public void BeGreaterOrEqualTo(TimeSpan minDuration, string? because = "", params object?[] becauseArgs)
         {
             bool Condition(TimeSpan duration) => duration.CompareTo(minDuration) >= 0;
             (bool isRunning, TimeSpan elapsed) = PollUntil(Condition, expectedResult: true, rate: minDuration);
@@ -152,7 +152,7 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public void BeGreaterThan(TimeSpan minDuration, string because = "", params object[] becauseArgs)
+        public void BeGreaterThan(TimeSpan minDuration, string? because = "", params object?[] becauseArgs)
         {
             bool Condition(TimeSpan duration) => duration.CompareTo(minDuration) > 0;
             (bool isRunning, TimeSpan elapsed) = PollUntil(Condition, expectedResult: true, rate: minDuration);
@@ -184,7 +184,7 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public void BeCloseTo(TimeSpan expectedDuration, TimeSpan precision, string because = "", params object[] becauseArgs)
+        public void BeCloseTo(TimeSpan expectedDuration, TimeSpan precision, string? because = "", params object?[] becauseArgs)
         {
             TimeSpan minimumValue = expectedDuration - precision;
             TimeSpan maximumValue = expectedDuration + precision;
@@ -214,12 +214,12 @@ namespace FluentAssertions.Specialized
         /// Initializes a new instance of the <see cref="ExecutionTime"/> class.
         /// </summary>
         /// <param name="action">The action of which the execution time must be asserted.</param>
-        public ExecutionTime(Action action)
+        public ExecutionTime(Action? action)
             : this(action, "the action")
         {
         }
 
-        public ExecutionTime(Func<Task> action)
+        public ExecutionTime(Func<Task>? action)
             : this(action, "the action")
         {
         }
@@ -291,7 +291,7 @@ namespace FluentAssertions.Specialized
 
         internal Task Task { get; }
 
-        internal Exception Exception { get; private set; }
+        internal Exception? Exception { get; private set; }
 
         private readonly Stopwatch stopwatch;
     }
@@ -303,7 +303,7 @@ namespace FluentAssertions.Specialized
         /// </summary>
         /// <param name="subject">The object that exposes the method or property.</param>
         /// <param name="action">A reference to the method or property to measure the execution time of.</param>
-        public MemberExecutionTime(T subject, Expression<Action<T>> action)
+        public MemberExecutionTime(T subject, Expression<Action<T>>? action)
             : base(() => action.Compile()(subject), "(" + action.Body + ")")
         {
         }

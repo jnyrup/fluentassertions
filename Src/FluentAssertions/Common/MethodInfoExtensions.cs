@@ -48,7 +48,7 @@ namespace FluentAssertions.Common
             return !method.IsVirtual || method.IsFinal;
         }
 
-        private static (bool success, MethodImplAttribute attribute) RecreateMethodImplAttribute(MethodBase methodBase)
+        private static (bool success, MethodImplAttribute? attribute) RecreateMethodImplAttribute(MethodBase methodBase)
         {
             MethodImplAttributes implementationFlags = methodBase.MethodImplementationFlags;
 

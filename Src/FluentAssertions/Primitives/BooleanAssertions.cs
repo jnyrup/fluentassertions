@@ -29,7 +29,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<BooleanAssertions> BeFalse(string because = "", params object[] becauseArgs)
+        public AndConstraint<BooleanAssertions> BeFalse(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject == false)
@@ -49,7 +49,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<BooleanAssertions> BeTrue(string because = "", params object[] becauseArgs)
+        public AndConstraint<BooleanAssertions> BeTrue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject == true)
@@ -70,7 +70,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<BooleanAssertions> Be(bool expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<BooleanAssertions> Be(bool expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue && Subject.Value.Equals(expected))

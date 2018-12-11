@@ -23,7 +23,7 @@ namespace FluentAssertions.Types
         /// Initializes a new instance of the <see cref="PropertyInfoSelectorAssertions"/> class, for a number of <see cref="PropertyInfo"/> objects.
         /// </summary>
         /// <param name="properties">The properties to assert.</param>
-        public PropertyInfoSelectorAssertions(params PropertyInfo[] properties)
+        public PropertyInfoSelectorAssertions(params PropertyInfo?[] properties)
         {
             SubjectProperties = properties;
         }
@@ -38,7 +38,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoSelectorAssertions> BeVirtual(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoSelectorAssertions> BeVirtual(string? because = "", params object?[] becauseArgs)
         {
             PropertyInfo[] nonVirtualProperties = GetAllNonVirtualPropertiesFromSelection();
 
@@ -65,7 +65,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoSelectorAssertions> NotBeVirtual(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoSelectorAssertions> NotBeVirtual(string? because = "", params object?[] becauseArgs)
         {
             PropertyInfo[] virtualProperties = GetAllVirtualPropertiesFromSelection();
 
@@ -92,7 +92,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoSelectorAssertions> BeWritable(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoSelectorAssertions> BeWritable(string? because = "", params object?[] becauseArgs)
         {
             PropertyInfo[] readOnlyProperties = GetAllReadOnlyPropertiesFromSelection();
 
@@ -144,7 +144,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoSelectorAssertions> BeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoSelectorAssertions> BeDecoratedWith<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             PropertyInfo[] propertiesWithoutAttribute = GetPropertiesWithout<TAttribute>();
@@ -172,7 +172,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<PropertyInfoSelectorAssertions> NotBeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<PropertyInfoSelectorAssertions> NotBeDecoratedWith<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             PropertyInfo[] propertiesWithAttribute = GetPropertiesWith<TAttribute>();

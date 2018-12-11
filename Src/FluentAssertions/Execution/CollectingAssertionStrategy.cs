@@ -32,7 +32,7 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Will throw a combined exception for any failures have been collected since <see cref="StartCollecting"/> was called.
         /// </summary>
-        public void ThrowIfAny(IDictionary<string, object> context)
+        public void ThrowIfAny(IDictionary<string, object>? context)
         {
             if (failureMessages.Any())
             {
@@ -54,7 +54,7 @@ namespace FluentAssertions.Execution
         /// <summary>
         /// Instructs the strategy to handle a assertion failure.
         /// </summary>
-        public void HandleFailure(string message)
+        public void HandleFailure(string? message)
         {
             failureMessages.Add(message);
         }

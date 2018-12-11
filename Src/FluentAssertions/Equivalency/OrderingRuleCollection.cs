@@ -22,7 +22,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Initializes a new collection of ordering rules based on an existing collection of ordering rules.
         /// </summary>
-        public OrderingRuleCollection(IEnumerable<IOrderingRule> orderingRules)
+        public OrderingRuleCollection(IEnumerable<IOrderingRule>? orderingRules)
         {
             rules.AddRange(orderingRules);
         }
@@ -65,7 +65,7 @@ namespace FluentAssertions.Equivalency
         /// Determines whether the rules in this collection dictate strict ordering during the equivalency assertion on
         /// the collection pointed to by <paramref name="memberInfo"/>.
         /// </summary>
-        public bool IsOrderingStrictFor(IMemberInfo memberInfo)
+        public bool IsOrderingStrictFor(IMemberInfo? memberInfo)
         {
             List<OrderStrictness> results = rules.Select(r => r.Evaluate(memberInfo)).ToList();
             return results.Contains(OrderStrictness.Strict) && !results.Contains(OrderStrictness.NotStrict);

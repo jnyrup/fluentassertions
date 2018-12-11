@@ -13,12 +13,12 @@ namespace FluentAssertions.Types
     {
         private List<Type> types;
 
-        public TypeSelector(Type type)
+        public TypeSelector(Type? type)
             : this(new[] { type })
         {
         }
 
-        public TypeSelector(IEnumerable<Type> types)
+        public TypeSelector(IEnumerable<Type?>? types)
         {
             this.types = types.ToList();
         }
@@ -132,7 +132,7 @@ namespace FluentAssertions.Types
         /// <summary>
         /// Determines whether the namespace of type is exactly <paramref name="namespace"/>.
         /// </summary>
-        public TypeSelector ThatAreInNamespace(string @namespace)
+        public TypeSelector ThatAreInNamespace(string? @namespace)
         {
             types = types.Where(t => t.Namespace == @namespace).ToList();
             return this;
@@ -141,7 +141,7 @@ namespace FluentAssertions.Types
         /// <summary>
         /// Determines whether the namespace of type is exactly not <paramref name="namespace"/>.
         /// </summary>
-        public TypeSelector ThatAreNotInNamespace(string @namespace)
+        public TypeSelector ThatAreNotInNamespace(string? @namespace)
         {
             types = types.Where(t => t.Namespace != @namespace).ToList();
             return this;
@@ -150,7 +150,7 @@ namespace FluentAssertions.Types
         /// <summary>
         /// Determines whether the namespace of type starts with <paramref name="namespace"/>.
         /// </summary>
-        public TypeSelector ThatAreUnderNamespace(string @namespace)
+        public TypeSelector ThatAreUnderNamespace(string? @namespace)
         {
             types = types.Where(t => t.Namespace?.StartsWith(@namespace) == true).ToList();
             return this;
@@ -159,7 +159,7 @@ namespace FluentAssertions.Types
         /// <summary>
         /// Determines whether the namespace of type does not start with <paramref name="namespace"/>.
         /// </summary>
-        public TypeSelector ThatAreNotUnderNamespace(string @namespace)
+        public TypeSelector ThatAreNotUnderNamespace(string? @namespace)
         {
             types = types.Where(t => t.Namespace?.StartsWith(@namespace) != true).ToList();
             return this;

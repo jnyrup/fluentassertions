@@ -9,7 +9,7 @@ namespace FluentAssertions.Equivalency
     /// </summary>
     public abstract class SelectedMemberInfo
     {
-        public static SelectedMemberInfo Create(PropertyInfo propertyInfo)
+        public static SelectedMemberInfo? Create(PropertyInfo propertyInfo)
         {
             if (propertyInfo is null || propertyInfo.IsIndexer())
             {
@@ -19,7 +19,7 @@ namespace FluentAssertions.Equivalency
             return new PropertySelectedMemberInfo(propertyInfo);
         }
 
-        public static SelectedMemberInfo Create(FieldInfo fieldInfo)
+        public static SelectedMemberInfo? Create(FieldInfo fieldInfo)
         {
             if (fieldInfo is null)
             {
@@ -57,6 +57,6 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Returns the member value of a specified object with optional index values for indexed properties or methods.
         /// </summary>
-        public abstract object GetValue(object obj, object[] index);
+        public abstract object GetValue(object obj, object[]? index);
     }
 }

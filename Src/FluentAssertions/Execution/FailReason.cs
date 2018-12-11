@@ -17,7 +17,7 @@
     /// </remarks>
     public class FailReason
     {
-        public FailReason(string message, params object[] args)
+        public FailReason(string? message, params object?[] args)
         {
             Message = message;
             Args = args;
@@ -28,12 +28,12 @@
         /// numbered <see cref="string.Format(string,object[])"/>-style placeholders as well
         /// as specialized placeholders.
         /// </summary>
-        public string Message { get; }
+        public string? Message { get; }
 
         /// <summary>
         /// Arguments for the numbered <see cref="string.Format(string,object[])"/>-style placeholders
         /// of <see cref="Message"/>.
         /// </summary>
-        public object[] Args { get; }
+        public object?[] Args { get; }
     }
 }

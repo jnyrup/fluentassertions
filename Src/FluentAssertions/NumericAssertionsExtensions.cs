@@ -29,8 +29,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<sbyte>> BeCloseTo(this NumericAssertions<sbyte> parent,
-            sbyte nearbyValue, byte delta, string because = "",
-            params object[] becauseArgs)
+            sbyte nearbyValue, byte delta, string? because = "",
+            params object?[] becauseArgs)
         {
             sbyte actualValue = (sbyte)parent.Subject;
             sbyte minValue = (sbyte)(nearbyValue - delta);
@@ -68,8 +68,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<byte>> BeCloseTo(this NumericAssertions<byte> parent,
-            byte nearbyValue, byte delta, string because = "",
-            params object[] becauseArgs)
+            byte nearbyValue, byte delta, string? because = "",
+            params object?[] becauseArgs)
         {
             byte actualValue = (byte)parent.Subject;
             byte minValue = (byte)(nearbyValue - delta);
@@ -107,8 +107,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<short>> BeCloseTo(this NumericAssertions<short> parent,
-            short nearbyValue, ushort delta, string because = "",
-            params object[] becauseArgs)
+            short nearbyValue, ushort delta, string? because = "",
+            params object?[] becauseArgs)
         {
             short actualValue = (short)parent.Subject;
             short minValue = (short)(nearbyValue - delta);
@@ -146,8 +146,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<ushort>> BeCloseTo(this NumericAssertions<ushort> parent,
-            ushort nearbyValue, ushort delta, string because = "",
-            params object[] becauseArgs)
+            ushort nearbyValue, ushort delta, string? because = "",
+            params object?[] becauseArgs)
         {
             ushort actualValue = (ushort)parent.Subject;
             ushort minValue = (ushort)(nearbyValue - delta);
@@ -185,8 +185,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<int>> BeCloseTo(this NumericAssertions<int> parent,
-            int nearbyValue, uint delta, string because = "",
-            params object[] becauseArgs)
+            int nearbyValue, uint delta, string? because = "",
+            params object?[] becauseArgs)
         {
             int actualValue = (int)parent.Subject;
             int minValue = (int)(nearbyValue - delta);
@@ -224,8 +224,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<uint>> BeCloseTo(this NumericAssertions<uint> parent,
-            uint nearbyValue, uint delta, string because = "",
-            params object[] becauseArgs)
+            uint nearbyValue, uint delta, string? because = "",
+            params object?[] becauseArgs)
         {
             uint actualValue = (uint)parent.Subject;
             uint minValue = nearbyValue - delta;
@@ -263,8 +263,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<long>> BeCloseTo(this NumericAssertions<long> parent,
-            long nearbyValue, ulong delta, string because = "",
-            params object[] becauseArgs)
+            long nearbyValue, ulong delta, string? because = "",
+            params object?[] becauseArgs)
         {
             long actualValue = (long)parent.Subject;
             long minValue = GetMinValue(nearbyValue, delta);
@@ -293,8 +293,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<ulong>> BeCloseTo(this NumericAssertions<ulong> parent,
-            ulong nearbyValue, ulong delta, string because = "",
-            params object[] becauseArgs)
+            ulong nearbyValue, ulong delta, string? because = "",
+            params object?[] becauseArgs)
         {
             ulong actualValue = (ulong)parent.Subject;
             ulong minValue = nearbyValue - delta;
@@ -316,7 +316,7 @@ namespace FluentAssertions
 
         private static void FailIfValueOutsideBounds<TValue, TDelta>(bool valueWithinBounds,
             TValue nearbyValue, TDelta delta, TValue actualValue,
-            string because, object[] becauseArgs)
+            string? because, object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(valueWithinBounds)
@@ -347,8 +347,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<sbyte>> NotBeCloseTo(this NumericAssertions<sbyte> parent,
-            sbyte distantValue, byte delta, string because = "",
-            params object[] becauseArgs)
+            sbyte distantValue, byte delta, string? because = "",
+            params object?[] becauseArgs)
         {
             sbyte actualValue = (sbyte)parent.Subject;
             sbyte minValue = (sbyte)(distantValue - delta);
@@ -386,8 +386,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<byte>> NotBeCloseTo(this NumericAssertions<byte> parent,
-            byte distantValue, byte delta, string because = "",
-            params object[] becauseArgs)
+            byte distantValue, byte delta, string? because = "",
+            params object?[] becauseArgs)
         {
             byte actualValue = (byte)parent.Subject;
             byte minValue = (byte)(distantValue - delta);
@@ -425,8 +425,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<short>> NotBeCloseTo(this NumericAssertions<short> parent,
-            short distantValue, ushort delta, string because = "",
-            params object[] becauseArgs)
+            short distantValue, ushort delta, string? because = "",
+            params object?[] becauseArgs)
         {
             short actualValue = (short)parent.Subject;
             short minValue = (short)(distantValue - delta);
@@ -464,8 +464,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<ushort>> NotBeCloseTo(this NumericAssertions<ushort> parent,
-            ushort distantValue, ushort delta, string because = "",
-            params object[] becauseArgs)
+            ushort distantValue, ushort delta, string? because = "",
+            params object?[] becauseArgs)
         {
             ushort actualValue = (ushort)parent.Subject;
             ushort minValue = (ushort)(distantValue - delta);
@@ -503,8 +503,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<int>> NotBeCloseTo(this NumericAssertions<int> parent,
-            int distantValue, uint delta, string because = "",
-            params object[] becauseArgs)
+            int distantValue, uint delta, string? because = "",
+            params object?[] becauseArgs)
         {
             int actualValue = (int)parent.Subject;
             int minValue = (int)(distantValue - delta);
@@ -542,8 +542,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<uint>> NotBeCloseTo(this NumericAssertions<uint> parent,
-            uint distantValue, uint delta, string because = "",
-            params object[] becauseArgs)
+            uint distantValue, uint delta, string? because = "",
+            params object?[] becauseArgs)
         {
             uint actualValue = (uint)parent.Subject;
             uint minValue = distantValue - delta;
@@ -581,8 +581,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<long>> NotBeCloseTo(this NumericAssertions<long> parent,
-            long distantValue, ulong delta, string because = "",
-            params object[] becauseArgs)
+            long distantValue, ulong delta, string? because = "",
+            params object?[] becauseArgs)
         {
             long actualValue = (long)parent.Subject;
             long minValue = GetMinValue(distantValue, delta);
@@ -611,8 +611,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<ulong>> NotBeCloseTo(this NumericAssertions<ulong> parent,
-            ulong distantValue, ulong delta, string because = "",
-            params object[] becauseArgs)
+            ulong distantValue, ulong delta, string? because = "",
+            params object?[] becauseArgs)
         {
             ulong actualValue = (ulong)parent.Subject;
             ulong minValue = distantValue - delta;
@@ -635,7 +635,7 @@ namespace FluentAssertions
         private static void FailIfValueInsideBounds<TValue, TDelta>(
             bool valueOutsideBounds,
             TValue distantValue, TDelta delta, TValue actualValue,
-            string because, object[] becauseArgs)
+            string? because, object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(valueOutsideBounds)
@@ -666,8 +666,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<float>> BeApproximately(this NullableNumericAssertions<float> parent,
-            float expectedValue, float precision, string because = "",
-            params object[] becauseArgs)
+            float expectedValue, float precision, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(parent.Subject != null)
@@ -699,8 +699,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<float>> BeApproximately(this NullableNumericAssertions<float> parent,
-            float? expectedValue, float precision, string because = "",
-            params object[] becauseArgs)
+            float? expectedValue, float precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject is null && expectedValue is null)
             {
@@ -739,8 +739,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<float>> BeApproximately(this NumericAssertions<float> parent,
-            float expectedValue, float precision, string because = "",
-            params object[] becauseArgs)
+            float expectedValue, float precision, string? because = "",
+            params object?[] becauseArgs)
         {
             float actualDifference = Math.Abs(expectedValue - (float)parent.Subject);
 
@@ -767,8 +767,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<double>> BeApproximately(this NullableNumericAssertions<double> parent,
-            double expectedValue, double precision, string because = "",
-            params object[] becauseArgs)
+            double expectedValue, double precision, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(parent.Subject != null)
@@ -800,8 +800,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<double>> BeApproximately(this NullableNumericAssertions<double> parent,
-            double? expectedValue, double precision, string because = "",
-            params object[] becauseArgs)
+            double? expectedValue, double precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject is null && expectedValue is null)
             {
@@ -840,8 +840,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<double>> BeApproximately(this NumericAssertions<double> parent,
-            double expectedValue, double precision, string because = "",
-            params object[] becauseArgs)
+            double expectedValue, double precision, string? because = "",
+            params object?[] becauseArgs)
         {
             double actualDifference = Math.Abs(expectedValue - (double)parent.Subject);
 
@@ -868,8 +868,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<decimal>> BeApproximately(this NullableNumericAssertions<decimal> parent,
-            decimal expectedValue, decimal precision, string because = "",
-            params object[] becauseArgs)
+            decimal expectedValue, decimal precision, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(parent.Subject != null)
@@ -901,8 +901,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<decimal>> BeApproximately(this NullableNumericAssertions<decimal> parent,
-            decimal? expectedValue, decimal precision, string because = "",
-            params object[] becauseArgs)
+            decimal? expectedValue, decimal precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject is null && expectedValue is null)
             {
@@ -941,8 +941,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<decimal>> BeApproximately(this NumericAssertions<decimal> parent,
-            decimal expectedValue, decimal precision, string because = "",
-            params object[] becauseArgs)
+            decimal expectedValue, decimal precision, string? because = "",
+            params object?[] becauseArgs)
         {
             decimal actualDifference = Math.Abs(expectedValue - (decimal)parent.Subject);
 
@@ -954,7 +954,7 @@ namespace FluentAssertions
         private static void FailIfDifferenceOutsidePrecision<T>(
             bool differenceWithinPrecision,
             NumericAssertions<T> parent, T expectedValue, T precision, T actualDifference,
-            string because, object[] becauseArgs) where T : struct
+            string? because, object?[] becauseArgs) where T : struct
         {
             Execute.Assertion
                 .ForCondition(differenceWithinPrecision)
@@ -985,8 +985,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<float>> NotBeApproximately(this NullableNumericAssertions<float> parent,
-            float unexpectedValue, float precision, string because = "",
-            params object[] becauseArgs)
+            float unexpectedValue, float precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject != null)
             {
@@ -1016,8 +1016,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<float>> NotBeApproximately(this NullableNumericAssertions<float> parent,
-            float? unexpectedValue, float precision, string because = "",
-            params object[] becauseArgs)
+            float? unexpectedValue, float precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject is null ^ unexpectedValue is null)
             {
@@ -1056,8 +1056,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<float>> NotBeApproximately(this NumericAssertions<float> parent,
-            float unexpectedValue, float precision, string because = "",
-            params object[] becauseArgs)
+            float unexpectedValue, float precision, string? because = "",
+            params object?[] becauseArgs)
         {
             float actualDifference = Math.Abs(unexpectedValue - (float)parent.Subject);
 
@@ -1084,8 +1084,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<double>> NotBeApproximately(this NullableNumericAssertions<double> parent,
-            double unexpectedValue, double precision, string because = "",
-            params object[] becauseArgs)
+            double unexpectedValue, double precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject != null)
             {
@@ -1115,8 +1115,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<double>> NotBeApproximately(this NullableNumericAssertions<double> parent,
-            double? unexpectedValue, double precision, string because = "",
-            params object[] becauseArgs)
+            double? unexpectedValue, double precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject is null ^ unexpectedValue is null)
             {
@@ -1155,8 +1155,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<double>> NotBeApproximately(this NumericAssertions<double> parent,
-            double unexpectedValue, double precision, string because = "",
-            params object[] becauseArgs)
+            double unexpectedValue, double precision, string? because = "",
+            params object?[] becauseArgs)
         {
             double actualDifference = Math.Abs(unexpectedValue - (double)parent.Subject);
 
@@ -1183,8 +1183,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<decimal>> NotBeApproximately(this NullableNumericAssertions<decimal> parent,
-            decimal unexpectedValue, decimal precision, string because = "",
-            params object[] becauseArgs)
+            decimal unexpectedValue, decimal precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject != null)
             {
@@ -1214,8 +1214,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NullableNumericAssertions<decimal>> NotBeApproximately(this NullableNumericAssertions<decimal> parent,
-            decimal? unexpectedValue, decimal precision, string because = "",
-            params object[] becauseArgs)
+            decimal? unexpectedValue, decimal precision, string? because = "",
+            params object?[] becauseArgs)
         {
             if (parent.Subject is null ^ unexpectedValue is null)
             {
@@ -1254,8 +1254,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public static AndConstraint<NumericAssertions<decimal>> NotBeApproximately(this NumericAssertions<decimal> parent,
-            decimal unexpectedValue, decimal precision, string because = "",
-            params object[] becauseArgs)
+            decimal unexpectedValue, decimal precision, string? because = "",
+            params object?[] becauseArgs)
         {
             decimal actualDifference = Math.Abs(unexpectedValue - (decimal)parent.Subject);
 
@@ -1267,7 +1267,7 @@ namespace FluentAssertions
         private static void FailIfDifferenceWithinPrecision<T>(
             NumericAssertions<T> parent, bool differenceOutsidePrecision,
             T unexpectedValue, T precision, T actualDifference,
-            string because, object[] becauseArgs) where T : struct
+            string? because, object?[] becauseArgs) where T : struct
         {
             Execute.Assertion
                 .ForCondition(differenceOutsidePrecision)

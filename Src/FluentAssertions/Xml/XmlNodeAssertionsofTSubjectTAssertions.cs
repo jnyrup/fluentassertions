@@ -10,11 +10,11 @@ namespace FluentAssertions.Xml
     /// Contains a number of methods to assert that an <see cref="XmlNode"/> is in the expected state.
     /// </summary>
     [DebuggerNonUserCode]
-    public class XmlNodeAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<TSubject, TAssertions>
+    public class XmlNodeAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<TSubject?, TAssertions>
         where TSubject : XmlNode
         where TAssertions : XmlNodeAssertions<TSubject, TAssertions>
     {
-        public XmlNodeAssertions(TSubject xmlNode) : base(xmlNode)
+        public XmlNodeAssertions(TSubject? xmlNode) : base(xmlNode)
         {
         }
 
@@ -22,7 +22,7 @@ namespace FluentAssertions.Xml
         /// Asserts that the current <see cref="XmlNode"/> is equivalent to the <paramref name="expected"/> element.
         /// </summary>
         /// <param name="expected">The expected element</param>
-        public AndConstraint<TAssertions> BeEquivalentTo(XmlNode expected)
+        public AndConstraint<TAssertions> BeEquivalentTo(XmlNode? expected)
         {
             return BeEquivalentTo(expected, string.Empty);
         }
@@ -38,7 +38,7 @@ namespace FluentAssertions.Xml
         /// <param name="reasonArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> BeEquivalentTo(XmlNode expected, string because, params object[] reasonArgs)
+        public AndConstraint<TAssertions> BeEquivalentTo(XmlNode? expected, string? because, params object[] reasonArgs)
         {
             using (XmlNodeReader subjectReader = new XmlNodeReader(Subject))
             using (XmlNodeReader expectedReader = new XmlNodeReader(expected))
@@ -55,7 +55,7 @@ namespace FluentAssertions.Xml
         /// the <paramref name="unexpected"/> node.
         /// </summary>
         /// <param name="unexpected">The unexpected node</param>
-        public AndConstraint<TAssertions> NotBeEquivalentTo(XmlNode unexpected)
+        public AndConstraint<TAssertions> NotBeEquivalentTo(XmlNode? unexpected)
         {
             return NotBeEquivalentTo(unexpected, string.Empty);
         }
@@ -73,7 +73,7 @@ namespace FluentAssertions.Xml
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         /// <returns></returns>
-        public AndConstraint<TAssertions> NotBeEquivalentTo(XmlNode unexpected, string because, params object[] reasonArgs)
+        public AndConstraint<TAssertions> NotBeEquivalentTo(XmlNode? unexpected, string? because, params object?[] reasonArgs)
         {
             using (XmlNodeReader subjectReader = new XmlNodeReader(Subject))
             using (XmlNodeReader unexpectedReader = new XmlNodeReader(unexpected))

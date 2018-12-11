@@ -8,24 +8,24 @@ namespace FluentAssertions.Equivalency
 {
     public class AssertionRuleEquivalencyStep<TSubject> : IEquivalencyStep
     {
-        private readonly Expression<Func<IMemberInfo, bool>> canHandle;
+        private readonly Expression<Func<IMemberInfo, bool>>? canHandle;
 
-        private readonly Action<IAssertionContext<TSubject>> handle;
+        private readonly Action<IAssertionContext<TSubject>>? handle;
 
-        public AssertionRuleEquivalencyStep(Expression<Func<IMemberInfo, bool>> predicate, Action<IAssertionContext<TSubject>> action)
+        public AssertionRuleEquivalencyStep(Expression<Func<IMemberInfo, bool>>? predicate, Action<IAssertionContext<TSubject>>? action)
         {
             canHandle = predicate;
             handle = action;
         }
 
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             Func<IMemberInfo, bool> predicate = canHandle.Compile();
 
             return ((context.SelectedMemberInfo != null) && predicate(context));
         }
 
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent, IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent, IEquivalencyAssertionOptions? config)
         {
             bool subjectIsNull = context.Subject is null;
 
@@ -39,7 +39,7 @@ namespace FluentAssertions.Equivalency
 
             bool expectationIsValidType =
                 AssertionScope.Current
-                    .ForCondition(expectationIsNull || context.Expectation.GetType().IsSameOrInherits(typeof(TSubject)))
+                    .ForCondition(expectationIsNull || context.Expectation!.GetType().IsSameOrInherits(typeof(TSubject)))
                     .FailWith("Expected " + context.SelectedMemberDescription + " from expectation to be a {0}{reason}, but found a {1}.",
                         typeof(TSubject), context.SelectedMemberInfo.MemberType);
 

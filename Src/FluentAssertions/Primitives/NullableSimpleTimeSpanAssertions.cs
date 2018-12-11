@@ -29,7 +29,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableSimpleTimeSpanAssertions> HaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableSimpleTimeSpanAssertions> HaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue)
@@ -49,7 +49,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableSimpleTimeSpanAssertions> NotBeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableSimpleTimeSpanAssertions> NotBeNull(string? because = "", params object?[] becauseArgs)
         {
             return HaveValue(because, becauseArgs);
         }
@@ -64,7 +64,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableSimpleTimeSpanAssertions> NotHaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableSimpleTimeSpanAssertions> NotHaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.HasValue)
@@ -84,7 +84,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableSimpleTimeSpanAssertions> BeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableSimpleTimeSpanAssertions> BeNull(string? because = "", params object?[] becauseArgs)
         {
             return NotHaveValue(because, becauseArgs);
         }
@@ -100,8 +100,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NullableSimpleTimeSpanAssertions> Be(TimeSpan? expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NullableSimpleTimeSpanAssertions> Be(TimeSpan? expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject == expected)

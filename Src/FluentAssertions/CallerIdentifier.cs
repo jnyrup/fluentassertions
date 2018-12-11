@@ -17,9 +17,9 @@ namespace FluentAssertions
 
 #if !NETSTANDARD1_3 && !NETSTANDARD1_6
 
-        public static string DetermineCallerIdentity()
+        public static string? DetermineCallerIdentity()
         {
-            string caller = null;
+            string? caller = null;
 
             StackTrace stack = new StackTrace(true);
 
@@ -58,12 +58,12 @@ namespace FluentAssertions
                 ?.StartsWith("system", StringComparison.InvariantCultureIgnoreCase) == true;
         }
 
-        private static string ExtractVariableNameFrom(StackFrame frame)
+        private static string? ExtractVariableNameFrom(StackFrame frame)
         {
-            string caller = null;
+            string? caller = null;
 
             int column = frame.GetFileColumnNumber();
-            string line = GetSourceCodeLineFrom(frame);
+            string? line = GetSourceCodeLineFrom(frame);
 
             if ((line != null) && (column != 0) && (line.Length > 0))
             {
@@ -89,7 +89,7 @@ namespace FluentAssertions
             return caller;
         }
 
-        private static string GetSourceCodeLineFrom(StackFrame frame)
+        private static string? GetSourceCodeLineFrom(StackFrame frame)
         {
             string fileName = frame.GetFileName();
             int expectedLineNumber = frame.GetFileLineNumber();
@@ -142,7 +142,7 @@ namespace FluentAssertions
         }
 
 #else
-        public static string DetermineCallerIdentity()
+        public static string? DetermineCallerIdentity()
         {
             return null;
         }

@@ -15,7 +15,7 @@ namespace FluentAssertions.Collections
     public class SelfReferencingCollectionAssertions<T, TAssertions> : CollectionAssertions<IEnumerable<T>, TAssertions>
         where TAssertions : SelfReferencingCollectionAssertions<T, TAssertions>
     {
-        public SelfReferencingCollectionAssertions(IEnumerable<T> actualValue) : base(actualValue)
+        public SelfReferencingCollectionAssertions(IEnumerable<T>? actualValue) : base(actualValue)
         {
         }
 
@@ -30,7 +30,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> HaveCount(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> HaveCount(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -60,8 +60,8 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> HaveCount(Expression<Func<int, bool>> countPredicate, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<TAssertions> HaveCount(Expression<Func<int, bool>>? countPredicate, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(countPredicate, nameof(countPredicate), "Cannot compare collection count against a <null> predicate.");
 
@@ -98,7 +98,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> NotHaveCount(int unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotHaveCount(int unexpected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -128,7 +128,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> HaveCountGreaterThan(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> HaveCountGreaterThan(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -158,7 +158,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> HaveCountGreaterOrEqualTo(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> HaveCountGreaterOrEqualTo(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -188,7 +188,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> HaveCountLessThan(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> HaveCountLessThan(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -218,7 +218,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> HaveCountLessOrEqualTo(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> HaveCountLessOrEqualTo(int expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -279,7 +279,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public AndConstraint<TAssertions> Equal<TExpected>(
-            IEnumerable<TExpected> expectation, Func<T, TExpected, bool> equalityComparison, string because = "", params object[] becauseArgs)
+            IEnumerable<TExpected>? expectation, Func<T, TExpected, bool>? equalityComparison, string? because = "", params object?[] becauseArgs)
         {
             AssertSubjectEquality(expectation, equalityComparison, because, becauseArgs);
 
@@ -300,7 +300,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> StartWith(IEnumerable<T> expectation, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> StartWith(IEnumerable<T>? expectation, string? because = "", params object?[] becauseArgs)
         {
             if (expectation is null)
             {
@@ -329,7 +329,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TAssertions> StartWith<TExpected>(
-            IEnumerable<TExpected> expectation, Func<T, TExpected, bool> equalityComparison, string because = "", params object[] becauseArgs)
+            IEnumerable<TExpected>? expectation, Func<T, TExpected, bool>? equalityComparison, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expectation, nameof(expectation), "Cannot compare collection with <null>.");
 
@@ -351,7 +351,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> EndWith(IEnumerable<T> expectation, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> EndWith(IEnumerable<T>? expectation, string? because = "", params object?[] becauseArgs)
         {
             if (expectation is null)
             {
@@ -380,7 +380,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TAssertions> EndWith<TExpected>(
-            IEnumerable<TExpected> expectation, Func<T, TExpected, bool> equalityComparison, string because = "", params object[] becauseArgs)
+            IEnumerable<TExpected>? expectation, Func<T, TExpected, bool>? equalityComparison, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expectation, nameof(expectation), "Cannot compare collection with <null>.");
 
@@ -399,7 +399,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public AndWhichConstraint<TAssertions, T> Contain(T expected, string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<TAssertions, T> Contain(T expected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -425,7 +425,7 @@ namespace FluentAssertions.Collections
         /// </summary>
         /// <param name="expectedItemsList">An <see cref="IEnumerable{T}"/> of expectation items.</param>
         /// <param name="additionalExpectedItems">Additional items that are expectation to be contained by the collection.</param>
-        public AndConstraint<TAssertions> Contain(IEnumerable<T> expectedItemsList,
+        public AndConstraint<TAssertions> Contain(IEnumerable<T>? expectedItemsList,
             params T[] additionalExpectedItems)
         {
             var list = new List<T>(expectedItemsList);
@@ -445,7 +445,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public AndWhichConstraint<TAssertions, T> Contain(Expression<Func<T, bool>> predicate, string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<TAssertions, T> Contain(Expression<Func<T, bool>>? predicate, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 
@@ -478,7 +478,7 @@ namespace FluentAssertions.Collections
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
         public AndConstraint<TAssertions> OnlyContain(
-            Expression<Func<T, bool>> predicate, string because = "", params object[] becauseArgs)
+            Expression<Func<T, bool>>? predicate, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 
@@ -513,7 +513,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public AndWhichConstraint<TAssertions, T> NotContain(T unexpected, string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<TAssertions, T> NotContain(T unexpected, string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -539,7 +539,7 @@ namespace FluentAssertions.Collections
         /// </summary>
         /// <param name="unexpectedItemsList">An <see cref="IEnumerable{T}"/> of unexpected items.</param>
         /// <param name="additionalUnexpectedItems">Additional items that are not expected to be contained by the collection.</param>
-        public AndConstraint<TAssertions> NotContain(IEnumerable<T> unexpectedItemsList, params T[] additionalUnexpectedItems)
+        public AndConstraint<TAssertions> NotContain(IEnumerable<T>? unexpectedItemsList, params T[] additionalUnexpectedItems)
         {
             var list = new List<T>(unexpectedItemsList);
             list.AddRange(additionalUnexpectedItems);
@@ -557,7 +557,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        public AndConstraint<TAssertions> NotContain(Expression<Func<T, bool>> predicate, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotContain(Expression<Func<T, bool>>? predicate, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 
@@ -592,7 +592,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndWhichConstraint<TAssertions, T> ContainSingle(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<TAssertions, T> ContainSingle(string? because = "", params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -627,8 +627,8 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndWhichConstraint<TAssertions, T> ContainSingle(Expression<Func<T, bool>> predicate,
-            string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<TAssertions, T> ContainSingle(Expression<Func<T, bool>>? predicate,
+            string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 

@@ -25,7 +25,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableNumericAssertions<T>> HaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableNumericAssertions<T>> HaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null))
@@ -45,7 +45,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableNumericAssertions<T>> NotBeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableNumericAssertions<T>> NotBeNull(string? because = "", params object?[] becauseArgs)
         {
             return HaveValue(because, becauseArgs);
         }
@@ -60,7 +60,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableNumericAssertions<T>> NotHaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableNumericAssertions<T>> NotHaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject is null)
@@ -80,7 +80,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableNumericAssertions<T>> BeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableNumericAssertions<T>> BeNull(string? because = "", params object?[] becauseArgs)
         {
             return NotHaveValue(because, becauseArgs);
         }

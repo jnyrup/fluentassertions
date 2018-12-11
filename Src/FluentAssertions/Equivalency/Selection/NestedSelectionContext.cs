@@ -17,7 +17,7 @@ namespace FluentAssertions.Equivalency.Selection
             SelectedMemberInfo = selectedMemberInfo;
         }
 
-        public SelectedMemberInfo SelectedMemberInfo { get; private set; }
+        public SelectedMemberInfo? SelectedMemberInfo { get; private set; }
 
         public string SelectedMemberPath { get; private set; }
 

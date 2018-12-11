@@ -6,6 +6,6 @@ namespace FluentAssertions.Common
 {
     public interface IReflector
     {
-        IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool> predicate);
+        IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool>? predicate);
     }
 }

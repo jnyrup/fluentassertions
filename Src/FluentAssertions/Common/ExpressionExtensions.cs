@@ -11,11 +11,11 @@ namespace FluentAssertions.Common
 {
     internal static class ExpressionExtensions
     {
-        public static SelectedMemberInfo GetSelectedMemberInfo<T, TValue>(this Expression<Func<T, TValue>> expression)
+        public static SelectedMemberInfo? GetSelectedMemberInfo<T, TValue>(this Expression<Func<T, TValue>> expression)
         {
             Guard.ThrowIfArgumentIsNull(expression, nameof(expression), "Expected an expression, but found <null>.");
 
-            MemberInfo memberInfo = AttemptToGetMemberInfoFromCastExpression(expression) ??
+            MemberInfo? memberInfo = AttemptToGetMemberInfoFromCastExpression(expression) ??
                                     AttemptToGetMemberInfoFromMemberExpression(expression);
 
             if (memberInfo != null)
@@ -52,7 +52,7 @@ namespace FluentAssertions.Common
             return propertyInfo;
         }
 
-        private static MemberInfo AttemptToGetMemberInfoFromMemberExpression<T, TValue>(
+        private static MemberInfo? AttemptToGetMemberInfoFromMemberExpression<T, TValue>(
             Expression<Func<T, TValue>> expression)
         {
             if (expression.Body is MemberExpression memberExpression)
@@ -63,7 +63,7 @@ namespace FluentAssertions.Common
             return null;
         }
 
-        private static MemberInfo AttemptToGetMemberInfoFromCastExpression<T, TValue>(Expression<Func<T, TValue>> expression)
+        private static MemberInfo? AttemptToGetMemberInfoFromCastExpression<T, TValue>(Expression<Func<T, TValue>> expression)
         {
             if (expression.Body is UnaryExpression castExpression)
             {
@@ -86,7 +86,7 @@ namespace FluentAssertions.Common
 
             var segments = new List<string>();
             var declaringTypes = new List<Type>();
-            Expression node = expression;
+            Expression? node = expression;
 
             var unsupportedExpressionMessage = $"Expression <{expression.Body}> cannot be used to select a member.";
 

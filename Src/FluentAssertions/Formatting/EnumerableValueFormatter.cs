@@ -14,13 +14,13 @@ namespace FluentAssertions.Formatting
         /// <returns>
         /// <c>true</c> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <c>false</c>.
         /// </returns>
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return value is IEnumerable;
         }
 
         /// <inheritdoc />
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             ICollection<object> enumerable = ((IEnumerable)value).ConvertOrCastToCollection<object>();
 

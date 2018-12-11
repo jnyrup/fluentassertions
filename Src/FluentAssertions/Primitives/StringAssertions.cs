@@ -13,12 +13,12 @@ namespace FluentAssertions.Primitives
     /// Contains a number of methods to assert that a <see cref="string"/> is in the expected state.
     /// </summary>
     [DebuggerNonUserCode]
-    public class StringAssertions : ReferenceTypeAssertions<string, StringAssertions>
+    public class StringAssertions : ReferenceTypeAssertions<string?, StringAssertions>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="System.Object" /> class.
         /// </summary>
-        public StringAssertions(string value) : base(value)
+        public StringAssertions(string? value) : base(value)
         {
         }
 
@@ -33,7 +33,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> Be(string expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> Be(string? expected, string? because = "", params object?[] becauseArgs)
         {
             var stringEqualityValidator = new StringEqualityValidator(Subject, expected, StringComparison.CurrentCulture, because, becauseArgs);
             stringEqualityValidator.Validate();
@@ -47,7 +47,7 @@ namespace FluentAssertions.Primitives
         /// <param name="validValues">
         /// The values that are valid.
         /// </param>
-        public AndConstraint<StringAssertions> BeOneOf(params string[] validValues)
+        public AndConstraint<StringAssertions> BeOneOf(params string?[] validValues)
         {
             return BeOneOf(validValues, string.Empty);
         }
@@ -65,7 +65,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> BeOneOf(IEnumerable<string> validValues, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> BeOneOf(IEnumerable<string?>? validValues, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(validValues.Contains(Subject))
@@ -89,8 +89,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> BeEquivalentTo(string expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> BeEquivalentTo(string? expected, string? because = "",
+            params object?[] becauseArgs)
         {
             var expectation = new StringEqualityValidator(
                 Subject, expected, StringComparison.CurrentCultureIgnoreCase, because, becauseArgs);
@@ -112,7 +112,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotBe(string unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotBe(string? unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject != unexpected)
@@ -135,7 +135,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> Match(string wildcardPattern, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> Match(string? wildcardPattern, string? because = "", params object?[] becauseArgs)
         {
             var stringWildcardMatchingValidator = new StringWildcardMatchingValidator(Subject, wildcardPattern, because, becauseArgs);
             stringWildcardMatchingValidator.Validate();
@@ -156,7 +156,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotMatch(string wildcardPattern, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotMatch(string? wildcardPattern, string? because = "", params object?[] becauseArgs)
         {
             new StringWildcardMatchingValidator(Subject, wildcardPattern, because, becauseArgs)
             {
@@ -179,8 +179,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> MatchEquivalentOf(string wildcardPattern, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> MatchEquivalentOf(string? wildcardPattern, string? because = "",
+            params object?[] becauseArgs)
         {
             var validator = new StringWildcardMatchingValidator(Subject, wildcardPattern, because, becauseArgs)
             {
@@ -206,8 +206,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotMatchEquivalentOf(string wildcardPattern, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotMatchEquivalentOf(string? wildcardPattern, string? because = "",
+            params object?[] becauseArgs)
         {
             var validator = new StringWildcardMatchingValidator(Subject, wildcardPattern, because, becauseArgs)
             {
@@ -234,7 +234,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> MatchRegex([RegexPattern] string regularExpression, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> MatchRegex([RegexPattern] string? regularExpression, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(regularExpression, nameof(regularExpression), "Cannot match string against <null>.");
 
@@ -277,7 +277,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotMatchRegex([RegexPattern] string regularExpression, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotMatchRegex([RegexPattern] string? regularExpression, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(regularExpression, nameof(regularExpression), "Cannot match string against <null>.");
 
@@ -319,7 +319,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> StartWith(string expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> StartWith(string? expected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot compare start of string with <null>.");
 
@@ -346,7 +346,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotStartWith(string unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotStartWith(string? unexpected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(unexpected, nameof(unexpected), "Cannot compare start of string with <null>.");
 
@@ -373,8 +373,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> StartWithEquivalent(string expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> StartWithEquivalent(string? expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot compare string start equivalence with <null>.");
 
@@ -401,7 +401,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotStartWithEquivalentOf(string unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotStartWithEquivalentOf(string? unexpected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(unexpected, nameof(unexpected), "Cannot compare start of string with <null>.");
 
@@ -428,7 +428,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> EndWith(string expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> EndWith(string? expected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot compare string end with <null>.");
 
@@ -471,7 +471,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotEndWith(string unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotEndWith(string? unexpected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(unexpected, nameof(unexpected), "Cannot compare end of string with <null>.");
 
@@ -507,7 +507,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> EndWithEquivalent(string expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> EndWithEquivalent(string? expected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot compare string end equivalence with <null>.");
 
@@ -550,7 +550,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotEndWithEquivalentOf(string unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotEndWithEquivalentOf(string? unexpected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(unexpected, nameof(unexpected), "Cannot compare end of string with <null>.");
 
@@ -587,7 +587,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> Contain(string expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> Contain(string? expected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot assert string containment against <null>.");
 
@@ -616,7 +616,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> ContainEquivalentOf(string expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> ContainEquivalentOf(string? expected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot assert string containment against <null>.");
 
@@ -646,7 +646,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> ContainAll(IEnumerable<string> values, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> ContainAll(IEnumerable<string?>? values, string? because = "", params object?[] becauseArgs)
         {
             ThrowIfValuesNullOrEmpty(values);
 
@@ -665,7 +665,7 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should all be present in the string
         /// </param>
-        public AndConstraint<StringAssertions> ContainAll(params string[] values)
+        public AndConstraint<StringAssertions> ContainAll(params string?[] values)
         {
             return ContainAll(values, because: string.Empty);
         }
@@ -683,7 +683,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> ContainAny(IEnumerable<string> values, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> ContainAny(IEnumerable<string?>? values, string? because = "", params object?[] becauseArgs)
         {
             ThrowIfValuesNullOrEmpty(values);
 
@@ -701,7 +701,7 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should will be tested against the string
         /// </param>
-        public AndConstraint<StringAssertions> ContainAny(params string[] values)
+        public AndConstraint<StringAssertions> ContainAny(params string?[] values)
         {
             return ContainAny(values, because: string.Empty);
         }
@@ -719,8 +719,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotContain(string unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotContain(string? unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(unexpected, nameof(unexpected), "Cannot assert string containment against <null>.");
 
@@ -751,8 +751,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotContainAll(IEnumerable<string> values, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotContainAll(IEnumerable<string?>? values, string? because = "",
+            params object?[] becauseArgs)
         {
             ThrowIfValuesNullOrEmpty(values);
 
@@ -773,7 +773,7 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should not be present in the string
         /// </param>
-        public AndConstraint<StringAssertions> NotContainAll(params string[] values)
+        public AndConstraint<StringAssertions> NotContainAll(params string?[] values)
         {
             return NotContainAll(values, because: string.Empty);
         }
@@ -791,8 +791,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotContainAny(IEnumerable<string> values, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotContainAny(IEnumerable<string?>? values, string? because = "",
+            params object?[] becauseArgs)
         {
             ThrowIfValuesNullOrEmpty(values);
 
@@ -812,7 +812,7 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should not be present in the string
         /// </param>
-        public AndConstraint<StringAssertions> NotContainAny(params string[] values)
+        public AndConstraint<StringAssertions> NotContainAny(params string?[] values)
         {
             return NotContainAny(values, because: string.Empty);
         }
@@ -829,8 +829,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotContainEquivalentOf(string unexpected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotContainEquivalentOf(string? unexpected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Contains(Subject, unexpected, StringComparison.CurrentCultureIgnoreCase))
@@ -840,7 +840,7 @@ namespace FluentAssertions.Primitives
             return new AndConstraint<StringAssertions>(this);
         }
 
-        private static bool Contains(string actual, string expected, StringComparison comparison)
+        private static bool Contains(string? actual, string? expected, StringComparison comparison)
         {
             return (actual ?? "").IndexOf(expected ?? "", comparison) >= 0;
         }
@@ -855,7 +855,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> BeEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> BeEmpty(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject?.Length == 0)
@@ -875,7 +875,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> NotBeEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotBeEmpty(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.Length > 0)
@@ -896,7 +896,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringAssertions> HaveLength(int expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> HaveLength(int expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.Length == expected)
@@ -917,7 +917,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<StringAssertions> NotBeNullOrEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotBeNullOrEmpty(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!string.IsNullOrEmpty(Subject))
@@ -937,7 +937,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<StringAssertions> BeNullOrEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> BeNullOrEmpty(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(string.IsNullOrEmpty(Subject))
@@ -957,7 +957,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<StringAssertions> NotBeNullOrWhiteSpace(string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> NotBeNullOrWhiteSpace(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!string.IsNullOrWhiteSpace(Subject))
@@ -977,7 +977,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<StringAssertions> BeNullOrWhiteSpace(string because = "", params object[] becauseArgs)
+        public AndConstraint<StringAssertions> BeNullOrWhiteSpace(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(string.IsNullOrWhiteSpace(Subject))
@@ -987,7 +987,7 @@ namespace FluentAssertions.Primitives
             return new AndConstraint<StringAssertions>(this);
         }
 
-        private static void ThrowIfValuesNullOrEmpty(IEnumerable<string> values)
+        private static void ThrowIfValuesNullOrEmpty(IEnumerable<string?>? values)
         {
             Guard.ThrowIfArgumentIsNull(values, nameof(values), "Cannot assert string containment of values in null collection");
 

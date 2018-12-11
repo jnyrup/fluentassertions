@@ -32,7 +32,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<GuidAssertions> BeEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<GuidAssertions> BeEmpty(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition((Subject.HasValue) && (Subject.Value == Guid.Empty))
@@ -52,7 +52,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<GuidAssertions> NotBeEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<GuidAssertions> NotBeEmpty(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition((Subject.HasValue) && (Subject.Value != Guid.Empty))
@@ -77,7 +77,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<GuidAssertions> Be(string expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<GuidAssertions> Be(string? expected, string? because = "", params object?[] becauseArgs)
         {
             var expectedGuid = new Guid(expected);
             return Be(expectedGuid, because, becauseArgs);
@@ -94,7 +94,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<GuidAssertions> Be(Guid expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<GuidAssertions> Be(Guid expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.Equals(expected))
@@ -115,7 +115,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<GuidAssertions> NotBe(Guid unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<GuidAssertions> NotBe(Guid unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.Equals(unexpected))

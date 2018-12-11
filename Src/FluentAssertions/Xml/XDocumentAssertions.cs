@@ -13,12 +13,12 @@ namespace FluentAssertions.Xml
     /// Contains a number of methods to assert that an <see cref="XDocument"/> is in the expected state.
     /// </summary>
     [DebuggerNonUserCode]
-    public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentAssertions>
+    public class XDocumentAssertions : ReferenceTypeAssertions<XDocument?, XDocumentAssertions>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="XDocumentAssertions" /> class.
         /// </summary>
-        public XDocumentAssertions(XDocument document) : base(document)
+        public XDocumentAssertions(XDocument? document) : base(document)
         {
         }
 
@@ -27,7 +27,7 @@ namespace FluentAssertions.Xml
         /// using its <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="expected">The expected document</param>
-        public AndConstraint<XDocumentAssertions> Be(XDocument expected)
+        public AndConstraint<XDocumentAssertions> Be(XDocument? expected)
         {
             return Be(expected, string.Empty);
         }
@@ -44,7 +44,7 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<XDocumentAssertions> Be(XDocument expected, string because, params object[] becauseArgs)
+        public AndConstraint<XDocumentAssertions> Be(XDocument? expected, string? because, params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.IsSameOrEqualTo(expected))
@@ -59,7 +59,7 @@ namespace FluentAssertions.Xml
         /// using its <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="unexpected">The unexpected document</param>
-        public AndConstraint<XDocumentAssertions> NotBe(XDocument unexpected)
+        public AndConstraint<XDocumentAssertions> NotBe(XDocument? unexpected)
         {
             return NotBe(unexpected, string.Empty);
         }
@@ -76,7 +76,7 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<XDocumentAssertions> NotBe(XDocument unexpected, string because, params object[] becauseArgs)
+        public AndConstraint<XDocumentAssertions> NotBe(XDocument? unexpected, string? because, params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null))
@@ -96,7 +96,7 @@ namespace FluentAssertions.Xml
         /// using its <see cref="XNode.DeepEquals(XNode, XNode)" /> implementation.
         /// </summary>
         /// <param name="expected">The expected document</param>
-        public AndConstraint<XDocumentAssertions> BeEquivalentTo(XDocument expected)
+        public AndConstraint<XDocumentAssertions> BeEquivalentTo(XDocument? expected)
         {
             return BeEquivalentTo(expected, string.Empty);
         }
@@ -113,7 +113,7 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<XDocumentAssertions> BeEquivalentTo(XDocument expected, string because, params object[] becauseArgs)
+        public AndConstraint<XDocumentAssertions> BeEquivalentTo(XDocument? expected, string? because, params object?[] becauseArgs)
         {
             using (XmlReader subjectReader = Subject.CreateReader())
             using (XmlReader otherReader = expected.CreateReader())
@@ -130,7 +130,7 @@ namespace FluentAssertions.Xml
         /// using its <see cref="XNode.DeepEquals(XNode, XNode)" /> implementation.
         /// </summary>
         /// <param name="unexpected">The unexpected document</param>
-        public AndConstraint<XDocumentAssertions> NotBeEquivalentTo(XDocument unexpected)
+        public AndConstraint<XDocumentAssertions> NotBeEquivalentTo(XDocument? unexpected)
         {
             return NotBeEquivalentTo(unexpected, string.Empty);
         }
@@ -147,7 +147,7 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<XDocumentAssertions> NotBeEquivalentTo(XDocument unexpected, string because, params object[] becauseArgs)
+        public AndConstraint<XDocumentAssertions> NotBeEquivalentTo(XDocument? unexpected, string? because, params object?[] becauseArgs)
         {
             using (XmlReader subjectReader = Subject.CreateReader())
             using (XmlReader otherReader = unexpected.CreateReader())
@@ -164,7 +164,7 @@ namespace FluentAssertions.Xml
         /// <paramref name="expected"/> name.
         /// </summary>
         /// <param name="expected">The name of the expected root element of the current document.</param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(string expected)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(string? expected)
         {
             return HaveRoot(expected, string.Empty);
         }
@@ -174,7 +174,7 @@ namespace FluentAssertions.Xml
         /// <paramref name="expected"/> name.
         /// </summary>
         /// <param name="expected">The name of the expected root element of the current document.</param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(XName expected)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(XName? expected)
         {
             return HaveRoot(expected, string.Empty);
         }
@@ -191,8 +191,8 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(string expected, string because,
-            params object[] becauseArgs)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(string? expected, string? because,
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected),
                 "Cannot assert the document has a root element if the element name is <null>*");
@@ -212,7 +212,7 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(XName expected, string because, params object[] becauseArgs)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveRoot(XName? expected, string? because, params object?[] becauseArgs)
         {
             if (Subject is null)
             {
@@ -240,7 +240,7 @@ namespace FluentAssertions.Xml
         /// <param name="expected">
         /// The name of the expected child element of the current document's Root <see cref="XDocument.Root"/> element.
         /// </param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(string expected)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(string? expected)
         {
             return HaveElement(expected, string.Empty);
         }
@@ -252,7 +252,7 @@ namespace FluentAssertions.Xml
         /// <param name="expected">
         /// The full name <see cref="XName"/> of the expected child element of the current document's Root <see cref="XDocument.Root"/> element.
         /// </param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(XName expected)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(XName? expected)
         {
             return HaveElement(expected, string.Empty);
         }
@@ -271,8 +271,8 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(string expected, string because,
-            params object[] becauseArgs)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(string? expected, string? because,
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected),
                 "Cannot assert the document has an element if the element name is <null>*");
@@ -294,8 +294,8 @@ namespace FluentAssertions.Xml
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(XName expected, string because,
-            params object[] becauseArgs)
+        public AndWhichConstraint<XDocumentAssertions, XElement> HaveElement(XName? expected, string? because,
+            params object?[] becauseArgs)
         {
             if (Subject is null)
             {

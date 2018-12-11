@@ -15,11 +15,11 @@ namespace FluentAssertions.Specialized
     {
         private readonly IClock clock;
 
-        public AsyncFunctionAssertions(Func<Task> subject, IExtractExceptions extractor) : this(subject, extractor, new Clock())
+        public AsyncFunctionAssertions(Func<Task>? subject, IExtractExceptions? extractor) : this(subject, extractor, new Clock())
         {
         }
 
-        public AsyncFunctionAssertions(Func<Task> subject, IExtractExceptions extractor, IClock clock) : base(subject, extractor, clock)
+        public AsyncFunctionAssertions(Func<Task>? subject, IExtractExceptions? extractor, IClock? clock) : base(subject, extractor, clock)
         {
             this.clock = clock;
             Subject = subject;
@@ -55,8 +55,8 @@ namespace FluentAssertions.Specialized
         /// <returns>
         /// Returns an object that allows asserting additional members of the thrown exception.
         /// </returns>
-        public async Task<ExceptionAssertions<TException>> ThrowExactlyAsync<TException>(string because = "",
-            params object[] becauseArgs)
+        public async Task<ExceptionAssertions<TException>> ThrowExactlyAsync<TException>(string? because = "",
+            params object?[] becauseArgs)
             where TException : Exception
         {
             Type expectedType = typeof(TException);
@@ -88,8 +88,8 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public async Task<ExceptionAssertions<TException>> ThrowAsync<TException>(string because = "",
-            params object[] becauseArgs)
+        public async Task<ExceptionAssertions<TException>> ThrowAsync<TException>(string? because = "",
+            params object?[] becauseArgs)
             where TException : Exception
         {
             Execute.Assertion
@@ -138,7 +138,7 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public async Task NotThrowAsync<TException>(string because = "", params object[] becauseArgs)
+        public async Task NotThrowAsync<TException>(string? because = "", params object?[] becauseArgs)
             where TException : Exception
         {
             Execute.Assertion
@@ -225,7 +225,7 @@ namespace FluentAssertions.Specialized
             }
         }
 
-        private static async Task<Exception> InvokeWithInterceptionAsync(Func<Task> action)
+        private static async Task<Exception>? InvokeWithInterceptionAsync(Func<Task> action)
         {
             try
             {

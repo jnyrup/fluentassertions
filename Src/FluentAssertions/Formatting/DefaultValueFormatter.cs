@@ -23,13 +23,13 @@ namespace FluentAssertions.Formatting
         /// <returns>
         /// <c>true</c> if this instance can handle the specified value; otherwise, <c>false</c>.
         /// </returns>
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return true;
         }
 
         /// <inheritdoc />
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             if (value.GetType() == typeof(object))
             {

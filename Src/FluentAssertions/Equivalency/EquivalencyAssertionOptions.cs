@@ -23,7 +23,7 @@ namespace FluentAssertions.Equivalency
         {
         }
 
-        internal EquivalencyAssertionOptions(IEquivalencyAssertionOptions defaults)
+        internal EquivalencyAssertionOptions(IEquivalencyAssertionOptions? defaults)
             : base(defaults)
         {
         }
@@ -31,7 +31,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Excludes the specified (nested) member from the structural equality check.
         /// </summary>
-        public EquivalencyAssertionOptions<TExpectation> Excluding(Expression<Func<TExpectation, object>> expression)
+        public EquivalencyAssertionOptions<TExpectation> Excluding(Expression<Func<TExpectation, object>>? expression)
         {
             AddSelectionRule(new ExcludeMemberByPathSelectionRule(expression.GetMemberPath()));
             return this;
@@ -43,7 +43,7 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// This overrides the default behavior of including all declared members.
         /// </remarks>
-        public EquivalencyAssertionOptions<TExpectation> Including(Expression<Func<TExpectation, object>> expression)
+        public EquivalencyAssertionOptions<TExpectation> Including(Expression<Func<TExpectation, object>>? expression)
         {
             AddSelectionRule(new IncludeMemberByPathSelectionRule(expression.GetMemberPath()));
             return this;
@@ -55,7 +55,7 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// This overrides the default behavior of including all declared members.
         /// </remarks>
-        public EquivalencyAssertionOptions<TExpectation> Including(Expression<Func<IMemberInfo, bool>> predicate)
+        public EquivalencyAssertionOptions<TExpectation> Including(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             AddSelectionRule(new IncludeMemberByPredicateSelectionRule(predicate));
             return this;
@@ -66,7 +66,7 @@ namespace FluentAssertions.Equivalency
         /// in which the items appear in the expectation.
         /// </summary>
         public EquivalencyAssertionOptions<TExpectation> WithStrictOrderingFor(
-            Expression<Func<TExpectation, object>> expression)
+            Expression<Func<TExpectation, object>>? expression)
         {
             string expressionMemberPath = expression.GetMemberPath().ToString();
             orderingRules.Add(new PathBasedOrderingRule(expressionMemberPath));

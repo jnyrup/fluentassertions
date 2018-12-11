@@ -14,7 +14,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets a value indicating whether this step can handle the current subject and/or expectation.
         /// </summary>
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             Type subjectType = config.GetExpectationType(context);
 
@@ -32,8 +32,8 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// May throw when preconditions are not met or if it detects mismatching data.
         /// </remarks>
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent,
-            IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent,
+            IEquivalencyAssertionOptions? config)
         {
             switch (config.EnumEquivalencyHandling)
             {
@@ -71,8 +71,8 @@ namespace FluentAssertions.Equivalency
 
         private static void HandleByName(IEquivalencyValidationContext context)
         {
-            string subject = context.Subject?.ToString();
-            string expected = context.Expectation.ToString();
+            string? subject = context.Subject?.ToString();
+            string? expected = context.Expectation.ToString();
 
             Execute.Assertion
                 .ForCondition(subject == expected)

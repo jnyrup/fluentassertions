@@ -37,7 +37,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndWhichConstraint<MemberInfoAssertions<TSubject, TAssertions>, TAttribute> BeDecoratedWith<TAttribute>(
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             return BeDecoratedWith<TAttribute>(_ => true, because, becauseArgs);
@@ -54,7 +54,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TAssertions> NotBeDecoratedWith<TAttribute>(
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             return NotBeDecoratedWith<TAttribute>(_ => true, because, becauseArgs);
@@ -76,7 +76,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndWhichConstraint<MemberInfoAssertions<TSubject, TAssertions>, TAttribute> BeDecoratedWith<TAttribute>(
             Expression<Func<TAttribute, bool>> isMatchingAttributePredicate,
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
@@ -111,7 +111,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndConstraint<TAssertions> NotBeDecoratedWith<TAttribute>(
             Expression<Func<TAttribute, bool>> isMatchingAttributePredicate,
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));

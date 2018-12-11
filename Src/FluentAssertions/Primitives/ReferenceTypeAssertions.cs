@@ -39,7 +39,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> BeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> BeNull(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(ReferenceEquals(Subject, null))
@@ -60,7 +60,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> NotBeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotBeNull(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!ReferenceEquals(Subject, null))
@@ -82,7 +82,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<TAssertions> BeSameAs(TSubject expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> BeSameAs(TSubject expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .UsingLineBreaks
@@ -105,7 +105,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<TAssertions> NotBeSameAs(TSubject unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotBeSameAs(TSubject unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .UsingLineBreaks
@@ -128,7 +128,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndWhichConstraint<TAssertions, T> BeOfType<T>(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<TAssertions, T> BeOfType<T>(string? because = "", params object?[] becauseArgs)
         {
             BeOfType(typeof(T), because, becauseArgs);
 
@@ -152,7 +152,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> BeOfType(Type expectedType, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> BeOfType(Type expectedType, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!ReferenceEquals(Subject, null))
@@ -184,7 +184,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> NotBeOfType<T>(string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotBeOfType<T>(string? because = "", params object?[] becauseArgs)
         {
             NotBeOfType(typeof(T), because, becauseArgs);
 
@@ -204,7 +204,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> NotBeOfType(Type unexpectedType, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotBeOfType(Type unexpectedType, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!ReferenceEquals(Subject, null))
@@ -232,7 +232,7 @@ namespace FluentAssertions.Primitives
         /// <param name="because">The reason why the object should be assignable to the type.</param>
         /// <param name="becauseArgs">The parameters used when formatting the <paramref name="because"/>.</param>
         /// <returns>An <see cref="AndWhichConstraint{TAssertions, T}"/> which can be used to chain assertions.</returns>
-        public AndWhichConstraint<TAssertions, T> BeAssignableTo<T>(string because = "", params object[] becauseArgs)
+        public AndWhichConstraint<TAssertions, T> BeAssignableTo<T>(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject is T)
@@ -256,7 +256,7 @@ namespace FluentAssertions.Primitives
         /// <param name="because">The parameters used when formatting the <paramref name="because"/>.</param>
         /// <param name="becauseArgs"></param>
         /// <returns>An <see cref="AndConstraint{TAssertions}"/> which can be used to chain assertions.</returns>
-        public AndConstraint<TAssertions> BeAssignableTo(Type type, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> BeAssignableTo(Type type, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!ReferenceEquals(Subject, null))
@@ -292,7 +292,7 @@ namespace FluentAssertions.Primitives
         /// <param name="because">The reason why the object should not be assignable to the type.</param>
         /// <param name="becauseArgs">The parameters used when formatting the <paramref name="because"/>.</param>
         /// <returns>An <see cref="AndConstraint{TAssertions}"/> which can be used to chain assertions.</returns>
-        public AndConstraint<TAssertions> NotBeAssignableTo<T>(string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotBeAssignableTo<T>(string? because = "", params object?[] becauseArgs)
         {
             return NotBeAssignableTo(typeof(T), because, becauseArgs);
         }
@@ -304,7 +304,7 @@ namespace FluentAssertions.Primitives
         /// <param name="because">The parameters used when formatting the <paramref name="because"/>.</param>
         /// <param name="becauseArgs"></param>
         /// <returns>An <see cref="AndConstraint{TAssertions}"/> which can be used to chain assertions.</returns>
-        public AndConstraint<TAssertions> NotBeAssignableTo(Type type, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotBeAssignableTo(Type type, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!ReferenceEquals(Subject, null))
@@ -341,8 +341,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">The parameters used when formatting the <paramref name="because" />.</param>
         /// <returns>An <see cref="AndConstraint{T}" /> which can be used to chain assertions.</returns>
         public AndConstraint<TAssertions> Match(Expression<Func<TSubject, bool>> predicate,
-            string because = "",
-            params object[] becauseArgs)
+            string? because = "",
+            params object?[] becauseArgs)
         {
             return Match<TSubject>(predicate, because, becauseArgs);
         }
@@ -355,8 +355,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">The parameters used when formatting the <paramref name="because" />.</param>
         /// <returns>An <see cref="AndConstraint{T}" /> which can be used to chain assertions.</returns>
         public AndConstraint<TAssertions> Match<T>(Expression<Func<T, bool>> predicate,
-            string because = "",
-            params object[] becauseArgs)
+            string? because = "",
+            params object?[] becauseArgs)
             where T : TSubject
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate), "Cannot match an object against a <null> predicate.");

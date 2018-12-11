@@ -25,8 +25,8 @@ namespace FluentAssertions
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public static AndConstraint<ObjectAssertions> BeBinarySerializable(this ObjectAssertions assertions, string because = "",
-            params object[] becauseArgs)
+        public static AndConstraint<ObjectAssertions> BeBinarySerializable(this ObjectAssertions assertions, string? because = "",
+            params object?[] becauseArgs)
         {
             return BeBinarySerializable<object>(assertions, options => options, because, becauseArgs);
         }
@@ -43,8 +43,8 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public static AndConstraint<ObjectAssertions> BeBinarySerializable<T>(this ObjectAssertions assertions,
-            Func<EquivalencyAssertionOptions<T>, EquivalencyAssertionOptions<T>> options, string because = "",
-            params object[] becauseArgs)
+            Func<EquivalencyAssertionOptions<T>, EquivalencyAssertionOptions<T>> options, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(options, nameof(options));
 
@@ -82,7 +82,7 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public static AndConstraint<ObjectAssertions> BeDataContractSerializable(this ObjectAssertions assertions,
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
         {
             return BeDataContractSerializable<object>(assertions, options => options, because, becauseArgs);
         }
@@ -99,7 +99,7 @@ namespace FluentAssertions
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public static AndConstraint<ObjectAssertions> BeDataContractSerializable<T>(this ObjectAssertions assertions,
-            Func<EquivalencyAssertionOptions<T>, EquivalencyAssertionOptions<T>> options, string because = "", params object[] becauseArgs)
+            Func<EquivalencyAssertionOptions<T>, EquivalencyAssertionOptions<T>> options, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(options, nameof(options));
 
@@ -149,7 +149,7 @@ namespace FluentAssertions
                 this.type = type;
             }
 
-            public override Type BindToType(string assemblyName, string typeName)
+            public override Type? BindToType(string assemblyName, string typeName)
             {
                 if ((type.FullName == typeName) && (type.Assembly.FullName == assemblyName))
                 {
@@ -184,8 +184,8 @@ namespace FluentAssertions
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public static AndConstraint<ObjectAssertions> BeXmlSerializable(this ObjectAssertions assertions, string because = "",
-            params object[] becauseArgs)
+        public static AndConstraint<ObjectAssertions> BeXmlSerializable(this ObjectAssertions assertions, string? because = "",
+            params object?[] becauseArgs)
         {
             try
             {

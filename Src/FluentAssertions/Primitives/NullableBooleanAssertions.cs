@@ -24,7 +24,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableBooleanAssertions> HaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableBooleanAssertions> HaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue)
@@ -44,7 +44,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableBooleanAssertions> NotBeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableBooleanAssertions> NotBeNull(string? because = "", params object?[] becauseArgs)
         {
             return HaveValue(because, becauseArgs);
         }
@@ -59,7 +59,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableBooleanAssertions> NotHaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableBooleanAssertions> NotHaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.HasValue)
@@ -79,7 +79,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableBooleanAssertions> BeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableBooleanAssertions> BeNull(string? because = "", params object?[] becauseArgs)
         {
             return NotHaveValue(because, becauseArgs);
         }
@@ -95,7 +95,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<BooleanAssertions> Be(bool? expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<BooleanAssertions> Be(bool? expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject == expected)
@@ -115,7 +115,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<BooleanAssertions> NotBeFalse(string because = "", params object[] becauseArgs)
+        public AndConstraint<BooleanAssertions> NotBeFalse(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.HasValue || Subject.Value)
@@ -135,7 +135,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<BooleanAssertions> NotBeTrue(string because = "", params object[] becauseArgs)
+        public AndConstraint<BooleanAssertions> NotBeTrue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.HasValue || !Subject.Value)

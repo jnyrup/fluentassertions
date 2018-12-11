@@ -9,7 +9,7 @@ namespace FluentAssertions.Collections
     public class StringCollectionAssertions :
         SelfReferencingCollectionAssertions<string, StringCollectionAssertions>
     {
-        public StringCollectionAssertions(IEnumerable<string> actualValue)
+        public StringCollectionAssertions(IEnumerable<string?>? actualValue)
             : base(actualValue)
         {
         }
@@ -19,7 +19,7 @@ namespace FluentAssertions.Collections
         /// <paramref name="expected" />. Elements are compared using their <see cref="object.Equals(object)" />.
         /// </summary>
         /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-        public new AndConstraint<StringCollectionAssertions> Equal(params string[] expected)
+        public new AndConstraint<StringCollectionAssertions> Equal(params string?[] expected)
         {
             return base.Equal(expected.AsEnumerable());
         }
@@ -29,7 +29,7 @@ namespace FluentAssertions.Collections
         /// <paramref name="expected" />. Elements are compared using their <see cref="object.Equals(object)" />.
         /// </summary>
         /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-        public AndConstraint<StringCollectionAssertions> Equal(IEnumerable<string> expected)
+        public AndConstraint<StringCollectionAssertions> Equal(IEnumerable<string?>? expected)
         {
             return base.Equal(expected);
         }
@@ -40,7 +40,7 @@ namespace FluentAssertions.Collections
         /// <remarks>
         /// The two collections are equivalent when they both contain the same strings in any order.
         /// </remarks>
-        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(params string[] expectation)
+        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(params string?[] expectation)
         {
             BeEquivalentTo(expectation, config => config);
 
@@ -60,7 +60,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(IEnumerable<string> expectation, string because = "", params object[] becauseArgs)
+        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(IEnumerable<string?>? expectation, string? because = "", params object?[] becauseArgs)
         {
             BeEquivalentTo(expectation, config => config, because, becauseArgs);
 
@@ -86,9 +86,9 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(IEnumerable<string> expectation,
-            Func<EquivalencyAssertionOptions<string>, EquivalencyAssertionOptions<string>> config, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(IEnumerable<string?>? expectation,
+            Func<EquivalencyAssertionOptions<string>, EquivalencyAssertionOptions<string>>? config, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(config, nameof(config));
 
@@ -99,7 +99,7 @@ namespace FluentAssertions.Collections
                 Subject = Subject,
                 Expectation = expectation,
                 RootIsCollection = true,
-                CompileTimeType = typeof(IEnumerable<string>),
+                CompileTimeType = typeof(IEnumerable<string?>?),
                 Because = because,
                 BecauseArgs = becauseArgs,
                 Tracer = options.TraceWriter
@@ -116,7 +116,7 @@ namespace FluentAssertions.Collections
         /// using their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-        public AndConstraint<StringCollectionAssertions> ContainInOrder(params string[] expected)
+        public AndConstraint<StringCollectionAssertions> ContainInOrder(params string?[] expected)
         {
             return base.ContainInOrder(expected.AsEnumerable());
         }
@@ -133,8 +133,8 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringCollectionAssertions> ContainInOrder(IEnumerable<string> expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<StringCollectionAssertions> ContainInOrder(IEnumerable<string?>? expected, string? because = "",
+            params object?[] becauseArgs)
         {
             return base.ContainInOrder(expected, because, becauseArgs);
         }
@@ -144,7 +144,7 @@ namespace FluentAssertions.Collections
         /// using their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-        public AndConstraint<StringCollectionAssertions> Contain(IEnumerable<string> expected)
+        public AndConstraint<StringCollectionAssertions> Contain(IEnumerable<string?>? expected)
         {
             return base.Contain(expected);
         }
@@ -161,11 +161,11 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringCollectionAssertions> Contain(IEnumerable<string> expected, string because = null,
-            object becauseArg = null,
-            params object[] becauseArgs)
+        public AndConstraint<StringCollectionAssertions> Contain(IEnumerable<string?>? expected, string? because = null,
+            object? becauseArg = null,
+            params object?[] becauseArgs)
         {
-            var args = new List<object> { becauseArg };
+            var args = new List<object?> { becauseArg };
             args.AddRange(becauseArgs);
             return base.Contain(expected, because, args.ToArray());
         }
@@ -182,11 +182,11 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<StringCollectionAssertions> NotContain(IEnumerable<string> unexpected, string because = null,
-            object becauseArg = null,
-            params object[] becauseArgs)
+        public AndConstraint<StringCollectionAssertions> NotContain(IEnumerable<string> unexpected, string? because = null,
+            object? becauseArg = null,
+            params object?[] becauseArgs)
         {
-            var args = new List<object> { becauseArg };
+            var args = new List<object?> { becauseArg };
             args.AddRange(becauseArgs);
             return base.NotContain(unexpected, because, args.ToArray());
         }

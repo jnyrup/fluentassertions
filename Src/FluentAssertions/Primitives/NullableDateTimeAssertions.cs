@@ -29,7 +29,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableDateTimeAssertions> HaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableDateTimeAssertions> HaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue)
@@ -49,7 +49,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableDateTimeAssertions> NotBeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableDateTimeAssertions> NotBeNull(string? because = "", params object?[] becauseArgs)
         {
             return HaveValue(because, becauseArgs);
         }
@@ -64,7 +64,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableDateTimeAssertions> NotHaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableDateTimeAssertions> NotHaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.HasValue)
@@ -84,7 +84,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableDateTimeAssertions> BeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableDateTimeAssertions> BeNull(string? because = "", params object?[] becauseArgs)
         {
             return NotHaveValue(because, becauseArgs);
         }
@@ -100,7 +100,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<DateTimeAssertions> Be(DateTime? expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<DateTimeAssertions> Be(DateTime? expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject == expected)

@@ -14,16 +14,16 @@ namespace FluentAssertions.Execution
 #endif
     public class ContinuedAssertionScope : IAssertionScope
     {
-        private readonly AssertionScope predecessor;
+        private readonly AssertionScope? predecessor;
         private readonly bool predecessorSucceeded;
 
-        public ContinuedAssertionScope(AssertionScope predecessor, bool predecessorSucceeded)
+        public ContinuedAssertionScope(AssertionScope? predecessor, bool predecessorSucceeded)
         {
             this.predecessorSucceeded = predecessorSucceeded;
             this.predecessor = predecessor;
         }
 
-        public GivenSelector<T> Given<T>(Func<T> selector)
+        public GivenSelector<T> Given<T>(Func<T>? selector)
         {
             return predecessor.Given(selector);
         }
@@ -38,7 +38,7 @@ namespace FluentAssertions.Execution
             return this;
         }
 
-        public Continuation FailWith(Func<FailReason> failReasonFunc)
+        public Continuation FailWith(Func<FailReason>? failReasonFunc)
         {
             if (predecessorSucceeded)
             {
@@ -48,7 +48,7 @@ namespace FluentAssertions.Execution
             return new Continuation(predecessor, false);
         }
 
-        public Continuation FailWith(string message, params object[] args)
+        public Continuation FailWith(string? message, params object?[] args)
         {
             if (predecessorSucceeded)
             {
@@ -58,7 +58,7 @@ namespace FluentAssertions.Execution
             return new Continuation(predecessor, false);
         }
 
-        public IAssertionScope BecauseOf(string because, params object[] becauseArgs)
+        public IAssertionScope BecauseOf(string? because, params object?[] becauseArgs)
         {
             return predecessor.BecauseOf(because, becauseArgs);
         }
@@ -70,12 +70,12 @@ namespace FluentAssertions.Execution
             return new Continuation(predecessor, predecessorSucceeded);
         }
 
-        public IAssertionScope WithExpectation(string message, params object[] args)
+        public IAssertionScope WithExpectation(string? message, params object?[] args)
         {
             return predecessor.WithExpectation(message, args);
         }
 
-        public IAssertionScope WithDefaultIdentifier(string identifier)
+        public IAssertionScope WithDefaultIdentifier(string? identifier)
         {
             return predecessor.WithDefaultIdentifier(identifier);
         }

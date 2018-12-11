@@ -19,15 +19,15 @@ namespace FluentAssertions.Events
         private readonly Func<DateTime> utcNow;
         private readonly BlockingCollection<RecordedEvent> raisedEvents = new BlockingCollection<RecordedEvent>();
         private readonly object lockable = new object();
-        private WeakReference eventObject;
-        private Action cleanup;
+        private WeakReference? eventObject;
+        private Action? cleanup;
 
         /// <summary>
         /// </summary>
         /// <param name = "eventRaiser">The object events are recorded from</param>
         /// <param name = "eventName">The name of the event that's recorded</param>
         /// <param name="utcNow">A delegate to get the current date and time in UTC format.</param>
-        public EventRecorder(object eventRaiser, string eventName, Func<DateTime> utcNow)
+        public EventRecorder(object? eventRaiser, string? eventName, Func<DateTime>? utcNow)
         {
             this.utcNow = utcNow;
             EventObject = eventRaiser;
@@ -37,7 +37,7 @@ namespace FluentAssertions.Events
         /// <summary>
         /// The object events are recorded from
         /// </summary>
-        public object EventObject
+        public object? EventObject
         {
             get => eventObject?.Target;
             private set => eventObject = new WeakReference(value);
@@ -48,7 +48,7 @@ namespace FluentAssertions.Events
 
         public Type EventHandlerType { get; private set; }
 
-        public void Attach(WeakReference subject, EventInfo eventInfo)
+        public void Attach(WeakReference? subject, EventInfo? eventInfo)
         {
             EventHandlerType = eventInfo.EventHandlerType;
 
@@ -100,7 +100,7 @@ namespace FluentAssertions.Events
         /// <summary>
         /// Called by the auto-generated IL, to record information about a raised event.
         /// </summary>
-        public void RecordEvent(params object[] parameters)
+        public void RecordEvent(params object?[] parameters)
         {
             lock (lockable)
             {

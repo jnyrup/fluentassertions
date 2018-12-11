@@ -10,7 +10,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets a value indicating whether this step can handle the current subject and/or expectation.
         /// </summary>
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             return typeof(IDictionary).IsAssignableFrom(config.GetExpectationType(context));
         }
@@ -26,7 +26,7 @@ namespace FluentAssertions.Equivalency
         /// May throw when preconditions are not met or if it detects mismatching data.
         /// </remarks>
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        public virtual bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent, IEquivalencyAssertionOptions config)
+        public virtual bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent, IEquivalencyAssertionOptions? config)
         {
             var subject = context.Subject as IDictionary;
             var expectation = context.Expectation as IDictionary;
@@ -54,28 +54,28 @@ namespace FluentAssertions.Equivalency
             return true;
         }
 
-        private static bool PreconditionsAreMet(IDictionary expectation, IDictionary subject)
+        private static bool PreconditionsAreMet(IDictionary? expectation, IDictionary? subject)
         {
             return AssertIsDictionary(subject)
                    && AssertEitherIsNotNull(expectation, subject)
                    && AssertSameLength(expectation, subject);
         }
 
-        private static bool AssertEitherIsNotNull(IDictionary expectation, IDictionary subject)
+        private static bool AssertEitherIsNotNull(IDictionary? expectation, IDictionary? subject)
         {
             return AssertionScope.Current
                 .ForCondition(((expectation is null) && (subject is null)) || (expectation != null))
                 .FailWith("Expected {context:subject} to be {0}, but found {1}.", null, subject);
         }
 
-        private static bool AssertIsDictionary(IDictionary subject)
+        private static bool AssertIsDictionary(IDictionary? subject)
         {
             return AssertionScope.Current
                 .ForCondition(subject != null)
                 .FailWith("Expected {context:subject} to be a dictionary, but it is not.");
         }
 
-        private static bool AssertSameLength(IDictionary expectation, IDictionary subject)
+        private static bool AssertSameLength(IDictionary? expectation, IDictionary? subject)
         {
             return AssertionScope.Current
                 .ForCondition((expectation is null) || (subject.Keys.Count == expectation.Keys.Count))

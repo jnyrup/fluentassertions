@@ -36,7 +36,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TAssertions> HaveAccessModifier(
-            CSharpAccessModifier accessModifier, string because = "", params object[] becauseArgs)
+            CSharpAccessModifier accessModifier, string? because = "", params object?[] becauseArgs)
         {
             CSharpAccessModifier subjectAccessModifier = Subject.GetCSharpAccessModifier();
 
@@ -59,7 +59,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> NotHaveAccessModifier(CSharpAccessModifier accessModifier, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotHaveAccessModifier(CSharpAccessModifier accessModifier, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(accessModifier != Subject.GetCSharpAccessModifier())

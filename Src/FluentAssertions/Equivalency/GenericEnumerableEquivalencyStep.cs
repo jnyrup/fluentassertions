@@ -16,7 +16,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets a value indicating whether this step can handle the verificationScope subject and/or expectation.
         /// </summary>
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             Type expectationType = config.GetExpectationType(context);
 
@@ -33,8 +33,8 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// May throw when preconditions are not met or if it detects mismatching data.
         /// </remarks>
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent,
-            IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent,
+            IEquivalencyAssertionOptions? config)
         {
             Type expectedType = config.GetExpectationType(context);
 
@@ -78,13 +78,13 @@ namespace FluentAssertions.Equivalency
         {
             bool conditionMet = AssertionScope.Current
                 .ForCondition(!(subject is null))
-                .FailWith("Expected {context:subject} not to be {0}.", new object[] { null });
+                .FailWith("Expected {context:subject} not to be {0}.", new object?[] { null });
 
             if (conditionMet)
             {
                 conditionMet = AssertionScope.Current
-                    .ForCondition(IsCollection(subject.GetType()))
-                    .FailWith("Expected {context:subject} to be a collection, but it was a {0}", subject.GetType());
+                    .ForCondition(IsCollection(subject!.GetType()))
+                    .FailWith("Expected {context:subject} to be a collection, but it was a {0}", subject!.GetType());
             }
 
             return conditionMet;

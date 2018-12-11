@@ -14,11 +14,11 @@ namespace FluentAssertions.Specialized
     {
         private readonly IClock clock;
 
-        public FunctionAssertions(Func<T> subject, IExtractExceptions extractor) : this(subject, extractor, new Clock())
+        public FunctionAssertions(Func<T>? subject, IExtractExceptions? extractor) : this(subject, extractor, new Clock())
         {
         }
 
-        public FunctionAssertions(Func<T> subject, IExtractExceptions extractor, IClock clock) : base(subject, extractor, clock)
+        public FunctionAssertions(Func<T>? subject, IExtractExceptions? extractor, IClock? clock) : base(subject, extractor, clock)
         {
             this.clock = clock;
             Subject = subject;
@@ -46,7 +46,7 @@ namespace FluentAssertions.Specialized
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public new AndWhichConstraint<FunctionAssertions<T>, T> NotThrow(string because = "", params object[] becauseArgs)
+        public new AndWhichConstraint<FunctionAssertions<T>, T> NotThrow(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!ReferenceEquals(Subject, null))
@@ -88,7 +88,7 @@ namespace FluentAssertions.Specialized
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException">Throws if waitTime or pollInterval are negative.</exception>
-        public new AndWhichConstraint<FunctionAssertions<T>, T> NotThrowAfter(TimeSpan waitTime, TimeSpan pollInterval, string because = "", params object[] becauseArgs)
+        public new AndWhichConstraint<FunctionAssertions<T>, T> NotThrowAfter(TimeSpan waitTime, TimeSpan pollInterval, string? because = "", params object?[] becauseArgs)
         {
             if (waitTime < TimeSpan.Zero)
             {

@@ -15,18 +15,18 @@ namespace FluentAssertions.Equivalency
 
         private const int MaxDepth = 10;
 
-        private readonly IEquivalencyAssertionOptions config;
+        private readonly IEquivalencyAssertionOptions? config;
 
         private readonly Dictionary<Type, bool> isComplexTypeMap = new Dictionary<Type, bool>();
 
         #endregion
 
-        public EquivalencyValidator(IEquivalencyAssertionOptions config)
+        public EquivalencyValidator(IEquivalencyAssertionOptions? config)
         {
             this.config = config;
         }
 
-        public void AssertEquality(EquivalencyValidationContext context)
+        public void AssertEquality(EquivalencyValidationContext? context)
         {
             using (var scope = new AssertionScope())
             {
@@ -43,7 +43,7 @@ namespace FluentAssertions.Equivalency
             }
         }
 
-        public void AssertEqualityUsing(IEquivalencyValidationContext context)
+        public void AssertEqualityUsing(IEquivalencyValidationContext? context)
         {
             if (ShouldCompareMembersThisDeep(context.SelectedMemberPath))
             {

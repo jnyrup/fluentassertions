@@ -18,7 +18,7 @@ namespace FluentAssertions.Equivalency
             return propertyPath.Substring(propertyPath.IndexOf('.') + 1);
         }
 
-        public SelectedMemberInfo SelectedMemberInfo { get; private set; }
+        public SelectedMemberInfo? SelectedMemberInfo { get; private set; }
 
         public string SelectedMemberPath { get; private set; }
 

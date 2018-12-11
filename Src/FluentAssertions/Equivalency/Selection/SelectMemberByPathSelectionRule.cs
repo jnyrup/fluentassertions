@@ -14,8 +14,8 @@ namespace FluentAssertions.Equivalency.Selection
 
         public virtual bool IncludesMembers => false;
 
-        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo> selectedMembers, IMemberInfo context,
-            IEquivalencyAssertionOptions config)
+        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo?>? selectedMembers, IMemberInfo? context,
+            IEquivalencyAssertionOptions? config)
         {
             string path = context.SelectedMemberPath;
             if (!ContainsIndexingQualifiers(selectedPath))

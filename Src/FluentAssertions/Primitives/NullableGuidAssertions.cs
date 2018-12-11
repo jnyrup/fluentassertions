@@ -25,7 +25,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableGuidAssertions> HaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableGuidAssertions> HaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject.HasValue)
@@ -45,7 +45,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableGuidAssertions> NotBeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableGuidAssertions> NotBeNull(string? because = "", params object?[] becauseArgs)
         {
             return HaveValue(because, becauseArgs);
         }
@@ -60,7 +60,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableGuidAssertions> NotHaveValue(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableGuidAssertions> NotHaveValue(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.HasValue)
@@ -80,7 +80,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NullableGuidAssertions> BeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableGuidAssertions> BeNull(string? because = "", params object?[] becauseArgs)
         {
             return NotHaveValue(because, becauseArgs);
         }
@@ -96,7 +96,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NullableGuidAssertions> Be(Guid? expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NullableGuidAssertions> Be(Guid? expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject == expected)

@@ -17,7 +17,7 @@ namespace FluentAssertions.Equivalency
             public Func<IMemberInfo, bool> Predicate { get; }
             public string Description { get; }
 
-            public ConversionSelectorRule(Func<IMemberInfo, bool> predicate, string description)
+            public ConversionSelectorRule(Func<IMemberInfo, bool>? predicate, string? description)
             {
                 Predicate = predicate;
                 Description = description;
@@ -32,7 +32,7 @@ namespace FluentAssertions.Equivalency
             inclusions.Add(new ConversionSelectorRule(_ => true, "Try conversion of all members. "));
         }
 
-        public void Include(Expression<Func<IMemberInfo, bool>> predicate)
+        public void Include(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 
@@ -41,7 +41,7 @@ namespace FluentAssertions.Equivalency
                 $"Try conversion of member {predicate.Body}. "));
         }
 
-        public void Exclude(Expression<Func<IMemberInfo, bool>> predicate)
+        public void Exclude(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 
@@ -50,7 +50,7 @@ namespace FluentAssertions.Equivalency
                 $"Do not convert member {predicate.Body}."));
         }
 
-        public bool RequiresConversion(IMemberInfo info)
+        public bool RequiresConversion(IMemberInfo? info)
         {
             return inclusions.Any(p => p.Predicate(info)) && !exclusions.Any(p => p.Predicate(info));
         }

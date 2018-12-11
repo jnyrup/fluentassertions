@@ -17,7 +17,7 @@ namespace FluentAssertions.Types
         /// Initializes a new instance of the <see cref="MethodInfoSelector"/> class.
         /// </summary>
         /// <param name="type">The type from which to select methods.</param>
-        public MethodInfoSelector(Type type)
+        public MethodInfoSelector(Type? type)
             : this(new[] { type })
         {
         }
@@ -26,7 +26,7 @@ namespace FluentAssertions.Types
         /// Initializes a new instance of the <see cref="MethodInfoSelector"/> class.
         /// </summary>
         /// <param name="types">The types from which to select methods.</param>
-        public MethodInfoSelector(IEnumerable<Type> types)
+        public MethodInfoSelector(IEnumerable<Type?>? types)
         {
             selectedMethods = types.SelectMany(t => t
                 .GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)

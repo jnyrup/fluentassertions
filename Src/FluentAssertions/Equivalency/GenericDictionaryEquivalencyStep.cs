@@ -19,15 +19,15 @@ namespace FluentAssertions.Equivalency
         private static readonly MethodInfo AssertDictionaryEquivalenceMethod = new Action<EquivalencyValidationContext, IEquivalencyValidator, IEquivalencyAssertionOptions, IDictionary<object, object>, IDictionary<object, object>>
             (AssertDictionaryEquivalence).GetMethodInfo().GetGenericMethodDefinition();
 
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             Type expectationType = config.GetExpectationType(context);
 
             return context.Expectation != null && GetIDictionaryInterfaces(expectationType).Any();
         }
 
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent,
-            IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent,
+            IEquivalencyAssertionOptions? config)
         {
             if (PreconditionsAreMet(context, config))
             {
@@ -59,7 +59,7 @@ namespace FluentAssertions.Equivalency
         {
             return AssertionScope.Current
                 .ForCondition(!(subject is null))
-                .FailWith("Expected {context:Subject} not to be {0}.", new object[] { null });
+                .FailWith("Expected {context:Subject} not to be {0}.", new object?[] { null });
         }
 
         private static bool AssertExpectationIsNotNull(object subject, object expectation)

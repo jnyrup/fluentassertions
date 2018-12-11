@@ -128,7 +128,7 @@ namespace FluentAssertions.Events
             }
         }
 
-        public IEventRecorder GetEventRecorder(string eventName)
+        public IEventRecorder GetEventRecorder(string? eventName)
         {
             if (!recorderMap.TryGetValue(eventName, out IEventRecorder recorder))
             {

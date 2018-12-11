@@ -17,7 +17,7 @@ namespace FluentAssertions.Types
         /// Initializes a new instance of the <see cref="PropertyInfoSelector"/> class.
         /// </summary>
         /// <param name="type">The type from which to select properties.</param>
-        public PropertyInfoSelector(Type type)
+        public PropertyInfoSelector(Type? type)
             : this(new[] { type })
         {
         }
@@ -26,7 +26,7 @@ namespace FluentAssertions.Types
         /// Initializes a new instance of the <see cref="PropertyInfoSelector"/> class.
         /// </summary>
         /// <param name="types">The types from which to select properties.</param>
-        public PropertyInfoSelector(IEnumerable<Type> types)
+        public PropertyInfoSelector(IEnumerable<Type?>? types)
         {
             selectedProperties = types.SelectMany(t => t
                 .GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic));

@@ -7,9 +7,9 @@ namespace FluentAssertions.Equivalency
     /// </summary>
     public interface ITraceWriter
     {
-        void AddSingle(string trace);
+        void AddSingle(string? trace);
 
-        IDisposable AddBlock(string trace);
+        IDisposable AddBlock(string? trace);
 
         string ToString();
     }

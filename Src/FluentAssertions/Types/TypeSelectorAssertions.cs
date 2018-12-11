@@ -18,7 +18,7 @@ namespace FluentAssertions.Types
         /// <summary>
         /// Initializes a new instance of the <see cref="System.Object" /> class.
         /// </summary>
-        public TypeSelectorAssertions(params Type[] types)
+        public TypeSelectorAssertions(params Type?[] types)
         {
             Subject = types;
         }
@@ -38,7 +38,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TypeSelectorAssertions> BeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<TypeSelectorAssertions> BeDecoratedWith<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Type[] typesWithoutAttribute = Subject
@@ -72,7 +72,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TypeSelectorAssertions> BeDecoratedWith<TAttribute>(
-            Expression<Func<TAttribute, bool>> isMatchingAttributePredicate, string because = "", params object[] becauseArgs)
+            Expression<Func<TAttribute, bool>>? isMatchingAttributePredicate, string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
@@ -104,7 +104,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TypeSelectorAssertions> BeDecoratedWithOrInherit<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<TypeSelectorAssertions> BeDecoratedWithOrInherit<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Type[] typesWithoutAttribute = Subject
@@ -138,7 +138,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TypeSelectorAssertions> BeDecoratedWithOrInherit<TAttribute>(
-            Expression<Func<TAttribute, bool>> isMatchingAttributePredicate, string because = "", params object[] becauseArgs)
+            Expression<Func<TAttribute, bool>>? isMatchingAttributePredicate, string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
@@ -170,7 +170,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWith<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Type[] typesWithAttribute = Subject
@@ -204,7 +204,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWith<TAttribute>(
-            Expression<Func<TAttribute, bool>> isMatchingAttributePredicate, string because = "", params object[] becauseArgs)
+            Expression<Func<TAttribute, bool>>? isMatchingAttributePredicate, string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
@@ -236,7 +236,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWithOrInherit<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWithOrInherit<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Type[] typesWithAttribute = Subject
@@ -270,7 +270,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWithOrInherit<TAttribute>(
-            Expression<Func<TAttribute, bool>> isMatchingAttributePredicate, string because = "", params object[] becauseArgs)
+            Expression<Func<TAttribute, bool>>? isMatchingAttributePredicate, string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));

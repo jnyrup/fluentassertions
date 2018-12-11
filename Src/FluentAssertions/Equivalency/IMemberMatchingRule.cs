@@ -29,6 +29,6 @@ namespace FluentAssertions.Equivalency
         /// Returns the <see cref="FluentAssertions.Equivalency.SelectedMemberInfo"/> of the property with which to compare the subject with, or <c>null</c>
         /// if no match was found.
         /// </returns>
-        SelectedMemberInfo Match(SelectedMemberInfo expectedMember, object subject, string memberPath, IEquivalencyAssertionOptions config);
+        SelectedMemberInfo? Match(SelectedMemberInfo? expectedMember, object? subject, string? memberPath, IEquivalencyAssertionOptions? config);
     }
 }

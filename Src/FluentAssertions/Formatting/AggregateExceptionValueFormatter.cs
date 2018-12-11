@@ -12,7 +12,7 @@ namespace FluentAssertions.Formatting
         /// <returns>
         /// <c>true</c> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <c>false</c>.
         /// </returns>
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return value is AggregateException;
         }
@@ -33,7 +33,7 @@ namespace FluentAssertions.Formatting
         /// <returns>
         /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             var exception = (AggregateException)value;
             if (exception.InnerExceptions.Count == 1)

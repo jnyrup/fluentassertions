@@ -12,7 +12,7 @@ namespace FluentAssertions.Execution
     {
         private readonly AssertionScope sourceScope;
 
-        public Continuation(AssertionScope sourceScope, bool sourceSucceeded)
+        public Continuation(AssertionScope? sourceScope, bool sourceSucceeded)
         {
             this.sourceScope = sourceScope;
             SourceSucceeded = sourceSucceeded;

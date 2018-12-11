@@ -12,7 +12,7 @@ namespace FluentAssertions.Events
         /// Store information about a raised event
         /// </summary>
         /// <param name = "parameters">Parameters the event was raised with</param>
-        void RecordEvent(params object[] parameters);
+        void RecordEvent(params object?[] parameters);
 
         /// <summary>
         /// Resets the event recorder, removing any events recorded thus far.
@@ -22,7 +22,7 @@ namespace FluentAssertions.Events
         /// <summary>
         /// The object events are recorded from
         /// </summary>
-        object EventObject { get; }
+        object? EventObject { get; }
 
         /// <summary>
         /// The name of the event that's recorded

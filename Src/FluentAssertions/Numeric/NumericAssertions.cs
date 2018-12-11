@@ -16,7 +16,7 @@ namespace FluentAssertions.Numeric
     public class NumericAssertions<T>
         where T : struct
     {
-        public NumericAssertions(object value)
+        public NumericAssertions(object? value)
         {
             if (!(value is null))
             {
@@ -28,7 +28,7 @@ namespace FluentAssertions.Numeric
             }
         }
 
-        public IComparable Subject { get; private set; }
+        public IComparable? Subject { get; private set; }
 
         /// <summary>
         /// Asserts that the integral number value is exactly the same as the <paramref name="expected"/> value.
@@ -41,7 +41,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> Be(T expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> Be(T expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && Subject.CompareTo(expected) == 0)
@@ -62,7 +62,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> Be(T? expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> Be(T? expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition((Subject is null && !expected.HasValue) || (!(Subject is null) && Subject.CompareTo(expected) == 0))
@@ -83,7 +83,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> NotBe(T unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> NotBe(T unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(Subject is null || Subject.CompareTo(unexpected) != 0)
@@ -104,7 +104,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> NotBe(T? unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> NotBe(T? unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition((Subject is null == unexpected.HasValue) || (!(Subject is null) && Subject.CompareTo(unexpected) != 0))
@@ -124,7 +124,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BePositive(string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BePositive(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && Subject.CompareTo(default(T)) > 0)
@@ -144,7 +144,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeNegative(string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeNegative(string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && Subject.CompareTo(default(T)) < 0)
@@ -165,7 +165,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeLessThan(T expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeLessThan(T expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && Subject.CompareTo(expected) < 0)
@@ -186,8 +186,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeLessOrEqualTo(T expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeLessOrEqualTo(T expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && Subject.CompareTo(expected) <= 0)
@@ -208,8 +208,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeGreaterThan(T expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeGreaterThan(T expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && Subject.CompareTo(expected) > 0)
@@ -230,8 +230,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeGreaterOrEqualTo(T expected, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeGreaterOrEqualTo(T expected, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && Subject.CompareTo(expected) >= 0)
@@ -260,8 +260,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeInRange(T minimumValue, T maximumValue, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeInRange(T minimumValue, T maximumValue, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && (Subject.CompareTo(minimumValue) >= 0) && (Subject.CompareTo(maximumValue) <= 0))
@@ -291,8 +291,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> NotBeInRange(T minimumValue, T maximumValue, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> NotBeInRange(T minimumValue, T maximumValue, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && !((Subject.CompareTo(minimumValue) >= 0) && (Subject.CompareTo(maximumValue) <= 0)))
@@ -327,8 +327,8 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeOneOf(IEnumerable<T> validValues, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeOneOf(IEnumerable<T>? validValues, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!(Subject is null) && validValues.Contains((T)Subject))
@@ -351,7 +351,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeOfType(Type expectedType, string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> BeOfType(Type? expectedType, string? because = "", params object?[] becauseArgs)
         {
             Type subjectType = Subject.GetType();
             if (expectedType.GetTypeInfo().IsGenericTypeDefinition && subjectType.GetTypeInfo().IsGenericType)
@@ -379,7 +379,7 @@ namespace FluentAssertions.Numeric
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> NotBeOfType(Type unexpectedType, string because = "", params object[] becauseArgs)
+        public AndConstraint<NumericAssertions<T>> NotBeOfType(Type? unexpectedType, string? because = "", params object?[] becauseArgs)
         {
             Subject.GetType().Should().NotBe(unexpectedType, because, becauseArgs);
 

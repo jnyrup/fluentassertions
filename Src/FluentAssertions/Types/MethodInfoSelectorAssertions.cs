@@ -19,7 +19,7 @@ namespace FluentAssertions.Types
         /// Initializes a new instance of the <see cref="MethodInfoSelectorAssertions"/> class.
         /// </summary>
         /// <param name="methodInfo">The methods to assert.</param>
-        public MethodInfoSelectorAssertions(params MethodInfo[] methods)
+        public MethodInfoSelectorAssertions(params MethodInfo?[] methods)
         {
             SubjectMethods = methods;
         }
@@ -39,7 +39,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodInfoSelectorAssertions> BeVirtual(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodInfoSelectorAssertions> BeVirtual(string? because = "", params object?[] becauseArgs)
         {
             MethodInfo[] nonVirtualMethods = GetAllNonVirtualMethodsFromSelection();
 
@@ -66,7 +66,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodInfoSelectorAssertions> NotBeVirtual(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodInfoSelectorAssertions> NotBeVirtual(string? because = "", params object?[] becauseArgs)
         {
             MethodInfo[] virtualMethods = GetAllVirtualMethodsFromSelection();
 
@@ -113,7 +113,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodInfoSelectorAssertions> BeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodInfoSelectorAssertions> BeDecoratedWith<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             return BeDecoratedWith<TAttribute>(_ => true, because, becauseArgs);
@@ -134,7 +134,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<MethodInfoSelectorAssertions> BeDecoratedWith<TAttribute>(
-            Expression<Func<TAttribute, bool>> isMatchingAttributePredicate, string because = "", params object[] becauseArgs)
+            Expression<Func<TAttribute, bool>>? isMatchingAttributePredicate, string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
@@ -164,7 +164,7 @@ namespace FluentAssertions.Types
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<MethodInfoSelectorAssertions> NotBeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
+        public AndConstraint<MethodInfoSelectorAssertions> NotBeDecoratedWith<TAttribute>(string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             return NotBeDecoratedWith<TAttribute>(_ => true, because, becauseArgs);
@@ -185,7 +185,7 @@ namespace FluentAssertions.Types
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<MethodInfoSelectorAssertions> NotBeDecoratedWith<TAttribute>(
-            Expression<Func<TAttribute, bool>> isMatchingAttributePredicate, string because = "", params object[] becauseArgs)
+            Expression<Func<TAttribute, bool>>? isMatchingAttributePredicate, string? because = "", params object?[] becauseArgs)
             where TAttribute : Attribute
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));

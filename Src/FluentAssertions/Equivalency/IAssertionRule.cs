@@ -11,6 +11,6 @@ namespace FluentAssertions.Equivalency
         /// Returns <c>false</c> if this rule doesn't support the subject's type.
         /// Throws if the rule did support the data type but assertion fails.
         /// </returns>
-        bool AssertEquality(IEquivalencyValidationContext context);
+        bool AssertEquality(IEquivalencyValidationContext? context);
     }
 }

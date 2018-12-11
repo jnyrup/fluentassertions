@@ -29,7 +29,7 @@ namespace FluentAssertions.Execution
         }
 
         // SMELL: Too many parameters.
-        public string Build(string message, object[] messageArgs, string reason, ContextDataItems contextData, string identifier, string fallbackIdentifier)
+        public string Build(string message, object?[] messageArgs, string reason, ContextDataItems contextData, string? identifier, string fallbackIdentifier)
         {
             message = Regex.Replace(message, "{reason}", SanitizeReason(reason));
 
@@ -42,7 +42,7 @@ namespace FluentAssertions.Execution
             return message;
         }
 
-        private static string SubstituteIdentifier(string message, string identifier, string fallbackIdentifier)
+        private static string SubstituteIdentifier(string message, string? identifier, string fallbackIdentifier)
         {
             const string pattern = @"(\s|^)\{context(?:\:(?<default>[a-z|A-Z|\s]+))?\}";
 
@@ -79,14 +79,14 @@ namespace FluentAssertions.Execution
             return Regex.Replace(message, pattern, match =>
             {
                 string key = match.Groups["key"].Value;
-                string contextualTags = contextData.AsStringOrDefault(key);
-                string contextualTagsSubstituted = contextualTags?.Replace("{", "{{").Replace("}", "}}");
+                string? contextualTags = contextData.AsStringOrDefault(key);
+                string? contextualTagsSubstituted = contextualTags?.Replace("{", "{{").Replace("}", "}}");
 
                 return contextualTagsSubstituted ?? match.Groups["default"].Value;
             });
         }
 
-        private string FormatArgumentPlaceholders(string failureMessage, object[] failureArgs)
+        private string FormatArgumentPlaceholders(string failureMessage, object?[] failureArgs)
         {
             string[] values = failureArgs.Select(a => Formatter.ToString(a, useLineBreaks)).ToArray();
             string formattedMessage = string.Format(failureMessage, values);

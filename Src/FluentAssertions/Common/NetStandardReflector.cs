@@ -11,7 +11,7 @@ namespace FluentAssertions.Common
 {
     internal class NetStandardReflector : IReflector
     {
-        public IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool> predicate)
+        public IEnumerable<Type> GetAllTypesFromAppDomain(Func<Assembly, bool>? predicate)
         {
             return DependencyContext.Default.RuntimeLibraries
                 .Where(IsRelevant)
@@ -33,7 +33,7 @@ namespace FluentAssertions.Common
                    !assemblyName.StartsWith("newtonsoft");
         }
 
-        private static Assembly TryLoad(RuntimeLibrary lib)
+        private static Assembly? TryLoad(RuntimeLibrary lib)
         {
             try
             {

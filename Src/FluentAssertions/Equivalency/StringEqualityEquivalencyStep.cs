@@ -10,7 +10,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets a value indicating whether this step can handle the current subject and/or expectation.
         /// </summary>
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             Type expectationType = config.GetExpectationType(context);
 
@@ -27,7 +27,7 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// May throw when preconditions are not met or if it detects mismatching data.
         /// </remarks>
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent, IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent, IEquivalencyAssertionOptions? config)
         {
             if (!ValidateAgainstNulls(context))
             {
@@ -37,8 +37,8 @@ namespace FluentAssertions.Equivalency
             bool subjectIsString = ValidateAgainstType<string>(context);
             if (subjectIsString)
             {
-                string subject = (string)context.Subject;
-                string expectation = (string)context.Expectation;
+                string? subject = (string?)context.Subject;
+                string? expectation = (string?)context.Expectation;
 
                 subject.Should()
                     .Be(expectation, context.Because, context.BecauseArgs);
@@ -49,8 +49,8 @@ namespace FluentAssertions.Equivalency
 
         private static bool ValidateAgainstNulls(IEquivalencyValidationContext context)
         {
-            object expected = context.Expectation;
-            object subject = context.Subject;
+            object? expected = context.Expectation;
+            object? subject = context.Subject;
 
             bool onlyOneNull = (expected is null) ^ (subject is null);
 

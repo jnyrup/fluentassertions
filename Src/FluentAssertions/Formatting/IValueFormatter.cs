@@ -15,7 +15,7 @@
         /// <returns>
         /// <c>true</c> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <c>false</c>.
         /// </returns>
-        bool CanHandle(object value);
+        bool CanHandle(object? value);
 
         /// <summary>
         /// Returns a human-readable representation of <paramref name="value"/>.
@@ -31,7 +31,7 @@
         /// DO NOT CALL <see cref="Formatter.ToString(object,bool)"/> directly, but use <paramref name="formatChild"/>
         /// instead. This will ensure cyclic dependencies are properly detected.
         /// </remarks>
-        string Format(object value, FormattingContext context, FormatChild formatChild);
+        string Format(object? value, FormattingContext? context, FormatChild? formatChild);
     }
 
     /// <summary>
@@ -53,5 +53,5 @@
     /// <param name="value">
     /// The child value to run through the configured <see cref="IValueFormatter"/>s.
     /// </param>
-    public delegate string FormatChild(string childPath, object value);
+    public delegate string FormatChild(string? childPath, object? value);
 }

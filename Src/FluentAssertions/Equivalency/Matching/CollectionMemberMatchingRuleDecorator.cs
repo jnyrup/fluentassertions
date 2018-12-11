@@ -9,8 +9,8 @@ namespace FluentAssertions.Equivalency.Matching
             this.matchingRule = matchingRule;
         }
 
-        public SelectedMemberInfo Match(SelectedMemberInfo expectedMember, object subject, string memberPath,
-            IEquivalencyAssertionOptions config)
+        public SelectedMemberInfo? Match(SelectedMemberInfo? expectedMember, object? subject, string? memberPath,
+            IEquivalencyAssertionOptions? config)
         {
             return matchingRule.Match(expectedMember, subject, memberPath, config);
         }

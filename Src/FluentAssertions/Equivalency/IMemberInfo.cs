@@ -11,7 +11,7 @@ namespace FluentAssertions.Equivalency
         /// Gets the <see cref="SelectedMemberInfo"/> of the member that returned the current object, or <c>null</c> if the current
         /// object represents the root object.
         /// </summary>
-        SelectedMemberInfo SelectedMemberInfo { get; }
+        SelectedMemberInfo? SelectedMemberInfo { get; }
 
         /// <summary>
         /// Gets the full path from the root object until the current object separated by dots.

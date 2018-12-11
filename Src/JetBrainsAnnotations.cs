@@ -99,7 +99,7 @@ namespace JetBrains.Annotations
     /// </summary>
     /// <example><code>
     /// [StringFormatMethod("message")]
-    /// void ShowError(string message, params object[] args) { /* do something */ }
+    /// void ShowError(string message, params object?[] args) { /* do something */ }
     /// 
     /// void Foo() {
     ///   ShowError("Failed: {0}"); // Warning: Non-existing argument in format string

@@ -8,12 +8,12 @@ namespace FluentAssertions.Equivalency
         private readonly StringBuilder builder = new StringBuilder();
         private int depth = 1;
 
-        public void AddSingle(string trace)
+        public void AddSingle(string? trace)
         {
             WriteLine(trace);
         }
 
-        public IDisposable AddBlock(string trace)
+        public IDisposable AddBlock(string? trace)
         {
             WriteLine(trace);
             WriteLine("{");

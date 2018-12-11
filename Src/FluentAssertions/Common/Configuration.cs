@@ -7,10 +7,10 @@ namespace FluentAssertions.Common
     {
         #region Private Definitions
 
-        private readonly IConfigurationStore store;
-        private string valueFormatterAssembly;
+        private readonly IConfigurationStore? store;
+        private string? valueFormatterAssembly;
         private ValueFormatterDetectionMode? valueFormatterDetectionMode;
-        private string testFrameworkName;
+        private string? testFrameworkName;
         private readonly object propertiesAccessLock = new object();
 
         #endregion
@@ -20,7 +20,7 @@ namespace FluentAssertions.Common
         /// </summary>
         public static Configuration Current => Services.Configuration;
 
-        public Configuration(IConfigurationStore store)
+        public Configuration(IConfigurationStore? store)
         {
             this.store = store;
         }
@@ -57,7 +57,7 @@ namespace FluentAssertions.Common
                 return ValueFormatterDetectionMode.Specific;
             }
 
-            string setting = store.GetSetting("valueFormatters");
+            string? setting = store.GetSetting("valueFormatters");
             if (!string.IsNullOrEmpty(setting))
             {
                 try
@@ -79,13 +79,13 @@ namespace FluentAssertions.Common
         /// Gets or sets the assembly name to scan for custom value formatters in case <see cref="ValueFormatterDetectionMode"/>
         /// is set to <see cref="ValueFormatterDetectionMode.Specific"/>.
         /// </summary>
-        public string ValueFormatterAssembly
+        public string? ValueFormatterAssembly
         {
             get
             {
                 if (valueFormatterAssembly is null)
                 {
-                    string assemblyName = store.GetSetting("valueFormattersAssembly");
+                    string? assemblyName = store.GetSetting("valueFormattersAssembly");
                     if (!string.IsNullOrEmpty(assemblyName))
                     {
                         valueFormatterAssembly = assemblyName;
@@ -113,7 +113,7 @@ namespace FluentAssertions.Common
         /// will try to detect it by scanning the currently loaded assemblies. If it can't find a suitable provider,
         /// and the run-time platform supports it, it'll try to get it from the <see cref="IConfigurationStore"/>.
         /// </remarks>
-        public string TestFrameworkName
+        public string? TestFrameworkName
         {
             get
             {

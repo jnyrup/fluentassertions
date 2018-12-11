@@ -12,7 +12,7 @@ namespace FluentAssertions.Equivalency
             SelectedMemberPath = "";
         }
 
-        public SelectedMemberInfo SelectedMemberInfo { get; set; }
+        public SelectedMemberInfo? SelectedMemberInfo { get; set; }
 
         public string SelectedMemberPath { get; set; }
 
@@ -21,23 +21,23 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets the value of the <see cref="IMemberInfo.SelectedMemberInfo" />
         /// </summary>
-        public object Subject { get; set; }
+        public object? Subject { get; set; }
 
         /// <summary>
         /// Gets the value of the <see cref="IEquivalencyValidationContext.MatchingExpectationProperty" />.
         /// </summary>
-        public object Expectation { get; set; }
+        public object? Expectation { get; set; }
 
         /// <summary>
         /// A formatted phrase as is supported by <see cref="string.Format(string,object[])" /> explaining why the assertion
         /// is needed. If the phrase does not start with the word <i>because</i>, it is prepended automatically.
         /// </summary>
-        public string Because { get; set; }
+        public string? Because { get; set; }
 
         /// <summary>
         /// Zero or more objects to format using the placeholders in <see cref="IEquivalencyValidationContext.Because" />.
         /// </summary>
-        public object[] BecauseArgs { get; set; }
+        public object?[] BecauseArgs { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the current context represents the root of the object graph.
@@ -94,9 +94,9 @@ namespace FluentAssertions.Equivalency
         /// </summary>
         public bool RootIsCollection { get; set; }
 
-        public ITraceWriter Tracer { get; set; }
+        public ITraceWriter? Tracer { get; set; }
 
-        public void TraceSingle(GetTraceMessage getTraceMessage)
+        public void TraceSingle(GetTraceMessage? getTraceMessage)
         {
             if (Tracer != null)
             {
@@ -105,7 +105,7 @@ namespace FluentAssertions.Equivalency
             }
         }
 
-        public IDisposable TraceBlock(GetTraceMessage getTraceMessage)
+        public IDisposable TraceBlock(GetTraceMessage? getTraceMessage)
         {
             if (Tracer != null)
             {

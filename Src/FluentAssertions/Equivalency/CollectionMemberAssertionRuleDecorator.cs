@@ -9,15 +9,15 @@ namespace FluentAssertions.Equivalency
             this.equivalencyStep = equivalencyStep;
         }
 
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             return equivalencyStep.CanHandle(CreateAdjustedCopy(context), config);
         }
 
         public bool Handle(
-            IEquivalencyValidationContext context,
-            IEquivalencyValidator parent,
-            IEquivalencyAssertionOptions config)
+            IEquivalencyValidationContext? context,
+            IEquivalencyValidator? parent,
+            IEquivalencyAssertionOptions? config)
         {
             EquivalencyValidationContext equivalencyValidationContext = CreateAdjustedCopy(context);
 

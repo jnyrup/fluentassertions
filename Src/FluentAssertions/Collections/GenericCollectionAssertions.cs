@@ -15,7 +15,7 @@ namespace FluentAssertions.Collections
     public class GenericCollectionAssertions<T> :
         SelfReferencingCollectionAssertions<T, GenericCollectionAssertions<T>>
     {
-        public GenericCollectionAssertions(IEnumerable<T> actualValue)
+        public GenericCollectionAssertions(IEnumerable<T>? actualValue)
             : base(actualValue)
         {
         }
@@ -31,7 +31,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<GenericCollectionAssertions<T>> NotContainNulls<TKey>(Expression<Func<T, TKey>> predicate, string because = "", params object[] becauseArgs)
+        public AndConstraint<GenericCollectionAssertions<T>> NotContainNulls<TKey>(Expression<Func<T, TKey>>? predicate, string? because = "", params object?[] becauseArgs)
             where TKey : class
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
@@ -72,7 +72,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<GenericCollectionAssertions<T>> OnlyHaveUniqueItems<TKey>(Expression<Func<T, TKey>> predicate, string because = "", params object[] becauseArgs)
+        public AndConstraint<GenericCollectionAssertions<T>> OnlyHaveUniqueItems<TKey>(Expression<Func<T, TKey>>? predicate, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 
@@ -128,7 +128,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public AndConstraint<GenericCollectionAssertions<T>> BeInAscendingOrder<TSelector>(
-            Expression<Func<T, TSelector>> propertyExpression, string because = "", params object[] args)
+            Expression<Func<T, TSelector>>? propertyExpression, string? because = "", params object?[] args)
         {
             return BeInAscendingOrder(propertyExpression, Comparer<TSelector>.Default, because, args);
         }
@@ -148,7 +148,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public AndConstraint<GenericCollectionAssertions<T>> BeInAscendingOrder(
-            IComparer<T> comparer, string because = "", params object[] args)
+            IComparer<T>? comparer, string? because = "", params object?[] args)
         {
             return BeInAscendingOrder(item => item, comparer, because, args);
         }
@@ -171,7 +171,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public AndConstraint<GenericCollectionAssertions<T>> BeInAscendingOrder<TSelector>(
-            Expression<Func<T, TSelector>> propertyExpression, IComparer<TSelector> comparer, string because = "", params object[] args)
+            Expression<Func<T, TSelector>>? propertyExpression, IComparer<TSelector>? comparer, string? because = "", params object?[] args)
         {
             return BeOrderedBy(propertyExpression, comparer, SortOrder.Ascending, because, args);
         }
@@ -191,7 +191,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public AndConstraint<GenericCollectionAssertions<T>> BeInDescendingOrder<TSelector>(
-            Expression<Func<T, TSelector>> propertyExpression, string because = "", params object[] args)
+            Expression<Func<T, TSelector>>? propertyExpression, string? because = "", params object?[] args)
         {
             return BeInDescendingOrder(propertyExpression, Comparer<TSelector>.Default, because, args);
         }
@@ -211,7 +211,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public AndConstraint<GenericCollectionAssertions<T>> BeInDescendingOrder(
-            IComparer<T> comparer, string because = "", params object[] args)
+            IComparer<T>? comparer, string? because = "", params object?[] args)
         {
             return BeInDescendingOrder(item => item, comparer, because, args);
         }
@@ -234,13 +234,13 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because"/>.
         /// </param>
         public AndConstraint<GenericCollectionAssertions<T>> BeInDescendingOrder<TSelector>(
-            Expression<Func<T, TSelector>> propertyExpression, IComparer<TSelector> comparer, string because = "", params object[] args)
+            Expression<Func<T, TSelector>>? propertyExpression, IComparer<TSelector>? comparer, string? because = "", params object?[] args)
         {
             return BeOrderedBy(propertyExpression, comparer, SortOrder.Descending, because, args);
         }
 
         private AndConstraint<GenericCollectionAssertions<T>> BeOrderedBy<TSelector>(
-            Expression<Func<T, TSelector>> propertyExpression, IComparer<TSelector> comparer, SortOrder direction, string because, object[] args)
+            Expression<Func<T, TSelector>>? propertyExpression, IComparer<TSelector>? comparer, SortOrder direction, string? because, object?[] args)
         {
             Guard.ThrowIfArgumentIsNull(comparer, nameof(comparer), "Cannot assert collection ordering without specifying a comparer.");
 
@@ -267,7 +267,7 @@ namespace FluentAssertions.Collections
             return new AndConstraint<GenericCollectionAssertions<T>>(this);
         }
 
-        private bool IsValidProperty<TSelector>(Expression<Func<T, TSelector>> propertyExpression, string because, object[] args)
+        private bool IsValidProperty<TSelector>(Expression<Func<T, TSelector>> propertyExpression, string? because, object?[] args)
         {
             Guard.ThrowIfArgumentIsNull(propertyExpression, nameof(propertyExpression),
                 "Cannot assert collection ordering without specifying a property.");
@@ -298,7 +298,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public void AllBeEquivalentTo<TExpectation>(TExpectation expectation,
-            string because = "", params object[] becauseArgs)
+            string? because = "", params object?[] becauseArgs)
         {
             AllBeEquivalentTo(expectation, options => options, because, becauseArgs);
         }
@@ -328,9 +328,9 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public void AllBeEquivalentTo<TExpectation>(TExpectation expectation,
-            Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>> config,
-            string because = "",
-            params object[] becauseArgs)
+            Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>? config,
+            string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(config, nameof(config));
 

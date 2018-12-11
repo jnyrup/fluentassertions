@@ -21,7 +21,7 @@ namespace FluentAssertions.Equivalency.Selection
 
         public bool IncludesMembers => false;
 
-        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo> selectedMembers, IMemberInfo context, IEquivalencyAssertionOptions config)
+        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo?>? selectedMembers, IMemberInfo? context, IEquivalencyAssertionOptions? config)
         {
             return selectedMembers.Where(p => !predicate(new NestedSelectionContext(context, p))).ToArray();
         }

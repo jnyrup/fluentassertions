@@ -10,7 +10,7 @@ namespace FluentAssertions.Equivalency
         /// Gets the <see cref="FluentAssertions.Equivalency.SelectedMemberInfo"/> of the member that returned the current object, or <c>null</c> if the current
         /// object represents the root object.
         /// </summary>
-        SelectedMemberInfo SubjectProperty { get; }
+        SelectedMemberInfo? SubjectProperty { get; }
 
         /// <summary>
         /// Gets the value of the <see cref="SubjectProperty" />
@@ -31,6 +31,6 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Zero or more objects to format using the placeholders in <see cref="Because"/>.
         /// </summary>
-        object[] BecauseArgs { get; set; }
+        object?[] BecauseArgs { get; set; }
     }
 }

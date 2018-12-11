@@ -10,7 +10,7 @@ namespace FluentAssertions.Execution
         /// <paramref name="selector">
         /// Selector which result is passed to successive calls to <see cref="ForCondition"/>.
         /// </paramref>
-        GivenSelector<T> Given<T>(Func<T> selector);
+        GivenSelector<T> Given<T>(Func<T>? selector);
 
         /// <summary>
         /// Specify the condition that must be satisfied.
@@ -26,7 +26,7 @@ namespace FluentAssertions.Execution
         /// <paramref name="failReasonFunc"/> will not be called unless the assertion is not met.
         /// </summary>
         /// <param name="failReasonFunc">Function returning <see cref="FailReason"/> object on demand. Called only when the assertion is not met.</param>
-        Continuation FailWith(Func<FailReason> failReasonFunc);
+        Continuation FailWith(Func<FailReason>? failReasonFunc);
 
         /// <summary>
         /// Sets the failure message when the assertion is not met, or completes the failure message set to a
@@ -47,7 +47,7 @@ namespace FluentAssertions.Execution
         /// </remarks>
         /// <param name="message">The format string that represents the failure message.</param>
         /// <param name="args">Optional arguments to any numbered placeholders.</param>
-        Continuation FailWith(string message, params object[] args);
+        Continuation FailWith(string? message, params object?[] args);
 
         /// <summary>
         /// Specify the reason why you expect the condition to be <c>true</c>.
@@ -62,7 +62,7 @@ namespace FluentAssertions.Execution
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])"/> compatible placeholders.
         /// </param>
-        IAssertionScope BecauseOf(string because, params object[] becauseArgs);
+        IAssertionScope BecauseOf(string? because, params object?[] becauseArgs);
 
         /// <summary>
         /// Clears the expectation set by <see cref="WithExpectation"/>.
@@ -86,12 +86,12 @@ namespace FluentAssertions.Execution
         /// </remarks>
         /// <param name="expectation">The format string that represents the failure message.</param>
         /// <param name="args">Optional arguments to any numbered placeholders.</param>
-        IAssertionScope WithExpectation(string message, params object[] args);
+        IAssertionScope WithExpectation(string? message, params object?[] args);
 
         /// <summary>
         /// Defines the name of the subject in case this cannot be extracted from the source code.
         /// </summary>
-        IAssertionScope WithDefaultIdentifier(string identifier);
+        IAssertionScope WithDefaultIdentifier(string? identifier);
 
         /// <summary>
         /// Indicates that every argument passed into <see cref="FailWith"/> is displayed on a separate line.

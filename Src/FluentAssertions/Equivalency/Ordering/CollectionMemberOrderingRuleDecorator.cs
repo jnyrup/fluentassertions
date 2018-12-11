@@ -9,7 +9,7 @@ namespace FluentAssertions.Equivalency.Ordering
             this.orderingRule = orderingRule;
         }
 
-        public OrderStrictness Evaluate(IMemberInfo memberInfo)
+        public OrderStrictness Evaluate(IMemberInfo? memberInfo)
         {
             return orderingRule.Evaluate(new CollectionMemberMemberInfo(memberInfo));
         }

@@ -42,7 +42,7 @@ namespace FluentAssertions.Events
         /// You must call <see cref="AssertionExtensions.Monitor"/> on the same object prior to this call so that Fluent Assertions can
         /// subscribe for the events of the object.
         /// </remarks>
-        public IEventRecorder Raise(string eventName, string because = "", params object[] becauseArgs)
+        public IEventRecorder Raise(string? eventName, string? because = "", params object?[] becauseArgs)
         {
             IEventRecorder eventRecorder = monitor.GetEventRecorder(eventName);
 
@@ -74,7 +74,7 @@ namespace FluentAssertions.Events
         /// You must call <see cref="MonitorEvents"/> on the same object prior to this call so that Fluent Assertions can
         /// subscribe for the events of the object.
         /// </remarks>
-        public void NotRaise(string eventName, string because = "", params object[] becauseArgs)
+        public void NotRaise(string? eventName, string? because = "", params object?[] becauseArgs)
         {
             IEventRecorder eventRecorder = monitor.GetEventRecorder(eventName);
             if (eventRecorder.Any())
@@ -104,11 +104,11 @@ namespace FluentAssertions.Events
         /// You must call <see cref="AssertionExtensions.Monitor"/> on the same object prior to this call so that Fluent Assertions can
         /// subscribe for the events of the object.
         /// </remarks>
-        public IEventRecorder RaisePropertyChangeFor(Expression<Func<T, object>> propertyExpression,
-            string because = "", params object[] becauseArgs)
+        public IEventRecorder RaisePropertyChangeFor(Expression<Func<T, object>>? propertyExpression,
+            string? because = "", params object?[] becauseArgs)
         {
             IEventRecorder eventRecorder = monitor.GetEventRecorder(PropertyChangedEventName);
-            string propertyName = propertyExpression?.GetPropertyInfo().Name;
+            string? propertyName = propertyExpression?.GetPropertyInfo().Name;
 
             if (!eventRecorder.Any())
             {
@@ -139,8 +139,8 @@ namespace FluentAssertions.Events
         /// You must call <see cref="AssertionExtensions.Monitor"/> on the same object prior to this call so that Fluent Assertions can
         /// subscribe for the events of the object.
         /// </remarks>
-        public void NotRaisePropertyChangeFor(Expression<Func<T, object>> propertyExpression,
-            string because = "", params object[] becauseArgs)
+        public void NotRaisePropertyChangeFor(Expression<Func<T, object>>? propertyExpression,
+            string? because = "", params object?[] becauseArgs)
         {
             IEventRecorder eventRecorder = monitor.GetEventRecorder(PropertyChangedEventName);
 

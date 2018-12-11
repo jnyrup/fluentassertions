@@ -11,7 +11,7 @@ namespace FluentAssertions.Equivalency.Selection
     {
         public bool IncludesMembers => false;
 
-        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo> selectedMembers, IMemberInfo context, IEquivalencyAssertionOptions config)
+        public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo?>? selectedMembers, IMemberInfo? context, IEquivalencyAssertionOptions? config)
         {
             IEnumerable<SelectedMemberInfo> selectedNonPrivateProperties = config.GetExpectationType(context)
                 .GetNonPrivateProperties()

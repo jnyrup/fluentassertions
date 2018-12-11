@@ -7,7 +7,7 @@ namespace FluentAssertions.Primitives
 {
     internal class StringWildcardMatchingValidator : StringValidator
     {
-        public StringWildcardMatchingValidator(string subject, string expected, string because, object[] becauseArgs)
+        public StringWildcardMatchingValidator(string? subject, string? expected, string? because, object?[] becauseArgs)
             : base(subject, expected, because, becauseArgs)
         {
         }
@@ -31,18 +31,18 @@ namespace FluentAssertions.Primitives
         {
             RegexOptions options = IgnoreCase ? RegexOptions.IgnoreCase : RegexOptions.None;
 
-            string input = CleanNewLines(subject);
+            string? input = CleanNewLines(subject);
             string pattern = ConvertWildcardToRegEx(CleanNewLines(expected));
 
             return Regex.IsMatch(input, pattern, options | RegexOptions.Singleline);
         }
 
-        private static string ConvertWildcardToRegEx(string wildcardExpression)
+        private static string ConvertWildcardToRegEx(string? wildcardExpression)
         {
             return "^" + Regex.Escape(wildcardExpression).Replace("\\*", ".*").Replace("\\?", ".") + "$";
         }
 
-        private string CleanNewLines(string input)
+        private string? CleanNewLines(string? input)
         {
             if (input is null)
             {

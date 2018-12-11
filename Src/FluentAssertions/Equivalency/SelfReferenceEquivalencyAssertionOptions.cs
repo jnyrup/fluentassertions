@@ -55,7 +55,7 @@ namespace FluentAssertions.Equivalency
         private readonly List<Type> referenceTypes = new List<Type>();
         private readonly List<Type> valueTypes = new List<Type>();
 
-        private readonly Func<Type, EqualityStrategy> getDefaultEqualityStrategy = null;
+        private readonly Func<Type, EqualityStrategy>? getDefaultEqualityStrategy = null;
 
         #endregion
 
@@ -128,7 +128,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets an ordered collection of Equivalency steps how a subject is compared with the expectation.
         /// </summary>
-        IEnumerable<IEquivalencyStep> IEquivalencyAssertionOptions.GetUserEquivalencySteps(ConversionSelector conversionSelector) =>
+        IEnumerable<IEquivalencyStep> IEquivalencyAssertionOptions.GetUserEquivalencySteps(ConversionSelector? conversionSelector) =>
             userEquivalencySteps.Concat(new[] { new TryConversionStep(conversionSelector) });
 
         public ConversionSelector ConversionSelector { get; } = new ConversionSelector();
@@ -160,7 +160,7 @@ namespace FluentAssertions.Equivalency
 
         bool IEquivalencyAssertionOptions.IncludeFields => includeFields;
 
-        EqualityStrategy IEquivalencyAssertionOptions.GetEqualityStrategy(Type type)
+        EqualityStrategy IEquivalencyAssertionOptions.GetEqualityStrategy(Type? type)
         {
             EqualityStrategy strategy;
 
@@ -303,7 +303,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Excludes a (nested) property based on a predicate from the structural equality check.
         /// </summary>
-        public TSelf Excluding(Expression<Func<IMemberInfo, bool>> predicate)
+        public TSelf Excluding(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             AddSelectionRule(new ExcludeMemberByPredicateSelectionRule(predicate));
             return (TSelf)this;
@@ -335,7 +335,7 @@ namespace FluentAssertions.Equivalency
         /// <param name="action">
         /// The assertion to execute when the predicate is met.
         /// </param>
-        public Restriction<TProperty> Using<TProperty>(Action<IAssertionContext<TProperty>> action)
+        public Restriction<TProperty> Using<TProperty>(Action<IAssertionContext<TProperty>>? action)
         {
             return new Restriction<TProperty>((TSelf)this, action);
         }
@@ -401,7 +401,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Adds a selection rule to the ones already added by default, and which is evaluated after all existing rules.
         /// </summary>
-        public TSelf Using(IMemberSelectionRule selectionRule)
+        public TSelf Using(IMemberSelectionRule? selectionRule)
         {
             return AddSelectionRule(selectionRule);
         }
@@ -409,7 +409,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Adds a matching rule to the ones already added by default, and which is evaluated before all existing rules.
         /// </summary>
-        public TSelf Using(IMemberMatchingRule matchingRule)
+        public TSelf Using(IMemberMatchingRule? matchingRule)
         {
             return AddMatchingRule(matchingRule);
         }
@@ -417,7 +417,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Adds an assertion rule to the ones already added by default, and which is evaluated before all existing rules.
         /// </summary>
-        public TSelf Using(IAssertionRule assertionRule)
+        public TSelf Using(IAssertionRule? assertionRule)
         {
             userEquivalencySteps.Insert(0, new AssertionRuleEquivalencyStepAdapter(assertionRule));
             return (TSelf)this;
@@ -427,7 +427,7 @@ namespace FluentAssertions.Equivalency
         /// Adds an equivalency step rule to the ones already added by default, and which is evaluated before previous
         /// user-registered steps
         /// </summary>
-        public TSelf Using(IEquivalencyStep equivalencyStep)
+        public TSelf Using(IEquivalencyStep? equivalencyStep)
         {
             return AddEquivalencyStep(equivalencyStep);
         }
@@ -446,7 +446,7 @@ namespace FluentAssertions.Equivalency
         /// Causes the collection identified by the provided <paramref name="predicate" /> to be compared in the order
         /// in which the items appear in the expectation.
         /// </summary>
-        public TSelf WithStrictOrderingFor(Expression<Func<IMemberInfo, bool>> predicate)
+        public TSelf WithStrictOrderingFor(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             orderingRules.Add(new PredicateBasedOrderingRule(predicate));
             return (TSelf)this;
@@ -466,7 +466,7 @@ namespace FluentAssertions.Equivalency
         /// Causes the collection identified by the provided <paramref name="predicate" /> to be compared ignoring the order
         /// in which the items appear in the expectation.
         /// </summary>
-        public TSelf WithoutStrictOrderingFor(Expression<Func<IMemberInfo, bool>> predicate)
+        public TSelf WithoutStrictOrderingFor(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             orderingRules.Add(new PredicateBasedOrderingRule(predicate)
             {
@@ -535,7 +535,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Enables tracing the steps the equivalency validation followed to compare two graphs.
         /// </summary>
-        public TSelf WithTracing(ITraceWriter writer = null)
+        public TSelf WithTracing(ITraceWriter? writer = null)
         {
             TraceWriter = writer ?? new StringBuilderTraceWriter();
             return (TSelf)this;
@@ -555,7 +555,7 @@ namespace FluentAssertions.Equivalency
         /// Instructs the equivalency comparison to try to convert the value of
         /// a specific property on the expectation object before running any of the other steps.
         /// </summary>
-        public TSelf WithAutoConversionFor(Expression<Func<IMemberInfo, bool>> predicate)
+        public TSelf WithAutoConversionFor(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             ConversionSelector.Include(predicate);
             return (TSelf)this;
@@ -565,7 +565,7 @@ namespace FluentAssertions.Equivalency
         /// Instructs the equivalency comparison to prevent trying to convert the value of
         /// a specific property on the expectation object before running any of the other steps.
         /// </summary>
-        public TSelf WithoutAutoConversionFor(Expression<Func<IMemberInfo, bool>> predicate)
+        public TSelf WithoutAutoConversionFor(Expression<Func<IMemberInfo, bool>>? predicate)
         {
             ConversionSelector.Exclude(predicate);
             return (TSelf)this;

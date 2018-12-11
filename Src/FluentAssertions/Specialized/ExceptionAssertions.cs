@@ -17,7 +17,7 @@ namespace FluentAssertions.Specialized
     /// </summary>
     [DebuggerNonUserCode]
     public class ExceptionAssertions<TException> :
-        ReferenceTypeAssertions<IEnumerable<TException>, ExceptionAssertions<TException>>
+        ReferenceTypeAssertions<IEnumerable<TException?>?, ExceptionAssertions<TException>>
         where TException : Exception
     {
         #region Private Definitions
@@ -26,7 +26,7 @@ namespace FluentAssertions.Specialized
 
         #endregion
 
-        public ExceptionAssertions(IEnumerable<TException> exceptions) : base(exceptions)
+        public ExceptionAssertions(IEnumerable<TException?>? exceptions) : base(exceptions)
         {
         }
 
@@ -58,8 +58,8 @@ namespace FluentAssertions.Specialized
         /// <param name = "becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref = "because" />.
         /// </param>
-        public virtual ExceptionAssertions<TException> WithMessage(string expectedWildcardPattern, string because = "",
-            params object[] becauseArgs)
+        public virtual ExceptionAssertions<TException> WithMessage(string? expectedWildcardPattern, string? because = "",
+            params object?[] becauseArgs)
         {
             AssertionScope assertion = Execute.Assertion.BecauseOf(because, becauseArgs).UsingLineBreaks;
 
@@ -78,8 +78,8 @@ namespace FluentAssertions.Specialized
         /// <typeparam name = "TInnerException">The expected type of the inner exception.</typeparam>
         /// <param name = "because">The reason why the inner exception should be of the supplied type.</param>
         /// <param name = "becauseArgs">The parameters used when formatting the <paramref name = "because" />.</param>
-        public virtual ExceptionAssertions<TInnerException> WithInnerException<TInnerException>(string because = null,
-            params object[] becauseArgs)
+        public virtual ExceptionAssertions<TInnerException> WithInnerException<TInnerException>(string? because = null,
+            params object?[] becauseArgs)
             where TInnerException : Exception
         {
             Execute.Assertion
@@ -112,8 +112,8 @@ namespace FluentAssertions.Specialized
         /// <typeparam name = "TInnerException">The expected type of the inner exception.</typeparam>
         /// <param name = "because">The reason why the inner exception should be of the supplied type.</param>
         /// <param name = "becauseArgs">The parameters used when formatting the <paramref name = "because" />.</param>
-        public virtual ExceptionAssertions<TInnerException> WithInnerExceptionExactly<TInnerException>(string because = null,
-            params object[] becauseArgs)
+        public virtual ExceptionAssertions<TInnerException> WithInnerExceptionExactly<TInnerException>(string? because = null,
+            params object?[] becauseArgs)
             where TInnerException : Exception
         {
             WithInnerException<TInnerException>(because, becauseArgs);
@@ -144,8 +144,8 @@ namespace FluentAssertions.Specialized
         /// <param name = "becauseArgs">
         /// Zero or more values to use for filling in any <see cref = "string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public ExceptionAssertions<TException> Where(Expression<Func<TException, bool>> exceptionExpression,
-            string because = "", params object[] becauseArgs)
+        public ExceptionAssertions<TException> Where(Expression<Func<TException, bool>>? exceptionExpression,
+            string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(exceptionExpression, nameof(exceptionExpression));
 
@@ -193,7 +193,7 @@ namespace FluentAssertions.Specialized
 
             public string Context { get; set; }
 
-            public void Execute(IEnumerable<string> messages, string expectation, string because, params object[] becauseArgs)
+            public void Execute(IEnumerable<string> messages, string expectation, string? because, params object?[] becauseArgs)
             {
                 using (new AssertionScope())
                 {

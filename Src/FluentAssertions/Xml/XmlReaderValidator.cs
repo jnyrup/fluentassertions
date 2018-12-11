@@ -16,7 +16,7 @@ namespace FluentAssertions.Xml
 
         private readonly Stack<string> locationStack = new Stack<string>();
 
-        public XmlReaderValidator(XmlReader subjectReader, XmlReader otherReader, string because, object[] reasonArgs)
+        public XmlReaderValidator(XmlReader subjectReader, XmlReader otherReader, string? because, object?[] reasonArgs)
         {
             assertion = Execute.Assertion.BecauseOf(because, reasonArgs);
 
@@ -39,7 +39,7 @@ namespace FluentAssertions.Xml
 
         public void Validate(bool expectedEquivalence)
         {
-            ValidationResult validationResult = Validate();
+            ValidationResult? validationResult = Validate();
 
             if (expectedEquivalence && validationResult != null)
             {
@@ -52,7 +52,7 @@ namespace FluentAssertions.Xml
             }
         }
 
-        private ValidationResult Validate()
+        private ValidationResult? Validate()
         {
             subjectReader.MoveToContent();
             otherReader.MoveToContent();
@@ -64,7 +64,7 @@ namespace FluentAssertions.Xml
                         otherReader.NodeType, GetCurrentLocation(), subjectReader.NodeType);
                 }
 
-                ValidationResult validationResult = null;
+                ValidationResult? validationResult = null;
 
 #pragma warning disable IDE0010 // System.Xml.XmlNodeType has many members we do not care about
                 switch (subjectReader.NodeType)
@@ -157,7 +157,7 @@ namespace FluentAssertions.Xml
             }
         }
 
-        private ValidationResult ValidateAttributes()
+        private ValidationResult? ValidateAttributes()
         {
             IList<AttributeData> expectedAttributes = GetAttributes(otherReader);
             IList<AttributeData> subjectAttributes = GetAttributes(subjectReader);
@@ -214,7 +214,7 @@ namespace FluentAssertions.Xml
             return attributes;
         }
 
-        private ValidationResult ValidateStartElement()
+        private ValidationResult? ValidateStartElement()
         {
             if (subjectReader.LocalName != otherReader.LocalName)
             {
@@ -231,7 +231,7 @@ namespace FluentAssertions.Xml
             return null;
         }
 
-        private ValidationResult ValidateText()
+        private ValidationResult? ValidateText()
         {
             string subject = subjectReader.Value;
             string expected = otherReader.Value;

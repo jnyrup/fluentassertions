@@ -32,7 +32,7 @@ namespace FluentAssertions.Equivalency
         /// Returns <c>false</c> if this rule doesn't support the subject's type.
         /// Throws if the rule did support the data type but assertion fails.
         /// </returns>
-        public bool AssertEquality(IEquivalencyValidationContext context)
+        public bool AssertEquality(IEquivalencyValidationContext? context)
         {
             if (predicate(context))
             {
@@ -40,7 +40,7 @@ namespace FluentAssertions.Equivalency
 
                 bool subjectIsValidType =
                     AssertionScope.Current
-                        .ForCondition(subjectIsNull || context.Subject.GetType().IsSameOrInherits(typeof(TSubject)))
+                        .ForCondition(subjectIsNull || context.Subject!.GetType().IsSameOrInherits(typeof(TSubject)))
                         .FailWith("Expected " + context.SelectedMemberDescription + " from subject to be a {0}{reason}, but found a {1}.",
                             typeof(TSubject), context.Subject?.GetType());
 
@@ -48,7 +48,7 @@ namespace FluentAssertions.Equivalency
 
                 bool expectationIsValidType =
                     AssertionScope.Current
-                        .ForCondition(expectationIsNull || context.Expectation.GetType().IsSameOrInherits(typeof(TSubject)))
+                        .ForCondition(expectationIsNull || context.Expectation!.GetType().IsSameOrInherits(typeof(TSubject)))
                         .FailWith("Expected " + context.SelectedMemberDescription + " from expectation to be a {0}{reason}, but found a {1}.",
                             typeof(TSubject), context.Expectation?.GetType());
 

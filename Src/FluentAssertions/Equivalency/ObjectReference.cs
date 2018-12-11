@@ -9,12 +9,12 @@ namespace FluentAssertions.Equivalency
     /// </summary>
     internal class ObjectReference
     {
-        private readonly object @object;
+        private readonly object? @object;
         private readonly string path;
         private readonly bool? isComplexType;
-        private string[] pathElements;
+        private string[]? pathElements;
 
-        public ObjectReference(object @object, string path, bool? isComplexType = null)
+        public ObjectReference(object? @object, string path, bool? isComplexType = null)
         {
             this.@object = @object;
             this.path = path;

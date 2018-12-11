@@ -9,9 +9,9 @@ namespace FluentAssertions.Equivalency.Matching
     /// </summary>
     internal class MustMatchByNameRule : IMemberMatchingRule
     {
-        public SelectedMemberInfo Match(SelectedMemberInfo expectedMember, object subject, string memberPath, IEquivalencyAssertionOptions config)
+        public SelectedMemberInfo? Match(SelectedMemberInfo? expectedMember, object? subject, string? memberPath, IEquivalencyAssertionOptions? config)
         {
-            SelectedMemberInfo compareeSelectedMemberInfoInfo = null;
+            SelectedMemberInfo? compareeSelectedMemberInfoInfo = null;
 
             if (config.IncludeProperties)
             {

@@ -8,12 +8,12 @@ namespace FluentAssertions.Formatting
     /// </summary>
     public class TaskFormatter : IValueFormatter
     {
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return value is Task;
         }
 
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             if (value is Task task)
             {

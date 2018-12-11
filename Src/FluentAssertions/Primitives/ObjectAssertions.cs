@@ -9,9 +9,9 @@ namespace FluentAssertions.Primitives
     /// <summary>
     /// Contains a number of methods to assert that an <see cref="object"/> is in the expected state.
     /// </summary>
-    public class ObjectAssertions : ReferenceTypeAssertions<object, ObjectAssertions>
+    public class ObjectAssertions : ReferenceTypeAssertions<object?, ObjectAssertions>
     {
-        public ObjectAssertions(object value) : base(value)
+        public ObjectAssertions(object? value) : base(value)
         {
         }
 
@@ -26,7 +26,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<ObjectAssertions> Be(object expected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ObjectAssertions> Be(object? expected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -48,7 +48,7 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<ObjectAssertions> NotBe(object unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<ObjectAssertions> NotBe(object? unexpected, string? because = "", params object?[] becauseArgs)
         {
             Execute.Assertion
                 .ForCondition(!Subject.IsSameOrEqualTo(unexpected))
@@ -75,8 +75,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public void BeEquivalentTo<TExpectation>(TExpectation expectation, string because = "",
-            params object[] becauseArgs)
+        public void BeEquivalentTo<TExpectation>(TExpectation expectation, string? because = "",
+            params object?[] becauseArgs)
         {
             BeEquivalentTo(expectation, config => config, because, becauseArgs);
         }
@@ -104,8 +104,8 @@ namespace FluentAssertions.Primitives
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public void BeEquivalentTo<TExpectation>(TExpectation expectation,
-            Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>> config, string because = "",
-            params object[] becauseArgs)
+            Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>> config, string? because = "",
+            params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(config, nameof(config));
 
@@ -204,8 +204,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<ObjectAssertions> HaveFlag(Enum expectedFlag, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<ObjectAssertions> HaveFlag(Enum expectedFlag, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
@@ -233,8 +233,8 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<ObjectAssertions> NotHaveFlag(Enum unexpectedFlag, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<ObjectAssertions> NotHaveFlag(Enum unexpectedFlag, string? because = "",
+            params object?[] becauseArgs)
         {
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)

@@ -14,7 +14,7 @@ namespace FluentAssertions.Equivalency
     {
         private readonly ConversionSelector selector;
 
-        public TryConversionStep(ConversionSelector selector)
+        public TryConversionStep(ConversionSelector? selector)
         {
             this.selector = selector;
         }
@@ -22,7 +22,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets a value indicating whether this step can handle the current subject and/or expectation.
         /// </summary>
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             return selector.RequiresConversion(context);
         }
@@ -37,8 +37,8 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// May throw when preconditions are not met or if it detects mismatching data.
         /// </remarks>
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator structuralEqualityValidator,
-            IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? structuralEqualityValidator,
+            IEquivalencyAssertionOptions? config)
         {
             if ((context.Expectation is null) || (context.Subject is null))
             {
@@ -53,11 +53,11 @@ namespace FluentAssertions.Equivalency
                 return false;
             }
 
-            if (TryChangeType(context.Subject, expectationType, out object convertedSubject))
+            if (TryChangeType(context.Subject, expectationType, out object? convertedSubject))
             {
                 context.TraceSingle(path => $"Converted subject {context.Subject} at {path} to {expectationType}");
 
-                IEquivalencyValidationContext newContext = context.CreateWithDifferentSubject(convertedSubject, expectationType);
+                IEquivalencyValidationContext newContext = context.CreateWithDifferentSubject(convertedSubject!, expectationType);
 
                 structuralEqualityValidator.AssertEqualityUsing(newContext);
                 return true;
@@ -68,7 +68,7 @@ namespace FluentAssertions.Equivalency
             return false;
         }
 
-        private static bool TryChangeType(object subject, Type expectationType, out object conversionResult)
+        private static bool TryChangeType(object subject, Type expectationType, out object? conversionResult)
         {
             conversionResult = null;
             try

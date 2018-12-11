@@ -74,7 +74,7 @@ namespace FluentAssertions.Formatting
         /// <returns>
         /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
-        public static string ToString(object value, bool useLineBreaks = false)
+        public static string ToString(object? value, bool useLineBreaks = false)
         {
             try
             {
@@ -133,7 +133,7 @@ namespace FluentAssertions.Formatting
             }
         }
 
-        private static string Format(object value, FormattingContext context, FormatChild formatChild)
+        private static string Format(object? value, FormattingContext context, FormatChild formatChild)
         {
             IValueFormatter firstFormatterThatCanHandleValue = Formatters.First(f => f.CanHandle(value));
             return firstFormatterThatCanHandleValue.Format(value, context, formatChild);
@@ -173,14 +173,14 @@ namespace FluentAssertions.Formatting
             private readonly CyclicReferenceDetector tracker;
             private readonly Stack<string> pathStack;
 
-            public ObjectGraph(object rootObject)
+            public ObjectGraph(object? rootObject)
             {
                 tracker = new CyclicReferenceDetector(CyclicReferenceHandling.Ignore);
                 pathStack = new Stack<string>();
                 TryPush("root", rootObject);
             }
 
-            public bool TryPush(string path, object value)
+            public bool TryPush(string path, object? value)
             {
                 pathStack.Push(path);
 

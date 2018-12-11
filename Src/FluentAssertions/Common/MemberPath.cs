@@ -12,7 +12,7 @@ namespace FluentAssertions.Common
         private readonly Type declaringType;
         private readonly string dottedPath;
 
-        private string[] segments;
+        private string[]? segments;
 
         public MemberPath(Type declaringType, string dottedPath)
         {

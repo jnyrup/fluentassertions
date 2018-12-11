@@ -8,13 +8,13 @@ namespace FluentAssertions.Xml
 {
     public class XmlNodeFormatter : IValueFormatter
     {
-        public bool CanHandle(object value)
+        public bool CanHandle(object? value)
         {
             return value is XmlNode;
         }
 
         /// <inheritdoc />
-        public string Format(object value, FormattingContext context, FormatChild formatChild)
+        public string Format(object? value, FormattingContext? context, FormatChild? formatChild)
         {
             string outerXml = ((XmlNode)value).OuterXml;
 

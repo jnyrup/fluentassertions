@@ -21,7 +21,7 @@ namespace FluentAssertions.Execution
 
         #endregion
 
-        public GivenSelector(Func<T> selector, bool predecessorSucceeded, AssertionScope predecessor)
+        public GivenSelector(Func<T>? selector, bool predecessorSucceeded, AssertionScope? predecessor)
         {
             this.predecessorSucceeded = predecessorSucceeded;
             this.predecessor = predecessor;
@@ -39,7 +39,7 @@ namespace FluentAssertions.Execution
         /// The condition will not be evaluated if the prior assertion failed,
         /// nor will <see cref="FailWith(string, System.Func{T, object}[])"/> throw any exceptions.
         /// </remarks>
-        public GivenSelector<T> ForCondition(Func<T, bool> predicate)
+        public GivenSelector<T> ForCondition(Func<T, bool>? predicate)
         {
             Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate));
 
@@ -58,7 +58,7 @@ namespace FluentAssertions.Execution
         /// The selector will not be invoked if the prior assertion failed,
         /// nor will <see cref="FailWith(string,System.Func{T,object}[])"/> throw any exceptions.
         /// </remarks>
-        public GivenSelector<TOut> Given<TOut>(Func<T, TOut> selector)
+        public GivenSelector<TOut> Given<TOut>(Func<T, TOut>? selector)
         {
             Guard.ThrowIfArgumentIsNull(selector, nameof(selector));
 
@@ -74,7 +74,7 @@ namespace FluentAssertions.Execution
         /// then the failure message is appended to that expectation.
         /// </remarks>
         /// <param name="message">The format string that represents the failure message.</param>
-        public ContinuationOfGiven<T> FailWith(string message)
+        public ContinuationOfGiven<T> FailWith(string? message)
         {
             return FailWith(message, new object[0]);
         }
@@ -98,7 +98,7 @@ namespace FluentAssertions.Execution
         /// </remarks>
         /// <param name="message">The format string that represents the failure message.</param>
         /// <param name="args">Optional arguments to any numbered placeholders.</param>
-        public ContinuationOfGiven<T> FailWith(string message, params Func<T, object>[] args)
+        public ContinuationOfGiven<T> FailWith(string? message, params Func<T, object>?[] args)
         {
             object[] mappedArguments = args.Select(a => a(subject)).ToArray();
             return FailWith(message, mappedArguments);
@@ -124,7 +124,7 @@ namespace FluentAssertions.Execution
         /// </remarks>
         /// <param name="message">The format string that represents the failure message.</param>
         /// <param name="args">Optional arguments to any numbered placeholders.</param>
-        public ContinuationOfGiven<T> FailWith(string message, params object[] args)
+        public ContinuationOfGiven<T> FailWith(string? message, params object?[] args)
         {
             bool succeeded = predecessorSucceeded;
 

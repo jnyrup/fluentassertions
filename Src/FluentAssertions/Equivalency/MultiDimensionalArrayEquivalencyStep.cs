@@ -11,14 +11,14 @@ namespace FluentAssertions.Equivalency
     /// </summary>
     internal class MultiDimensionalArrayEquivalencyStep : IEquivalencyStep
     {
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
-            Array array = context.Expectation as Array;
+            Array? array = context.Expectation as Array;
             return array?.Rank > 1;
         }
 
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent,
-            IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent,
+            IEquivalencyAssertionOptions? config)
         {
             Array expectationAsArray = (Array)context.Expectation;
 
@@ -50,7 +50,7 @@ namespace FluentAssertions.Equivalency
             return Enumerable
                 .Range(0, subjectAsArray.Rank)
                 .Reverse()
-                .Aggregate((Digit)null, (next, rank) => new Digit(subjectAsArray.GetLength(rank), next));
+                .Aggregate((Digit?)null, (next, rank) => new Digit(subjectAsArray.GetLength(rank), next))!;
         }
 
         private static bool AreComparable(IEquivalencyValidationContext context, Array expectationAsArray)
@@ -65,7 +65,7 @@ namespace FluentAssertions.Equivalency
         {
             return AssertionScope.Current
                 .ForCondition(!(type is null))
-                .FailWith("Cannot compare a multi-dimensional array to {0}.", new object[] { null })
+                .FailWith("Cannot compare a multi-dimensional array to {0}.", new object?[] { null })
                 .Then
                 .ForCondition(type is Array)
                 .FailWith("Cannot compare a multi-dimensional array to something else.");
@@ -103,10 +103,10 @@ namespace FluentAssertions.Equivalency
     internal class Digit
     {
         private readonly int length;
-        private readonly Digit nextDigit;
+        private readonly Digit? nextDigit;
         private int index;
 
-        public Digit(int length, Digit nextDigit)
+        public Digit(int length, Digit? nextDigit)
         {
             this.length = length;
             this.nextDigit = nextDigit;
@@ -116,7 +116,7 @@ namespace FluentAssertions.Equivalency
         {
             var indices = new List<int>();
 
-            Digit digit = this;
+            Digit? digit = this;
             while (digit != null)
             {
                 indices.Add(digit.index);

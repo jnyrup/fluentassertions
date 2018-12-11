@@ -12,7 +12,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets a value indicating whether this step can handle the verificationScope subject and/or expectation.
         /// </summary>
-        public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+        public bool CanHandle(IEquivalencyValidationContext? context, IEquivalencyAssertionOptions? config)
         {
             Type subjectType = config.GetExpectationType(context);
 
@@ -29,7 +29,7 @@ namespace FluentAssertions.Equivalency
         /// <remarks>
         /// May throw when preconditions are not met or if it detects mismatching data.
         /// </remarks>
-        public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent, IEquivalencyAssertionOptions config)
+        public bool Handle(IEquivalencyValidationContext? context, IEquivalencyValidator? parent, IEquivalencyAssertionOptions? config)
         {
             if (AssertSubjectIsCollection(context.Subject))
             {
@@ -54,7 +54,7 @@ namespace FluentAssertions.Equivalency
             if (conditionMet)
             {
                 conditionMet = AssertionScope.Current
-                .ForCondition(IsCollection(subject.GetType()))
+                .ForCondition(IsCollection(subject!.GetType()))
                 .FailWith("Expected a collection, but {context:Subject} is of a non-collection type.");
             }
 
@@ -66,7 +66,7 @@ namespace FluentAssertions.Equivalency
             return !typeof(string).IsAssignableFrom(type) && typeof(IEnumerable).IsAssignableFrom(type);
         }
 
-        internal static object[] ToArray(object value)
+        internal static object[]? ToArray(object value)
         {
             return !(value is null) ? ((IEnumerable)value).Cast<object>().ToArray() : null;
         }
