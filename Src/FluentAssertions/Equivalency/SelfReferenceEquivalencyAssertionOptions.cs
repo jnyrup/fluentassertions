@@ -196,7 +196,7 @@ namespace FluentAssertions.Equivalency
             return strategy;
         }
 
-        public ITraceWriter TraceWriter { get; private set; }
+        public ITraceWriter? TraceWriter { get; private set; }
 
         /// <summary>
         /// Causes inclusion of only public properties of the subject as far as they are defined on the declared type.

@@ -444,7 +444,7 @@ namespace FluentAssertions.Primitives
                     .FailWith("Expected {context:string} {0} to end with {1}{reason}.", Subject, expected);
             }
 
-            if (Subject.Length < expected.Length)
+            if (Subject!.Length < expected.Length)
             {
                 Execute.Assertion
                     .BecauseOf(because, becauseArgs)
@@ -452,7 +452,7 @@ namespace FluentAssertions.Primitives
             }
 
             Execute.Assertion
-                .ForCondition(Subject.EndsWith(expected))
+                .ForCondition(Subject!.EndsWith(expected))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:string} {0} to end with {1}{reason}.", Subject, expected);
 
@@ -488,7 +488,7 @@ namespace FluentAssertions.Primitives
             }
 
             Execute.Assertion
-                .ForCondition(!Subject.EndsWith(unexpected))
+                .ForCondition(!Subject!.EndsWith(unexpected))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:string} {0} not to end with {1}{reason}.", Subject, unexpected);
 
@@ -523,7 +523,7 @@ namespace FluentAssertions.Primitives
                     .FailWith("Expected {context:string} that ends with equivalent of {0}{reason}, but found {1}.", expected, Subject);
             }
 
-            if (Subject.Length < expected.Length)
+            if (Subject!.Length < expected.Length)
             {
                 Execute.Assertion
                     .BecauseOf(because, becauseArgs)
@@ -531,7 +531,7 @@ namespace FluentAssertions.Primitives
             }
 
             Execute.Assertion
-                .ForCondition(Subject.EndsWith(expected, StringComparison.CurrentCultureIgnoreCase))
+                .ForCondition(Subject!.EndsWith(expected, StringComparison.CurrentCultureIgnoreCase))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:string} that ends with equivalent of {0}{reason}, but found {1}.", expected, Subject);
 
@@ -567,7 +567,7 @@ namespace FluentAssertions.Primitives
             }
 
             Execute.Assertion
-                .ForCondition(!Subject.EndsWith(unexpected, StringComparison.CurrentCultureIgnoreCase))
+                .ForCondition(!Subject!.EndsWith(unexpected, StringComparison.CurrentCultureIgnoreCase))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:string} that does not end with equivalent of {0}{reason}, but found {1}.", unexpected, Subject);
 

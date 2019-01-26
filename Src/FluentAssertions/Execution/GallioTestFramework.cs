@@ -6,22 +6,22 @@ namespace FluentAssertions.Execution
 {
     internal class GallioTestFramework : ITestFramework
     {
-        private Assembly assembly;
+        private Assembly? assembly;
 
         /// <summary>
         /// Throws a framework-specific exception to indicate a failing unit test.
         /// </summary>
         public void Throw(string message)
         {
-            Type assertionFailureBuilderType = assembly.GetType("Gallio.Framework.Assertions.AssertionFailureBuilder");
-            Type assertionHelperType = assembly.GetType("Gallio.Framework.Assertions.AssertionHelper");
-            Type testContextType = assembly.GetType("Gallio.Framework.TestContext");
+            Type assertionFailureBuilderType = assembly!.GetType("Gallio.Framework.Assertions.AssertionFailureBuilder");
+            Type assertionHelperType = assembly!.GetType("Gallio.Framework.Assertions.AssertionHelper");
+            Type testContextType = assembly!.GetType("Gallio.Framework.TestContext");
 
             if ((assertionFailureBuilderType is null) || (assertionHelperType is null) || (testContextType is null))
             {
                 throw new Exception(string.Format(
                     "Failed to create the assertion exception for the current test framework: \"{0}\"",
-                    assembly.FullName));
+                    assembly!.FullName));
             }
 
             object testContext = testContextType

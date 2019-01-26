@@ -715,7 +715,7 @@ namespace FluentAssertions
             if (succeeded)
             {
                 // ReSharper disable once PossibleInvalidOperationException
-                parent.BeApproximately(expectedValue.Value, precision, because, becauseArgs);
+                parent.BeApproximately(expectedValue!.Value, precision, because, becauseArgs);
             }
 
             return new AndConstraint<NullableNumericAssertions<float>>(parent);
@@ -816,7 +816,7 @@ namespace FluentAssertions
             if (succeeded)
             {
                 // ReSharper disable once PossibleInvalidOperationException
-                parent.BeApproximately(expectedValue.Value, precision, because, becauseArgs);
+                parent.BeApproximately(expectedValue!.Value, precision, because, becauseArgs);
             }
 
             return new AndConstraint<NullableNumericAssertions<double>>(parent);
@@ -917,7 +917,7 @@ namespace FluentAssertions
             if (succeeded)
             {
                 // ReSharper disable once PossibleInvalidOperationException
-                parent.BeApproximately(expectedValue.Value, precision, because, becauseArgs);
+                parent.BeApproximately(expectedValue!.Value, precision, because, becauseArgs);
             }
 
             return new AndConstraint<NullableNumericAssertions<decimal>>(parent);
@@ -1032,7 +1032,7 @@ namespace FluentAssertions
             if (succeeded)
             {
                 // ReSharper disable once PossibleInvalidOperationException
-                parent.NotBeApproximately(unexpectedValue.Value, precision, because, becauseArgs);
+                parent.NotBeApproximately(unexpectedValue!.Value, precision, because, becauseArgs);
             }
 
             return new AndConstraint<NullableNumericAssertions<float>>(parent);
@@ -1131,7 +1131,7 @@ namespace FluentAssertions
             if (succeeded)
             {
                 // ReSharper disable once PossibleInvalidOperationException
-                parent.NotBeApproximately(unexpectedValue.Value, precision, because, becauseArgs);
+                parent.NotBeApproximately(unexpectedValue!.Value, precision, because, becauseArgs);
             }
 
             return new AndConstraint<NullableNumericAssertions<double>>(parent);
@@ -1230,7 +1230,7 @@ namespace FluentAssertions
             if (succeeded)
             {
                 // ReSharper disable once PossibleInvalidOperationException
-                parent.NotBeApproximately(unexpectedValue.Value, precision, because, becauseArgs);
+                parent.NotBeApproximately(unexpectedValue!.Value, precision, because, becauseArgs);
             }
 
             return new AndConstraint<NullableNumericAssertions<decimal>>(parent);

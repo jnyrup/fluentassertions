@@ -11,7 +11,7 @@ namespace FluentAssertions.Types
     /// </summary>
     [DebuggerNonUserCode]
     public class PropertyInfoAssertions :
-        MemberInfoAssertions<PropertyInfo, PropertyInfoAssertions>
+        MemberInfoAssertions<PropertyInfo?, PropertyInfoAssertions>
     {
         public PropertyInfoAssertions(PropertyInfo? propertyInfo) : base(propertyInfo)
         {

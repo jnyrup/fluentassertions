@@ -6,7 +6,9 @@ namespace FluentAssertions.Equivalency
     {
         private Type compileTimeType;
 
+#pragma warning disable CS8618 // compileTimeType and becauseArgs are hopefully always set in ctor initializer
         public EquivalencyValidationContext()
+#pragma warning restore CS8618
         {
             SelectedMemberDescription = "";
             SelectedMemberPath = "";

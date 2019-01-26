@@ -70,7 +70,7 @@ namespace FluentAssertions.Primitives
 
             if (success)
             {
-                TimeSpan actual = target - subject.Value;
+                TimeSpan actual = target - subject!.Value;
 
                 if (!predicate.IsMatchedBy(actual, timeSpan))
                 {
@@ -108,7 +108,7 @@ namespace FluentAssertions.Primitives
 
             if (success)
             {
-                TimeSpan actual = subject.Value - target;
+                TimeSpan actual = subject!.Value - target;
 
                 if (!predicate.IsMatchedBy(actual, timeSpan))
                 {

@@ -559,8 +559,8 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> ContainEquivalentOf<TExpectation>(TExpectation expectation, string because = "",
-            params object[] becauseArgs)
+        public AndConstraint<TAssertions> ContainEquivalentOf<TExpectation>(TExpectation expectation, string? because = "",
+            params object?[] becauseArgs)
         {
             return ContainEquivalentOf(expectation, config => config, because, becauseArgs);
         }
@@ -588,7 +588,7 @@ namespace FluentAssertions.Collections
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
         public AndConstraint<TAssertions> ContainEquivalentOf<TExpectation>(TExpectation expectation, Func<EquivalencyAssertionOptions<TExpectation>,
-                EquivalencyAssertionOptions<TExpectation>> config, string because = "", params object[] becauseArgs)
+                EquivalencyAssertionOptions<TExpectation>>? config, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(config, nameof(config));
 

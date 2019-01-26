@@ -13,7 +13,7 @@ namespace FluentAssertions.Types
     /// </summary>
     [DebuggerNonUserCode]
     public abstract class MethodBaseAssertions<TSubject, TAssertions> : MemberInfoAssertions<TSubject, TAssertions>
-        where TSubject : MethodBase
+        where TSubject : MethodBase?
         where TAssertions : MethodBaseAssertions<TSubject, TAssertions>
     {
         protected MethodBaseAssertions() : this(default)

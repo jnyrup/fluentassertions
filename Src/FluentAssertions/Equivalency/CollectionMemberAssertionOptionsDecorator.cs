@@ -63,6 +63,6 @@ namespace FluentAssertions.Equivalency
             return inner.GetEqualityStrategy(type);
         }
 
-        public ITraceWriter TraceWriter => inner.TraceWriter;
+        public ITraceWriter? TraceWriter => inner.TraceWriter;
     }
 }

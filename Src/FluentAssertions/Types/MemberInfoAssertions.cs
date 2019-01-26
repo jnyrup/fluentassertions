@@ -15,7 +15,7 @@ namespace FluentAssertions.Types
     /// </summary>
     [DebuggerNonUserCode]
     public abstract class MemberInfoAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<TSubject, TAssertions>
-        where TSubject : MemberInfo
+        where TSubject : MemberInfo?
         where TAssertions : MemberInfoAssertions<TSubject, TAssertions>
     {
         protected MemberInfoAssertions() : this(null)

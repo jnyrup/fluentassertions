@@ -388,7 +388,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Year == expected)
+                .ForCondition(Subject!.Value.Year == expected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value.Year)
                 .Then
@@ -416,7 +416,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Year != unexpected)
+                .ForCondition(Subject!.Value.Year != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then
@@ -445,7 +445,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Month == expected)
+                .ForCondition(Subject!.Value.Month == expected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value.Month)
                 .Then
@@ -473,7 +473,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Month != unexpected)
+                .ForCondition(Subject!.Value.Month != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then
@@ -502,7 +502,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Day == expected)
+                .ForCondition(Subject!.Value.Day == expected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value.Day)
                 .Then
@@ -530,7 +530,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Day != unexpected)
+                .ForCondition(Subject!.Value.Day != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then
@@ -559,7 +559,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Hour == expected)
+                .ForCondition(Subject!.Value.Hour == expected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value.Hour)
                 .Then
@@ -587,7 +587,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Hour != unexpected)
+                .ForCondition(Subject!.Value.Hour != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then
@@ -616,7 +616,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Minute == expected)
+                .ForCondition(Subject!.Value.Minute == expected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value.Minute)
                 .Then
@@ -645,7 +645,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Minute != unexpected)
+                .ForCondition(Subject!.Value.Minute != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then
@@ -674,7 +674,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Second == expected)
+                .ForCondition(Subject!.Value.Second == expected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value.Second)
                 .Then
@@ -703,7 +703,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Second != unexpected)
+                .ForCondition(Subject!.Value.Second != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then
@@ -732,7 +732,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Offset == expected)
+                .ForCondition(Subject!.Value.Offset == expected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value.Offset)
                 .Then
@@ -761,7 +761,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Offset != unexpected)
+                .ForCondition(Subject!.Value.Offset != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then
@@ -853,7 +853,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.", expectedDate)
                 .Then
-                .ForCondition(Subject.Value.Date == expectedDate)
+                .ForCondition(Subject!.Value.Date == expectedDate)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was {0}.", Subject.Value)
                 .Then
@@ -884,7 +884,7 @@ namespace FluentAssertions.Primitives
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but found a <null> DateTimeOffset.")
                 .Then
-                .ForCondition(Subject.Value.Date != unexpectedDate)
+                .ForCondition(Subject!.Value.Date != unexpectedDate)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("but it was.")
                 .Then

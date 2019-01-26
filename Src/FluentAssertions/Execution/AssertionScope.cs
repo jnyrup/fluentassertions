@@ -91,7 +91,7 @@ namespace FluentAssertions.Execution
         /// Gets or sets the context of the current assertion scope, e.g. the path of the object graph
         /// that is being asserted on.
         /// </summary>
-        public string Context { get; set; }
+        public string? Context { get; set; }
 
         /// <summary>
         /// Gets the current thread-specific assertion scope.

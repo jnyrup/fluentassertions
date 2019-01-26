@@ -73,7 +73,7 @@ namespace FluentAssertions.Equivalency
         /// <summary>
         /// Gets the currently configured tracer, or <c>null</c> if no tracing was configured.
         /// </summary>
-        ITraceWriter TraceWriter { get; }
+        ITraceWriter? TraceWriter { get; }
 
         /// <summary>
         /// Determines the right strategy for evaluating the equality of objects of this type.

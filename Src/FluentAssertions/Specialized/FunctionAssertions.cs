@@ -10,7 +10,7 @@ namespace FluentAssertions.Specialized
     /// Contains a number of methods to assert that a synchronous function yields the expected result.
     /// </summary>
     [DebuggerNonUserCode]
-    public class FunctionAssertions<T> : DelegateAssertions<Func<T>>
+    public class FunctionAssertions<T> : DelegateAssertions<Func<T>?>
     {
         private readonly IClock clock;
 
@@ -106,7 +106,7 @@ namespace FluentAssertions.Specialized
                 .FailWith("Expected {context} not to throw any exceptions after {0}{reason}, but found <null>.", waitTime);
 
             TimeSpan? invocationEndTime = null;
-            Exception exception = null;
+            Exception? exception = null;
             ITimer timer = clock.StartTimer();
 
             while (invocationEndTime is null || invocationEndTime < waitTime)

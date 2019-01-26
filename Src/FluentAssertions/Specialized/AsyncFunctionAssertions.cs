@@ -28,7 +28,7 @@ namespace FluentAssertions.Specialized
         /// <summary>
         /// Gets the <see cref="Func{Task}"/> that is being asserted.
         /// </summary>
-        public new Func<Task> Subject { get; }
+        public new Func<Task>? Subject { get; }
 
         protected override string Identifier => "async function";
 
@@ -204,7 +204,7 @@ namespace FluentAssertions.Specialized
             async Task assertionTask()
             {
                 TimeSpan? invocationEndTime = null;
-                Exception exception = null;
+                Exception? exception = null;
                 ITimer timer = clock.StartTimer();
 
                 while (invocationEndTime is null || invocationEndTime < waitTime)

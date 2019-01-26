@@ -7,7 +7,7 @@ namespace FluentAssertions.Types
     /// Contains a number of methods to assert that a <see cref="ConstructorInfo"/> is in the expected state.
     /// </summary>
     [DebuggerNonUserCode]
-    public class ConstructorInfoAssertions : MethodBaseAssertions<ConstructorInfo, ConstructorInfoAssertions>
+    public class ConstructorInfoAssertions : MethodBaseAssertions<ConstructorInfo?, ConstructorInfoAssertions>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstructorInfoAssertions"/> class.
