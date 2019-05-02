@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 namespace FluentAssertions.Common
 {
@@ -26,21 +27,28 @@ namespace FluentAssertions.Common
                 return true;
             }
 
+            Type expectedType = expected.GetType();
+            Type actualType = actual.GetType();
+
+            return expectedType != typeof(string) && actualType != typeof(string)
+                && CanConvert(actual, expected, actualType, expectedType)
+                && CanConvert(expected, actual, expectedType, actualType);
+        }
+
+        private static bool CanConvert(object source, object target, Type sourceType, Type targetType)
+        {
             try
             {
-                if (expected.GetType() != typeof(string) && actual.GetType() != typeof(string))
-                {
-                    var convertedActual = Convert.ChangeType(actual, expected.GetType());
+                var converted = Convert.ChangeType(source, targetType);
 
-                    return convertedActual.Equals(expected);
-                }
+                return (source.Equals(Convert.ChangeType(converted, sourceType)))
+                    && converted.Equals(target);
             }
             catch
             {
                 // ignored
+                return false;
             }
-
-            return false;
         }
     }
 }
