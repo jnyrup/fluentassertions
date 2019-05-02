@@ -98,7 +98,7 @@ namespace FluentAssertions.Execution
         /// </remarks>
         /// <param name="message">The format string that represents the failure message.</param>
         /// <param name="args">Optional arguments to any numbered placeholders.</param>
-        public ContinuationOfGiven<T> FailWith(string? message, params Func<T, object>?[] args)
+        public ContinuationOfGiven<T> FailWith(string? message, params Func<T, object?>?[] args)
         {
             object[] mappedArguments = args.Select(a => a(subject)).ToArray();
             return FailWith(message, mappedArguments);
