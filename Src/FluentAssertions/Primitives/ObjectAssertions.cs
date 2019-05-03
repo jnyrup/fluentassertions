@@ -212,8 +212,8 @@ namespace FluentAssertions.Primitives
                 .ForCondition(!(Subject is null))
                 .FailWith("Expected type to be {0}{reason}, but found <null>.", expectedFlag.GetType())
                 .Then
-                .ForCondition(Subject.GetType() == expectedFlag.GetType())
-                .FailWith("Expected the enum to be of type {0} type but found {1}{reason}.", expectedFlag.GetType(), Subject.GetType())
+                .ForCondition(Subject!.GetType() == expectedFlag.GetType())
+                .FailWith("Expected the enum to be of type {0} type but found {1}{reason}.", expectedFlag.GetType(), Subject!.GetType())
                 .Then
                 .Given(() => Subject as Enum)
                 .ForCondition(@enum => @enum.HasFlag(expectedFlag))
@@ -241,8 +241,8 @@ namespace FluentAssertions.Primitives
                 .ForCondition(!(Subject is null))
                 .FailWith("Expected type to be {0}{reason}, but found <null>.", unexpectedFlag.GetType())
                 .Then
-                .ForCondition(Subject.GetType() == unexpectedFlag.GetType())
-                .FailWith("Expected the enum to be of type {0} type but found {1}{reason}.", unexpectedFlag.GetType(), Subject.GetType())
+                .ForCondition(Subject!.GetType() == unexpectedFlag.GetType())
+                .FailWith("Expected the enum to be of type {0} type but found {1}{reason}.", unexpectedFlag.GetType(), Subject!.GetType())
                 .Then
                 .Given(() => Subject as Enum)
                 .ForCondition(@enum => !@enum.HasFlag(unexpectedFlag))

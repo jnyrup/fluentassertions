@@ -232,14 +232,14 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> Equal(IEnumerable expected, string? because = "", params object?[] becauseArgs)
+        public AndConstraint<TAssertions> Equal(IEnumerable? expected, string? because = "", params object?[] becauseArgs)
         {
             AssertSubjectEquality<object, object>(expected, (s, e) => s.IsSameOrEqualTo(e), because, becauseArgs);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
         }
 
-        protected void AssertSubjectEquality<TActual, TExpected>(IEnumerable expectation, Func<TActual, TExpected, bool> equalityComparison,
+        protected void AssertSubjectEquality<TActual, TExpected>(IEnumerable? expectation, Func<TActual, TExpected, bool> equalityComparison,
             string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(equalityComparison, nameof(equalityComparison));
@@ -707,7 +707,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> Contain(IEnumerable expected, string? because = "", params object?[] becauseArgs)
+        public AndConstraint<TAssertions> Contain(IEnumerable? expected, string? because = "", params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot verify containment against a <null> collection");
 
@@ -783,7 +783,7 @@ namespace FluentAssertions.Collections
         /// <param name="becauseArgs">
         /// Zero or more objects to format using the placeholders in <see cref="because" />.
         /// </param>
-        public AndConstraint<TAssertions> ContainInOrder(IEnumerable expected, string? because = "",
+        public AndConstraint<TAssertions> ContainInOrder(IEnumerable? expected, string? because = "",
             params object?[] becauseArgs)
         {
             Guard.ThrowIfArgumentIsNull(expected, nameof(expected), "Cannot verify ordered containment against a <null> collection.");

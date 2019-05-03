@@ -142,6 +142,11 @@ namespace FluentAssertions.Events
         public void NotRaisePropertyChangeFor(Expression<Func<T, object>>? propertyExpression,
             string? because = "", params object?[] becauseArgs)
         {
+            if (propertyExpression is null)
+            {
+                throw new ArgumentNullException(nameof(propertyExpression));
+            }
+
             IEventRecorder eventRecorder = monitor.GetEventRecorder(PropertyChangedEventName);
 
             string propertyName = propertyExpression.GetPropertyInfo().Name;

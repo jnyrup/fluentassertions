@@ -19,7 +19,7 @@ namespace FluentAssertions.Specialized
         /// <param name="executionTime">The execution on which time must be asserted.</param>
         public ExecutionTimeAssertions(ExecutionTime? executionTime)
         {
-            execution = executionTime;
+            execution = executionTime ?? throw new ArgumentNullException(nameof(executionTime));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace FluentAssertions.Specialized
         {
         }
 
-        protected ExecutionTime(Action action, string actionDescription)
+        protected ExecutionTime(Action? action, string actionDescription)
         {
             ActionDescription = actionDescription;
             stopwatch = new Stopwatch();
@@ -256,7 +256,7 @@ namespace FluentAssertions.Specialized
         /// The original constructor shall stay in place in order to keep backward-compatibility
         /// and to avoid unnecessary wrapping action in <see cref="Task"/>.
         /// </remarks>
-        protected ExecutionTime(Func<Task> action, string actionDescription)
+        protected ExecutionTime(Func<Task>? action, string actionDescription)
         {
             ActionDescription = actionDescription;
             stopwatch = new Stopwatch();
@@ -304,7 +304,7 @@ namespace FluentAssertions.Specialized
         /// <param name="subject">The object that exposes the method or property.</param>
         /// <param name="action">A reference to the method or property to measure the execution time of.</param>
         public MemberExecutionTime(T subject, Expression<Action<T>>? action)
-            : base(() => action.Compile()(subject), "(" + action.Body + ")")
+            : base(() => (action ?? throw new ArgumentNullException(nameof(action))).Compile()(subject), "(" + action!.Body + ")")
         {
         }
     }

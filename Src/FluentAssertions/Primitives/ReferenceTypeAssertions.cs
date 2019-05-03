@@ -160,7 +160,7 @@ namespace FluentAssertions.Primitives
                 .WithDefaultIdentifier("type")
                 .FailWith("Expected {context} to be {0}{reason}, but found <null>.", expectedType);
 
-            Type subjectType = Subject.GetType();
+            Type subjectType = Subject!.GetType();
             if (expectedType.GetTypeInfo().IsGenericTypeDefinition && subjectType.GetTypeInfo().IsGenericType)
             {
                 subjectType.GetGenericTypeDefinition().Should().Be(expectedType, because, becauseArgs);
@@ -212,7 +212,7 @@ namespace FluentAssertions.Primitives
                 .WithDefaultIdentifier("type")
                 .FailWith("Expected {context} not to be {0}{reason}, but found <null>.", unexpectedType);
 
-            Type subjectType = Subject.GetType();
+            Type subjectType = Subject!.GetType();
             if (unexpectedType.GetTypeInfo().IsGenericTypeDefinition && subjectType.GetTypeInfo().IsGenericType)
             {
                 subjectType.GetGenericTypeDefinition().Should().NotBe(unexpectedType, because, becauseArgs);
@@ -267,11 +267,11 @@ namespace FluentAssertions.Primitives
             bool isAssignable;
             if (type.GetTypeInfo().IsGenericTypeDefinition)
             {
-                isAssignable = Subject.GetType().IsAssignableToOpenGeneric(type);
+                isAssignable = Subject!.GetType().IsAssignableToOpenGeneric(type);
             }
             else
             {
-                isAssignable = type.IsAssignableFrom(Subject.GetType());
+                isAssignable = type.IsAssignableFrom(Subject!.GetType());
             }
 
             Execute.Assertion
@@ -280,7 +280,7 @@ namespace FluentAssertions.Primitives
                 .WithDefaultIdentifier(Identifier)
                 .FailWith("Expected {context} to be assignable to {0}{reason}, but {1} is not.",
                     type,
-                    Subject.GetType());
+                    Subject!.GetType());
 
             return new AndConstraint<TAssertions>((TAssertions)this);
         }
@@ -315,11 +315,11 @@ namespace FluentAssertions.Primitives
             bool isAssignable;
             if (type.GetTypeInfo().IsGenericTypeDefinition)
             {
-                isAssignable = Subject.GetType().IsAssignableToOpenGeneric(type);
+                isAssignable = Subject!.GetType().IsAssignableToOpenGeneric(type);
             }
             else
             {
-                isAssignable = type.IsAssignableFrom(Subject.GetType());
+                isAssignable = type.IsAssignableFrom(Subject!.GetType());
             }
 
             Execute.Assertion
@@ -328,7 +328,7 @@ namespace FluentAssertions.Primitives
                 .WithDefaultIdentifier(Identifier)
                 .FailWith("Expected {context} to not be assignable to {0}{reason}, but {1} is.",
                     type,
-                    Subject.GetType());
+                    Subject!.GetType());
 
             return new AndConstraint<TAssertions>((TAssertions)this);
         }

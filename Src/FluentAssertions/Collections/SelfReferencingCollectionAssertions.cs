@@ -281,6 +281,11 @@ namespace FluentAssertions.Collections
         public AndConstraint<TAssertions> Equal<TExpected>(
             IEnumerable<TExpected>? expectation, Func<T, TExpected, bool>? equalityComparison, string? because = "", params object?[] becauseArgs)
         {
+            if (equalityComparison is null)
+            {
+                throw new ArgumentNullException(nameof(equalityComparison));
+            }
+
             AssertSubjectEquality(expectation, equalityComparison, because, becauseArgs);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
@@ -331,6 +336,7 @@ namespace FluentAssertions.Collections
         public AndConstraint<TAssertions> StartWith<TExpected>(
             IEnumerable<TExpected>? expectation, Func<T, TExpected, bool>? equalityComparison, string? because = "", params object?[] becauseArgs)
         {
+            Guard.ThrowIfArgumentIsNull(equalityComparison, nameof(equalityComparison));
             Guard.ThrowIfArgumentIsNull(expectation, nameof(expectation), "Cannot compare collection with <null>.");
 
             AssertCollectionStartsWith(Subject, expectation.ConvertOrCastToCollection(), equalityComparison, because, becauseArgs);
@@ -382,6 +388,7 @@ namespace FluentAssertions.Collections
         public AndConstraint<TAssertions> EndWith<TExpected>(
             IEnumerable<TExpected>? expectation, Func<T, TExpected, bool>? equalityComparison, string? because = "", params object?[] becauseArgs)
         {
+            Guard.ThrowIfArgumentIsNull(equalityComparison, nameof(equalityComparison));
             Guard.ThrowIfArgumentIsNull(expectation, nameof(expectation), "Cannot compare collection with <null>.");
 
             AssertCollectionEndsWith(Subject, expectation.ConvertOrCastToCollection(), equalityComparison, because, becauseArgs);

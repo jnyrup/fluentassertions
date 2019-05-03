@@ -165,6 +165,11 @@ namespace FluentAssertions.Collections
             object? becauseArg = null,
             params object?[] becauseArgs)
         {
+            if (expected is null)
+            {
+                throw new ArgumentNullException(nameof(expected), "Cannot verify containment against a <null> collection");
+            }
+
             var args = new List<object?> { becauseArg };
             args.AddRange(becauseArgs);
             return base.Contain(expected, because, args.ToArray());

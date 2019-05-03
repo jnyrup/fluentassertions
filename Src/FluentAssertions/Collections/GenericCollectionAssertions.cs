@@ -242,6 +242,7 @@ namespace FluentAssertions.Collections
         private AndConstraint<GenericCollectionAssertions<T>> BeOrderedBy<TSelector>(
             Expression<Func<T, TSelector>>? propertyExpression, IComparer<TSelector>? comparer, SortOrder direction, string? because, object?[] args)
         {
+            Guard.ThrowIfArgumentIsNull(propertyExpression, nameof(propertyExpression));
             Guard.ThrowIfArgumentIsNull(comparer, nameof(comparer), "Cannot assert collection ordering without specifying a comparer.");
 
             if (IsValidProperty(propertyExpression, because, args))

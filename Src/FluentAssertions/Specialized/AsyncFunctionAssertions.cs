@@ -97,7 +97,7 @@ namespace FluentAssertions.Specialized
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context} to throw {0}{reason}, but found <null>.", typeof(TException));
 
-            Exception exception = await InvokeWithInterceptionAsync(Subject.ExecuteInDefaultSynchronizationContext);
+            Exception? exception = await InvokeWithInterceptionAsync(Subject.ExecuteInDefaultSynchronizationContext);
             return Throw<TException>(exception, because, becauseArgs);
         }
 

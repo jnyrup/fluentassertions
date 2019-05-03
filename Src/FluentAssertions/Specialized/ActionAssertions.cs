@@ -8,7 +8,7 @@ namespace FluentAssertions.Specialized
     /// Contains a number of methods to assert that an <see cref="Action"/> yields the expected result.
     /// </summary>
     [DebuggerNonUserCode]
-    public class ActionAssertions : DelegateAssertions<Action>
+    public class ActionAssertions : DelegateAssertions<Action?>
     {
         public ActionAssertions(Action? subject, IExtractExceptions? extractor) : this(subject, extractor, new Clock())
         {

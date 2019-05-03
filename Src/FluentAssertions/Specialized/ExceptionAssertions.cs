@@ -17,7 +17,7 @@ namespace FluentAssertions.Specialized
     /// </summary>
     [DebuggerNonUserCode]
     public class ExceptionAssertions<TException> :
-        ReferenceTypeAssertions<IEnumerable<TException?>?, ExceptionAssertions<TException>>
+        ReferenceTypeAssertions<IEnumerable<TException>?, ExceptionAssertions<TException>>
         where TException : Exception
     {
         #region Private Definitions
@@ -193,7 +193,7 @@ namespace FluentAssertions.Specialized
 
             public string Context { get; set; }
 
-            public void Execute(IEnumerable<string> messages, string expectation, string? because, params object?[] becauseArgs)
+            public void Execute(IEnumerable<string> messages, string? expectation, string? because, params object?[] becauseArgs)
             {
                 using (new AssertionScope())
                 {
