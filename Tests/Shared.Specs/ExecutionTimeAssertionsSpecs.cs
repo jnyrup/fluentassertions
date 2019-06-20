@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions.Common;
 using FluentAssertions.Extensions;
 using Xunit;
 using Xunit.Sdk;
@@ -16,13 +17,15 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(610)).Should().BeLessOrEqualTo(500.Milliseconds(),
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(610), clock).Should().BeLessOrEqualTo(500.Milliseconds(),
                 "we like speed");
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -37,12 +40,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(0)).Should().BeLessOrEqualTo(500.Milliseconds());
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(0), clock).Should().BeLessOrEqualTo(500.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -56,12 +61,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(510);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(510));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeLessOrEqualTo(100.Milliseconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeLessOrEqualTo(100.Milliseconds());
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -76,12 +83,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(100);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(100));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeLessOrEqualTo(1.Seconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeLessOrEqualTo(1.Seconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -122,13 +131,15 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(610)).Should().BeLessThan(500.Milliseconds(),
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(610), clock).Should().BeLessThan(500.Milliseconds(),
                 "we like speed");
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -143,12 +154,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(0)).Should().BeLessThan(500.Milliseconds());
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(0), clock).Should().BeLessThan(500.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -162,12 +175,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(510);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(510));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeLessThan(100.Milliseconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeLessThan(100.Milliseconds());
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -182,12 +197,16 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Func<Task> someAction = () => Task.Delay(TimeSpan.FromMilliseconds(150));
+            var timer = new FakeClock();
+            var taskFactory = new TaskCompletionSource<bool>();
+
+            Func<Task> someAction = () => taskFactory.Task;
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeLessThan(100.Milliseconds());
+            Action act = () => someAction.ExecutionTime(timer).Should().BeLessThan(100.Milliseconds());
+            timer.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -202,12 +221,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(100);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(100));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeLessThan(2.Seconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeLessThan(2.Seconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -221,12 +242,16 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Func<Task> someAction = () => Task.Delay(TimeSpan.FromMilliseconds(100));
+            var timer = new FakeClock();
+            var taskFactory = new TaskCompletionSource<bool>();
+            Func<Task> someAction = () => taskFactory.Task;
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeLessThan(2.Seconds());
+            Action act = () => someAction.ExecutionTime(timer).Should().BeLessThan(2.Seconds());
+            taskFactory.SetResult(true);
+            timer.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -267,13 +292,15 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(100)).Should().BeGreaterOrEqualTo(1.Seconds(),
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(100), clock).Should().BeGreaterOrEqualTo(1.Seconds(),
                 "we like speed");
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -288,12 +315,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(100)).Should().BeGreaterOrEqualTo(50.Milliseconds());
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(100), clock).Should().BeGreaterOrEqualTo(50.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -307,12 +336,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(100);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(100));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeGreaterOrEqualTo(1.Seconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeGreaterOrEqualTo(1.Seconds());
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -327,12 +358,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(100);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(100));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeGreaterOrEqualTo(50.Milliseconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeGreaterOrEqualTo(50.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -372,13 +405,15 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(100)).Should().BeGreaterThan(1.Seconds(),
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(100), clock).Should().BeGreaterThan(1.Seconds(),
                 "we like speed");
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -393,12 +428,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(200)).Should().BeGreaterThan(100.Milliseconds());
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(200), clock).Should().BeGreaterThan(100.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -412,12 +449,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(100);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(100));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeGreaterThan(1.Seconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeGreaterThan(1.Seconds());
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -432,12 +471,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(200);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(200));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeGreaterThan(100.Milliseconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeGreaterThan(100.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -477,14 +518,16 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(200)).Should().BeCloseTo(100.Milliseconds(),
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(200), clock).Should().BeCloseTo(100.Milliseconds(),
                 50.Milliseconds(),
                 "we like speed");
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -499,13 +542,15 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            var subject = new SleepingClass();
+            var clock = new FakeClock();
+            var subject = new SleepingClass(clock);
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(210)).Should().BeCloseTo(200.Milliseconds(),
+            Action act = () => subject.ExecutionTimeOf(s => s.Sleep(210), clock).Should().BeCloseTo(200.Milliseconds(),
                 150.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -519,12 +564,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(200);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(200));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeCloseTo(100.Milliseconds(), 50.Milliseconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeCloseTo(100.Milliseconds(), 50.Milliseconds());
+            clock.RunsIntoTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -539,12 +586,14 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(210);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(210));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
             //-----------------------------------------------------------------------------------------------------------
-            Action act = () => someAction.ExecutionTime().Should().BeCloseTo(200.Milliseconds(), 150.Milliseconds());
+            Action act = () => someAction.ExecutionTime(clock).Should().BeCloseTo(200.Milliseconds(), 150.Milliseconds());
+            clock.CompletesBeforeTimeout();
 
             //-----------------------------------------------------------------------------------------------------------
             // Assert
@@ -604,7 +653,8 @@ namespace FluentAssertions.Specs
             //-----------------------------------------------------------------------------------------------------------
             // Arrange
             //-----------------------------------------------------------------------------------------------------------
-            Action someAction = () => Thread.Sleep(300);
+            var clock = new FakeClock();
+            Action someAction = () => clock.Delay(TimeSpan.FromMilliseconds(300));
 
             //-----------------------------------------------------------------------------------------------------------
             // Act
@@ -613,7 +663,8 @@ namespace FluentAssertions.Specs
             {
                 // I know it's not meant to be used like this,
                 // but since you can, it should still give consistent results
-                Specialized.ExecutionTime time = someAction.ExecutionTime();
+                Specialized.ExecutionTime time = someAction.ExecutionTime(clock);
+                clock.RunsIntoTimeout();
                 time.Should().BeGreaterThan(100.Milliseconds());
                 time.Should().BeGreaterThan(200.Milliseconds());
             };
@@ -627,10 +678,15 @@ namespace FluentAssertions.Specs
 
         internal class SleepingClass
         {
-            public void Sleep(int milliseconds)
+            private readonly IClock clock;
+
+            public SleepingClass(IClock clock)
             {
-                Thread.Sleep(milliseconds);
+                this.clock = clock;
             }
+
+            public void Sleep(int milliseconds)
+                => clock.Delay(TimeSpan.FromMilliseconds(milliseconds));
         }
     }
 }

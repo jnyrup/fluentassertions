@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using FluentAssertions.Common;
 using FluentAssertions.Execution;
 
 namespace FluentAssertions.Specialized
@@ -42,7 +42,7 @@ namespace FluentAssertions.Specialized
                     break;
                 }
 
-                isRunning = !execution.Task.Wait(rate);
+                isRunning = !execution.Wait(rate);
                 elapsed = execution.ElapsedTime;
             }
 
@@ -215,27 +215,46 @@ namespace FluentAssertions.Specialized
         /// </summary>
         /// <param name="action">The action of which the execution time must be asserted.</param>
         public ExecutionTime(Action action)
-            : this(action, "the action")
+            : this(action, new Clock())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExecutionTime"/> class.
+        /// </summary>
+        /// <param name="action">The action of which the execution time must be asserted.</param>
+        public ExecutionTime(Action action, IClock clock)
+            : this(action, "the action", clock)
         {
         }
 
         public ExecutionTime(Func<Task> action)
-            : this(action, "the action")
+            : this(action, new Clock())
+        {
+        }
+
+        public ExecutionTime(Func<Task> action, IClock clock)
+            : this(action, "the action", clock)
         {
         }
 
         protected ExecutionTime(Action action, string actionDescription)
+            : this(action, actionDescription, new Clock())
+        {
+        }
+
+        protected ExecutionTime(Action action, string actionDescription, IClock clock)
         {
             ActionDescription = actionDescription;
-            stopwatch = new Stopwatch();
+            this.clock = clock;
             IsRunning = true;
-            Task = Task.Run(() =>
+            task = Task.Run(() =>
             {
                 // move stopwatch as close to action start as possible
                 // so that we have to get correct time readings
                 try
                 {
-                    stopwatch.Start();
+                    timer = clock.StartTimer();
                     action();
                 }
                 catch (Exception exception)
@@ -245,29 +264,34 @@ namespace FluentAssertions.Specialized
                 finally
                 {
                     // ensures that we stop the stopwatch even on exceptions
-                    stopwatch.Stop();
+                    timer.Stop();
                     IsRunning = false;
                 }
             });
         }
 
+        protected ExecutionTime(Func<Task> action, string actionDescription)
+            : this(action, actionDescription, new Clock())
+        {
+        }
+
         /// <remarks>
         /// This constructor is almost exact copy of the one accepting <see cref="Action"/>.
         /// The original constructor shall stay in place in order to keep backward-compatibility
-        /// and to avoid unnecessary wrapping action in <see cref="Task"/>.
+        /// and to avoid unnecessary wrapping action in <see cref="task"/>.
         /// </remarks>
-        protected ExecutionTime(Func<Task> action, string actionDescription)
+        protected ExecutionTime(Func<Task> action, string actionDescription, IClock clock)
         {
             ActionDescription = actionDescription;
-            stopwatch = new Stopwatch();
+            this.clock = clock;
             IsRunning = true;
-            Task = Task.Run(async () =>
+            task = Task.Run(async () =>
             {
                 // move stopwatch as close to action start as possible
                 // so that we have to get correct time readings
                 try
                 {
-                    stopwatch.Start();
+                    timer = clock.StartTimer();
                     await action();
                 }
                 catch (Exception exception)
@@ -277,23 +301,27 @@ namespace FluentAssertions.Specialized
                 finally
                 {
                     // ensures that we stop the stopwatch even on exceptions
-                    stopwatch.Stop();
+                    timer.Stop();
                     IsRunning = false;
                 }
             });
         }
 
-        internal TimeSpan ElapsedTime => stopwatch.Elapsed;
+        internal TimeSpan ElapsedTime => timer?.Elapsed ?? TimeSpan.Zero;
 
         internal bool IsRunning { get; private set; }
 
         internal string ActionDescription { get; }
 
-        internal Task Task { get; }
-
         internal Exception Exception { get; private set; }
 
-        private readonly Stopwatch stopwatch;
+        internal bool Wait(TimeSpan timeout) => clock.Wait(task, timeout);
+
+        private readonly IClock clock;
+
+        private readonly Task task;
+
+        private ITimer timer;
     }
 
     public class MemberExecutionTime<T> : ExecutionTime
@@ -304,7 +332,17 @@ namespace FluentAssertions.Specialized
         /// <param name="subject">The object that exposes the method or property.</param>
         /// <param name="action">A reference to the method or property to measure the execution time of.</param>
         public MemberExecutionTime(T subject, Expression<Action<T>> action)
-            : base(() => action.Compile()(subject), "(" + action.Body + ")")
+            : this(subject, action, new Clock())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemberExecutionTime&lt;T&gt;"/> class.
+        /// </summary>
+        /// <param name="subject">The object that exposes the method or property.</param>
+        /// <param name="action">A reference to the method or property to measure the execution time of.</param>
+        public MemberExecutionTime(T subject, Expression<Action<T>> action, IClock clock)
+            : base(() => action.Compile()(subject), "(" + action.Body + ")", clock)
         {
         }
     }

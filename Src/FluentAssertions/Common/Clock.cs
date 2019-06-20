@@ -38,5 +38,7 @@ namespace FluentAssertions.Common
         }
 
         public TimeSpan Elapsed => stopwatch.Elapsed;
+
+        public void Stop() => stopwatch.Stop();
     }
 }

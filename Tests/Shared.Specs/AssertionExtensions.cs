@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentAssertions.Common;
 using FluentAssertions.Specialized;
@@ -27,6 +28,21 @@ namespace FluentAssertions.Specs
         public static FunctionAssertions<T> Should<T>(this Func<T> func, IClock clock)
         {
             return new FunctionAssertions<T>(func, extractor, clock);
+        }
+
+        public static ExecutionTime ExecutionTime(this Action action, IClock clock)
+        {
+            return new ExecutionTime(action, clock);
+        }
+
+        public static ExecutionTime ExecutionTime(this Func<Task> action, IClock clock)
+        {
+            return new ExecutionTime(action, clock);
+        }
+
+        public static MemberExecutionTime<T> ExecutionTimeOf<T>(this T subject, Expression<Action<T>> action, IClock clock)
+        {
+            return new MemberExecutionTime<T>(subject, action, clock);
         }
     }
 }
