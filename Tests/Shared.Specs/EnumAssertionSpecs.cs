@@ -95,7 +95,208 @@ namespace FluentAssertions.Specs
 
             // Assert
             act.Should().Throw<XunitException>()
-                .WithMessage("Expected*to be <null> because comparing enums should throw, but found UInt64Max*");
+                .WithMessage("Expected*to equal null by name because comparing enums should throw, but found EnumULong.UInt64Max*");
+        }
+
+        [Fact]
+        public void When_comparing_an_enum_and_a_numeric_for_equality_it_should_fail()
+        {
+            // Arrange
+            MyEnum subject = MyEnum.One;
+            object expected = 1;
+
+            // Act
+            Action act = () => subject.Should().Be(expected);
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_a_numeric_and_an_enum_for_equality_it_should_fail()
+        {
+            // Arrange
+            object subject = 1;
+            MyEnum expected = MyEnum.One;
+
+            // Act
+            Action act = () => subject.Should().Be(expected);
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_an_enum_and_a_numeric_for_equivalency_it_should_succeed()
+        {
+            // Arrange
+            MyEnum subject = MyEnum.One;
+            object expected = 1;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected);
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_comparing_a_numeric_and_an_enum_for_equivalency_it_should_succeed()
+        {
+            // Arrange
+            object subject = 1;
+            MyEnum expected = MyEnum.One;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected);
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_comparing_an_enum_and_a_string_for_equivalency_by_value_it_should_fail()
+        {
+            // Arrange
+            MyEnum subject = MyEnum.One;
+            object expected = "one";
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByValue());
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_a_string_and_an_enum_for_equivalency_by_value_it_should_fail()
+        {
+            // Arrange
+            object subject = "one";
+            MyEnum expected = MyEnum.One;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByValue());
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_an_enum_and_a_string_for_equivalency_by_name_it_should_succeed()
+        {
+            // Arrange
+            MyEnum subject = MyEnum.One;
+            object expected = "one";
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByName());
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_comparing_a_string_and_an_enum_for_equivalency_by_name_it_should_succeed()
+        {
+            // Arrange
+            object subject = "one";
+            MyEnum expected = MyEnum.One;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByName());
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_comparing_an_enum_and_an_invalid_string_for_equivalency_by_name_it_should_fail()
+        {
+            // Arrange
+            MyEnum subject = MyEnum.One;
+            object expected = "one111";
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByName());
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_an_invalid_string_and_an_enum_for_equivalency_by_name_it_should_fail()
+        {
+            // Arrange
+            object subject = "one111";
+            MyEnum expected = MyEnum.One;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByName());
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_an_enum_and_a_numeric_for_equivalency_by_name_it_should_fail()
+        {
+            // Arrange
+            MyEnum subject = MyEnum.One;
+            object expected = 1;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByName());
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_a_numeric_and_an_enum_for_equivalency_by_name_it_should_fail()
+        {
+            // Arrange
+            object subject = 1;
+            MyEnum expected = MyEnum.One;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByName());
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void When_comparing_an_enum_and_a_numeric_for_equivalency_by_value_it_should_succeed()
+        {
+            // Arrange
+            MyEnum subject = MyEnum.One;
+            object expected = 1;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByValue());
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_comparing_a_numeric_and_an_enum_for_equivalency_by_value_it_should_succeed()
+        {
+            // Arrange
+            object subject = 1;
+            MyEnum expected = MyEnum.One;
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt.ComparingEnumsByValue());
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        private enum MyEnum
+        {
+            One = 1
         }
     }
 }

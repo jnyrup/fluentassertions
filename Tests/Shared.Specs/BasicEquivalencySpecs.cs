@@ -3207,6 +3207,28 @@ namespace FluentAssertions.Specs
         }
 
         [Fact]
+        public void When_the_expected_enum_name_is_null_it_should_report_that_properly()
+        {
+            // Arrange
+            var subject = new
+            {
+                NullableEnum = DayOfWeek.Friday
+            };
+
+            var expectation = new
+            {
+                NullableEnum = (DayOfWeek?)null
+            };
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expectation, o => o.ComparingEnumsByValue());
+
+            // Assert
+            act.Should().Throw<XunitException>()
+                .WithMessage("Expected*null*5*");
+        }
+
+        [Fact]
         public void When_asserting_different_enum_members_are_equivalent_it_should_fail()
         {
             // Arrange / Act
@@ -3313,6 +3335,27 @@ namespace FluentAssertions.Specs
             var expected = new
             {
                 Property = TestEnum.First
+            };
+
+            // Act
+            Action act = () => actual.Should().BeEquivalentTo(expected, options => options.ComparingEnumsByValue());
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_an_enum_is_compared_with_a_numeric_member_it_should_respect_the_enum_options()
+        {
+            // Arrange
+            var actual = new
+            {
+                Property = TestEnum.First
+            };
+
+            var expected = new
+            {
+                Property = 1
             };
 
             // Act

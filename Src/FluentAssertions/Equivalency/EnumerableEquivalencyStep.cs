@@ -14,9 +14,9 @@ namespace FluentAssertions.Equivalency
         /// </summary>
         public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
         {
-            Type subjectType = config.GetExpectationType(context);
+            Type expectationType = config.GetExpectationType(context);
 
-            return IsCollection(subjectType);
+            return IsCollection(expectationType);
         }
 
         /// <summary>

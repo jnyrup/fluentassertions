@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace FluentAssertions.Common
@@ -31,8 +32,8 @@ namespace FluentAssertions.Common
             Type actualType = actual.GetType();
 
             return actualType != expectedType
-                && IsNumericType(actual)
-                && IsNumericType(expected)
+                && actual.IsNumericType()
+                && expected.IsNumericType()
                 && CanConvert(actual, expected, actualType, expectedType)
                 && CanConvert(expected, actual, expectedType, actualType);
         }
@@ -53,7 +54,7 @@ namespace FluentAssertions.Common
             }
         }
 
-        private static bool IsNumericType(object obj)
+        internal static bool IsNumericType(this object obj)
         {
             switch (obj)
             {
@@ -73,5 +74,22 @@ namespace FluentAssertions.Common
                     return false;
             }
         }
+
+        private static readonly HashSet<Type> numericTypes = new HashSet<Type>
+        {
+            typeof(int),
+            typeof(long),
+            typeof(float),
+            typeof(double),
+            typeof(decimal),
+            typeof(sbyte),
+            typeof(byte),
+            typeof(short),
+            typeof(ushort),
+            typeof(uint),
+            typeof(ulong)
+        };
+
+        internal static bool IsNumericType(this Type type) => numericTypes.Contains(type);
     }
 }

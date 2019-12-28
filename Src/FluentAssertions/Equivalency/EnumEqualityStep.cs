@@ -3,6 +3,7 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using FluentAssertions.Common;
 using FluentAssertions.Execution;
 
 #endregion
@@ -16,11 +17,38 @@ namespace FluentAssertions.Equivalency
         /// </summary>
         public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
         {
-            Type subjectType = config.GetExpectationType(context);
+            Type expectationType = config.GetExpectationType(context);
+            Type subjectType = context.Subject?.GetType();
+            bool expectationIsEnum = expectationType?.GetTypeInfo().IsEnum == true;
+            bool subjectIsEnum = subjectType?.GetTypeInfo().IsEnum == true;
 
-            return (subjectType?.GetTypeInfo().IsEnum == true) ||
-                   (context.Expectation?.GetType().GetTypeInfo().IsEnum == true);
+            if (expectationIsEnum && subjectIsEnum)
+            {
+                return true;
+            }
+
+            if (expectationIsEnum)
+            {
+                return context.Subject is null
+                    || CanCompareByValue(subjectType, config)
+                    || CanCompareByName(subjectType, config);
+            }
+
+            if (subjectIsEnum)
+            {
+                return context.Expectation is null
+                    || CanCompareByValue(expectationType, config)
+                    || CanCompareByName(expectationType, config);
+            }
+
+            return false;
         }
+
+        private static bool CanCompareByValue(Type type, IEquivalencyAssertionOptions config) =>
+            config.EnumEquivalencyHandling == EnumEquivalencyHandling.ByValue && type.IsNumericType();
+
+        private static bool CanCompareByName(Type type, IEquivalencyAssertionOptions config) =>
+            config.EnumEquivalencyHandling == EnumEquivalencyHandling.ByName && type == typeof(string);
 
         /// <summary>
         /// Applies a step as part of the task to compare two objects for structural equality.
@@ -72,14 +100,14 @@ namespace FluentAssertions.Equivalency
         private static void HandleByName(IEquivalencyValidationContext context)
         {
             string subject = context.Subject?.ToString();
-            string expected = context.Expectation.ToString();
+            string expected = context.Expectation?.ToString();
 
             Execute.Assertion
-                .ForCondition(subject == expected)
+                .ForCondition(string.Equals(subject, expected, StringComparison.OrdinalIgnoreCase))
                 .FailWith(() =>
                 {
-                    decimal? subjectsUnderlyingValue = ExtractDecimal(context.Subject);
-                    decimal? expectationsUnderlyingValue = ExtractDecimal(context.Expectation);
+                    string subjectsUnderlyingValue = ExtractValue(context.Subject);
+                    string expectationsUnderlyingValue = ExtractValue(context.Expectation);
 
                     string subjectsName = GetDisplayNameForEnumComparison(context.Subject, subjectsUnderlyingValue);
                     string expectationName = GetDisplayNameForEnumComparison(context.Expectation, expectationsUnderlyingValue);
@@ -88,7 +116,31 @@ namespace FluentAssertions.Equivalency
                 });
         }
 
+        private static string ExtractValue(object o)
+        {
+            switch (o)
+            {
+                case string str:
+                    return str;
+                case null:
+                    return null;
+                default:
+                    return Convert.ToDecimal(o).ToString(CultureInfo.InvariantCulture);
+            }
+        }
+
         private static string GetDisplayNameForEnumComparison(object o, decimal? v)
+        {
+            if (o is null || v is null)
+            {
+                return "null";
+            }
+
+            string valuePart = v.Value.ToString(CultureInfo.InvariantCulture);
+            return GetDisplayNameForEnumComparison(o, valuePart);
+        }
+
+        private static string GetDisplayNameForEnumComparison(object o, string v)
         {
             if (o is null || v is null)
             {
@@ -99,11 +151,11 @@ namespace FluentAssertions.Equivalency
             {
                 string typePart = o.GetType().Name;
                 string namePart = Enum.GetName(o.GetType(), o);
-                string valuePart = v.Value.ToString(CultureInfo.InvariantCulture);
+                string valuePart = v;
                 return $"{typePart}.{namePart}({valuePart})";
             }
 
-            return v.Value.ToString(CultureInfo.InvariantCulture);
+            return v;
         }
 
         private static decimal? ExtractDecimal(object o)
