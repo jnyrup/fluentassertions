@@ -65,6 +65,8 @@ namespace FluentAssertions.Common
                     index++;
                 }
             }
+
+            throw new Exception();
         }
     }
 }
