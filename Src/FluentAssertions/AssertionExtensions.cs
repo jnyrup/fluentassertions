@@ -67,7 +67,7 @@ namespace FluentAssertions
             return () => action(subject);
         }
 
-#if NETCOREAPP2_1 || NETSTANDARD2_1
+#if (NETCOREAPP2_1 || true) || NETSTANDARD2_1
         /// <summary>
         /// Invokes the specified action on a subject so that you can chain it
         /// with any of the assertions from <see cref="AsyncFunctionAssertions"/>
@@ -79,7 +79,7 @@ namespace FluentAssertions
         }
 #endif
 
-#if NETCOREAPP2_0 || NETCOREAPP2_1 || NETSTANDARD2_1
+#if NETCOREAPP2_0 || (NETCOREAPP2_1 || true) || NETSTANDARD2_1
         /// <summary>
         /// Invokes the specified action on a subject so that you can chain it
         /// with any of the assertions from <see cref="AsyncFunctionAssertions"/>

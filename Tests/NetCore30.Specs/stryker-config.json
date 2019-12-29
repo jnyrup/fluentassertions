@@ -1,0 +1,28 @@
+{
+    "stryker-config":
+    {
+        "test-runner": "vstest",
+        "reporters": [
+            "progress",
+            "html"
+        ],
+        "log-level": "warning",
+        "log-file":true,
+        "timeout-ms": 10000,
+        "project-file": "C:\\git\\fluentassertions\\Src\\FluentAssertions\\FluentAssertions.csproj",
+        "max-concurrent-test-runners": 4,
+        "threshold-high": 80,
+        "threshold-low": 70,
+		"solution-path": "..\\..\\FluentAssertions.sln",
+        "threshold-break": 60,
+        "file-patterns": [
+            "!ExecutionTimeAssertions.cs"
+        ],
+        "excluded-mutations": [
+            "string",
+			"linq"
+        ],
+        "ignore-methods": [
+        ]
+    }
+}
