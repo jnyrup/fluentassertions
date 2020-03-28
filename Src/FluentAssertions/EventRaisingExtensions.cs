@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using FluentAssertions.Common;
 using FluentAssertions.Events;
 using FluentAssertions.Execution;
+using System.Collections.Generic;
 
 namespace FluentAssertions
 {
@@ -63,7 +64,7 @@ namespace FluentAssertions
         /// </summary>
         public static IEventRecorder WithArgs<T>(this IEventRecorder eventRecorder, params Expression<Func<T, bool>>[] predicates)
         {
-            Func<T, bool>[] compiledPredicates = predicates.Select(p => p?.Compile()).ToArray();
+            List<Func<T, bool>> compiledPredicates = predicates.Select(p => p?.Compile()).ToList();
 
             if (!eventRecorder.First().Parameters.OfType<T>().Any())
             {
@@ -72,8 +73,8 @@ namespace FluentAssertions
 
             bool expected = eventRecorder.Any(recordedEvent =>
             {
-                T[] parameters = recordedEvent.Parameters.OfType<T>().ToArray();
-                int parametersToCheck = Math.Min(parameters.Length, predicates.Length);
+                List<T> parameters = recordedEvent.Parameters.OfType<T>().ToList();
+                int parametersToCheck = Math.Min(parameters.Count, predicates.Length);
 
                 bool isMatch = true;
                 for (int i = 0; i < parametersToCheck && isMatch; i++)

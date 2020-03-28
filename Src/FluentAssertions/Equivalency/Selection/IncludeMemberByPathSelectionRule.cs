@@ -30,7 +30,7 @@ namespace FluentAssertions.Equivalency.Selection
                     memberToInclude.IsParentOrChildOf(memberPath)
                 select member;
 
-            return selectedMembers.Concat(matchingMembers).ToArray();
+            return selectedMembers.Concat(matchingMembers).ToList();
         }
 
         public override string ToString()

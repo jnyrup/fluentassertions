@@ -84,7 +84,7 @@ namespace FluentAssertions.Formatting
                 }
             }
 
-            return "<" + string.Join(" ", fragments.ToArray()) + ">";
+            return "<" + string.Join(" ", fragments) + ">";
         }
 
         private static bool HasTime(DateTimeOffset dateTime)

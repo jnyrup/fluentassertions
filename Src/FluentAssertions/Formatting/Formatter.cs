@@ -198,7 +198,7 @@ namespace FluentAssertions.Formatting
 
             public override string ToString()
             {
-                return string.Join(".", pathStack.Reverse().ToArray());
+                return string.Join(".", pathStack.Reverse());
             }
         }
     }

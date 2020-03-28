@@ -648,8 +648,8 @@ namespace FluentAssertions.Collections
                 .BecauseOf(because, becauseArgs)
                 .FailWith(expectationPrefix + "but the collection is empty.");
 
-            T[] matchingElements = actualItems.Where(predicate.Compile()).ToArray();
-            int count = matchingElements.Length;
+            List<T> matchingElements = actualItems.Where(predicate.Compile()).ToList();
+            int count = matchingElements.Count;
             if (count == 0)
             {
                 Execute.Assertion

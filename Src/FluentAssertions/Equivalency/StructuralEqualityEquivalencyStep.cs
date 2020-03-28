@@ -34,7 +34,7 @@ namespace FluentAssertions.Equivalency
 
             if (expectationIsNotNull && subjectIsNotNull)
             {
-                SelectedMemberInfo[] selectedMembers = GetMembersFromExpectation(context, config).ToArray();
+                List<SelectedMemberInfo> selectedMembers = GetMembersFromExpectation(context, config).ToList();
                 if (context.IsRoot && !selectedMembers.Any())
                 {
                     throw new InvalidOperationException(

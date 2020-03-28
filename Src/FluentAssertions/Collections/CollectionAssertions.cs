@@ -181,16 +181,16 @@ namespace FluentAssertions.Collections
                     .FailWith("Expected {context:collection} not to contain <null>s{reason}, but collection is <null>.");
             }
 
-            int[] indices = Subject
+            List<int> indices = Subject
                 .Cast<object>()
                 .Select((item, index) => new { Item = item, Index = index })
                 .Where(e => e.Item is null)
                 .Select(e => e.Index)
-                .ToArray();
+                .ToList();
 
-            if (indices.Length > 0)
+            if (indices.Count > 0)
             {
-                if (indices.Length > 1)
+                if (indices.Count > 1)
                 {
                     Execute.Assertion
                         .BecauseOf(because, becauseArgs)
@@ -799,10 +799,10 @@ namespace FluentAssertions.Collections
             for (int index = 0; index < expectedItems.Count; index++)
             {
                 object expectedItem = expectedItems[index];
-                actualItems = actualItems.SkipWhile(actualItem => !actualItem.IsSameOrEqualTo(expectedItem)).ToArray();
+                actualItems = actualItems.SkipWhile(actualItem => !actualItem.IsSameOrEqualTo(expectedItem)).ToList();
                 if (actualItems.Any())
                 {
-                    actualItems = actualItems.Skip(1).ToArray();
+                    actualItems = actualItems.Skip(1).ToList();
                 }
                 else
                 {
@@ -918,11 +918,11 @@ namespace FluentAssertions.Collections
 
             IList<object> actualItems = Subject.ConvertOrCastToList<object>();
 
-            object[] orderedItems = (expectedOrder == SortOrder.Ascending)
-                ? actualItems.OrderBy(item => item, comparer).ToArray()
-                : actualItems.OrderByDescending(item => item, comparer).ToArray();
+            List<object> orderedItems = (expectedOrder == SortOrder.Ascending)
+                ? actualItems.OrderBy(item => item, comparer).ToList()
+                : actualItems.OrderByDescending(item => item, comparer).ToList();
 
-            for (int index = 0; index < orderedItems.Length; index++)
+            for (int index = 0; index < orderedItems.Count; index++)
             {
                 Execute.Assertion
                     .ForCondition(actualItems[index].IsSameOrEqualTo(orderedItems[index]))
@@ -1034,9 +1034,9 @@ namespace FluentAssertions.Collections
                         Subject);
             }
 
-            object[] orderedItems = (order == SortOrder.Ascending)
-                ? Subject.Cast<object>().OrderBy(item => item, comparer).ToArray()
-                : Subject.Cast<object>().OrderByDescending(item => item, comparer).ToArray();
+            List<object> orderedItems = (order == SortOrder.Ascending)
+                ? Subject.Cast<object>().OrderBy(item => item, comparer).ToList()
+                : Subject.Cast<object>().OrderByDescending(item => item, comparer).ToList();
 
             bool itemsAreUnordered = Subject
                 .Cast<object>()

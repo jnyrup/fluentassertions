@@ -146,7 +146,7 @@ namespace FluentAssertions.Common
             // If any members were accessed in the expression, the first one found is the last member.
             Type declaringType = declaringTypes.FirstOrDefault() ?? typeof(TDeclaringType);
 
-            string[] reversedSegments = segments.AsEnumerable().Reverse().ToArray();
+            List<string> reversedSegments = segments.AsEnumerable().Reverse().ToList();
             string segmentPath = string.Join(".", reversedSegments);
 
             return new MemberPath(declaringType, segmentPath.Replace(".[", "["));

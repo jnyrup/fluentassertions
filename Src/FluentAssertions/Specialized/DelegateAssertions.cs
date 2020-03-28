@@ -212,7 +212,7 @@ namespace FluentAssertions.Specialized
         protected ExceptionAssertions<TException> Throw<TException>(Exception exception, string because, object[] becauseArgs)
             where TException : Exception
         {
-            TException[] expectedExceptions = extractor.OfType<TException>(exception).ToArray();
+            List<TException> expectedExceptions = extractor.OfType<TException>(exception).ToList();
 
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)

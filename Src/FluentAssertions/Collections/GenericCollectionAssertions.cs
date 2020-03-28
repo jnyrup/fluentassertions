@@ -45,11 +45,11 @@ namespace FluentAssertions.Collections
 
             Func<T, TKey> compiledPredicate = predicate.Compile();
 
-            T[] values = Subject
+            List<T> values = Subject
                 .Where(e => compiledPredicate(e) is null)
-                .ToArray();
+                .ToList();
 
-            if (values.Length > 0)
+            if (values.Count > 0)
             {
                 Execute.Assertion
                     .BecauseOf(because, becauseArgs)
@@ -85,14 +85,14 @@ namespace FluentAssertions.Collections
 
             Func<T, TKey> compiledPredicate = predicate.Compile();
 
-            IGrouping<TKey, T>[] groupWithMultipleItems = Subject
+            List<IGrouping<TKey, T>> groupWithMultipleItems = Subject
                 .GroupBy(compiledPredicate)
                 .Where(g => g.Count() > 1)
-                .ToArray();
+                .ToList();
 
-            if (groupWithMultipleItems.Length > 0)
+            if (groupWithMultipleItems.Count > 0)
             {
-                if (groupWithMultipleItems.Length > 1)
+                if (groupWithMultipleItems.Count > 1)
                 {
                     Execute.Assertion
                         .BecauseOf(because, becauseArgs)
@@ -554,7 +554,7 @@ namespace FluentAssertions.Collections
         {
             Guard.ThrowIfArgumentIsNull(config, nameof(config));
 
-            TExpectation[] repeatedExpectation = RepeatAsManyAs(expectation, Subject).ToArray();
+            List<TExpectation> repeatedExpectation = RepeatAsManyAs(expectation, Subject).ToList();
 
             // Because we have just manually created the collection based on single element
             // we are sure that we can force strict ordering, because ordering does not matter in terms

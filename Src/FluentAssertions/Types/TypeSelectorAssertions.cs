@@ -41,9 +41,9 @@ namespace FluentAssertions.Types
         public AndConstraint<TypeSelectorAssertions> BeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
             where TAttribute : Attribute
         {
-            Type[] typesWithoutAttribute = Subject
+            List<Type> typesWithoutAttribute = Subject
                 .Where(type => !type.IsDecoratedWith<TAttribute>())
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithoutAttribute.Any())
@@ -77,9 +77,9 @@ namespace FluentAssertions.Types
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
 
-            Type[] typesWithoutMatchingAttribute = Subject
+            List<Type> typesWithoutMatchingAttribute = Subject
                 .Where(type => !type.IsDecoratedWith(isMatchingAttributePredicate))
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithoutMatchingAttribute.Any())
@@ -107,9 +107,9 @@ namespace FluentAssertions.Types
         public AndConstraint<TypeSelectorAssertions> BeDecoratedWithOrInherit<TAttribute>(string because = "", params object[] becauseArgs)
             where TAttribute : Attribute
         {
-            Type[] typesWithoutAttribute = Subject
+            List<Type> typesWithoutAttribute = Subject
                 .Where(type => !type.IsDecoratedWithOrInherit<TAttribute>())
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithoutAttribute.Any())
@@ -143,9 +143,9 @@ namespace FluentAssertions.Types
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
 
-            Type[] typesWithoutMatchingAttribute = Subject
+            List<Type> typesWithoutMatchingAttribute = Subject
                 .Where(type => !type.IsDecoratedWithOrInherit(isMatchingAttributePredicate))
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithoutMatchingAttribute.Any())
@@ -173,9 +173,9 @@ namespace FluentAssertions.Types
         public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
             where TAttribute : Attribute
         {
-            Type[] typesWithAttribute = Subject
+            List<Type> typesWithAttribute = Subject
                 .Where(type => type.IsDecoratedWith<TAttribute>())
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithAttribute.Any())
@@ -209,9 +209,9 @@ namespace FluentAssertions.Types
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
 
-            Type[] typesWithMatchingAttribute = Subject
+            List<Type> typesWithMatchingAttribute = Subject
                 .Where(type => type.IsDecoratedWith(isMatchingAttributePredicate))
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithMatchingAttribute.Any())
@@ -239,9 +239,9 @@ namespace FluentAssertions.Types
         public AndConstraint<TypeSelectorAssertions> NotBeDecoratedWithOrInherit<TAttribute>(string because = "", params object[] becauseArgs)
             where TAttribute : Attribute
         {
-            Type[] typesWithAttribute = Subject
+            List<Type> typesWithAttribute = Subject
                 .Where(type => type.IsDecoratedWithOrInherit<TAttribute>())
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithAttribute.Any())
@@ -275,9 +275,9 @@ namespace FluentAssertions.Types
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
 
-            Type[] typesWithMatchingAttribute = Subject
+            List<Type> typesWithMatchingAttribute = Subject
                 .Where(type => type.IsDecoratedWithOrInherit(isMatchingAttributePredicate))
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(!typesWithMatchingAttribute.Any())
@@ -294,7 +294,7 @@ namespace FluentAssertions.Types
 
         private static string GetDescriptionsFor(IEnumerable<Type> types)
         {
-            string[] descriptions = types.Select(GetDescriptionFor).ToArray();
+            List<string> descriptions = types.Select(GetDescriptionFor).ToList();
             return string.Join(Environment.NewLine, descriptions);
         }
 

@@ -1016,7 +1016,7 @@ namespace FluentAssertions.Collections
                     .FailWith("Expected {context:dictionary} to contain key/value pairs {0}{reason}, but dictionary is {1}.", expected, Subject);
             }
 
-            TKey[] expectedKeys = expectedKeyValuePairs.Select(keyValuePair => keyValuePair.Key).ToArray();
+            List<TKey> expectedKeys = expectedKeyValuePairs.Select(keyValuePair => keyValuePair.Key).ToList();
             IEnumerable<TKey> missingKeys = expectedKeys.Where(key => !Subject.ContainsKey(key));
 
             if (missingKeys.Any())
@@ -1037,11 +1037,11 @@ namespace FluentAssertions.Collections
                 }
             }
 
-            KeyValuePair<TKey, TValue>[] keyValuePairsNotSameOrEqualInSubject = expectedKeyValuePairs.Where(keyValuePair => !Subject[keyValuePair.Key].IsSameOrEqualTo(keyValuePair.Value)).ToArray();
+            List<KeyValuePair<TKey, TValue>> keyValuePairsNotSameOrEqualInSubject = expectedKeyValuePairs.Where(keyValuePair => !Subject[keyValuePair.Key].IsSameOrEqualTo(keyValuePair.Value)).ToList();
 
             if (keyValuePairsNotSameOrEqualInSubject.Any())
             {
-                if (keyValuePairsNotSameOrEqualInSubject.Length > 1)
+                if (keyValuePairsNotSameOrEqualInSubject.Count > 1)
                 {
                     Execute.Assertion
                         .BecauseOf(because, becauseArgs)
@@ -1173,16 +1173,16 @@ namespace FluentAssertions.Collections
                     .FailWith("Expected {context:dictionary} to not contain key/value pairs {0}{reason}, but dictionary is {1}.", items, Subject);
             }
 
-            KeyValuePair<TKey, TValue>[] keyValuePairsFound = keyValuePairs.Where(keyValuePair => Subject.ContainsKey(keyValuePair.Key)).ToArray();
+            List<KeyValuePair<TKey, TValue>> keyValuePairsFound = keyValuePairs.Where(keyValuePair => Subject.ContainsKey(keyValuePair.Key)).ToList();
 
             if (keyValuePairsFound.Any())
             {
-                KeyValuePair<TKey, TValue>[] keyValuePairsSameOrEqualInSubject = keyValuePairsFound
-                    .Where(keyValuePair => Subject[keyValuePair.Key].IsSameOrEqualTo(keyValuePair.Value)).ToArray();
+                List<KeyValuePair<TKey, TValue>> keyValuePairsSameOrEqualInSubject = keyValuePairsFound
+                    .Where(keyValuePair => Subject[keyValuePair.Key].IsSameOrEqualTo(keyValuePair.Value)).ToList();
 
                 if (keyValuePairsSameOrEqualInSubject.Any())
                 {
-                    if (keyValuePairsSameOrEqualInSubject.Length > 1)
+                    if (keyValuePairsSameOrEqualInSubject.Count > 1)
                     {
                         Execute.Assertion
                             .BecauseOf(because, becauseArgs)

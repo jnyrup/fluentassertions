@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using FluentAssertions.Common;
+using System.Collections.Generic;
 
 namespace FluentAssertions.Execution
 {

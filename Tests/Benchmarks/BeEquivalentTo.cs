@@ -3,11 +3,14 @@ using System.Linq;
 using BenchmarkDotNet.Attributes;
 using FluentAssertions;
 using FluentAssertions.Collections;
+using BenchmarkDotNet.Jobs;
 
 namespace Benchmarks
 {
     [MemoryDiagnoser]
-    [RyuJitX86Job]
+    [SimpleJob(RuntimeMoniker.Net472)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp21)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     public class BeEquivalentToBenchmarks
     {
         private List<Nested> list;

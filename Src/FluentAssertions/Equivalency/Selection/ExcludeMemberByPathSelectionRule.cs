@@ -23,7 +23,7 @@ namespace FluentAssertions.Equivalency.Selection
         {
             return selectedMembers
                 .Where(memberInfo => !memberToExclude.IsSameAs(new MemberPath(memberInfo.DeclaringType, currentPath.Combine(memberInfo.Name))))
-                .ToArray();
+                .ToList();
         }
 
         public override string ToString()

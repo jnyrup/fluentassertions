@@ -67,7 +67,7 @@ namespace FluentAssertions.Specialized
                 .ForCondition(Subject.Any())
                 .FailWith("Expected exception with message {0}{reason}, but no exception was thrown.", expectedWildcardPattern);
 
-            outerMessageAssertion.Execute(Subject.Select(exc => exc.Message).ToArray(), expectedWildcardPattern, because, becauseArgs);
+            outerMessageAssertion.Execute(Subject.Select(exc => exc.Message).ToList(), expectedWildcardPattern, because, becauseArgs);
 
             return this;
         }
@@ -93,10 +93,10 @@ namespace FluentAssertions.Specialized
                 .Then
                 .ClearExpectation();
 
-            TInnerException[] expectedInnerExceptions = Subject
+            List<TInnerException> expectedInnerExceptions = Subject
                 .Select(e => e.InnerException)
                 .OfType<TInnerException>()
-                .ToArray();
+                .ToList();
 
             Execute.Assertion
                 .ForCondition(expectedInnerExceptions.Any())
@@ -118,10 +118,10 @@ namespace FluentAssertions.Specialized
         {
             WithInnerException<TInnerException>(because, becauseArgs);
 
-            TInnerException[] expectedExceptions = Subject
+            List<TInnerException> expectedExceptions = Subject
                 .Select(e => e.InnerException)
                 .OfType<TInnerException>()
-                .Where(e => e?.GetType() == typeof(TInnerException)).ToArray();
+                .Where(e => e?.GetType() == typeof(TInnerException)).ToList();
 
             Execute.Assertion
                 .ForCondition(expectedExceptions.Any())

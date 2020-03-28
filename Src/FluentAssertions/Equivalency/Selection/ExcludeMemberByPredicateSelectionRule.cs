@@ -23,7 +23,7 @@ namespace FluentAssertions.Equivalency.Selection
 
         public IEnumerable<SelectedMemberInfo> SelectMembers(IEnumerable<SelectedMemberInfo> selectedMembers, IMemberInfo context, IEquivalencyAssertionOptions config)
         {
-            return selectedMembers.Where(p => !predicate(new NestedSelectionContext(context, p))).ToArray();
+            return selectedMembers.Where(p => !predicate(new NestedSelectionContext(context, p))).ToList();
         }
 
         /// <filterpriority>2</filterpriority>

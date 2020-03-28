@@ -37,7 +37,7 @@ namespace FluentAssertions.Equivalency
             return true;
         }
 
-        private static Type[] GetIDictionaryInterfaces(Type type)
+        private static List<Type> GetIDictionaryInterfaces(Type type)
         {
             return Common.TypeExtensions.GetClosedGenericInterfaces(
                 type,
@@ -71,8 +71,8 @@ namespace FluentAssertions.Equivalency
 
         private static bool AssertImplementsOnlyOneDictionaryInterface(object expectation)
         {
-            Type[] interfaces = GetIDictionaryInterfaces(expectation.GetType());
-            bool multipleInterfaces = interfaces.Length > 1;
+            List<Type> interfaces = GetIDictionaryInterfaces(expectation.GetType());
+            bool multipleInterfaces = interfaces.Count > 1;
             if (!multipleInterfaces)
             {
                 return true;
@@ -95,7 +95,7 @@ namespace FluentAssertions.Equivalency
             Type expectedKeyType = GetDictionaryKeyType(expectedDictionaryType);
 
             Type subjectType = subject.GetType();
-            Type[] subjectDictionaryInterfaces = GetIDictionaryInterfaces(subjectType);
+            List<Type> subjectDictionaryInterfaces = GetIDictionaryInterfaces(subjectType);
             if (!subjectDictionaryInterfaces.Any())
             {
                 AssertionScope.Current.FailWith(
@@ -104,10 +104,10 @@ namespace FluentAssertions.Equivalency
                 return false;
             }
 
-            Type[] suitableDictionaryInterfaces = subjectDictionaryInterfaces.Where(
-                @interface => GetDictionaryKeyType(@interface).IsAssignableFrom(expectedKeyType)).ToArray();
+            List<Type> suitableDictionaryInterfaces = subjectDictionaryInterfaces.Where(
+                @interface => GetDictionaryKeyType(@interface).IsAssignableFrom(expectedKeyType)).ToList();
 
-            if (suitableDictionaryInterfaces.Length > 1)
+            if (suitableDictionaryInterfaces.Count > 1)
             {
                 // SMELL: Code could be written to handle this better, but is it really worth the effort?
                 AssertionScope.Current.FailWith(

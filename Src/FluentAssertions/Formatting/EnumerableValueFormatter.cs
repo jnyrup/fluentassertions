@@ -32,7 +32,7 @@ namespace FluentAssertions.Formatting
                 if (enumerable.Count > maxItems)
                 {
                     postfix = $", …{enumerable.Count - maxItems} more…";
-                    enumerable = enumerable.Take(maxItems).ToArray();
+                    enumerable = enumerable.Take(maxItems).ToList();
                 }
 
                 return "{" + string.Join(", ", enumerable.Select((item, index) => formatChild(index.ToString(), item))) + postfix + "}";

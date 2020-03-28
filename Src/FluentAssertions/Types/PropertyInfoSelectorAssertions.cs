@@ -40,7 +40,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndConstraint<PropertyInfoSelectorAssertions> BeVirtual(string because = "", params object[] becauseArgs)
         {
-            PropertyInfo[] nonVirtualProperties = GetAllNonVirtualPropertiesFromSelection();
+            List<PropertyInfo> nonVirtualProperties = GetAllNonVirtualPropertiesFromSelection();
 
             string failureMessage =
                 "Expected all selected properties to be virtual{reason}, but the following properties are not virtual:" +
@@ -67,7 +67,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndConstraint<PropertyInfoSelectorAssertions> NotBeVirtual(string because = "", params object[] becauseArgs)
         {
-            PropertyInfo[] virtualProperties = GetAllVirtualPropertiesFromSelection();
+            List<PropertyInfo> virtualProperties = GetAllVirtualPropertiesFromSelection();
 
             string failureMessage =
                 "Expected all selected properties not to be virtual{reason}, but the following properties are virtual:" +
@@ -94,7 +94,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndConstraint<PropertyInfoSelectorAssertions> BeWritable(string because = "", params object[] becauseArgs)
         {
-            PropertyInfo[] readOnlyProperties = GetAllReadOnlyPropertiesFromSelection();
+            List<PropertyInfo> readOnlyProperties = GetAllReadOnlyPropertiesFromSelection();
 
             string failureMessage =
                 "Expected all selected properties to have a setter{reason}, but the following properties do not:" +
@@ -121,7 +121,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndConstraint<PropertyInfoSelectorAssertions> NotBeWritable(string because = "", params object[] becauseArgs)
         {
-            PropertyInfo[] writableProperties = GetAllWritablePropertiesFromSelection();
+            List<PropertyInfo> writableProperties = GetAllWritablePropertiesFromSelection();
 
             string failureMessage =
                 "Expected selected properties to not have a setter{reason}, but the following properties do:" +
@@ -136,34 +136,34 @@ namespace FluentAssertions.Types
             return new AndConstraint<PropertyInfoSelectorAssertions>(this);
         }
 
-        private PropertyInfo[] GetAllReadOnlyPropertiesFromSelection()
+        private List<PropertyInfo> GetAllReadOnlyPropertiesFromSelection()
         {
-            return SubjectProperties.Where(property => !property.CanWrite).ToArray();
+            return SubjectProperties.Where(property => !property.CanWrite).ToList();
         }
 
-        private PropertyInfo[] GetAllWritablePropertiesFromSelection()
+        private List<PropertyInfo> GetAllWritablePropertiesFromSelection()
         {
-            return SubjectProperties.Where(property => property.CanWrite).ToArray();
+            return SubjectProperties.Where(property => property.CanWrite).ToList();
         }
 
-        private PropertyInfo[] GetAllNonVirtualPropertiesFromSelection()
+        private List<PropertyInfo> GetAllNonVirtualPropertiesFromSelection()
         {
             IEnumerable<PropertyInfo> query =
                 from property in SubjectProperties
                 where !property.IsVirtual()
                 select property;
 
-            return query.ToArray();
+            return query.ToList();
         }
 
-        private PropertyInfo[] GetAllVirtualPropertiesFromSelection()
+        private List<PropertyInfo> GetAllVirtualPropertiesFromSelection()
         {
             IEnumerable<PropertyInfo> query =
                 from property in SubjectProperties
                 where property.IsVirtual()
                 select property;
 
-            return query.ToArray();
+            return query.ToList();
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace FluentAssertions.Types
         public AndConstraint<PropertyInfoSelectorAssertions> BeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
             where TAttribute : Attribute
         {
-            PropertyInfo[] propertiesWithoutAttribute = GetPropertiesWithout<TAttribute>();
+            List<PropertyInfo> propertiesWithoutAttribute = GetPropertiesWithout<TAttribute>();
 
             string failureMessage =
                 "Expected all selected properties to be decorated with {0}{reason}, but the following properties are not:" +
@@ -207,7 +207,7 @@ namespace FluentAssertions.Types
         public AndConstraint<PropertyInfoSelectorAssertions> NotBeDecoratedWith<TAttribute>(string because = "", params object[] becauseArgs)
             where TAttribute : Attribute
         {
-            PropertyInfo[] propertiesWithAttribute = GetPropertiesWith<TAttribute>();
+            List<PropertyInfo> propertiesWithAttribute = GetPropertiesWith<TAttribute>();
 
             string failureMessage =
                 "Expected all selected properties not to be decorated with {0}{reason}, but the following properties are:" +
@@ -222,21 +222,21 @@ namespace FluentAssertions.Types
             return new AndConstraint<PropertyInfoSelectorAssertions>(this);
         }
 
-        private PropertyInfo[] GetPropertiesWithout<TAttribute>()
+        private List<PropertyInfo> GetPropertiesWithout<TAttribute>()
             where TAttribute : Attribute
         {
-            return SubjectProperties.Where(property => !property.IsDecoratedWith<TAttribute>()).ToArray();
+            return SubjectProperties.Where(property => !property.IsDecoratedWith<TAttribute>()).ToList();
         }
 
-        private PropertyInfo[] GetPropertiesWith<TAttribute>()
+        private List<PropertyInfo> GetPropertiesWith<TAttribute>()
             where TAttribute : Attribute
         {
-            return SubjectProperties.Where(property => property.IsDecoratedWith<TAttribute>()).ToArray();
+            return SubjectProperties.Where(property => property.IsDecoratedWith<TAttribute>()).ToList();
         }
 
         private static string GetDescriptionsFor(IEnumerable<PropertyInfo> properties)
         {
-            string[] descriptions = properties.Select(PropertyInfoAssertions.GetDescriptionFor).ToArray();
+            List<string> descriptions = properties.Select(PropertyInfoAssertions.GetDescriptionFor).ToList();
             return string.Join(Environment.NewLine, descriptions);
         }
 

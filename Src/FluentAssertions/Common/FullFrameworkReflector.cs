@@ -14,7 +14,7 @@ namespace FluentAssertions.Common
             return AppDomain.CurrentDomain
                 .GetAssemblies()
                 .Where(a => !IsDynamic(a) && IsRelevant(a) && predicate(a))
-                .SelectMany(GetExportedTypes).ToArray();
+                .SelectMany(GetExportedTypes).ToList();
         }
 
         private bool IsRelevant(Assembly ass)

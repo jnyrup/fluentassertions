@@ -30,7 +30,7 @@ namespace FluentAssertions.Equivalency
 
         public OrderingRuleCollection OrderingRules { get; set; }
 
-        public void Execute<T>(object[] subject, T[] expectation)
+        public void Execute<T>(IList<object> subject, IList<T> expectation)
         {
             if (AssertIsNotNull(expectation, subject) && AssertCollectionsHaveSameCount(subject, expectation))
             {
@@ -51,7 +51,7 @@ namespace FluentAssertions.Equivalency
             }
         }
 
-        private static bool AssertIsNotNull(object expectation, object[] subject)
+        private static bool AssertIsNotNull(object expectation, IList<object> subject)
         {
             return AssertionScope.Current
                 .ForCondition(!(expectation is null))
@@ -71,10 +71,10 @@ namespace FluentAssertions.Equivalency
                 .ClearExpectation();
         }
 
-        private void AssertElementGraphEquivalency<T>(object[] subjects, T[] expectations)
+        private void AssertElementGraphEquivalency<T>(IList<object> subjects, IList<T> expectations)
         {
-            unmatchedSubjectIndexes = new List<int>(subjects.Length);
-            unmatchedSubjectIndexes.AddRange(Enumerable.Range(0, subjects.Length));
+            unmatchedSubjectIndexes = new List<int>(subjects.Count);
+            unmatchedSubjectIndexes.AddRange(Enumerable.Range(0, subjects.Count));
 
             if (OrderingRules.IsOrderingStrictFor(context))
             {
@@ -86,10 +86,10 @@ namespace FluentAssertions.Equivalency
             }
         }
 
-        private void AssertElementGraphEquivalencyWithStrictOrdering<T>(object[] subjects, T[] expectations)
+        private void AssertElementGraphEquivalencyWithStrictOrdering<T>(IList<object> subjects, IList<T> expectations)
         {
             int failedCount = 0;
-            foreach (int index in Enumerable.Range(0, expectations.Length))
+            foreach (int index in Enumerable.Range(0, expectations.Count))
             {
                 T expectation = expectations[index];
 
@@ -111,10 +111,10 @@ namespace FluentAssertions.Equivalency
             }
         }
 
-        private void AssertElementGraphEquivalencyWithLooseOrdering<T>(object[] subjects, T[] expectations)
+        private void AssertElementGraphEquivalencyWithLooseOrdering<T>(IList<object> subjects, IList<T> expectations)
         {
             int failedCount = 0;
-            foreach (int index in Enumerable.Range(0, expectations.Length))
+            foreach (int index in Enumerable.Range(0, expectations.Count))
             {
                 T expectation = expectations[index];
 
@@ -191,7 +191,7 @@ namespace FluentAssertions.Equivalency
             }
         }
 
-        private bool StrictlyMatchAgainst<T>(object[] subjects, T expectation, int expectationIndex)
+        private bool StrictlyMatchAgainst<T>(IList<object> subjects, T expectation, int expectationIndex)
         {
             using (var scope = new AssertionScope())
             {

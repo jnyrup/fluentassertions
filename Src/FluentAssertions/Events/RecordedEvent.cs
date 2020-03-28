@@ -35,7 +35,7 @@ namespace FluentAssertions.Events
             get
             {
                 return parameters.Select(parameter =>
-                    (parameter is WeakReference weakReference) ? weakReference.Target : parameter).ToArray();
+                    (parameter is WeakReference weakReference) ? weakReference.Target : parameter).ToList();
             }
 
             private set { parameters = value.ToArray(); }

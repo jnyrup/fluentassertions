@@ -41,7 +41,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndConstraint<MethodInfoSelectorAssertions> BeVirtual(string because = "", params object[] becauseArgs)
         {
-            MethodInfo[] nonVirtualMethods = GetAllNonVirtualMethodsFromSelection();
+            List<MethodInfo> nonVirtualMethods = GetAllNonVirtualMethodsFromSelection();
 
             string failureMessage =
                 "Expected all selected methods to be virtual{reason}, but the following methods are not virtual:" +
@@ -68,7 +68,7 @@ namespace FluentAssertions.Types
         /// </param>
         public AndConstraint<MethodInfoSelectorAssertions> NotBeVirtual(string because = "", params object[] becauseArgs)
         {
-            MethodInfo[] virtualMethods = GetAllVirtualMethodsFromSelection();
+            List<MethodInfo> virtualMethods = GetAllVirtualMethodsFromSelection();
 
             string failureMessage =
                 "Expected all selected methods not to be virtual{reason}, but the following methods are virtual:" +
@@ -83,24 +83,24 @@ namespace FluentAssertions.Types
             return new AndConstraint<MethodInfoSelectorAssertions>(this);
         }
 
-        private MethodInfo[] GetAllNonVirtualMethodsFromSelection()
+        private List<MethodInfo> GetAllNonVirtualMethodsFromSelection()
         {
             IEnumerable<MethodInfo> query =
                 from method in SubjectMethods
                 where method.IsNonVirtual()
                 select method;
 
-            return query.ToArray();
+            return query.ToList();
         }
 
-        private MethodInfo[] GetAllVirtualMethodsFromSelection()
+        private List<MethodInfo> GetAllVirtualMethodsFromSelection()
         {
             IEnumerable<MethodInfo> query =
                 from method in SubjectMethods
                 where !method.IsNonVirtual()
                 select method;
 
-            return query.ToArray();
+            return query.ToList();
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace FluentAssertions.Types
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
 
-            MethodInfo[] methodsWithoutAttribute = GetMethodsWithout(isMatchingAttributePredicate);
+            List<MethodInfo> methodsWithoutAttribute = GetMethodsWithout(isMatchingAttributePredicate);
 
             string failureMessage =
                 "Expected all selected methods to be decorated with {0}{reason}, but the following methods are not:" +
@@ -190,7 +190,7 @@ namespace FluentAssertions.Types
         {
             Guard.ThrowIfArgumentIsNull(isMatchingAttributePredicate, nameof(isMatchingAttributePredicate));
 
-            MethodInfo[] methodsWithAttribute = GetMethodsWith(isMatchingAttributePredicate);
+            List<MethodInfo> methodsWithAttribute = GetMethodsWith(isMatchingAttributePredicate);
 
             string failureMessage =
                 "Expected all selected methods to not be decorated with {0}{reason}, but the following methods are:" +
@@ -205,22 +205,22 @@ namespace FluentAssertions.Types
             return new AndConstraint<MethodInfoSelectorAssertions>(this);
         }
 
-        private MethodInfo[] GetMethodsWithout<TAttribute>(Expression<Func<TAttribute, bool>> isMatchingPredicate)
+        private List<MethodInfo> GetMethodsWithout<TAttribute>(Expression<Func<TAttribute, bool>> isMatchingPredicate)
             where TAttribute : Attribute
         {
-            return SubjectMethods.Where(method => !method.IsDecoratedWith(isMatchingPredicate)).ToArray();
+            return SubjectMethods.Where(method => !method.IsDecoratedWith(isMatchingPredicate)).ToList();
         }
 
-        private MethodInfo[] GetMethodsWith<TAttribute>(Expression<Func<TAttribute, bool>> isMatchingPredicate)
+        private List<MethodInfo> GetMethodsWith<TAttribute>(Expression<Func<TAttribute, bool>> isMatchingPredicate)
             where TAttribute : Attribute
         {
-            return SubjectMethods.Where(method => method.IsDecoratedWith(isMatchingPredicate)).ToArray();
+            return SubjectMethods.Where(method => method.IsDecoratedWith(isMatchingPredicate)).ToList();
         }
 
         private static string GetDescriptionsFor(IEnumerable<MethodInfo> methods)
         {
             return string.Join(Environment.NewLine,
-                methods.Select(MethodInfoAssertions.GetDescriptionFor).ToArray());
+                methods.Select(MethodInfoAssertions.GetDescriptionFor).ToList());
         }
 
         /// <summary>

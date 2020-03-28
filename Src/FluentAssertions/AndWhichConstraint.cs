@@ -35,9 +35,9 @@ namespace FluentAssertions
         private static TMatchedElement SingleOrDefault(
             IEnumerable<TMatchedElement> matchedConstraint)
         {
-            TMatchedElement[] matchedElements = matchedConstraint.ToArray();
+            List<TMatchedElement> matchedElements = matchedConstraint.ToList();
 
-            if (matchedElements.Length > 1)
+            if (matchedElements.Count > 1)
             {
                 string foundObjects = string.Join(Environment.NewLine,
                     matchedElements.Select(

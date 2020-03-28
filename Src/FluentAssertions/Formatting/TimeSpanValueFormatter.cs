@@ -122,9 +122,9 @@ namespace FluentAssertions.Formatting
             return string.Join(", ", AllButLastFragment(fragments)) + " and " + fragments.Last();
         }
 
-        private static string[] AllButLastFragment(IEnumerable<string> fragments)
+        private static List<string> AllButLastFragment(IEnumerable<string> fragments)
         {
-            return fragments.Take(fragments.Count() - 1).ToArray();
+            return fragments.Take(fragments.Count() - 1).ToList();
         }
     }
 }

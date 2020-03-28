@@ -20,13 +20,13 @@ namespace FluentAssertions.Equivalency
         {
             get
             {
-                return inner.SelectionRules.Select(rule => new CollectionMemberSelectionRuleDecorator(rule)).ToArray();
+                return inner.SelectionRules.Select(rule => new CollectionMemberSelectionRuleDecorator(rule)).ToList();
             }
         }
 
         public IEnumerable<IMemberMatchingRule> MatchingRules
         {
-            get { return inner.MatchingRules.Select(rule => new CollectionMemberMatchingRuleDecorator(rule)).ToArray(); }
+            get { return inner.MatchingRules.Select(rule => new CollectionMemberMatchingRuleDecorator(rule)).ToList(); }
         }
 
         public OrderingRuleCollection OrderingRules
@@ -41,7 +41,7 @@ namespace FluentAssertions.Equivalency
 
         public IEnumerable<IEquivalencyStep> UserEquivalencySteps
         {
-            get { return inner.UserEquivalencySteps.Select(step => new CollectionMemberAssertionRuleDecorator(step)).ToArray(); }
+            get { return inner.UserEquivalencySteps.Select(step => new CollectionMemberAssertionRuleDecorator(step)).ToList(); }
         }
 
         public bool IsRecursive => inner.IsRecursive;

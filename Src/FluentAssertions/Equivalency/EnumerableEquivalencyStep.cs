@@ -4,6 +4,8 @@ using System.Collections;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions.Execution;
+using System.Collections.Generic;
+using FluentAssertions.Common;
 
 namespace FluentAssertions.Equivalency
 {
@@ -39,7 +41,7 @@ namespace FluentAssertions.Equivalency
                     OrderingRules = config.OrderingRules
                 };
 
-                validator.Execute(ToArray(context.Subject), ToArray(context.Expectation));
+                validator.Execute(ToList(context.Subject), ToList(context.Expectation));
             }
 
             return true;
@@ -66,9 +68,9 @@ namespace FluentAssertions.Equivalency
             return !typeof(string).IsAssignableFrom(type) && typeof(IEnumerable).IsAssignableFrom(type);
         }
 
-        internal static object[] ToArray(object value)
+        internal static IList<object> ToList(object value)
         {
-            return !(value is null) ? ((IEnumerable)value).Cast<object>().ToArray() : null;
+            return !(value is null) ? ((IEnumerable)value).ConvertOrCastToList<object>() : null;
         }
     }
 }

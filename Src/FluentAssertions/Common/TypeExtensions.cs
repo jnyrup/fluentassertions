@@ -183,18 +183,18 @@ namespace FluentAssertions.Common
                 && type != expectedBaseType;
         }
 
-        internal static Type[] GetClosedGenericInterfaces(Type type, Type openGenericType)
+        internal static List<Type> GetClosedGenericInterfaces(Type type, Type openGenericType)
         {
             if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == openGenericType)
             {
-                return new[] { type };
+                return new List<Type>(1) { type };
             }
 
             Type[] interfaces = type.GetInterfaces();
             return
                 interfaces
                     .Where(t => t.GetTypeInfo().IsGenericType && t.GetGenericTypeDefinition() == openGenericType)
-                    .ToArray();
+                    .ToList();
         }
 
         public static bool OverridesEquals(this Type type)
@@ -260,7 +260,7 @@ namespace FluentAssertions.Common
                 GetNonPrivateProperties(typeToReflect)
                     .Select(SelectedMemberInfo.Create)
                     .Concat(GetNonPrivateFields(typeToReflect).Select(SelectedMemberInfo.Create))
-                    .ToArray();
+                    .ToList();
         }
 
         public static IEnumerable<PropertyInfo> GetNonPrivateProperties(this Type typeToReflect,
@@ -273,7 +273,7 @@ namespace FluentAssertions.Common
                 where filter is null || filter.Contains(propertyInfo.Name)
                 select propertyInfo;
 
-            return query.ToArray();
+            return query.ToList();
         }
 
         public static IEnumerable<FieldInfo> GetNonPrivateFields(this Type typeToReflect)
@@ -284,7 +284,7 @@ namespace FluentAssertions.Common
                 where !fieldInfo.IsFamily
                 select fieldInfo;
 
-            return query.ToArray();
+            return query.ToList();
         }
 
         private static IEnumerable<FieldInfo> GetFieldsFromHierarchy(Type typeToReflect)
@@ -332,7 +332,7 @@ namespace FluentAssertions.Common
                     propertyInfos.InsertRange(0, newPropertyInfos);
                 }
 
-                return propertyInfos.ToArray();
+                return propertyInfos.ToList();
             }
 
             return getMembers(typeToReflect);

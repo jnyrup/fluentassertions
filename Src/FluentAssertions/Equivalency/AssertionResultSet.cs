@@ -35,7 +35,7 @@ namespace FluentAssertions.Equivalency
                 return new string[0];
             }
 
-            KeyValuePair<object, string[]>[] bestResultSets = GetBestResultSets();
+            List<KeyValuePair<object, string[]>> bestResultSets = GetBestResultSets();
 
             KeyValuePair<object, string[]> bestMatch = bestResultSets.FirstOrDefault(r => r.Key.Equals(key));
 
@@ -47,10 +47,10 @@ namespace FluentAssertions.Equivalency
             return bestMatch.Value;
         }
 
-        private KeyValuePair<object, string[]>[] GetBestResultSets()
+        private List<KeyValuePair<object, string[]>> GetBestResultSets()
         {
             int fewestFailures = set.Values.Min(r => r.Length);
-            return set.Where(r => r.Value.Length == fewestFailures).ToArray();
+            return set.Where(r => r.Value.Length == fewestFailures).ToList();
         }
 
         /// <summary>

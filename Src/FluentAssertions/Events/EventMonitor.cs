@@ -34,7 +34,7 @@ namespace FluentAssertions.Events
         {
             get
             {
-                return recorderMap.ToArray()
+                return recorderMap.ToList()
                     .Select(r => new EventMetadata(r.Value.EventName, r.Value.EventHandlerType))
                     .ToArray();
             }
@@ -45,7 +45,7 @@ namespace FluentAssertions.Events
             get
             {
                 IEnumerable<OccurredEvent> query =
-                    from mapItem in recorderMap.ToArray()
+                    from mapItem in recorderMap.ToList()
                     let eventName = mapItem.Key
                     let recorder = mapItem.Value
                     from occurrence in mapItem.Value

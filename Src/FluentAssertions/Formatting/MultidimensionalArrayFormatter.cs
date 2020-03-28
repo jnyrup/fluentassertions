@@ -33,7 +33,7 @@ namespace FluentAssertions.Formatting
 
             var sb = new StringBuilder();
 
-            int[] dimensionIndices = Enumerable.Range(0, arr.Rank).Select(dimension => arr.GetLowerBound(dimension)).ToArray();
+            List<int> dimensionIndices = Enumerable.Range(0, arr.Rank).Select(dimension => arr.GetLowerBound(dimension)).ToList();
 
             int currentLoopIndex = 0;
             IEnumerator enumerator = arr.GetEnumerator();

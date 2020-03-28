@@ -21,7 +21,7 @@ namespace FluentAssertions.Execution
         /// </summary>
         public IEnumerable<string> DiscardFailures()
         {
-            var discardedFailures = failureMessages.ToArray();
+            var discardedFailures = failureMessages.ToList();
             failureMessages.Clear();
             return discardedFailures;
         }

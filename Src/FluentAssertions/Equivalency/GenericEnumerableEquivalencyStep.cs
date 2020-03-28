@@ -10,7 +10,7 @@ namespace FluentAssertions.Equivalency
 {
     public class GenericEnumerableEquivalencyStep : IEquivalencyStep
     {
-        private static readonly MethodInfo HandleMethod = new Action<EnumerableEquivalencyValidator, object[], IEnumerable<object>>
+        private static readonly MethodInfo HandleMethod = new Action<EnumerableEquivalencyValidator, List<object>, IEnumerable<object>>
             (HandleImpl).GetMethodInfo().GetGenericMethodDefinition();
 
         /// <summary>
@@ -38,10 +38,10 @@ namespace FluentAssertions.Equivalency
         {
             Type expectedType = config.GetExpectationType(context);
 
-            Type[] interfaceTypes = GetIEnumerableInterfaces(expectedType);
+            List<Type> interfaceTypes = GetIEnumerableInterfaces(expectedType);
 
             AssertionScope.Current
-                .ForCondition(interfaceTypes.Length == 1)
+                .ForCondition(interfaceTypes.Count == 1)
                 .FailWith(() => new FailReason("{context:Expectation} implements {0}, so cannot determine which one " +
                     "to use for asserting the equivalency of the collection. ",
                     interfaceTypes.Select(type => "IEnumerable<" + type.GetGenericArguments().Single() + ">")));
@@ -56,11 +56,11 @@ namespace FluentAssertions.Equivalency
 
                 Type typeOfEnumeration = GetTypeOfEnumeration(expectedType);
 
-                var subjectAsArray = EnumerableEquivalencyStep.ToArray(context.Subject);
+                var subjectAsList = EnumerableEquivalencyStep.ToList(context.Subject);
 
                 try
                 {
-                    HandleMethod.MakeGenericMethod(typeOfEnumeration).Invoke(null, new[] { validator, subjectAsArray, context.Expectation });
+                    HandleMethod.MakeGenericMethod(typeOfEnumeration).Invoke(null, new[] { validator, subjectAsList, context.Expectation });
                 }
                 catch (TargetInvocationException e)
                 {
@@ -71,8 +71,8 @@ namespace FluentAssertions.Equivalency
             return true;
         }
 
-        private static void HandleImpl<T>(EnumerableEquivalencyValidator validator, object[] subject, IEnumerable<T> expectation)
-            => validator.Execute(subject, expectation?.ToArray());
+        private static void HandleImpl<T>(EnumerableEquivalencyValidator validator, List<object> subject, IEnumerable<T> expectation)
+            => validator.Execute(subject, expectation?.ToList());
 
         private static bool AssertSubjectIsCollection(object subject)
         {
@@ -97,12 +97,12 @@ namespace FluentAssertions.Equivalency
 
         private static bool IsGenericCollection(Type type)
         {
-            Type[] enumerableInterfaces = GetIEnumerableInterfaces(type);
+            List<Type> enumerableInterfaces = GetIEnumerableInterfaces(type);
 
             return (!typeof(string).IsAssignableFrom(type)) && enumerableInterfaces.Any();
         }
 
-        private static Type[] GetIEnumerableInterfaces(Type type)
+        private static List<Type> GetIEnumerableInterfaces(Type type)
         {
             Type soughtType = typeof(IEnumerable<>);
 
