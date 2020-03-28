@@ -27,6 +27,8 @@ namespace FluentAssertions.Common
             return (source as IList<T>) ?? source.Cast<T>().ToList();
         }
 
+        public static IEnumerable<T> Concat<T>(this T head, IEnumerable<T> tail) => new[] { head }.Concat(tail);
+
         /// <summary>
         /// Searches for the first different element in two sequences using specified <paramref name="equalityComparison" />
         /// </summary>

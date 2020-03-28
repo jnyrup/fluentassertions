@@ -203,8 +203,7 @@ namespace FluentAssertions.Specs
             Action act = () => actual.Should().BeEquivalentTo(expected);
 
             // Assert
-            act.Should().Throw<XunitException>(@"Fluent Assertions 5.x.x has the params object[] overload,
-                which discards the compile time type.");
+            act.Should().NotThrow();
         }
 
         [Fact]

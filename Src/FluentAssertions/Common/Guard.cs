@@ -4,6 +4,14 @@ namespace FluentAssertions.Common
 {
     internal static class Guard
     {
+        public static void ThrowIfArgumentIsAmbiguous<T>(T[] obj, string paramName)
+        {
+            if (obj is null)
+            {
+                throw new ArgumentException("It is ambiguous whether it is a null collection or a collection of a null item", paramName);
+            }
+        }
+
         public static void ThrowIfArgumentIsNull<T>(T obj, string paramName)
             where T : class
         {

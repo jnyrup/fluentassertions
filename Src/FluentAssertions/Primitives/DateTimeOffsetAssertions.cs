@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FluentAssertions.Common;
 using FluentAssertions.Execution;
 
 namespace FluentAssertions.Primitives
@@ -828,9 +829,10 @@ namespace FluentAssertions.Primitives
         /// <param name="validValues">
         /// The values that are valid.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(params DateTimeOffset?[] validValues)
+        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(DateTimeOffset? validValue, params DateTimeOffset?[] validValues)
         {
-            return BeOneOf(validValues, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(validValues, nameof(validValues));
+            return BeOneOf(validValue.Concat(validValues));
         }
 
         /// <summary>
@@ -839,9 +841,10 @@ namespace FluentAssertions.Primitives
         /// <param name="validValues">
         /// The values that are valid.
         /// </param>
-        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(params DateTimeOffset[] validValues)
+        public AndConstraint<DateTimeOffsetAssertions> BeOneOf(DateTimeOffset validValue, params DateTimeOffset[] validValues)
         {
-            return BeOneOf(validValues.Cast<DateTimeOffset?>());
+            Guard.ThrowIfArgumentIsAmbiguous(validValues, nameof(validValues));
+            return BeOneOf(validValue.Concat(validValues));
         }
 
         /// <summary>

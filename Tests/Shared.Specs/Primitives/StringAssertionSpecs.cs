@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions.Execution;
 using Xunit;
@@ -1946,8 +1947,11 @@ namespace FluentAssertions.Specs
         [Fact]
         public void When_containment_of_all_strings_in_a_null_collection_is_asserted_it_should_throw_an_argument_exception()
         {
+            // Arrange
+            IEnumerable<string> other = null;
+
             // Act
-            Action act = () => "a".Should().ContainAll(null);
+            Action act = () => "a".Should().ContainAll(other);
 
             // Assert
             act.Should().Throw<ArgumentNullException>()
@@ -1959,7 +1963,7 @@ namespace FluentAssertions.Specs
         public void When_containment_of_all_strings_in_an_empty_collection_is_asserted_it_should_throw_an_argument_exception()
         {
             // Act
-            Action act = () => "a".Should().ContainAll();
+            Action act = () => "a".Should().ContainAll(Array.Empty<string>());
 
             // Assert
             act.Should().Throw<ArgumentException>()
@@ -2070,8 +2074,11 @@ namespace FluentAssertions.Specs
         [Fact]
         public void When_containment_of_any_string_in_a_null_collection_is_asserted_it_should_throw_an_argument_exception()
         {
+            // Arrange
+            IEnumerable<string> other = null;
+
             // Act
-            Action act = () => "a".Should().ContainAny(null);
+            Action act = () => "a".Should().ContainAny(other);
 
             // Assert
             act.Should().Throw<ArgumentNullException>()
@@ -2083,7 +2090,7 @@ namespace FluentAssertions.Specs
         public void When_containment_of_any_string_in_an_empty_collection_is_asserted_it_should_throw_an_argument_exception()
         {
             // Act
-            Action act = () => "a".Should().ContainAny();
+            Action act = () => "a".Should().ContainAny(Array.Empty<string>());
 
             // Assert
             act.Should().Throw<ArgumentException>()
@@ -2241,8 +2248,11 @@ namespace FluentAssertions.Specs
         [Fact]
         public void When_exclusion_of_all_strings_in_null_collection_is_asserted_it_should_throw_an_argument_exception()
         {
+            // Arrange
+            IEnumerable<string> other = null;
+
             // Act
-            Action act = () => "a".Should().NotContainAll(null);
+            Action act = () => "a".Should().NotContainAll(other);
 
             // Assert
             act.Should().Throw<ArgumentNullException>()
@@ -2254,7 +2264,7 @@ namespace FluentAssertions.Specs
         public void When_exclusion_of_all_strings_in_an_empty_collection_is_asserted_it_should_throw_an_argument_exception()
         {
             // Act
-            Action act = () => "a".Should().NotContainAll();
+            Action act = () => "a".Should().NotContainAll(Array.Empty<string>());
 
             // Assert
             act.Should().Throw<ArgumentException>()
@@ -2359,8 +2369,11 @@ namespace FluentAssertions.Specs
         [Fact]
         public void When_exclusion_of_any_string_in_null_collection_is_asserted_it_should_throw_an_argument_exception()
         {
+            // Arrange
+            IEnumerable<string> other = null;
+
             // Act
-            Action act = () => "a".Should().NotContainAny(null);
+            Action act = () => "a".Should().NotContainAny(other);
 
             // Assert
             act.Should().Throw<ArgumentNullException>()
@@ -2372,7 +2385,7 @@ namespace FluentAssertions.Specs
         public void When_exclusion_of_any_string_in_an_empty_collection_is_asserted_it_should_throw_an_argument_exception()
         {
             // Act
-            Action act = () => "a".Should().NotContainAny();
+            Action act = () => "a".Should().NotContainAny(Array.Empty<string>());
 
             // Assert
             act.Should().Throw<ArgumentException>()

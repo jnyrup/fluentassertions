@@ -47,9 +47,10 @@ namespace FluentAssertions.Primitives
         /// <param name="validValues">
         /// The values that are valid.
         /// </param>
-        public AndConstraint<StringAssertions> BeOneOf(params string[] validValues)
+        public AndConstraint<StringAssertions> BeOneOf(string validValue, params string[] validValues)
         {
-            return BeOneOf(validValues, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(validValues, nameof(validValues));
+            return BeOneOf(validValue.Concat(validValues));
         }
 
         /// <summary>
@@ -772,9 +773,10 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should all be present in the string
         /// </param>
-        public AndConstraint<StringAssertions> ContainAll(params string[] values)
+        public AndConstraint<StringAssertions> ContainAll(string value, params string[] values)
         {
-            return ContainAll(values, because: string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(values, nameof(values));
+            return ContainAll(value.Concat(values));
         }
 
         /// <summary>
@@ -808,9 +810,10 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should will be tested against the string
         /// </param>
-        public AndConstraint<StringAssertions> ContainAny(params string[] values)
+        public AndConstraint<StringAssertions> ContainAny(string value, params string[] values)
         {
-            return ContainAny(values, because: string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(values, nameof(values));
+            return ContainAny(value.Concat(values));
         }
 
         /// <summary>
@@ -880,9 +883,10 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should not be present in the string
         /// </param>
-        public AndConstraint<StringAssertions> NotContainAll(params string[] values)
+        public AndConstraint<StringAssertions> NotContainAll(string value, params string[] values)
         {
-            return NotContainAll(values, because: string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(values, nameof(values));
+            return NotContainAll(value.Concat(values));
         }
 
         /// <summary>
@@ -919,9 +923,10 @@ namespace FluentAssertions.Primitives
         /// <param name="values">
         /// The values that should not be present in the string
         /// </param>
-        public AndConstraint<StringAssertions> NotContainAny(params string[] values)
+        public AndConstraint<StringAssertions> NotContainAny(string value, params string[] values)
         {
-            return NotContainAny(values, because: string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(values, nameof(values));
+            return NotContainAny(value.Concat(values));
         }
 
         /// <summary>

@@ -847,9 +847,10 @@ namespace FluentAssertions.Specs
         {
             // Arrange
             IEnumerable<string> nullColl = null;
+            IEnumerable<string> other = null;
 
             // Act
-            Action act = () => nullColl.Should().Equal(null);
+            Action act = () => nullColl.Should().Equal(other);
 
             // Assert
             act.Should().NotThrow();
@@ -1253,8 +1254,11 @@ namespace FluentAssertions.Specs
         [Fact]
         public void When_passing_in_null_while_checking_for_ordered_containment_it_should_throw_with_a_clear_explanation()
         {
+            // Arrange
+            IEnumerable<string> other = null;
+
             // Act
-            Action act = () => new[] { "one", "two", "three" }.Should().ContainInOrder(null);
+            Action act = () => new[] { "one", "two", "three" }.Should().ContainInOrder(other);
 
             // Assert
             act.Should().Throw<ArgumentNullException>().WithMessage(

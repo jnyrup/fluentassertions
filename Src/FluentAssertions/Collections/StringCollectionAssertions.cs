@@ -19,10 +19,12 @@ namespace FluentAssertions.Collections
         /// Expects the current collection to contain all the same elements in the same order as the collection identified by
         /// <paramref name="expected" />. Elements are compared using their <see cref="object.Equals(object)" />.
         /// </summary>
-        /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-        public new AndConstraint<StringCollectionAssertions> Equal(params string[] expected)
+        /// <param name="expected">An expected element.</param>
+        /// <param name="additionalExpected">An <see cref="IEnumerable{T}"/> with additional expected elements.</param>
+        public new AndConstraint<StringCollectionAssertions> Equal(string expected, params string[] additionalExpected)
         {
-            return base.Equal(expected.AsEnumerable());
+            Guard.ThrowIfArgumentIsAmbiguous(additionalExpected, nameof(additionalExpected));
+            return base.Equal(expected, additionalExpected);
         }
 
         /// <summary>
@@ -41,9 +43,10 @@ namespace FluentAssertions.Collections
         /// <remarks>
         /// The two collections are equivalent when they both contain the same strings in any order.
         /// </remarks>
-        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(params string[] expectation)
+        public AndConstraint<StringCollectionAssertions> BeEquivalentTo(string expected, params string[] expectation)
         {
-            BeEquivalentTo(expectation, config => config);
+            Guard.ThrowIfArgumentIsAmbiguous(expectation, nameof(expectation));
+            BeEquivalentTo(expected.Concat(expectation), config => config);
 
             return new AndConstraint<StringCollectionAssertions>(this);
         }
@@ -117,9 +120,10 @@ namespace FluentAssertions.Collections
         /// using their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-        public AndConstraint<StringCollectionAssertions> ContainInOrder(params string[] expected)
+        public AndConstraint<StringCollectionAssertions> ContainInOrder(string expected, params string[] expecteds)
         {
-            return base.ContainInOrder(expected.AsEnumerable());
+            Guard.ThrowIfArgumentIsAmbiguous(expecteds, nameof(expecteds));
+            return base.ContainInOrder(expected.Concat(expecteds));
         }
 
         /// <summary>
@@ -281,7 +285,5 @@ namespace FluentAssertions.Collections
                 });
             }
         }
-
-        
     }
 }

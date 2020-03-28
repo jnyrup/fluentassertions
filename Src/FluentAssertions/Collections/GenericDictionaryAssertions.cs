@@ -596,9 +596,10 @@ namespace FluentAssertions.Collections
         /// Key comparison will honor the equality comparer of the dictionary when applicable.
         /// </summary>
         /// <param name="expected">The expected keys</param>
-        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> ContainKeys(params TKey[] expected)
+        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> ContainKeys(TKey expected, params TKey[] expecteds)
         {
-            return ContainKeys(expected, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(expecteds, nameof(expecteds));
+            return ContainKeys(expected.Concat(expecteds));
         }
 
         /// <summary>
@@ -696,9 +697,10 @@ namespace FluentAssertions.Collections
         /// Key comparison will honor the equality comparer of the dictionary when applicable.
         /// </summary>
         /// <param name="unexpected">The unexpected keys</param>
-        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> NotContainKeys(params TKey[] unexpected)
+        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> NotContainKeys(TKey unexpected, params TKey[] unexpecteds)
         {
-            return NotContainKeys(unexpected, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(unexpecteds, nameof(unexpecteds));
+            return NotContainKeys(unexpected.Concat(unexpecteds));
         }
 
         /// <summary>
@@ -788,9 +790,10 @@ namespace FluentAssertions.Collections
         /// their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="expected">The expected values</param>
-        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> ContainValues(params TValue[] expected)
+        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> ContainValues(TValue expected, params TValue[] expecteds)
         {
-            return ContainValues(expected, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(expecteds, nameof(expecteds));
+            return ContainValues(expected.Concat(expecteds));
         }
 
         /// <summary>
@@ -909,9 +912,10 @@ namespace FluentAssertions.Collections
         /// their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="unexpected">The unexpected values</param>
-        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> NotContainValues(params TValue[] unexpected)
+        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> NotContainValues(TValue unexpected, params TValue[] unexpecteds)
         {
-            return NotContainValues(unexpected, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(unexpecteds, nameof(unexpecteds));
+            return NotContainValues(unexpected.Concat(unexpecteds));
         }
 
         /// <summary>
@@ -978,9 +982,10 @@ namespace FluentAssertions.Collections
         /// Values are compared using their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="expected">The expected key/value pairs.</param>
-        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> Contain(params KeyValuePair<TKey, TValue>[] expected)
+        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> Contain(KeyValuePair<TKey, TValue> expected, params KeyValuePair<TKey, TValue>[] expecteds)
         {
-            return Contain(expected, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(expecteds, nameof(expecteds));
+            return Contain(expected.Concat(expecteds));
         }
 
         /// <summary>
@@ -1135,9 +1140,10 @@ namespace FluentAssertions.Collections
         /// Values are compared using their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="items">The unexpected key/value pairs</param>
-        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> NotContain(params KeyValuePair<TKey, TValue>[] items)
+        public AndConstraint<GenericDictionaryAssertions<TKey, TValue>> NotContain(KeyValuePair<TKey, TValue> item, params KeyValuePair<TKey, TValue>[] items)
         {
-            return NotContain(items, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(items, nameof(items));
+            return NotContain(item.Concat(items));
         }
 
         /// <summary>

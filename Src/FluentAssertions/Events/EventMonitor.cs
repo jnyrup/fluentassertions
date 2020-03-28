@@ -100,7 +100,7 @@ namespace FluentAssertions.Events
                 return type.GetEvents();
             }
 
-            return new[] { type }
+            return type
                 .Concat(type.GetInterfaces())
                 .SelectMany(i => i.GetEvents())
                 .ToArray();

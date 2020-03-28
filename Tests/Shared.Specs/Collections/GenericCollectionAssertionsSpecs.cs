@@ -1471,9 +1471,10 @@ namespace FluentAssertions.Specs
         {
             // Arrange
             IEnumerable<int> collection = new[] { 1, 2 };
+            IEnumerable<Action<int>> elementInspectors = null;
 
             // Act
-            Action act = () => collection.Should().SatisfyRespectively(null);
+            Action act = () => collection.Should().SatisfyRespectively(elementInspectors);
 
             // Assert
             act.Should().Throw<ArgumentException>().WithMessage(
@@ -1487,7 +1488,7 @@ namespace FluentAssertions.Specs
             IEnumerable<int> collection = new[] { 1, 2 };
 
             // Act
-            Action act = () => collection.Should().SatisfyRespectively();
+            Action act = () => collection.Should().SatisfyRespectively(Array.Empty<Action<int>>());
 
             // Assert
             act.Should().Throw<ArgumentException>().WithMessage(

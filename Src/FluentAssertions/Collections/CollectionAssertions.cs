@@ -212,9 +212,10 @@ namespace FluentAssertions.Collections
         /// <paramref name="elements" />. Elements are compared using their <see cref="object.Equals(object)" />.
         /// </summary>
         /// <param name="elements">A params array with the expected elements.</param>
-        public AndConstraint<TAssertions> Equal(params object[] elements)
+        public AndConstraint<TAssertions> Equal(object element, params object[] elements)
         {
-            return Equal(elements, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(elements, nameof(elements));
+            return Equal(element.Concat(elements));
         }
 
         /// <summary>
@@ -347,9 +348,10 @@ namespace FluentAssertions.Collections
         /// items in the collection are structurally equal.
         /// Notice that actual behavior is determined by the global defaults managed by <see cref="AssertionOptions"/>.
         /// </remarks>
-        public AndConstraint<TAssertions> BeEquivalentTo(params object[] expectations)
+        public AndConstraint<TAssertions> BeEquivalentTo(object expectation, params object[] expectations)
         {
-            BeEquivalentTo(expectations, config => config, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(expectations, nameof(expectations));
+            BeEquivalentTo(expectation.Concat(expectations), config => config);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
         }
@@ -762,9 +764,10 @@ namespace FluentAssertions.Collections
         /// using their <see cref="object.Equals(object)" /> implementation.
         /// </summary>
         /// <param name="expected">An <see cref="IEnumerable"/> with the expected elements.</param>
-        public AndConstraint<TAssertions> ContainInOrder(params object[] expected)
+        public AndConstraint<TAssertions> ContainInOrder(object expected, params object[] expecteds)
         {
-            return ContainInOrder(expected, "");
+            Guard.ThrowIfArgumentIsAmbiguous(expecteds, nameof(expecteds));
+            return ContainInOrder(expected.Concat(expecteds));
         }
 
         /// <summary>

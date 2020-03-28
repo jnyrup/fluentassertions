@@ -313,9 +313,10 @@ namespace FluentAssertions.Numeric
         /// <param name="validValues">
         /// The values that are valid.
         /// </param>
-        public AndConstraint<NumericAssertions<T>> BeOneOf(params T[] validValues)
+        public AndConstraint<NumericAssertions<T>> BeOneOf(T validValue, params T[] validValues)
         {
-            return BeOneOf(validValues, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(validValues, nameof(validValues));
+            return BeOneOf(validValue.Concat(validValues));
         }
 
         /// <summary>

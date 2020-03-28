@@ -242,11 +242,12 @@ namespace FluentAssertions.Collections
         /// <paramref name="elements" />. Elements are compared using their <see cref="T.Equals(object)" /> method.
         /// </summary>
         /// <param name="elements">A params array with the expected elements.</param>
-        public AndConstraint<TAssertions> Equal(params T[] elements)
+        public AndConstraint<TAssertions> Equal(T e, params T[] elements)
         {
+            Guard.ThrowIfArgumentIsAmbiguous(elements, nameof(elements));
             Func<T, T, bool> comparer = GetComparer();
 
-            AssertSubjectEquality(elements, comparer, string.Empty);
+            AssertSubjectEquality(e.Concat(elements), comparer);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
         }
@@ -678,9 +679,10 @@ namespace FluentAssertions.Collections
         /// The element inspectors, which inspect each element in turn. The
         /// total number of element inspectors must exactly match the number of elements in the collection.
         /// </param>
-        public AndConstraint<TAssertions> SatisfyRespectively(params Action<T>[] elementInspectors)
+        public AndConstraint<TAssertions> SatisfyRespectively(Action<T> elementInspector, params Action<T>[] elementInspectors)
         {
-            return SatisfyRespectively(elementInspectors, string.Empty);
+            Guard.ThrowIfArgumentIsAmbiguous(elementInspectors, nameof(elementInspectors));
+            return SatisfyRespectively(elementInspector.Concat(elementInspectors));
         }
 
         /// <summary>
