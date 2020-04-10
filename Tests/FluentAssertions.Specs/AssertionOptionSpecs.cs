@@ -70,8 +70,7 @@ namespace FluentAssertions.Specs
                 When(() =>
                 {
                     AssertionOptions.AssertEquivalencyUsing(options => options
-                        .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, 0.01))
-                        .WhenTypeIs<double>());
+                        .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, 0.01)));
                 });
             }
 
@@ -102,8 +101,7 @@ namespace FluentAssertions.Specs
                 When(() =>
                 {
                     AssertionOptions.AssertEquivalencyUsing(options => options
-                        .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, 0.01))
-                        .WhenTypeIs<double>());
+                        .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, 0.01)));
                 });
             }
 
@@ -121,8 +119,7 @@ namespace FluentAssertions.Specs
                 };
 
                 Action act = () => actual.Should().BeEquivalentTo(expected, options => options
-                    .Using<double>(ctx => ctx.Subject.Should().Be(ctx.Expectation))
-                    .WhenTypeIs<double>());
+                    .Using<double>(ctx => ctx.Subject.Should().Be(ctx.Expectation)));
 
                 act.Should().Throw<XunitException>().WithMessage("Expected*");
             }

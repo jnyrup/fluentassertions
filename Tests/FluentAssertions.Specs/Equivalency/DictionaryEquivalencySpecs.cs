@@ -1115,7 +1115,6 @@ namespace FluentAssertions.Specs
             // Act / Assert
             dictOne.Should().BeEquivalentTo(dictTwo, options => options
                 .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, 0.1))
-                .WhenTypeIs<double>()
             );
         }
     }

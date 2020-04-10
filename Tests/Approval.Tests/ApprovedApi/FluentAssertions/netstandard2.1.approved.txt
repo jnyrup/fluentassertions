@@ -596,10 +596,22 @@ namespace FluentAssertions.Common
 }
 namespace FluentAssertions.Equivalency
 {
-    public class AssertionRuleEquivalencyStep<TSubject> : FluentAssertions.Equivalency.IEquivalencyStep
+    public class AssertionRuleEquivalencyStep<TSubject> : FluentAssertions.Equivalency.AssertionRuleEquivalencyStep<TSubject, TSubject, FluentAssertions.Equivalency.IAssertionContext<TSubject>>
     {
-        public AssertionRuleEquivalencyStep(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IMemberInfo, bool>> predicate, System.Action<FluentAssertions.Equivalency.IAssertionContext<TSubject>> assertion) { }
+        public AssertionRuleEquivalencyStep(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IEquivalencyValidationContext, bool>> predicate, System.Action<FluentAssertions.Equivalency.IAssertionContext<TSubject>> assertion) { }
+        protected override FluentAssertions.Equivalency.IAssertionContext<TSubject> GetAssertionContext(FluentAssertions.Equivalency.IEquivalencyValidationContext context) { }
+    }
+    public class AssertionRuleEquivalencyStep<TSubject, TExpectation> : FluentAssertions.Equivalency.AssertionRuleEquivalencyStep<TSubject, TExpectation, FluentAssertions.Equivalency.IAssertionContext<TSubject, TExpectation>>
+    {
+        public AssertionRuleEquivalencyStep(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IEquivalencyValidationContext, bool>> predicate, System.Action<FluentAssertions.Equivalency.IAssertionContext<TSubject, TExpectation>> assertion) { }
+        protected override FluentAssertions.Equivalency.IAssertionContext<TSubject, TExpectation> GetAssertionContext(FluentAssertions.Equivalency.IEquivalencyValidationContext context) { }
+    }
+    public abstract class AssertionRuleEquivalencyStep<TSubject, TExpectation, TAssertionContext> : FluentAssertions.Equivalency.IEquivalencyStep
+        where TAssertionContext : FluentAssertions.Equivalency.IAssertionContext<TSubject, TExpectation>
+    {
+        protected AssertionRuleEquivalencyStep(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IEquivalencyValidationContext, bool>> predicate, System.Action<TAssertionContext> assertion) { }
         public bool CanHandle(FluentAssertions.Equivalency.IEquivalencyValidationContext context, FluentAssertions.Equivalency.IEquivalencyAssertionOptions config) { }
+        protected abstract TAssertionContext GetAssertionContext(FluentAssertions.Equivalency.IEquivalencyValidationContext context);
         public bool Handle(FluentAssertions.Equivalency.IEquivalencyValidationContext context, FluentAssertions.Equivalency.IEquivalencyValidator parent, FluentAssertions.Equivalency.IEquivalencyAssertionOptions config) { }
         public override string ToString() { }
     }
@@ -713,11 +725,12 @@ namespace FluentAssertions.Equivalency
         public bool Handle(FluentAssertions.Equivalency.IEquivalencyValidationContext context, FluentAssertions.Equivalency.IEquivalencyValidator parent, FluentAssertions.Equivalency.IEquivalencyAssertionOptions config) { }
     }
     public delegate string GetTraceMessage(string path);
-    public interface IAssertionContext<TSubject>
+    public interface IAssertionContext<TSubject> : FluentAssertions.Equivalency.IAssertionContext<TSubject, TSubject> { }
+    public interface IAssertionContext<TSubject, TExpectation>
     {
         string Because { get; set; }
         object[] BecauseArgs { get; set; }
-        TSubject Expectation { get; }
+        TExpectation Expectation { get; }
         TSubject Subject { get; }
         FluentAssertions.Equivalency.SelectedMemberInfo SubjectProperty { get; }
     }
@@ -858,6 +871,7 @@ namespace FluentAssertions.Equivalency
         public TSelf Using<T>(System.Collections.Generic.IEqualityComparer<T> comparer) { }
         public TSelf Using<T, TEqualityComparer>()
             where TEqualityComparer : System.Collections.Generic.IEqualityComparer<T>, new () { }
+        public FluentAssertions.Equivalency.SelfReferenceEquivalencyAssertionOptions<TSelf>.Restriction<TSubjectProperty, TExpectationProperty> Using<TSubjectProperty, TExpectationProperty>(System.Action<FluentAssertions.Equivalency.IAssertionContext<TSubjectProperty, TExpectationProperty>> action) { }
         public TSelf WithAutoConversion() { }
         public TSelf WithAutoConversionFor(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IMemberInfo, bool>> predicate) { }
         public TSelf WithStrictOrdering() { }
@@ -871,8 +885,14 @@ namespace FluentAssertions.Equivalency
         public class Restriction<TMember>
         {
             public Restriction(TSelf options, System.Action<FluentAssertions.Equivalency.IAssertionContext<TMember>> action) { }
-            public TSelf When(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IMemberInfo, bool>> predicate) { }
+            public TSelf When(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IEquivalencyValidationContext, bool>> predicate) { }
             public TSelf WhenTypeIs<TMemberType>() { }
+        }
+        public class Restriction<TSubjectMember, TExpectationMember>
+        {
+            public Restriction(TSelf options, System.Action<FluentAssertions.Equivalency.IAssertionContext<TSubjectMember, TExpectationMember>> action) { }
+            public TSelf When(System.Linq.Expressions.Expression<System.Func<FluentAssertions.Equivalency.IEquivalencyValidationContext, bool>> predicate) { }
+            public TSelf WhenTypesAre<TSubjectMemberType, TExpectationMemberType>() { }
         }
     }
     public class SimpleEqualityEquivalencyStep : FluentAssertions.Equivalency.IEquivalencyStep

@@ -378,31 +378,102 @@ namespace FluentAssertions.Specs
             // Act
             Action act = () => subject.Should().BeEquivalentTo(expectation, options =>
                 options
-                    .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1.Seconds()))
-                    .WhenTypeIs<DateTime>());
+                    .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1.Seconds())));
 
             // Assert
             act.Should().NotThrow();
         }
 
         [Fact]
-        public void When_a_nullable_property_is_overriden_with_a_custom_assertion_it_should_use_it()
+        public void When_a_nullable_property_is_overriden_with_a_value_type_assertion_it_should_use_it()
         {
             // Arrange
             var actual = new SimpleWithNullable
             {
-                NullableIntegerProperty = 1,
                 StringProperty = "I haz a string!"
             };
 
             var expected = new SimpleWithNullable
             {
+                NullableIntegerProperty = 1,
+                StringProperty = "I haz a string!"
+            };
+
+            // Act
+            Action act = () => actual.Should().BeEquivalentTo(expected, opt => opt
+                .Using<long>(c => c.Subject.Should().BeInRange(0, 10)));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_a_nullable_property_is_overriden_with_a_value_type_assertion_it_should_not_use_it()
+        {
+            // Arrange
+            var actual = new SimpleWithNullable
+            {
+                StringProperty = "I haz a string!"
+            };
+
+            var expected = new SimpleWithNullable
+            {
+                NullableIntegerProperty = null,
+                StringProperty = "I haz a string!"
+            };
+
+            // Act
+            Action act = () => actual.Should().BeEquivalentTo(expected, opt => opt
+                .Using<long>(c => c.Subject.Should().BeInRange(0, 10)));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_a_nullable_property_with_value_is_overriden_with_a_custom_assertion_it_should_use_it()
+        {
+            // Arrange
+            var actual = new SimpleWithNullable
+            {
+                StringProperty = "I haz a string!"
+            };
+
+            var expected = new SimpleWithNullable
+            {
+                NullableIntegerProperty = 1,
                 StringProperty = "I haz a string!"
             };
 
             // Act / Assert
-            actual.Should().BeEquivalentTo(expected,
-                opt => opt.Using<long>(c => c.Subject.Should().BeInRange(0, 10)).WhenTypeIs<long?>());
+            Action act = () => actual.Should().BeEquivalentTo(expected, opt => opt
+                .Using<long?>(c => c.Subject.Should().BeInRange(0, 10)));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_a_nullable_property_without_value_is_overriden_with_a_custom_assertion_it_should_use_it()
+        {
+            // Arrange
+            var actual = new SimpleWithNullable
+            {
+                StringProperty = "I haz a string!"
+            };
+
+            var expected = new SimpleWithNullable
+            {
+                NullableIntegerProperty = null,
+                StringProperty = "I haz a string!"
+            };
+
+            // Act / Assert
+            Action act = () => actual.Should().BeEquivalentTo(expected, opt => opt
+                .Using<long?>(c => c.Subject.Should().BeInRange(0, 10)));
+
+            // Assert
+            act.Should().Throw<XunitException>();
         }
 
         internal class SimpleWithNullable
@@ -410,6 +481,59 @@ namespace FluentAssertions.Specs
             public long? NullableIntegerProperty { get; set; }
 
             public string StringProperty { get; set; }
+        }
+
+        [Fact]
+        public void When_a_derived_class_property_is_overriden_with_a_custom_assertion_it_should_use_it()
+        {
+            // Arrange
+            var actual = new
+            {
+                Property = new DerivedClass { Property = 42 },
+            };
+
+            var expected = new
+            {
+                Property = new DerivedClass { Property = 1337 }
+            };
+
+            // Act
+            Action act = () => actual.Should().BeEquivalentTo(expected, opt => opt
+                .Using<BaseClass>(c => c.Subject.Should().NotBeSameAs(c.Expectation)));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_a_child_class_property_is_overriden_with_a_custom_assertion_it_should_not_use_it()
+        {
+            // Arrange
+            var actual = new
+            {
+                Property = new BaseClass { Property = 42 },
+            };
+
+            var expected = new
+            {
+                Property = new BaseClass { Property = 42 }
+            };
+
+            // Act / Assert
+            Action act = () => actual.Should().BeEquivalentTo(expected, opt => opt
+                .Using<DerivedClass>(c => c.Subject.Should().BeSameAs(c.Expectation)));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        internal class BaseClass
+        {
+            public int Property { get; set; }
+        }
+
+        internal class DerivedClass : BaseClass
+        {
         }
 
         [Fact]
@@ -548,8 +672,29 @@ namespace FluentAssertions.Specs
 
             // Act
             Action act = () => subject.Should().BeEquivalentTo(expectation, options => options
-                .Using<ClassWithSomeFieldsAndProperties>(ctx => ctx.Subject.Should().BeEquivalentTo(ctx.Expectation, nestedOptions => nestedOptions.Excluding(x => x.Property2)))
-                .WhenTypeIs<ClassWithSomeFieldsAndProperties>());
+                .Using<ClassWithSomeFieldsAndProperties>(ctx => ctx.Subject.Should().BeEquivalentTo(ctx.Expectation, nestedOptions => nestedOptions.Excluding(x => x.Property2))));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void When_using_fisk()
+        {
+            // Arrange
+            var subject = new
+            {
+                Property = 42
+            };
+
+            var expectation = new
+            {
+                Property = "42"
+            };
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expectation, options => options
+                .Using<int, string>(ctx => ctx.Subject.ToString().Should().Be(ctx.Expectation)));
 
             // Assert
             act.Should().NotThrow();
@@ -573,8 +718,7 @@ namespace FluentAssertions.Specs
             actual.Should().BeEquivalentTo(expectation,
                 options => options
                     .WithAutoConversion()
-                    .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1.Seconds()))
-                    .WhenTypeIs<DateTime>());
+                    .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1.Seconds())));
         }
 
         #endregion

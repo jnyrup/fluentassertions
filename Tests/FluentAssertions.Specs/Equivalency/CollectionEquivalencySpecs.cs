@@ -1362,11 +1362,209 @@ namespace FluentAssertions.Specs
             // Act
             Action act = () => subject.Should().BeEquivalentTo(expectation, opts => opts
                 .Using<int>(ctx => ctx.Subject.Should().BeInRange(ctx.Expectation - 1, ctx.Expectation + 1))
-                .WhenTypeIs<int>()
             );
 
             // Assert
             act.Should().NotThrow();
+        }
+
+        [Fact]
+        public void lol()
+        {
+            var subject = new { SubjectValue = (string)null };
+            var expected = new { SubjectValue = (string)null };
+
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string>(ctx => ctx.Subject.Should().BeSameAs(ctx.Expectation)));
+        }
+
+        [Fact]
+        public void lola()
+        {
+            var subject = new { SubjectValue = (object)null };
+            var expected = new { SubjectValue = (object)null };
+
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string>(ctx => ctx.Subject.Should().BeSameAs(ctx.Expectation)));
+        }
+
+        [Fact]
+        public void lolb()
+        {
+            var subject = new { SubjectValue = (object)"a" };
+            var expected = new { SubjectValue = (object)"A" };
+
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string>(ctx => ctx.Subject.Should().BeEquivalentTo(ctx.Expectation)));
+        }
+
+        [Fact]
+        public void lol2()
+        {
+            var subject = new { SubjectValue = (string)null };
+            var expected = new { SubjectValue = (string)null };
+
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, string>(ctx => ctx.Subject.Should().BeSameAs(ctx.Expectation)));
+        }
+
+        [Fact]
+        public void lol2a()
+        {
+            var subject = new { SubjectValue = (string)null };
+            var expected = new { SubjectValue = (int?)null };
+
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, string>(ctx => ctx.Subject.Should().BeSameAs(ctx.Expectation)));
+        }
+
+        [Fact]
+        public void lol2b()
+        {
+            var subject = new { SubjectValue = (int?)null };
+            var expected = new { SubjectValue = (int?)null };
+
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, string>(ctx => ctx.Subject.Should().BeSameAs(ctx.Expectation)));
+        }
+
+        [Fact]
+        public void lol2c()
+        {
+            var subject = new { SubjectValue = (int?)null };
+            var expected = new { SubjectValue = (string)null };
+
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, string>(ctx => ctx.Subject.Should().BeSameAs(ctx.Expectation)));
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_a(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, string>(_ => { }));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_b(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, int?>(_ => { }));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_c(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<int?, string>(_ => { }));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_d(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<int?, int?>(_ => { }));
+
+            // Assert
+            act.Should().NotThrow();
+        }
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_a2(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, string>(ctx => ctx.Should().BeNull()));
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_b2(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<string, int?>(ctx => ctx.Should().BeNull()));
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_c2(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<int?, string>(ctx => ctx.Should().BeNull()));
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        [Theory]
+        [MemberData(nameof(LolData))]
+        public void lol_d2(object subject, object expected)
+        {
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .Using<int?, int?>(ctx => ctx.Should().BeNull()));
+
+            // Assert
+            act.Should().Throw<XunitException>();
+        }
+
+        public static IEnumerable<object[]> LolData()
+        {
+            var objs = new object[]
+            {
+                new { P = (string)null },
+                new { P = (int?)null }
+            };
+
+            return from x in objs
+                   from y in objs
+                   select new object[] { x, y };
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        [Fact]
+        public void lol_example()
+        {
+            var subject = new
+            {
+                Property = (int?)null
+            };
+
+            var expectation = new
+            {
+                Property = ""
+            };
+
+            subject.Should().BeEquivalentTo(expectation, opt => opt
+                .Using<string, string>(ctx => ctx.Expectation.Should().NotBeNull()));
         }
 
         [Fact]

@@ -6,17 +6,54 @@ using FluentAssertions.Execution;
 
 namespace FluentAssertions.Equivalency
 {
-    public class AssertionRuleEquivalencyStep<TSubject> : IEquivalencyStep
+    public class AssertionRuleEquivalencyStep<TSubject>
+        : AssertionRuleEquivalencyStep<TSubject, TSubject, IAssertionContext<TSubject>>
     {
-        private readonly Expression<Func<IMemberInfo, bool>> predicate;
-        private readonly Action<IAssertionContext<TSubject>> assertion;
+        private readonly Expression<Func<IEquivalencyValidationContext, bool>> predicate;
+
+        public AssertionRuleEquivalencyStep(Expression<Func<IEquivalencyValidationContext, bool>> predicate,
+            Action<IAssertionContext<TSubject>> assertion)
+            : base(assertion)
+        {
+            this.predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
+        }
+
+        protected internal override bool AppliesTo(IEquivalencyValidationContext context) => predicate.Compile()(context);
+
+        protected internal override IAssertionContext<TSubject> GetAssertionContext(IEquivalencyValidationContext context) =>
+            AssertionContext<TSubject>.CreateFromEquivalencyValidationContext(context);
+
+        protected internal override Expression GetPredicateBody() => predicate.Body;
+    }
+
+    public class AssertionRuleEquivalencyStep<TSubject, TExpectation>
+        : AssertionRuleEquivalencyStep<TSubject, TExpectation, IAssertionContext<TSubject, TExpectation>>
+    {
+        private readonly Expression<Func<IEquivalencyValidationContext, bool>> predicate;
+
+        public AssertionRuleEquivalencyStep(Expression<Func<IEquivalencyValidationContext, bool>> predicate,
+            Action<IAssertionContext<TSubject, TExpectation>> assertion)
+            : base(assertion)
+        {
+            this.predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
+        }
+
+        protected internal override bool AppliesTo(IEquivalencyValidationContext context) => predicate.Compile()(context);
+
+        protected internal override IAssertionContext<TSubject, TExpectation> GetAssertionContext(IEquivalencyValidationContext context) =>
+            AssertionContext<TSubject, TExpectation>.CreateFromEquivalencyValidationContext(context);
+
+        protected internal override Expression GetPredicateBody() => predicate.Body;
+    }
+
+    public abstract class AssertionRuleEquivalencyStep<TSubject, TExpectation, TAssertionContext> : IEquivalencyStep
+        where TAssertionContext : IAssertionContext<TSubject, TExpectation>
+    {
+        private readonly Action<TAssertionContext> assertion;
         private readonly AutoConversionStep converter = new AutoConversionStep();
 
-        public AssertionRuleEquivalencyStep(
-            Expression<Func<IMemberInfo, bool>> predicate,
-            Action<IAssertionContext<TSubject>> assertion)
+        protected AssertionRuleEquivalencyStep(Action<TAssertionContext> assertion)
         {
-            this.predicate = predicate;
             this.assertion = assertion;
         }
 
@@ -59,12 +96,7 @@ namespace FluentAssertions.Equivalency
             return success;
         }
 
-        private bool AppliesTo(IEquivalencyValidationContext context)
-        {
-            Func<IMemberInfo, bool> predicate = this.predicate.Compile();
-
-            return predicate(context);
-        }
+        protected internal abstract bool AppliesTo(IEquivalencyValidationContext context);
 
         private bool ExecuteAssertion(IEquivalencyValidationContext context)
         {
@@ -80,18 +112,20 @@ namespace FluentAssertions.Equivalency
 
             bool expectationIsValidType =
                 AssertionScope.Current
-                    .ForCondition(expectationIsNull || context.Expectation.GetType().IsSameOrInherits(typeof(TSubject)))
+                    .ForCondition(expectationIsNull || context.Expectation.GetType().IsSameOrInherits(typeof(TExpectation)))
                     .FailWith("Expected " + context.SelectedMemberDescription + " from expectation to be a {0}{reason}, but found a {1}.",
                         typeof(TSubject), context.Expectation?.GetType());
 
             if (subjectIsValidType && expectationIsValidType)
             {
-                assertion(AssertionContext<TSubject>.CreateFromEquivalencyValidationContext(context));
+                assertion(GetAssertionContext(context));
                 return true;
             }
 
             return false;
         }
+
+        protected internal abstract TAssertionContext GetAssertionContext(IEquivalencyValidationContext context);
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -102,7 +136,9 @@ namespace FluentAssertions.Equivalency
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return "Invoke Action<" + typeof(TSubject).Name + "> when " + predicate.Body;
+            return "Invoke Action<" + typeof(TSubject).Name + "> when " + GetPredicateBody();
         }
+
+        protected internal abstract Expression GetPredicateBody();
     }
 }

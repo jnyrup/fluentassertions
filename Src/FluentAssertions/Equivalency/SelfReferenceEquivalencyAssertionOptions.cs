@@ -343,6 +343,18 @@ namespace FluentAssertions.Equivalency
         }
 
         /// <summary>
+        /// Overrides the comparison of subject and expectation to use provided <paramref name="action"/>
+        /// when the predicate is met.
+        /// </summary>
+        /// <param name="action">
+        /// The assertion to execute when the predicate is met.
+        /// </param>
+        public Restriction<TSubjectProperty, TExpectationProperty> Using<TSubjectProperty, TExpectationProperty>(Action<IAssertionContext<TSubjectProperty, TExpectationProperty>> action)
+        {
+            return new Restriction<TSubjectProperty, TExpectationProperty>((TSelf)this, action);
+        }
+
+        /// <summary>
         /// Causes the structural equality check to include nested collections and complex types.
         /// </summary>
         public TSelf IncludingNestedObjects()
@@ -646,8 +658,8 @@ namespace FluentAssertions.Equivalency
         /// </summary>
         public class Restriction<TMember>
         {
-            private readonly Action<IAssertionContext<TMember>> action;
             private readonly TSelf options;
+            private readonly Action<IAssertionContext<TMember>> action;
 
             public Restriction(TSelf options, Action<IAssertionContext<TMember>> action)
             {
@@ -656,13 +668,61 @@ namespace FluentAssertions.Equivalency
             }
 
             /// <summary>
+            /// Allows overriding the way structural equality is applied to particular members.
+            /// </summary>
+            /// <param name="predicate">
+            /// A predicate based on the <see cref="IEquivalencyValidationContext" /> that is used to identify the property for which
+            /// the
+            /// override applies.
+            /// </param>
+            public TSelf When(Expression<Func<IEquivalencyValidationContext, bool>> predicate)
+            {
+                options.userEquivalencySteps.Insert(0,
+                    new AssertionRuleEquivalencyStep<TMember>(predicate, action));
+
+                return options;
+            }
+
+            /// <summary>
             /// Allows overriding the way structural equality is applied to (nested) objects of type
             /// <typeparamref name="TMemberType" />
             /// </summary>
-            public TSelf WhenTypeIs<TMemberType>()
+            private TSelf WhenTypeIs<TMemberType>()
             {
-                When(info => info.RuntimeType.IsSameOrInherits(typeof(TMemberType)));
+                When(ctx => NewMethod<TMemberType>(ctx));
                 return options;
+            }
+
+            private static bool NewMethod<TMemberType>(IEquivalencyValidationContext ctx)
+            {
+                Type wrappedType = Nullable.GetUnderlyingType(typeof(TMemberType));
+
+                return
+                    (wrappedType is object && ctx.Expectation is object && ctx.Subject is object && ctx.RuntimeType == wrappedType)
+                    ||
+                    (wrappedType is null && ctx.Expectation is object && ctx.Subject is object && ctx.RuntimeType == typeof(TMemberType))
+                    ||
+                    (wrappedType is object && ctx.Expectation is null && ctx.RuntimeType == typeof(TMemberType))
+                    ||
+                    (wrappedType is null && ctx.RuntimeType.IsSameOrInherits(typeof(TMemberType)))
+                    ;
+            }
+
+            public static implicit operator TSelf(Restriction<TMember> d) => d.WhenTypeIs<TMember>();
+        }
+
+        /// <summary>
+        /// Defines additional overrides when used with <see cref="SelfReferenceEquivalencyAssertionOptions{T}" />
+        /// </summary>
+        public class Restriction<TSubjectMember, TExpectationMember>
+        {
+            private readonly TSelf options;
+            private readonly Action<IAssertionContext<TSubjectMember, TExpectationMember>> action;
+
+            public Restriction(TSelf options, Action<IAssertionContext<TSubjectMember, TExpectationMember>> action)
+            {
+                this.options = options;
+                this.action = action;
             }
 
             /// <summary>
@@ -673,13 +733,37 @@ namespace FluentAssertions.Equivalency
             /// the
             /// override applies.
             /// </param>
-            public TSelf When(Expression<Func<IMemberInfo, bool>> predicate)
+            public TSelf When(Expression<Func<IEquivalencyValidationContext, bool>> predicate)
             {
                 options.userEquivalencySteps.Insert(0,
-                    new AssertionRuleEquivalencyStep<TMember>(predicate, action));
+                    new AssertionRuleEquivalencyStep<TSubjectMember, TExpectationMember>(predicate, action));
 
                 return options;
             }
+
+            /// <summary>
+            /// Allows overriding the way structural equality is applied to (nested) objects of type
+            /// <typeparamref name="TSubjectMemberType" />
+            /// </summary>
+            private TSelf WhenTypesAre<TSubjectMemberType, TExpectationMemberType>()
+            {
+                When(ctx =>
+                    NewMethod<TSubjectMemberType, TExpectationMemberType>(ctx)
+                    );
+
+                return options;
+            }
+
+            private static bool NewMethod<TSubjectMemberType, TExpectationMemberType>(IEquivalencyValidationContext ctx)
+            {
+                return ctx.RuntimeType.IsSameOrInherits(typeof(TExpectationMemberType))
+                    && (
+                    (ctx.Subject is null && typeof(TSubjectMemberType).IsNullable())
+                    || (ctx.Subject is object && ctx.Subject.GetType().IsSameOrInherits(typeof(TSubjectMemberType))));
+            }
+
+            public static implicit operator TSelf(Restriction<TSubjectMember, TExpectationMember> d) =>
+                d.WhenTypesAre<TSubjectMember, TExpectationMember>();
         }
 
         #region Non-fluent API

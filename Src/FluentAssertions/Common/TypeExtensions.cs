@@ -601,5 +601,7 @@ namespace FluentAssertions.Common
             bool IsParentNamespace() => IsNamespacePrefix() && type.Namespace[@namespace.Length] == '.';
             bool IsNamespacePrefix() => type.Namespace?.StartsWith(@namespace, StringComparison.Ordinal) == true;
         }
+
+        internal static bool IsNullable(this Type type) => !type.IsValueType || Nullable.GetUnderlyingType(type) is object;
     }
 }

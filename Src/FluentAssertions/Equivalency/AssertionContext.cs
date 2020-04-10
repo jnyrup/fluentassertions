@@ -1,8 +1,29 @@
 namespace FluentAssertions.Equivalency
 {
-    internal class AssertionContext<TSubject> : IAssertionContext<TSubject>
+    internal class AssertionContext<TSubject> : AssertionContext<TSubject, TSubject>, IAssertionContext<TSubject>
     {
-        public AssertionContext(SelectedMemberInfo subjectProperty, TSubject subject, TSubject expectation, string because,
+        public AssertionContext(SelectedMemberInfo subjectProperty, TSubject subject, TSubject expectation, string because, object[] becauseArgs)
+            : base(subjectProperty, subject, expectation, because, becauseArgs)
+        {
+        }
+
+        new internal static IAssertionContext<TSubject> CreateFromEquivalencyValidationContext(IEquivalencyValidationContext context)
+        {
+            TSubject expectation = (context.Expectation != null) ? (TSubject)context.Expectation : default;
+
+            var assertionContext = new AssertionContext<TSubject>(
+                context.SelectedMemberInfo,
+                (TSubject)context.Subject,
+                expectation,
+                context.Because,
+                context.BecauseArgs);
+            return assertionContext;
+        }
+    }
+
+    internal class AssertionContext<TSubject, TExpectation> : IAssertionContext<TSubject, TExpectation>
+    {
+        public AssertionContext(SelectedMemberInfo subjectProperty, TSubject subject, TExpectation expectation, string because,
                                 object[] becauseArgs)
         {
             SubjectProperty = subjectProperty;
@@ -16,17 +37,17 @@ namespace FluentAssertions.Equivalency
 
         public TSubject Subject { get; }
 
-        public TSubject Expectation { get; }
+        public TExpectation Expectation { get; }
 
         public string Because { get; set; }
 
         public object[] BecauseArgs { get; set; }
 
-        internal static AssertionContext<TSubject> CreateFromEquivalencyValidationContext(IEquivalencyValidationContext context)
+        internal static IAssertionContext<TSubject, TExpectation> CreateFromEquivalencyValidationContext(IEquivalencyValidationContext context)
         {
-            TSubject expectation = (context.Expectation != null) ? (TSubject)context.Expectation : default;
+            TExpectation expectation = (context.Expectation != null) ? (TExpectation)context.Expectation : default;
 
-            var assertionContext = new AssertionContext<TSubject>(
+            var assertionContext = new AssertionContext<TSubject, TExpectation>(
                 context.SelectedMemberInfo,
                 (TSubject)context.Subject,
                 expectation,
