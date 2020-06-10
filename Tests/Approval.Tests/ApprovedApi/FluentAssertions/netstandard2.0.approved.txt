@@ -86,8 +86,9 @@ namespace FluentAssertions
         public static FluentAssertions.Collections.GenericCollectionAssertions<T> Should<T>(this System.Collections.Generic.IEnumerable<T> actualValue) { }
         public static FluentAssertions.Specialized.GenericAsyncFunctionAssertions<T> Should<T>(this System.Func<System.Threading.Tasks.Task<T>> action) { }
         public static FluentAssertions.Specialized.FunctionAssertions<T> Should<T>(this System.Func<T> func) { }
-        public static FluentAssertions.Numeric.ComparableTypeAssertions<T> Should<T>(this System.IComparable<T> comparableValue) { }
         public static FluentAssertions.Specialized.TaskCompletionSourceAssertions<T> Should<T>(this System.Threading.Tasks.TaskCompletionSource<T> tcs) { }
+        public static FluentAssertions.Numeric.ComparableTypeAssertions<T> Should<T>(this T comparableValue)
+            where T : System.IComparable<T> { }
         public static FluentAssertions.Collections.GenericDictionaryAssertions<System.Collections.Generic.IDictionary<TKey, TValue>, TKey, TValue> Should<TKey, TValue>(this System.Collections.Generic.IDictionary<TKey, TValue> actualValue) { }
         public static FluentAssertions.Collections.GenericDictionaryAssertions<System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, TKey, TValue> Should<TKey, TValue>(this System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>> actualValue) { }
         public static FluentAssertions.Collections.GenericDictionaryAssertions<TCollection, TKey, TValue> Should<TCollection, TKey, TValue>(this TCollection actualValue)
@@ -1289,13 +1290,15 @@ namespace FluentAssertions.Formatting
 namespace FluentAssertions.Numeric
 {
     public class ComparableTypeAssertions<T> : FluentAssertions.Numeric.ComparableTypeAssertions<T, FluentAssertions.Numeric.ComparableTypeAssertions<T>>
+        where T : System.IComparable<T>
     {
-        public ComparableTypeAssertions(System.IComparable<T> value) { }
+        public ComparableTypeAssertions(T value) { }
     }
-    public class ComparableTypeAssertions<T, TAssertions> : FluentAssertions.Primitives.ReferenceTypeAssertions<System.IComparable<T>, TAssertions>
+    public class ComparableTypeAssertions<T, TAssertions> : FluentAssertions.Primitives.ReferenceTypeAssertions<T, TAssertions>
+        where T : System.IComparable<T>
         where TAssertions : FluentAssertions.Numeric.ComparableTypeAssertions<T, TAssertions>
     {
-        public ComparableTypeAssertions(System.IComparable<T> value) { }
+        public ComparableTypeAssertions(T value) { }
         protected override string Identifier { get; }
         public FluentAssertions.AndConstraint<TAssertions> Be(T expected, string because = "", params object[] becauseArgs) { }
         public FluentAssertions.AndConstraint<TAssertions> BeEquivalentTo<TExpectation>(TExpectation expectation, string because = "", params object[] becauseArgs) { }

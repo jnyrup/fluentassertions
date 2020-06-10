@@ -363,7 +363,8 @@ namespace FluentAssertions
         /// current <see cref="IComparable{T}"/>.
         /// </summary>
         [Pure]
-        public static ComparableTypeAssertions<T> Should<T>(this IComparable<T> comparableValue)
+        public static ComparableTypeAssertions<T> Should<T>(this T comparableValue)
+            where T : IComparable<T>
         {
             return new ComparableTypeAssertions<T>(comparableValue);
         }

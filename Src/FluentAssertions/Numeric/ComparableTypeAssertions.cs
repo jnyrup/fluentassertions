@@ -12,8 +12,9 @@ namespace FluentAssertions.Numeric
     /// </summary>
     [DebuggerNonUserCode]
     public class ComparableTypeAssertions<T> : ComparableTypeAssertions<T, ComparableTypeAssertions<T>>
+        where T : IComparable<T>
     {
-        public ComparableTypeAssertions(IComparable<T> value)
+        public ComparableTypeAssertions(T value)
             : base(value)
         {
         }
@@ -23,12 +24,13 @@ namespace FluentAssertions.Numeric
     /// Contains a number of methods to assert that an <see cref="IComparable{T}"/> is in the expected state.
     /// </summary>
     [DebuggerNonUserCode]
-    public class ComparableTypeAssertions<T, TAssertions> : ReferenceTypeAssertions<IComparable<T>, TAssertions>
+    public class ComparableTypeAssertions<T, TAssertions> : ReferenceTypeAssertions<T, TAssertions>
+        where T : IComparable<T>
         where TAssertions : ComparableTypeAssertions<T, TAssertions>
     {
         private const int Equal = 0;
 
-        public ComparableTypeAssertions(IComparable<T> value)
+        public ComparableTypeAssertions(T value)
             : base(value)
         {
         }
