@@ -234,6 +234,26 @@ namespace FluentAssertions.Specs
         }
 
         [Fact]
+        public void When_the_object_at_maximum_recursion_depth_is_null_it_should_print_null()
+        {
+            // Arrange
+            var head = new LinkedNode();
+            foreach (int i in Enumerable.Range(0, Formatter.MaxDepth))
+            {
+                head = new LinkedNode
+                {
+                    Next = head
+                };
+            }
+
+            // Act
+            string result = Formatter.ToString(head);
+
+            // Assert
+            result.Should().NotContainEquivalentOf("maximum recursion depth", "it can print <null> instead");
+        }
+
+        [Fact]
         public void When_formatting_a_byte_array_it_should_limit_the_items()
         {
             // Arrange
@@ -794,5 +814,10 @@ namespace FluentAssertions.Specs
         public static Node Default { get; } = new Node();
 
         public List<Node> Children { get; set; }
+    }
+
+    internal class LinkedNode
+    {
+        public LinkedNode Next { get; set; }
     }
 }

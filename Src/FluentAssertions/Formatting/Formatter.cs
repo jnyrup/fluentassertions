@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions.Common;
@@ -100,6 +101,27 @@ namespace FluentAssertions.Formatting
             }
         }
 
+        private static ConcurrentDictionary<Type, int> MaxDepths { get; } = new ConcurrentDictionary<Type, int>();
+
+        /// <summary>
+        /// The number of levels to recurse, when  items to include when formatting this object.
+        /// </summary>
+        /// <remarks>The default value is 5.</remarks>
+        public static int MaxDepth { get; set; } = 5;
+
+        /// <summary>
+        /// The number of items to include when formatting this object.
+        /// </summary>
+        /// <typeparam name="T">The type  </typeparam>
+        /// <param name="maxDepth"></param>
+        public static void SetMaxDepth<T>(int maxDepth) =>
+            MaxDepths[typeof(T)] = maxDepth;
+
+        private static int GetMaxDepth(object obj) =>
+            MaxDepths.TryGetValue(obj.GetType(), out int maxDepth)
+            ? maxDepth
+            : MaxDepth;
+
         private static string FormatChild(string path, object childValue, bool useLineBreaks, ObjectGraph graph)
         {
             try
@@ -110,7 +132,7 @@ namespace FluentAssertions.Formatting
                 {
                     return $"{{Cyclic reference to type {childValue.GetType()} detected}}";
                 }
-                else if (graph.Depth > 5)
+                else if (childValue is object && graph.Depth > GetMaxDepth(childValue))
                 {
                     return "{Maximum recursion depth was reached…}";
                 }
