@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions.Extensions;
+using FluentAssertions.Primitives;
 using Xunit;
 using Xunit.Sdk;
 
@@ -16,6 +17,89 @@ namespace FluentAssertions.Specs
 
             // Act / Assert
             subject.Should().BeSameAs(referenceToSubject);
+        }
+
+        [Fact]
+        public void When_valuetype()
+        {
+            // Arrange
+            object subject = null;
+            ValueType expectation = default;
+
+            // Act / Assert
+            subject.Should().BeSameAs(expectation);
+        }
+
+        private struct ValueType
+        {
+        }
+
+        [Fact]
+        public void When_different_types()
+        {
+            // Arrange
+            string subject = null;
+            Exception expectation = null;
+
+            // Act / Assert
+            subject.Should().BeSameAs(expectation);
+        }
+
+        [Fact]
+        public void When_parent_parent()
+        {
+            // Arrange
+
+            // Act / Assert
+#pragma warning disable IDE0004 // Remove Unnecessary Cast
+            ((Parent)null).Should().BeSameAs((Parent)null);
+            ((Parent)null).Should().BeSameAs((Child)null);
+            ((Parent)null).Should().BeSameAs(1);
+            ((Child)null).Should().BeSameAs((Parent)null);
+            ((Child)null).Should().BeSameAs((Child)null);
+            ((Child)null).Should().BeSameAs(1);
+
+            new ParentAssertions((Parent)null).BeSameAs((Parent)null);
+            new ParentAssertions((Parent)null).BeSameAs((Child)null);
+            new ParentAssertions((Child)null).BeSameAs((Parent)null);
+            new ParentAssertions((Child)null).BeSameAs((Child)null);
+            new ParentAssertions((Child)null).BeSameAs(1);
+
+            //new ChildAssertions((Parent)null).Should().BeSameAs((Parent)null);
+            //new ChildAssertions((Parent)null).Should().BeSameAs((Child)null);
+            new ChildAssertions((Child)null).BeSameAs((Parent)null);
+            new ChildAssertions((Child)null).BeSameAs((Child)null);
+            new ChildAssertions((Child)null).BeSameAs(1);
+#pragma warning restore IDE0004 // Remove Unnecessary Cast
+        }
+
+        private class Parent
+        {
+            public int MyProperty { get; set; }
+        }
+
+        private class Child : Parent
+        {
+        }
+
+        private class ParentAssertions : ReferenceTypeAssertions<Parent, ParentAssertions>
+        {
+            public ParentAssertions(Parent subject)
+                : base(subject)
+            {
+            }
+
+            protected override string Identifier => nameof(Parent);
+        }
+
+        private class ChildAssertions : ReferenceTypeAssertions<Child, ChildAssertions>
+        {
+            public ChildAssertions(Child subject)
+                : base(subject)
+            {
+            }
+
+            protected override string Identifier => nameof(Child);
         }
 
         [Fact]

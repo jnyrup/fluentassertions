@@ -81,9 +81,9 @@ namespace FluentAssertions.Primitives
         {
             Execute.Assertion
                 .UsingLineBreaks
-                .ForCondition(ReferenceEquals(Subject, expected))
                 .BecauseOf(because, becauseArgs)
                 .WithDefaultIdentifier(Identifier)
+                .ForCondition(ReferenceEquals(Subject, expected))
                 .FailWith("Expected {context} to refer to {0}{reason}, but found {1}.", expected, Subject);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
@@ -100,13 +100,17 @@ namespace FluentAssertions.Primitives
         /// <param name="becauseArgs">
         /// Zero or more values to use for filling in any <see cref="string.Format(string,object[])" /> compatible placeholders.
         /// </param>
-        public AndConstraint<TAssertions> NotBeSameAs(TSubject unexpected, string because = "", params object[] becauseArgs)
+        public AndConstraint<TAssertions> NotBeSameAs<TExpectation>(TExpectation unexpected, string because = "", params object[] becauseArgs)
+            where TExpectation : class
         {
             Execute.Assertion
                 .UsingLineBreaks
-                .ForCondition(!ReferenceEquals(Subject, unexpected))
                 .BecauseOf(because, becauseArgs)
                 .WithDefaultIdentifier(Identifier)
+                .ForCondition(typeof(TSubject).IsAssignableFrom(typeof(TExpectation)))
+                .FailWith("Did not expect {context} to refer to {0}{reason}, but the types {1} and {2} are incompatible", unexpected, typeof(TSubject), typeof(TExpectation))
+                .Then
+                .ForCondition(!ReferenceEquals(Subject, unexpected))
                 .FailWith("Did not expect {context} to refer to {0}{reason}.", unexpected);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
