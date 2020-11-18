@@ -51,7 +51,7 @@ namespace FluentAssertions.Primitives
                 .ForCondition(Subject.HasValue)
                 .FailWith("but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.CompareTo(TimeSpan.Zero) > 0)
+                .ForCondition(Subject > TimeSpan.Zero)
                 .FailWith("but found {0}.", Subject.Value)
                 .Then
                 .ClearExpectation();
@@ -77,7 +77,7 @@ namespace FluentAssertions.Primitives
                 .ForCondition(Subject.HasValue)
                 .FailWith("but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.CompareTo(TimeSpan.Zero) < 0)
+                .ForCondition(Subject < TimeSpan.Zero)
                 .FailWith("but found {0}.", Subject.Value)
                 .Then
                 .ClearExpectation();
@@ -105,7 +105,7 @@ namespace FluentAssertions.Primitives
                 .ForCondition(Subject.HasValue)
                 .FailWith("but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.CompareTo(expected) == 0)
+                .ForCondition(Subject == expected)
                 .FailWith("but found {0}.", Subject.Value)
                 .Then
                 .ClearExpectation();
@@ -128,7 +128,7 @@ namespace FluentAssertions.Primitives
         public AndConstraint<TAssertions> NotBe(TimeSpan unexpected, string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(!Subject.HasValue || Subject.Value.CompareTo(unexpected) != 0)
+                .ForCondition(Subject != unexpected)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Did not expect {0}{reason}.", unexpected);
 
@@ -155,7 +155,7 @@ namespace FluentAssertions.Primitives
                 .ForCondition(Subject.HasValue)
                 .FailWith("but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.CompareTo(expected) < 0)
+                .ForCondition(Subject < expected)
                 .FailWith("but found {0}.", Subject.Value)
                 .Then
                 .ClearExpectation();
@@ -183,7 +183,7 @@ namespace FluentAssertions.Primitives
                 .ForCondition(Subject.HasValue)
                 .FailWith("but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.CompareTo(expected) <= 0)
+                .ForCondition(Subject <= expected)
                 .FailWith("but found {0}.", Subject.Value)
                 .Then
                 .ClearExpectation();
@@ -211,7 +211,7 @@ namespace FluentAssertions.Primitives
                 .ForCondition(Subject.HasValue)
                 .FailWith("but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.CompareTo(expected) > 0)
+                .ForCondition(Subject > expected)
                 .FailWith("but found {0}.", Subject.Value)
                 .Then
                 .ClearExpectation();
@@ -240,7 +240,7 @@ namespace FluentAssertions.Primitives
                 .ForCondition(Subject.HasValue)
                 .FailWith("but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.CompareTo(expected) >= 0)
+                .ForCondition(Subject >= expected)
                 .FailWith("but found {0}.", Subject.Value)
                 .Then
                 .ClearExpectation();
@@ -281,11 +281,11 @@ namespace FluentAssertions.Primitives
             TimeSpan maximumValue = nearbyTime + precision;
 
             Execute.Assertion
-                .ForCondition(Subject.HasValue && (Subject.Value >= minimumValue) && (Subject.Value <= maximumValue))
+                .ForCondition((Subject >= minimumValue) && (Subject.Value <= maximumValue))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:time} to be within {0} from {1}{reason}, but found {2}.",
                     precision,
-                    nearbyTime, Subject ?? default(TimeSpan?));
+                    nearbyTime, Subject);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
         }
@@ -323,11 +323,11 @@ namespace FluentAssertions.Primitives
             TimeSpan maximumValue = distantTime + precision;
 
             Execute.Assertion
-                .ForCondition(Subject.HasValue && !((Subject.Value >= minimumValue) && (Subject.Value <= maximumValue)))
+                .ForCondition((Subject < minimumValue) || (Subject > maximumValue))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:time} to not be within {0} from {1}{reason}, but found {2}.",
                     precision,
-                    distantTime, Subject ?? default(TimeSpan?));
+                    distantTime, Subject);
 
             return new AndConstraint<TAssertions>((TAssertions)this);
         }

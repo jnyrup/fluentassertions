@@ -57,7 +57,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> Be(T expected, string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(SubjectInternal.HasValue && SubjectInternal.Value.CompareTo(expected) == 0)
+                .ForCondition(Nullable.Compare(SubjectInternal, expected) == 0)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:value} to be {0}{reason}, but found {1}.", expected, SubjectInternal);
 
@@ -78,9 +78,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> Be(T? expected, string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(
-                    (!SubjectInternal.HasValue && !expected.HasValue)
-                    || (SubjectInternal.HasValue && expected.HasValue && SubjectInternal.Value.CompareTo(expected.Value) == 0))
+                .ForCondition(Nullable.Compare(SubjectInternal, expected) == 0)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:value} to be {0}{reason}, but found {1}.", expected, SubjectInternal);
 
@@ -101,7 +99,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> NotBe(T unexpected, string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(!SubjectInternal.HasValue || SubjectInternal.Value.CompareTo(unexpected) != 0)
+                .ForCondition(Nullable.Compare(SubjectInternal, unexpected) != 0)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Did not expect {context:value} to be {0}{reason}.", unexpected);
 
@@ -122,9 +120,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> NotBe(T? unexpected, string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(
-                    (!SubjectInternal.HasValue == unexpected.HasValue)
-                    || (SubjectInternal.HasValue && unexpected.HasValue && SubjectInternal.Value.CompareTo(unexpected.Value) != 0))
+                .ForCondition(Nullable.Compare(SubjectInternal, unexpected) != 0)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Did not expect {context:value} to be {0}{reason}.", unexpected);
 
@@ -144,7 +140,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> BePositive(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(SubjectInternal.HasValue && SubjectInternal.Value.CompareTo(default(T)) > 0)
+                .ForCondition(SubjectInternal.HasValue && SubjectInternal.Value.CompareTo(default) > 0)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:value} to be positive{reason}, but found {0}.", SubjectInternal);
 
@@ -164,7 +160,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> BeNegative(string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(SubjectInternal.HasValue && SubjectInternal.Value.CompareTo(default(T)) < 0)
+                .ForCondition(SubjectInternal.HasValue && SubjectInternal.Value.CompareTo(default) < 0)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:value} to be negative{reason}, but found {0}.", SubjectInternal);
 
@@ -348,7 +344,7 @@ namespace FluentAssertions.Numeric
             params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(SubjectInternal.HasValue && validValues.Contains((T)SubjectInternal))
+                .ForCondition(SubjectInternal.HasValue && validValues.Contains(SubjectInternal.Value))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:value} to be one of {0}{reason}, but found {1}.", validValues, SubjectInternal);
 
