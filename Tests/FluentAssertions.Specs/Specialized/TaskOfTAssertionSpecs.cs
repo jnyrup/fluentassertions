@@ -42,9 +42,7 @@ namespace FluentAssertions.Specs.Specialized
             // Act
             Func<Task> action = async () =>
             {
-                Func<Task<int>> func = () => taskFactory.Task;
-
-                (await func.Should(timer).CompleteWithinAsync(100.Milliseconds()))
+                (await taskFactory.Awaiting(e => e.Task).Should(timer).CompleteWithinAsync(100.Milliseconds()))
                     .Which.Should().Be(42);
             };
 
@@ -65,9 +63,7 @@ namespace FluentAssertions.Specs.Specialized
             // Act
             Func<Task> action = async () =>
             {
-                Func<Task<int>> funcSubject = () => taskFactory.Task;
-
-                (await funcSubject.Should(timer).CompleteWithinAsync(100.Milliseconds()))
+                (await taskFactory.Awaiting(e => e.Task).Should(timer).CompleteWithinAsync(100.Milliseconds()))
                     .Which.Should().Be(42);
             };
 
@@ -88,12 +84,8 @@ namespace FluentAssertions.Specs.Specialized
             var taskFactory = new TaskCompletionSource<int>();
 
             // Act
-            Func<Task> action = async () =>
-            {
-                Func<Task<int>> funcSubject = () => taskFactory.Task;
-
-                await funcSubject.Should(timer).CompleteWithinAsync(100.Milliseconds()).WithResult(42);
-            };
+            Func<Task> action = () => taskFactory.Awaiting(e => e.Task).Should(timer).CompleteWithinAsync(100.Milliseconds())
+                .WithResult(42);
 
             taskFactory.SetResult(99);
             timer.Complete();
@@ -110,12 +102,7 @@ namespace FluentAssertions.Specs.Specialized
             var taskFactory = new TaskCompletionSource<int>();
 
             // Act
-            Func<Task> action = () =>
-            {
-                Func<Task<int>> func = () => taskFactory.Task;
-
-                return func.Should(timer).CompleteWithinAsync(100.Milliseconds());
-            };
+            Func<Task> action = () => taskFactory.Awaiting(e => e.Task).Should(timer).CompleteWithinAsync(100.Milliseconds());
 
             timer.Complete();
 
@@ -152,9 +139,7 @@ namespace FluentAssertions.Specs.Specialized
             // Act
             Func<Task> action = async () =>
             {
-                Func<Task<int>> func = () => taskFactory.Task;
-
-                (await func.Should(timer).NotThrowAsync())
+                (await taskFactory.Awaiting(e => e.Task).Should(timer).NotThrowAsync())
                     .Which.Should().Be(42);
             };
 
@@ -175,9 +160,7 @@ namespace FluentAssertions.Specs.Specialized
             // Act
             Func<Task> action = async () =>
             {
-                Func<Task<int>> func = () => taskFactory.Task;
-
-                (await func.Should(timer).NotThrowAsync())
+                (await taskFactory.Awaiting(e => e.Task).Should(timer).NotThrowAsync())
                     .Which.Should().Be(42);
             };
 
