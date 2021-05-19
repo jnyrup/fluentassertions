@@ -15,8 +15,8 @@ namespace FluentAssertions.Specs.Specialized
         {
             public EqualityComparer(Func<T, T, bool> cmp, Func<T, int> hasher)
             {
-                this.Cmp = cmp;
-                this.Hasher = hasher;
+                Cmp = cmp;
+                Hasher = hasher;
             }
 
             public bool Equals(T x, T y)
@@ -104,13 +104,21 @@ namespace FluentAssertions.Specs.Specialized
                 try
                 {
                     using var _ = new AssertionScope();
-                    object[] parameters = subParams.ToArray();
-                    subAssertion.Invoke(assertion, parameters);
-                }
-                catch (TargetInvocationException tie)
-                    when (tie.InnerException is NullReferenceException innerNRE)
-                {
-                    exceptions.Add(innerNRE);
+                    try
+                    {
+                        {
+                            object[] parameters = subParams.ToArray();
+                            subAssertion.Invoke(assertion, parameters);
+                        }
+                    }
+                    catch (TargetInvocationException tie)
+                        when (tie.InnerException is NullReferenceException innerNRE)
+                    {
+                        exceptions.Add(innerNRE);
+                    }
+                    catch
+                    {
+                    }
                 }
                 catch
                 {
