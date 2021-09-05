@@ -1,4 +1,4 @@
-[assembly: System.Reflection.AssemblyMetadata("RepositoryUrl", "https://github.com/fluentassertions/fluentassertions")]
+﻿[assembly: System.Reflection.AssemblyMetadata("RepositoryUrl", "https://github.com/fluentassertions/fluentassertions")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo(@"Benchmarks, PublicKey=00240000048000009400000006020000002400005253413100040000010001002d25ff515c85b13ba08f61d466cff5d80a7f28ba197bbf8796085213e7a3406f970d2a4874932fed35db546e89af2da88c194bf1b7f7ac70de7988c78406f7629c547283061282a825616eb7eb48a9514a7570942936020a9bb37dca9ff60b778309900851575614491c6d25018fadb75828f4c7a17bf2d7dc86e7b6eafc5d8f")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo(@"FluentAssertions.Specs, PublicKey=00240000048000009400000006020000002400005253413100040000010001002d25ff515c85b13ba08f61d466cff5d80a7f28ba197bbf8796085213e7a3406f970d2a4874932fed35db546e89af2da88c194bf1b7f7ac70de7988c78406f7629c547283061282a825616eb7eb48a9514a7570942936020a9bb37dca9ff60b778309900851575614491c6d25018fadb75828f4c7a17bf2d7dc86e7b6eafc5d8f")]
 [assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.7", FrameworkDisplayName=".NET Framework 4.7")]
@@ -128,7 +128,6 @@ namespace FluentAssertions
         public static FluentAssertions.Collections.GenericCollectionAssertions<T> Should<T>(this System.Collections.Generic.IEnumerable<T> actualValue) { }
         public static FluentAssertions.Specialized.GenericAsyncFunctionAssertions<T> Should<T>(this System.Func<System.Threading.Tasks.Task<T>> action) { }
         public static FluentAssertions.Specialized.FunctionAssertions<T> Should<T>(this System.Func<T> func) { }
-        public static FluentAssertions.Numeric.ComparableTypeAssertions<T> Should<T>(this System.IComparable<T> comparableValue) { }
         public static FluentAssertions.Specialized.TaskCompletionSourceAssertions<T> Should<T>(this System.Threading.Tasks.TaskCompletionSource<T> tcs) { }
         [System.Obsolete("You are asserting the \'AndConstraint\' itself. Remove the \'Should()\' method direct" +
             "ly following \'And\'", true)]
@@ -174,6 +173,11 @@ namespace FluentAssertions
     {
         public static System.Action<string> Logger { get; set; }
         public static string DetermineCallerIdentity() { }
+    }
+    public static class ComparableAssertionsExtensions
+    {
+        public static FluentAssertions.Numeric.ComparableTypeAssertions<T> Should<T>(this T comparableValue)
+            where T : System.IComparable<T> { }
     }
     [System.AttributeUsage(System.AttributeTargets.Method | System.AttributeTargets.All, AllowMultiple=false)]
     public class CustomAssertionAttribute : System.Attribute
@@ -1645,13 +1649,15 @@ namespace FluentAssertions.Formatting
 namespace FluentAssertions.Numeric
 {
     public class ComparableTypeAssertions<T> : FluentAssertions.Numeric.ComparableTypeAssertions<T, FluentAssertions.Numeric.ComparableTypeAssertions<T>>
+        where T : System.IComparable<T>
     {
-        public ComparableTypeAssertions(System.IComparable<T> value) { }
+        public ComparableTypeAssertions(T value) { }
     }
-    public class ComparableTypeAssertions<T, TAssertions> : FluentAssertions.Primitives.ReferenceTypeAssertions<System.IComparable<T>, TAssertions>
+    public class ComparableTypeAssertions<T, TAssertions> : FluentAssertions.Primitives.ReferenceTypeAssertions<T, TAssertions>
+        where T : System.IComparable<T>
         where TAssertions : FluentAssertions.Numeric.ComparableTypeAssertions<T, TAssertions>
     {
-        public ComparableTypeAssertions(System.IComparable<T> value) { }
+        public ComparableTypeAssertions(T value) { }
         protected override string Identifier { get; }
         public FluentAssertions.AndConstraint<TAssertions> Be(T expected, string because = "", params object[] becauseArgs) { }
         public FluentAssertions.AndConstraint<TAssertions> BeEquivalentTo<TExpectation>(TExpectation expectation, string because = "", params object[] becauseArgs) { }

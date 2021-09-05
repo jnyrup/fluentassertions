@@ -424,16 +424,6 @@ namespace FluentAssertions
         }
 
         /// <summary>
-        /// Returns an <see cref="ComparableTypeAssertions{T}"/> object that can be used to assert the
-        /// current <see cref="IComparable{T}"/>.
-        /// </summary>
-        [Pure]
-        public static ComparableTypeAssertions<T> Should<T>(this IComparable<T> comparableValue)
-        {
-            return new ComparableTypeAssertions<T>(comparableValue);
-        }
-
-        /// <summary>
         /// Returns an <see cref="NumericAssertions{T}"/> object that can be used to assert the
         /// current <see cref="int"/>.
         /// </summary>

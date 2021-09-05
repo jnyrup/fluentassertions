@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using FluentAssertions.Common;
 using FluentAssertions.Equivalency;
@@ -12,8 +13,9 @@ namespace FluentAssertions.Numeric
     /// </summary>
     [DebuggerNonUserCode]
     public class ComparableTypeAssertions<T> : ComparableTypeAssertions<T, ComparableTypeAssertions<T>>
+        where T : IComparable<T>
     {
-        public ComparableTypeAssertions(IComparable<T> value)
+        public ComparableTypeAssertions(T value)
             : base(value)
         {
         }
@@ -23,12 +25,13 @@ namespace FluentAssertions.Numeric
     /// Contains a number of methods to assert that an <see cref="IComparable{T}"/> is in the expected state.
     /// </summary>
     [DebuggerNonUserCode]
-    public class ComparableTypeAssertions<T, TAssertions> : ReferenceTypeAssertions<IComparable<T>, TAssertions>
+    public class ComparableTypeAssertions<T, TAssertions> : ReferenceTypeAssertions<T, TAssertions>
+        where T : IComparable<T>
         where TAssertions : ComparableTypeAssertions<T, TAssertions>
     {
         private const int Equal = 0;
 
-        public ComparableTypeAssertions(IComparable<T> value)
+        public ComparableTypeAssertions(T value)
             : base(value)
         {
         }
@@ -49,7 +52,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> Be(T expected, string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(Equals(Subject, expected))
+                .ForCondition(EqualityComparer<T>.Default.Equals(Subject, expected))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {context:object} to be equal to {0}{reason}, but found {1}.", expected, Subject);
 
@@ -142,7 +145,7 @@ namespace FluentAssertions.Numeric
         public AndConstraint<TAssertions> NotBe(T unexpected, string because = "", params object[] becauseArgs)
         {
             Execute.Assertion
-                .ForCondition(!Equals(Subject, unexpected))
+                .ForCondition(!EqualityComparer<T>.Default.Equals(Subject, unexpected))
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Did not expect {context:object} to be equal to {0}{reason}.", unexpected);
 
