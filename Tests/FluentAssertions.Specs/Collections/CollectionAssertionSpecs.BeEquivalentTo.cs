@@ -180,7 +180,7 @@ namespace FluentAssertions.Specs.Collections
             var collection2 = Enumerable.Repeat(1, 10000);
 
             // Act
-            Action act = () => collection1.Should().NotBeEquivalentTo(collection2, opt => opt.WithStrictOrdering());
+            Action act = () => collection1.Should().NotBeEquivalentTo(collection2);
 
             // Assert
             act.Should().Throw<XunitException>();
