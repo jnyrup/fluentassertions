@@ -10,12 +10,12 @@ namespace FluentAssertions.Collections.MaximumMatching
     /// <typeparam name="TValue">The type of elements which must be matched with predicates.</typeparam>
     internal class MaximumMatchingSolution<TValue>
     {
-        private readonly Dictionary<Predicate<TValue>, Element<TValue>> elementsByMatchedPredicate;
-        private readonly MaximumMatchingProblem<TValue> problem;
+        private readonly Dictionary<IPredicate<TValue>, Element<TValue>> elementsByMatchedPredicate;
+        private readonly IMaximumMatchingProblem<TValue> problem;
 
         public MaximumMatchingSolution(
-            MaximumMatchingProblem<TValue> problem,
-            Dictionary<Predicate<TValue>, Element<TValue>> elementsByMatchedPredicate)
+            IMaximumMatchingProblem<TValue> problem,
+            Dictionary<IPredicate<TValue>, Element<TValue>> elementsByMatchedPredicate)
         {
             this.problem = problem;
             this.elementsByMatchedPredicate = elementsByMatchedPredicate;
@@ -25,7 +25,7 @@ namespace FluentAssertions.Collections.MaximumMatching
 
         public bool UnmatchedElementsExist => problem.Elements.Count != elementsByMatchedPredicate.Count;
 
-        public List<Predicate<TValue>> GetUnmatchedPredicates()
+        public List<IPredicate<TValue>> GetUnmatchedPredicates()
         {
             return problem.Predicates.Except(elementsByMatchedPredicate.Keys).ToList();
         }

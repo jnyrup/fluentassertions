@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace FluentAssertions.Collections.MaximumMatching
 {
     /// <summary>
-    /// The <see cref="MaximumMatchingProblem{TElement}"/> class defines input for the maximum matching problem.
+    /// The <see cref="ActionMaximumMatchingProblem{TElement}"/> class defines input for the maximum matching problem.
     /// The input is a list of predicates and a list of elements.
     /// The goal of the problem is to find such mapping between predicates and elements that would maximize number of matches.
     /// A predicate can be mapped with only one element.
     /// An element can be mapped with only one predicate.
     /// </summary>
     /// <typeparam name="TValue">The type of elements which must be matched with predicates.</typeparam>
-    internal class MaximumMatchingProblem<TValue> : IMaximumMatchingProblem<TValue>
+    internal class ActionMaximumMatchingProblem<TValue> : IMaximumMatchingProblem<TValue>
     {
-        public MaximumMatchingProblem(
-            IEnumerable<Expression<Func<TValue, bool>>> predicates,
+        public ActionMaximumMatchingProblem(
+            IEnumerable<Func<TValue, bool>> predicates,
             IEnumerable<TValue> elements)
         {
-            Predicates.AddRange(predicates.Select((predicate, index) => (IPredicate<TValue>)new Predicate<TValue>(predicate, index)));
+            Predicates.AddRange(predicates.Select((predicate, index) => (IPredicate<TValue>)new ActionPredicate<TValue>(predicate, index)));
             Elements.AddRange(elements.Select((element, index) => new Element<TValue>(element, index)));
         }
 

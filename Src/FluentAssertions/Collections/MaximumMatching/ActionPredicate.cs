@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
 using FluentAssertions.Formatting;
 
 namespace FluentAssertions.Collections.MaximumMatching
@@ -8,15 +7,12 @@ namespace FluentAssertions.Collections.MaximumMatching
     /// Stores a predicate's expression and index in the maximum matching problem.
     /// </summary>
     /// <typeparam name="TValue">The type of the element values in the maximum matching problems.</typeparam>
-    internal class Predicate<TValue> : IPredicate<TValue>
+    internal class ActionPredicate<TValue> : IPredicate<TValue>
     {
-        private readonly Func<TValue, bool> compiledExpression;
-
-        public Predicate(Expression<Func<TValue, bool>> expression, int index)
+        public ActionPredicate(Func<TValue, bool> expression, int index)
         {
             Index = index;
             Expression = expression;
-            compiledExpression = expression.Compile();
         }
 
         /// <summary>
@@ -27,12 +23,12 @@ namespace FluentAssertions.Collections.MaximumMatching
         /// <summary>
         /// The expression of the predicate.
         /// </summary>
-        public Expression<Func<TValue, bool>> Expression { get; }
+        public Func<TValue, bool> Expression { get; }
 
         /// <summary>
         /// Determines whether the predicate matches the specified element.
         /// </summary>
-        public bool Matches(TValue element) => compiledExpression(element);
+        public bool Matches(TValue element) => Expression(element);
 
         public override string ToString() => $"Index: {Index}, Expression: {Formatter.ToString(Expression)}";
     }

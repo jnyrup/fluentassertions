@@ -188,7 +188,7 @@ namespace FluentAssertions.Specs
                         .Excluding(dataTable => dataTable.Constraints));
 
                 // Assert
-                action.Should().Throw<XunitException>().Which.Message.Should().Contain(dataSet2.TypedDataTable1.Columns[0].ColumnName);
+                action.Should().Throw<XunitException>();
             }
 
             [Fact]
@@ -233,7 +233,7 @@ namespace FluentAssertions.Specs
                         .Excluding(dataTable => dataTable.Constraints));
 
                 // Assert
-                action.Should().Throw<XunitException>().Which.Message.Should().Contain(dataSet2.TypedDataTable1.Columns[0].ColumnName);
+                action.Should().Throw<XunitException>();
             }
 
             [Fact]

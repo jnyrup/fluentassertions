@@ -2830,7 +2830,8 @@ namespace FluentAssertions.Collections
                     string message = string.Empty;
                     var doubleNewLine = Environment.NewLine + Environment.NewLine;
 
-                    List<MaximumMatching.Predicate<T>> unmatchedPredicates = maximumMatchingSolution.GetUnmatchedPredicates();
+                    List<MaximumMatching.Predicate<T>> unmatchedPredicates = maximumMatchingSolution.GetUnmatchedPredicates()
+                        .Cast<MaximumMatching.Predicate<T>>().ToList();
                     if (unmatchedPredicates.Any())
                     {
                         message += doubleNewLine + "The following predicates did not have matching elements:";

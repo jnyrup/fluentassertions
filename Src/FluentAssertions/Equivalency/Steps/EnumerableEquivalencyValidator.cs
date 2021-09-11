@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using FluentAssertions.Collections.MaximumMatching;
 using FluentAssertions.Equivalency.Execution;
 using FluentAssertions.Equivalency.Tracing;
 using FluentAssertions.Execution;
+using FluentAssertions.Formatting;
 using static System.FormattableString;
 
 namespace FluentAssertions.Equivalency.Steps
@@ -111,76 +115,52 @@ namespace FluentAssertions.Equivalency.Steps
 
         private void AssertElementGraphEquivalencyWithLooseOrdering<T>(object[] subjects, T[] expectations)
         {
-            int failedCount = 0;
-            foreach (int index in Enumerable.Range(0, expectations.Length))
-            {
-                T expectation = expectations[index];
+            var predicatesList = expectations.Select<T, Expression<Func<object, bool>>>((e, i) => (object s) => TryToMatch(s, e, i));
+            var maximumMatchingProblem = new MaximumMatchingProblem<object>(predicatesList, subjects);
+            var maximumMatchingSolution = maximumMatchingProblem.Solve();
 
-                using var _ = context.Tracer.WriteBlock(member =>
-                    Invariant($"Finding the best match of {expectation} within all items in {subjects} at {member.Description}[{index}]"));
-                bool succeeded = LooselyMatchAgainst(subjects, expectation, index);
-                if (!succeeded)
+            if (maximumMatchingSolution.UnmatchedPredicatesExist || maximumMatchingSolution.UnmatchedElementsExist)
+            {
+                string message = string.Empty;
+                var doubleNewLine = Environment.NewLine + Environment.NewLine;
+
+                List<Collections.MaximumMatching.Predicate<object>> unmatchedPredicates = maximumMatchingSolution.GetUnmatchedPredicates()
+                    .Cast<Collections.MaximumMatching.Predicate<object>>().ToList();
+                if (unmatchedPredicates.Any())
                 {
-                    failedCount++;
-                    if (failedCount >= FailedItemsFastFailThreshold)
-                    {
-                        context.Tracer.WriteLine(member =>
-                            $"Fail failing loose order comparison of collection after {FailedItemsFastFailThreshold} items failed at {member.Description}");
-                        break;
-                    }
+                    message += doubleNewLine + "The following predicates did not have matching elements:";
+                    message += doubleNewLine +
+                        string.Join(Environment.NewLine,
+                            unmatchedPredicates.Select(predicate => Formatter.ToString(predicate.Expression)));
                 }
+
+                List<Element<object>> unmatchedElements = maximumMatchingSolution.GetUnmatchedElements();
+                if (unmatchedElements.Any())
+                {
+                    message += doubleNewLine + "The following elements did not match any predicate:";
+
+                    IEnumerable<string> elementDescriptions = unmatchedElements
+                        .Select(element => $"Index: {element.Index}, Element: {Formatter.ToString(element.Value)}");
+                    message += doubleNewLine + string.Join(doubleNewLine, elementDescriptions);
+                }
+
+                AssertionScope.Current
+                    .BecauseOf(context.Reason.FormattedMessage, context.Reason.Arguments)
+                    .WithExpectation("Expected {context:collection} to satisfy all predicates{reason}, but:")
+                    .FailWithPreFormatted(message);
             }
         }
 
         private List<int> unmatchedSubjectIndexes;
 
-        private bool LooselyMatchAgainst<T>(IList<object> subjects, T expectation, int expectationIndex)
-        {
-            var results = new AssertionResultSet();
-            int index = 0;
-            GetTraceMessage getMessage = member => $"Comparing subject at {member.Description}[{index}] with the expectation at {member.Description}[{expectationIndex}]";
-            int indexToBeRemoved = -1;
-
-            for (var metaIndex = 0; metaIndex < unmatchedSubjectIndexes.Count; metaIndex++)
-            {
-                index = unmatchedSubjectIndexes[metaIndex];
-                object subject = subjects[index];
-
-                using var _ = context.Tracer.WriteBlock(getMessage);
-                string[] failures = TryToMatch(subject, expectation, expectationIndex);
-
-                results.AddSet(index, failures);
-                if (results.ContainsSuccessfulSet())
-                {
-                    context.Tracer.WriteLine(_ => "It's a match");
-                    indexToBeRemoved = metaIndex;
-                    break;
-                }
-                else
-                {
-                    context.Tracer.WriteLine(_ => $"Contained {failures.Length} failures");
-                }
-            }
-
-            if (indexToBeRemoved != -1)
-            {
-                unmatchedSubjectIndexes.RemoveAt(indexToBeRemoved);
-            }
-
-            foreach (string failure in results.SelectClosestMatchFor(expectationIndex))
-            {
-                AssertionScope.Current.AddPreFormattedFailure(failure);
-            }
-
-            return indexToBeRemoved != -1;
-        }
-
-        private string[] TryToMatch<T>(object subject, T expectation, int expectationIndex)
+        private bool TryToMatch<T>(object subject, T expectation, int expectationIndex)
         {
             using var scope = new AssertionScope();
             parent.RecursivelyAssertEquality(new Comparands(subject, expectation, typeof(T)), context.AsCollectionItem<T>(expectationIndex));
 
-            return scope.Discard();
+            var failures = scope.Discard();
+            bool failed = failures.Any();
+            return !failed;
         }
 
         private bool StrictlyMatchAgainst<T>(object[] subjects, T expectation, int expectationIndex)

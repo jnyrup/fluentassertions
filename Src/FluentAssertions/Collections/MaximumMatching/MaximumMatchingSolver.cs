@@ -13,10 +13,10 @@ namespace FluentAssertions.Collections.MaximumMatching
     /// </summary>
     internal class MaximumMatchingSolver<TValue>
     {
-        private readonly MaximumMatchingProblem<TValue> problem;
-        private readonly Dictionary<Predicate<TValue>, List<Element<TValue>>> matchingElementsByPredicate = new();
+        private readonly IMaximumMatchingProblem<TValue> problem;
+        private readonly Dictionary<IPredicate<TValue>, List<Element<TValue>>> matchingElementsByPredicate = new();
 
-        public MaximumMatchingSolver(MaximumMatchingProblem<TValue> problem)
+        public MaximumMatchingSolver(IMaximumMatchingProblem<TValue> problem)
         {
             this.problem = problem;
         }
@@ -50,7 +50,7 @@ namespace FluentAssertions.Collections.MaximumMatching
         /// and end at an unmatched element.<br />
         /// - Breadth first search used to traverse the graph.<br />
         /// </summary>
-        private IEnumerable<Match> FindMatchForPredicate(Predicate<TValue> predicate, MatchCollection currentMatches)
+        private IEnumerable<Match> FindMatchForPredicate(IPredicate<TValue> predicate, MatchCollection currentMatches)
         {
             var visitedElements = new HashSet<Element<TValue>>();
             var breadthFirstSearchTracker = new BreadthFirstSearchTracker(predicate, currentMatches);
@@ -78,7 +78,7 @@ namespace FluentAssertions.Collections.MaximumMatching
             return Enumerable.Empty<Match>();
         }
 
-        private IEnumerable<Element<TValue>> GetMatchingElements(Predicate<TValue> predicate)
+        private IEnumerable<Element<TValue>> GetMatchingElements(IPredicate<TValue> predicate)
         {
             if (!matchingElementsByPredicate.TryGetValue(predicate, out var matchingElements))
             {
@@ -91,7 +91,7 @@ namespace FluentAssertions.Collections.MaximumMatching
 
         private struct Match
         {
-            public Predicate<TValue> Predicate;
+            public IPredicate<TValue> Predicate;
             public Element<TValue> Element;
         }
 
@@ -107,7 +107,7 @@ namespace FluentAssertions.Collections.MaximumMatching
                 }
             }
 
-            public Predicate<TValue> GetMatchedPredicate(Element<TValue> element)
+            public IPredicate<TValue> GetMatchedPredicate(Element<TValue> element)
             {
                 return matchesByElement[element].Predicate;
             }
@@ -121,19 +121,19 @@ namespace FluentAssertions.Collections.MaximumMatching
 
         private class BreadthFirstSearchTracker
         {
-            private readonly Queue<Predicate<TValue>> unmatchedPredicatesQueue = new();
-            private readonly Dictionary<Predicate<TValue>, Match> previousMatchByPredicate = new();
+            private readonly Queue<IPredicate<TValue>> unmatchedPredicatesQueue = new();
+            private readonly Dictionary<IPredicate<TValue>, Match> previousMatchByPredicate = new();
 
             private readonly MatchCollection originalMatches;
 
-            public BreadthFirstSearchTracker(Predicate<TValue> unmatchedPredicate, MatchCollection originalMatches)
+            public BreadthFirstSearchTracker(IPredicate<TValue> unmatchedPredicate, MatchCollection originalMatches)
             {
                 unmatchedPredicatesQueue.Enqueue(unmatchedPredicate);
 
                 this.originalMatches = originalMatches;
             }
 
-            public bool TryDequeueUnMatchedPredicate(out Predicate<TValue> unmatchedPredicate)
+            public bool TryDequeueUnMatchedPredicate(out IPredicate<TValue> unmatchedPredicate)
             {
                 if (unmatchedPredicatesQueue.Count == 0)
                 {
@@ -145,7 +145,7 @@ namespace FluentAssertions.Collections.MaximumMatching
                 return true;
             }
 
-            public void ReassignElement(Element<TValue> element, Predicate<TValue> newMatchedPredicate)
+            public void ReassignElement(Element<TValue> element, IPredicate<TValue> newMatchedPredicate)
             {
                 var previouslyMatchedPredicate = originalMatches.GetMatchedPredicate(element);
                 previousMatchByPredicate.Add(previouslyMatchedPredicate, new Match { Predicate = newMatchedPredicate, Element = element });
