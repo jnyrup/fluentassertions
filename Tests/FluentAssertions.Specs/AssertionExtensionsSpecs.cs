@@ -126,6 +126,9 @@ public class AssertionExtensionsSpecs
             .Where(t => t.IsPublic)
             .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public))
             .Where(m => m.Name == "Should")
+
+            // Ignore non-generic TaskCompletionSourceAssertions because it does not return an AndConstraint.
+            .Where(x => x.ReturnType.Name != "TaskCompletionSourceAssertions" || x.ReturnType.IsGenericType)
             .ToList();
 
         List<Type> realOverloads = shouldOverloads

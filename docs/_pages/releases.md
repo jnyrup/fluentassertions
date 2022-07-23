@@ -10,6 +10,7 @@ sidebar:
 ## Unreleased
 
 ### What's new
+* Added `CompleteWithinAsync` and `NotCompleteWithinAsync` for non-generic `TaskCompletionSource` (.NET 6 and above) - [#1961](https://github.com/fluentassertions/fluentassertions/pull/1961)
 
 ### Fixes
 * Fix `For`/`Exclude` not excluding properties in objects in a collection - [#1953](https://github.com/fluentassertions/fluentassertions/pull/1953)

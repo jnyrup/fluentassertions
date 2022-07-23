@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions.Extensions;
 using Xunit;
@@ -9,8 +8,103 @@ namespace FluentAssertions.Specs.Specialized;
 
 public class TaskCompletionSourceAssertionSpecs
 {
+#if NET6_0_OR_GREATER
+
     [Fact]
     public async Task When_TCS_completes_in_time_it_should_succeed()
+    {
+        // Arrange
+        var subject = new TaskCompletionSource();
+        var timer = new FakeClock();
+
+        // Act
+        Func<Task> action = () => subject.Should(timer).CompleteWithinAsync(1.Seconds());
+        subject.SetResult();
+        timer.Complete();
+
+        // Assert
+        await action.Should().NotThrowAsync();
+    }
+
+    [Fact]
+    public async Task When_TCS_did_not_complete_in_time_it_should_fail()
+    {
+        // Arrange
+        var subject = new TaskCompletionSource();
+        var timer = new FakeClock();
+
+        // Act
+        Func<Task> action = () => subject.Should(timer).CompleteWithinAsync(1.Seconds(), "test {0}", "testArg");
+        timer.Complete();
+
+        // Assert
+        await action.Should().ThrowAsync<XunitException>()
+            .WithMessage("Expected subject to complete within 1s because test testArg.");
+    }
+
+    [Fact]
+    public async Task When_TCS_is_null_it_should_fail()
+    {
+        // Arrange
+        TaskCompletionSource subject = null;
+
+        // Act
+        Func<Task> action = () => subject.Should().CompleteWithinAsync(1.Seconds());
+
+        // Assert
+        await action.Should().ThrowAsync<XunitException>()
+            .WithMessage("Expected subject to complete within 1s, but found <null>.");
+    }
+
+    [Fact]
+    public async Task When_TCS_completes_in_time_and_it_is_not_expected_it_should_fail()
+    {
+        // Arrange
+        var subject = new TaskCompletionSource();
+        var timer = new FakeClock();
+
+        // Act
+        Func<Task> action = () => subject.Should(timer).NotCompleteWithinAsync(1.Seconds(), "test {0}", "testArg");
+        subject.SetResult();
+        timer.Complete();
+
+        // Assert
+        await action.Should().ThrowAsync<XunitException>().WithMessage("*to not complete within*because test testArg*");
+    }
+
+    [Fact]
+    public async Task When_TCS_did_not_complete_in_time_and_it_is_not_expected_it_should_succeed()
+    {
+        // Arrange
+        var subject = new TaskCompletionSource();
+        var timer = new FakeClock();
+
+        // Act
+        Func<Task> action = () => subject.Should(timer).NotCompleteWithinAsync(1.Seconds());
+        timer.Complete();
+
+        // Assert
+        await action.Should().NotThrowAsync();
+    }
+
+    [Fact]
+    public async Task When_TCS_is_null_and_we_validate_to_not_complete_it_should_fail()
+    {
+        // Arrange
+        TaskCompletionSource subject = null;
+
+        // Act
+        Func<Task> action = () => subject.Should().NotCompleteWithinAsync(1.Seconds(), "test {0}", "testArg");
+
+        // Assert
+        await action.Should().ThrowAsync<XunitException>()
+            .WithMessage("Expected subject to not complete within 1s because test testArg, but found <null>.");
+    }
+
+#endif
+
+    [Fact]
+    public async Task When_generic_TCS_completes_in_time_it_should_succeed()
     {
         // Arrange
         var subject = new TaskCompletionSource<bool>();
@@ -26,7 +120,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_completes_in_time_and_result_is_expected_it_should_succeed()
+    public async Task When_generic_TCS_completes_in_time_and_result_is_expected_it_should_succeed()
     {
         // Arrange
         var subject = new TaskCompletionSource<int>();
@@ -42,7 +136,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_completes_in_time_and_async_result_is_expected_it_should_succeed()
+    public async Task When_generic_TCS_completes_in_time_and_async_result_is_expected_it_should_succeed()
     {
         // Arrange
         var subject = new TaskCompletionSource<int>();
@@ -58,7 +152,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_completes_in_time_and_result_is_not_expected_it_should_fail()
+    public async Task When_generic_TCS_completes_in_time_and_result_is_not_expected_it_should_fail()
     {
         // Arrange
         var testSubject = new TaskCompletionSource<int>();
@@ -75,7 +169,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_completes_in_time_and_async_result_is_not_expected_it_should_fail()
+    public async Task When_generic_TCS_completes_in_time_and_async_result_is_not_expected_it_should_fail()
     {
         // Arrange
         var testSubject = new TaskCompletionSource<int>();
@@ -92,7 +186,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_did_not_complete_in_time_it_should_fail()
+    public async Task When_generic_TCS_did_not_complete_in_time_it_should_fail()
     {
         // Arrange
         var subject = new TaskCompletionSource<bool>();
@@ -108,7 +202,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_is_null_it_should_fail()
+    public async Task When_generic_TCS_is_null_it_should_fail()
     {
         // Arrange
         TaskCompletionSource<bool> subject = null;
@@ -122,7 +216,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_completes_in_time_and_it_is_not_expected_it_should_fail()
+    public async Task When_generic_TCS_completes_in_time_and_it_is_not_expected_it_should_fail()
     {
         // Arrange
         var subject = new TaskCompletionSource<bool>();
@@ -138,7 +232,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_did_not_complete_in_time_and_it_is_not_expected_it_should_succeed()
+    public async Task When_generic_TCS_did_not_complete_in_time_and_it_is_not_expected_it_should_succeed()
     {
         // Arrange
         var subject = new TaskCompletionSource<bool>();
@@ -153,7 +247,7 @@ public class TaskCompletionSourceAssertionSpecs
     }
 
     [Fact]
-    public async Task When_TCS_is_null_and_we_validate_to_not_complete_it_should_fail()
+    public async Task When_generic_TCS_is_null_and_we_validate_to_not_complete_it_should_fail()
     {
         // Arrange
         TaskCompletionSource<bool> subject = null;

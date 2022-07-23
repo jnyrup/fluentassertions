@@ -77,6 +77,7 @@ namespace FluentAssertions
         public static FluentAssertions.Types.ConstructorInfoAssertions Should(this System.Reflection.ConstructorInfo constructorInfo) { }
         public static FluentAssertions.Types.MethodInfoAssertions Should(this System.Reflection.MethodInfo methodInfo) { }
         public static FluentAssertions.Types.PropertyInfoAssertions Should(this System.Reflection.PropertyInfo propertyInfo) { }
+        public static FluentAssertions.Specialized.TaskCompletionSourceAssertions Should(this System.Threading.Tasks.TaskCompletionSource tcs) { }
         public static FluentAssertions.Primitives.TimeOnlyAssertions Should(this System.TimeOnly actualValue) { }
         public static FluentAssertions.Primitives.NullableTimeOnlyAssertions Should(this System.TimeOnly? actualValue) { }
         public static FluentAssertions.Primitives.SimpleTimeSpanAssertions Should(this System.TimeSpan actualValue) { }
@@ -2450,6 +2451,14 @@ namespace FluentAssertions.Specialized
     {
         public NonGenericAsyncFunctionAssertions(System.Func<System.Threading.Tasks.Task> subject, FluentAssertions.Specialized.IExtractExceptions extractor) { }
         public NonGenericAsyncFunctionAssertions(System.Func<System.Threading.Tasks.Task> subject, FluentAssertions.Specialized.IExtractExceptions extractor, FluentAssertions.Common.IClock clock) { }
+    }
+    public class TaskCompletionSourceAssertions
+    {
+        public TaskCompletionSourceAssertions(System.Threading.Tasks.TaskCompletionSource tcs) { }
+        public TaskCompletionSourceAssertions(System.Threading.Tasks.TaskCompletionSource tcs, FluentAssertions.Common.IClock clock) { }
+        public System.Threading.Tasks.Task CompleteWithinAsync(System.TimeSpan timeSpan, string because = "", params object[] becauseArgs) { }
+        public override bool Equals(object obj) { }
+        public System.Threading.Tasks.Task NotCompleteWithinAsync(System.TimeSpan timeSpan, string because = "", params object[] becauseArgs) { }
     }
     public class TaskCompletionSourceAssertions<T>
     {

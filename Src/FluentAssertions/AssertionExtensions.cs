@@ -921,6 +921,20 @@ public static class AssertionExtensions
 
 #endif
 
+#if NET6_0_OR_GREATER
+
+    /// <summary>
+    /// Returns a <see cref="TaskCompletionSourceAssertions"/> object that can be used to assert the
+    /// current <see cref="TaskCompletionSource"/>.
+    /// </summary>
+    [Pure]
+    public static TaskCompletionSourceAssertions Should(this TaskCompletionSource tcs)
+    {
+        return new TaskCompletionSourceAssertions(tcs);
+    }
+
+#endif
+
     /// <summary>
     /// Safely casts the specified object to the type specified through <typeparamref name="TTo"/>.
     /// </summary>
