@@ -42,10 +42,15 @@ public class TaskCompletionSourceAssertions
     public async Task CompleteWithinAsync(
         TimeSpan timeSpan, string because = "", params object[] becauseArgs)
     {
-        Execute.Assertion
+        var success = Execute.Assertion
             .ForCondition(subject is not null)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to complete within {0}{reason}, but found <null>.", timeSpan);
+
+        if (!success)
+        {
+            return;
+        }
 
         using var timeoutCancellationTokenSource = new CancellationTokenSource();
         Task completedTask = await Task.WhenAny(
@@ -138,10 +143,15 @@ public class TaskCompletionSourceAssertions<T>
     public async Task<AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>> CompleteWithinAsync(
         TimeSpan timeSpan, string because = "", params object[] becauseArgs)
     {
-        Execute.Assertion
+        var success = Execute.Assertion
             .ForCondition(subject is not null)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to complete within {0}{reason}, but found <null>.", timeSpan);
+
+        if (!success)
+        {
+            return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, default(T));
+        }
 
         using var timeoutCancellationTokenSource = new CancellationTokenSource();
         Task completedTask = await Task.WhenAny(
