@@ -10,8 +10,7 @@ namespace FluentAssertions.Specialized;
 #pragma warning disable CA1065 // Ignore throwing NotSupportedException from Equals
 
 #if NET6_0_OR_GREATER
-
-public class TaskCompletionSourceAssertions
+public class TaskCompletionSourceAssertions : TaskCompletionSourceAssertionsBase
 {
     private readonly TaskCompletionSource subject;
 
@@ -21,12 +20,10 @@ public class TaskCompletionSourceAssertions
     }
 
     public TaskCompletionSourceAssertions(TaskCompletionSource tcs, IClock clock)
+        : base(clock)
     {
         subject = tcs;
-        Clock = clock ?? throw new ArgumentNullException(nameof(clock));
     }
-
-    private protected IClock Clock { get; }
 
     /// <summary>
     /// Asserts that the <see cref="Task"/> of the current <see cref="TaskCompletionSource{T}"/> will complete within the specified time.
@@ -39,7 +36,7 @@ public class TaskCompletionSourceAssertions
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public async Task CompleteWithinAsync(
+    public async Task<AndConstraint<TaskCompletionSourceAssertions>> CompleteWithinAsync(
         TimeSpan timeSpan, string because = "", params object[] becauseArgs)
     {
         var success = Execute.Assertion
@@ -47,26 +44,16 @@ public class TaskCompletionSourceAssertions
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to complete within {0}{reason}, but found <null>.", timeSpan);
 
-        if (!success)
+        if (success)
         {
-            return;
+            bool completesWithinTimeout = await CompletesWithinTimeoutAsync(subject.Task, timeSpan);
+            Execute.Assertion
+                .ForCondition(completesWithinTimeout)
+                .BecauseOf(because, becauseArgs)
+                .FailWith("Expected {context:task} to complete within {0}{reason}.", timeSpan);
         }
 
-        using var timeoutCancellationTokenSource = new CancellationTokenSource();
-        Task completedTask = await Task.WhenAny(
-            subject.Task,
-            Clock.DelayAsync(timeSpan, timeoutCancellationTokenSource.Token));
-
-        if (completedTask == subject.Task)
-        {
-            timeoutCancellationTokenSource.Cancel();
-            await completedTask;
-        }
-
-        Execute.Assertion
-            .ForCondition(completedTask == subject.Task)
-            .BecauseOf(because, becauseArgs)
-            .FailWith("Expected {context:task} to complete within {0}{reason}.", timeSpan);
+        return new AndConstraint<TaskCompletionSourceAssertions>(this);
     }
 
     /// <summary>
@@ -80,39 +67,30 @@ public class TaskCompletionSourceAssertions
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public async Task NotCompleteWithinAsync(
+    public async Task<AndConstraint<TaskCompletionSourceAssertions>> NotCompleteWithinAsync(
         TimeSpan timeSpan, string because = "", params object[] becauseArgs)
     {
-        Execute.Assertion
+        var success = Execute.Assertion
             .ForCondition(subject is not null)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to not complete within {0}{reason}, but found <null>.", timeSpan);
 
-        using var timeoutCancellationTokenSource = new CancellationTokenSource();
-        Task completedTask = await Task.WhenAny(
-            subject.Task,
-            Clock.DelayAsync(timeSpan, timeoutCancellationTokenSource.Token));
-
-        if (completedTask == subject.Task)
+        if (success)
         {
-            timeoutCancellationTokenSource.Cancel();
-            await completedTask;
+            bool completesWithinTimeout = await CompletesWithinTimeoutAsync(subject.Task, timeSpan);
+            Execute.Assertion
+                .ForCondition(!completesWithinTimeout)
+                .BecauseOf(because, becauseArgs)
+                .FailWith("Expected {context:task} to not complete within {0}{reason}.", timeSpan);
         }
 
-        Execute.Assertion
-            .ForCondition(completedTask != subject.Task)
-            .BecauseOf(because, becauseArgs)
-            .FailWith("Expected {context:task} to not complete within {0}{reason}.", timeSpan);
+        return new AndConstraint<TaskCompletionSourceAssertions>(this);
     }
-
-    /// <inheritdoc/>
-    public override bool Equals(object obj) =>
-        throw new NotSupportedException("Calling Equals on Assertion classes is not supported.");
 }
 
 #endif
 
-public class TaskCompletionSourceAssertions<T>
+public class TaskCompletionSourceAssertions<T> : TaskCompletionSourceAssertionsBase
 {
     private readonly TaskCompletionSource<T> subject;
 
@@ -122,12 +100,10 @@ public class TaskCompletionSourceAssertions<T>
     }
 
     public TaskCompletionSourceAssertions(TaskCompletionSource<T> tcs, IClock clock)
+        : base(clock)
     {
         subject = tcs;
-        Clock = clock ?? throw new ArgumentNullException(nameof(clock));
     }
-
-    private protected IClock Clock { get; }
 
     /// <summary>
     /// Asserts that the <see cref="Task"/> of the current <see cref="TaskCompletionSource{T}"/> will complete within the specified time.
@@ -153,22 +129,13 @@ public class TaskCompletionSourceAssertions<T>
             return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, default(T));
         }
 
-        using var timeoutCancellationTokenSource = new CancellationTokenSource();
-        Task completedTask = await Task.WhenAny(
-            subject.Task,
-            Clock.DelayAsync(timeSpan, timeoutCancellationTokenSource.Token));
-
-        if (completedTask == subject.Task)
-        {
-            timeoutCancellationTokenSource.Cancel();
-            await completedTask;
-        }
-
+        bool completesWithinTimeout = await CompletesWithinTimeoutAsync(subject.Task, timeSpan);
         Execute.Assertion
-            .ForCondition(completedTask == subject.Task)
+            .ForCondition(completesWithinTimeout)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context:task} to complete within {0}{reason}.", timeSpan);
-        return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, subject.Task.Result);
+        T result = subject.Task.IsCompleted ? subject.Task.Result : default;
+        return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, result);
     }
 
     /// <summary>
@@ -182,32 +149,60 @@ public class TaskCompletionSourceAssertions<T>
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public async Task NotCompleteWithinAsync(
+    public async Task<AndConstraint<TaskCompletionSourceAssertions<T>>> NotCompleteWithinAsync(
         TimeSpan timeSpan, string because = "", params object[] becauseArgs)
     {
-        Execute.Assertion
+        var success = Execute.Assertion
             .ForCondition(subject is not null)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to not complete within {0}{reason}, but found <null>.", timeSpan);
 
-        using var timeoutCancellationTokenSource = new CancellationTokenSource();
-        Task completedTask = await Task.WhenAny(
-            subject.Task,
-            Clock.DelayAsync(timeSpan, timeoutCancellationTokenSource.Token));
-
-        if (completedTask == subject.Task)
+        if (success)
         {
-            timeoutCancellationTokenSource.Cancel();
-            await completedTask;
+            bool completesWithinTimeout = await CompletesWithinTimeoutAsync(subject.Task, timeSpan);
+            Execute.Assertion
+                .ForCondition(!completesWithinTimeout)
+                .BecauseOf(because, becauseArgs)
+                .FailWith("Expected {context:task} to not complete within {0}{reason}.", timeSpan);
         }
 
-        Execute.Assertion
-            .ForCondition(completedTask != subject.Task)
-            .BecauseOf(because, becauseArgs)
-            .FailWith("Expected {context:task} to not complete within {0}{reason}.", timeSpan);
+        return new AndConstraint<TaskCompletionSourceAssertions<T>>(this);
     }
+}
+
+/// <summary>
+/// Implements base functionality for assertions on TaskCompletionSource.
+/// </summary>
+public class TaskCompletionSourceAssertionsBase
+{
+    protected TaskCompletionSourceAssertionsBase(IClock clock)
+    {
+        Clock = clock ?? throw new ArgumentNullException(nameof(clock));
+    }
+
+    private protected IClock Clock { get; }
 
     /// <inheritdoc/>
     public override bool Equals(object obj) =>
         throw new NotSupportedException("Calling Equals on Assertion classes is not supported.");
+
+    /// <summary>
+    ///     Monitors the specified task whether it completes withing the remaining time span.
+    /// </summary>
+    protected async Task<bool> CompletesWithinTimeoutAsync(Task target, TimeSpan remainingTime)
+    {
+        using var timeoutCancellationTokenSource = new CancellationTokenSource();
+
+        Task completedTask =
+            await Task.WhenAny(target, Clock.DelayAsync(remainingTime, timeoutCancellationTokenSource.Token));
+
+        if (completedTask != target)
+        {
+            return false;
+        }
+
+        // cancel the clock
+        timeoutCancellationTokenSource.Cancel();
+        return true;
+    }
 }
