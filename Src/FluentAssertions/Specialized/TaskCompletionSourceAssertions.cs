@@ -26,7 +26,7 @@ public class TaskCompletionSourceAssertions : TaskCompletionSourceAssertionsBase
     }
 
     /// <summary>
-    /// Asserts that the <see cref="Task"/> of the current <see cref="TaskCompletionSource{T}"/> will complete within the specified time.
+    /// Asserts that the <see cref="Task"/> of the current <see cref="TaskCompletionSource"/> will complete within the specified time.
     /// </summary>
     /// <param name="timeSpan">The allowed time span for the operation.</param>
     /// <param name="because">
@@ -57,7 +57,7 @@ public class TaskCompletionSourceAssertions : TaskCompletionSourceAssertionsBase
     }
 
     /// <summary>
-    /// Asserts that the <see cref="Task"/> of the current <see cref="TaskCompletionSource{T}"/> will not complete within the specified time.
+    /// Asserts that the <see cref="Task"/> of the current <see cref="TaskCompletionSource"/> will not complete within the specified time.
     /// </summary>
     /// <param name="timeSpan">The time span to wait for the operation.</param>
     /// <param name="because">
@@ -173,7 +173,7 @@ public class TaskCompletionSourceAssertions<T> : TaskCompletionSourceAssertionsB
 /// <summary>
 /// Implements base functionality for assertions on TaskCompletionSource.
 /// </summary>
-public class TaskCompletionSourceAssertionsBase
+public abstract class TaskCompletionSourceAssertionsBase
 {
     protected TaskCompletionSourceAssertionsBase(IClock clock)
     {
@@ -189,7 +189,7 @@ public class TaskCompletionSourceAssertionsBase
     /// <summary>
     ///     Monitors the specified task whether it completes withing the remaining time span.
     /// </summary>
-    protected async Task<bool> CompletesWithinTimeoutAsync(Task target, TimeSpan remainingTime)
+    private protected async Task<bool> CompletesWithinTimeoutAsync(Task target, TimeSpan remainingTime)
     {
         using var timeoutCancellationTokenSource = new CancellationTokenSource();
 

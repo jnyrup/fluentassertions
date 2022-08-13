@@ -56,7 +56,6 @@ public class AssertionExtensionsSpecs
 #if NET6_0_OR_GREATER
         new object[] { new DateOnlyAssertions<DateOnlyAssertions>(default) },
         new object[] { new TimeOnlyAssertions<TimeOnlyAssertions>(default) },
-        new object[] { new TaskCompletionSourceAssertions<int>(default) }
 #endif
     };
 
@@ -84,13 +83,12 @@ public class AssertionExtensionsSpecs
     [InlineData(typeof(NumericAssertions<int, NumericAssertions<int>>))]
     [InlineData(typeof(PropertyInfoSelectorAssertions))]
     [InlineData(typeof(SimpleTimeSpanAssertions<SimpleTimeSpanAssertions>))]
-    [InlineData(typeof(TaskCompletionSourceAssertions<int>))]
+    [InlineData(typeof(TaskCompletionSourceAssertionsBase))]
     [InlineData(typeof(TypeSelectorAssertions))]
     [InlineData(typeof(EnumAssertions<StringComparison, EnumAssertions<StringComparison>>))]
 #if NET6_0_OR_GREATER
     [InlineData(typeof(DateOnlyAssertions<DateOnlyAssertions>))]
     [InlineData(typeof(TimeOnlyAssertions<TimeOnlyAssertions>))]
-    [InlineData(typeof(TaskCompletionSourceAssertions))]
 #endif
     public void Fake_should_method_throws(Type type)
     {
@@ -138,9 +136,6 @@ public class AssertionExtensionsSpecs
             {
                 typeof(DateTimeRangeAssertions<>),
                 typeof(DateTimeOffsetRangeAssertions<>),
-#if NET6_0_OR_GREATER
-                typeof(TaskCompletionSourceAssertions),
-#endif
             })
             .ToList();
 

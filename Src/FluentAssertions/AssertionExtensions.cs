@@ -1050,9 +1050,9 @@ public static class AssertionExtensions
         InvalidShouldCall();
     }
 
-    /// <inheritdoc cref="Should{T}(System.Threading.Tasks.TaskCompletionSource{T})" />
+    /// <inheritdoc cref="Should(ExecutionTimeAssertions)" />
     [Obsolete("You are asserting the 'AndConstraint' itself. Remove the 'Should()' method directly following 'And'", error: true)]
-    public static void Should<TSubject>(this TaskCompletionSourceAssertions<TSubject> _)
+    public static void Should(this TaskCompletionSourceAssertionsBase _)
     {
         InvalidShouldCall();
     }
@@ -1088,17 +1088,6 @@ public static class AssertionExtensions
     {
         InvalidShouldCall();
     }
-
-#if  NET6_0_OR_GREATER
-
-    /// <inheritdoc cref="Should(System.Threading.Tasks.TaskCompletionSource)" />
-    [Obsolete("You are asserting the 'AndConstraint' itself. Remove the 'Should()' method directly following 'And'", error: true)]
-    public static void Should(this TaskCompletionSourceAssertions _)
-    {
-        InvalidShouldCall();
-    }
-
-#endif
 
     [DoesNotReturn]
     private static void InvalidShouldCall()
