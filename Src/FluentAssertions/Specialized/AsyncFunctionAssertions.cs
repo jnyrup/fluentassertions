@@ -132,7 +132,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to throw exactly {0}{reason}, but found <null>.", expectedType);
 
-        Exception exception = await InvokeWithInterceptionAsync(Subject);
+        Exception exception = await InvokeWithInterceptionAsync(Subject, TimeSpan.MaxValue);
 
         Execute.Assertion
             .ForCondition(exception is not null)
@@ -163,8 +163,33 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to throw {0}{reason}, but found <null>.", typeof(TException));
 
-        Exception exception = await InvokeWithInterceptionAsync(Subject);
-        return ThrowInternal<TException>(exception, because, becauseArgs);
+        Exception exception = await InvokeWithInterceptionAsync(Subject, TimeSpan.MaxValue);
+        return ThrowInternal<TException>(exception, TimeSpan.MaxValue, because, becauseArgs);
+    }
+
+    /// <summary>
+    /// Asserts that the current <see cref="Func{Task}"/> throws an exception of type <typeparamref name="TException"/>.
+    /// </summary>
+    /// <param name="timeSpan">The allowed time span for the operation.</param>
+    /// <param name="because">
+    /// A formatted phrase as is supported by <see cref="string.Format(string,object[])" /> explaining why the assertion
+    /// is needed. If the phrase does not start with the word <i>because</i>, it is prepended automatically.
+    /// </param>
+    /// <param name="becauseArgs">
+    /// Zero or more objects to format using the placeholders in <paramref name="because" />.
+    /// </param>
+    public async Task<ExceptionAssertions<TException>> ThrowWithinAsync<TException>(
+        TimeSpan timeSpan, string because = "", params object[] becauseArgs)
+        where TException : Exception
+    {
+        Execute.Assertion
+            .ForCondition(Subject is not null)
+            .BecauseOf(because, becauseArgs)
+            .FailWith("Expected {context} to throw {0} within {1}{reason}, but found <null>.",
+                typeof(TException), timeSpan);
+
+        Exception exception = await InvokeWithInterceptionAsync(Subject, timeSpan);
+        return ThrowInternal<TException>(exception, timeSpan, because, becauseArgs);
     }
 
     /// <summary>
@@ -277,7 +302,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
 
             while (invocationEndTime is null || invocationEndTime < waitTime)
             {
-                exception = await InvokeWithInterceptionAsync(Subject);
+                exception = await InvokeWithInterceptionAsync(Subject, TimeSpan.MaxValue);
                 if (exception is null)
                 {
                     return new AndConstraint<TAssertions>((TAssertions)this);
@@ -327,7 +352,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         return true;
     }
 
-    private static async Task<Exception> InvokeWithInterceptionAsync(Func<Task> action)
+    private async Task<Exception> InvokeWithInterceptionAsync(Func<Task> action, TimeSpan timeSpan)
     {
         try
         {
@@ -343,7 +368,31 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
                     ? CallerIdentifier.OverrideStackSearchUsingCurrentScope()
                     : default)
             {
-                await action();
+                if (timeSpan == TimeSpan.MaxValue)
+                {
+                    await action();
+                }
+                else
+                {
+                    (TTask result, TimeSpan remainingTime) = InvokeWithTimer(timeSpan);
+                    if (remainingTime < TimeSpan.Zero)
+                    {
+                        // timeout reached without exception
+                        return null;
+                    }
+
+                    if (result.IsFaulted)
+                    {
+                        // exception in synchronous portion
+                        return result.Exception;
+                    }
+
+                    if (await CompletesWithinTimeoutAsync(result, remainingTime))
+                    {
+                        // completed without exception
+                        return null;
+                    }
+                }
             }
 
             return null;

@@ -2265,6 +2265,8 @@ namespace FluentAssertions.Specialized
             where TException : System.Exception { }
         public System.Threading.Tasks.Task<FluentAssertions.Specialized.ExceptionAssertions<TException>> ThrowExactlyAsync<TException>(string because = "", params object[] becauseArgs)
             where TException : System.Exception { }
+        public System.Threading.Tasks.Task<FluentAssertions.Specialized.ExceptionAssertions<TException>> ThrowWithinAsync<TException>(System.TimeSpan timeSpan, string because = "", params object[] becauseArgs)
+            where TException : System.Exception { }
     }
     public abstract class DelegateAssertionsBase<TDelegate, TAssertions> : FluentAssertions.Primitives.ReferenceTypeAssertions<TDelegate, FluentAssertions.Specialized.DelegateAssertionsBase<TDelegate, TAssertions>>
         where TDelegate : System.Delegate
@@ -2273,7 +2275,7 @@ namespace FluentAssertions.Specialized
         protected FluentAssertions.AndConstraint<TAssertions> NotThrowInternal(System.Exception exception, string because, object[] becauseArgs) { }
         protected FluentAssertions.AndConstraint<TAssertions> NotThrowInternal<TException>(System.Exception exception, string because, object[] becauseArgs)
             where TException : System.Exception { }
-        protected FluentAssertions.Specialized.ExceptionAssertions<TException> ThrowInternal<TException>(System.Exception exception, string because, object[] becauseArgs)
+        protected FluentAssertions.Specialized.ExceptionAssertions<TException> ThrowInternal<TException>(System.Exception exception, System.TimeSpan timeSpan, string because, object[] becauseArgs)
             where TException : System.Exception { }
     }
     public abstract class DelegateAssertions<TDelegate, TAssertions> : FluentAssertions.Specialized.DelegateAssertionsBase<TDelegate, TAssertions>

@@ -180,6 +180,117 @@ public static class TaskAssertionSpecs
         }
     }
 
+    public class ThrowAsync
+    {
+        [Fact]
+        public async Task When_task_throws_it_should_succeed()
+        {
+            // Arrange
+            var timer = new FakeClock();
+            var taskFactory = new TaskCompletionSource<bool>();
+
+            // Act
+            Func<Task> action = () =>
+            {
+                return taskFactory
+                    .Awaiting(t => (Task)t.Task)
+                    .Should(timer).ThrowAsync<InvalidOperationException>();
+            };
+            taskFactory.SetException(new InvalidOperationException("foo"));
+
+            // Assert
+            await action.Should().CompleteWithinAsync(1.Seconds());
+        }
+
+        [Fact]
+        public async Task When_task_completes_without_exception_it_should_fail()
+        {
+            // Arrange
+            var timer = new FakeClock();
+            var taskFactory = new TaskCompletionSource<bool>();
+
+            // Act
+            Func<Task> action = () =>
+            {
+                return taskFactory
+                    .Awaiting(t => (Task)t.Task)
+                    .Should(timer).ThrowAsync<InvalidOperationException>();
+            };
+            taskFactory.SetResult(true);
+            timer.Complete();
+
+            // Assert
+            await action.Should().ThrowAsync<XunitException>().WithMessage(
+                "Expected a <System.InvalidOperationException> to be thrown, but no exception was thrown.");
+        }
+    }
+
+    public class ThrowWithinAsync
+    {
+        [Fact]
+        public async Task When_task_throws_fast_it_should_succeed()
+        {
+            // Arrange
+            var timer = new FakeClock();
+            var taskFactory = new TaskCompletionSource<bool>();
+
+            // Act
+            Func<Task> action = () =>
+            {
+                return taskFactory
+                    .Awaiting(t => (Task)t.Task)
+                    .Should(timer).ThrowWithinAsync<InvalidOperationException>(100.Milliseconds());
+            };
+            taskFactory.SetException(new InvalidOperationException("foo"));
+
+            // Assert
+            await action.Should().CompleteWithinAsync(1.Seconds());
+        }
+
+        [Fact]
+        public async Task When_task_not_completes_it_should_fail()
+        {
+            // Arrange
+            var timer = new FakeClock();
+            var taskFactory = new TaskCompletionSource<bool>();
+
+            // Act
+            Func<Task> action = () =>
+            {
+                return taskFactory
+                    .Awaiting(t => (Task)t.Task)
+                    .Should(timer).ThrowWithinAsync<InvalidOperationException>(100.Milliseconds());
+            };
+            timer.Delay(200.Milliseconds());
+
+            // Assert
+            await action.Should().ThrowAsync<XunitException>().WithMessage(
+                "Expected a <System.InvalidOperationException> to be thrown within 100ms, but no exception was thrown.");
+        }
+
+        [Fact]
+        public async Task When_task_completes_without_exception_it_should_fail()
+        {
+            // Arrange
+            var timer = new FakeClock();
+            var taskFactory = new TaskCompletionSource<bool>();
+
+            // Act
+            Func<Task> action = () =>
+            {
+                return taskFactory
+                    .Awaiting(t => (Task)t.Task)
+                    .Should(timer).ThrowWithinAsync<InvalidOperationException>(100.Milliseconds());
+            };
+            taskFactory.SetResult(true);
+            timer.Complete();
+
+            // Assert
+            await action.Should().ThrowAsync<XunitException>().WithMessage(
+                "Expected a <System.InvalidOperationException> to be thrown within 100ms, but no exception was thrown.");
+        }
+    }
+
     [Collection("UIFacts")]
     public class CompleteWithinAsyncUIFacts
     {
