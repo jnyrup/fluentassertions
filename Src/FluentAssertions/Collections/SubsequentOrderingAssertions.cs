@@ -14,6 +14,11 @@ public class SubsequentOrderingAssertions<T> :
         : base(actualValue, previousOrderedEnumerable)
     {
     }
+
+    internal SubsequentOrderingAssertions(IEnumerable<T> actualValue, IEnumerable<T> materialized, IOrderedEnumerable<T> previousOrderedEnumerable)
+        : base(actualValue, materialized, previousOrderedEnumerable)
+    {
+    }
 }
 
 [DebuggerNonUserCode]
@@ -23,6 +28,11 @@ public class SubsequentOrderingGenericCollectionAssertions<TCollection, T> :
 {
     public SubsequentOrderingGenericCollectionAssertions(TCollection actualValue, IOrderedEnumerable<T> previousOrderedEnumerable)
         : base(actualValue, previousOrderedEnumerable)
+    {
+    }
+
+    internal SubsequentOrderingGenericCollectionAssertions(TCollection actualValue, IEnumerable<T> materialized, IOrderedEnumerable<T> previousOrderedEnumerable)
+        : base(actualValue, materialized, previousOrderedEnumerable)
     {
     }
 }
@@ -38,6 +48,12 @@ public class SubsequentOrderingGenericCollectionAssertions<TCollection, T, TAsse
 
     public SubsequentOrderingGenericCollectionAssertions(TCollection actualValue, IOrderedEnumerable<T> previousOrderedEnumerable)
         : base(actualValue)
+    {
+        this.previousOrderedEnumerable = previousOrderedEnumerable;
+    }
+
+    internal SubsequentOrderingGenericCollectionAssertions(TCollection actualValue, IEnumerable<T> materialized, IOrderedEnumerable<T> previousOrderedEnumerable)
+        : base(actualValue, materialized)
     {
         this.previousOrderedEnumerable = previousOrderedEnumerable;
     }
