@@ -16,6 +16,27 @@ internal sealed class MaterializingEnumerable<T> : IEnumerable<T>
         enumerator = enumerable.GetEnumerator();
     }
 
+    public List<T> GetList()
+    {
+        if (!fullyEnumerated)
+        {
+            Materialize();
+        }
+
+        return materialized;
+    }
+
+    private void Materialize()
+    {
+        while (enumerator.MoveNext())
+        {
+            materialized.Add(enumerator.Current);
+        }
+
+        fullyEnumerated = true;
+        enumerator.Dispose();
+    }
+
     private IEnumerable<T> GetElements()
     {
         foreach (var item in materialized)

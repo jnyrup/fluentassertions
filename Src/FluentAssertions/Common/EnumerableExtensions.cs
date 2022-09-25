@@ -1,20 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions.Collections;
 
 namespace FluentAssertions.Common;
 
 internal static class EnumerableExtensions
 {
-    public static ICollection<T> ConvertOrCastToCollection<T>(this IEnumerable<T> source)
+    public static ICollection<T> ConvertOrCastToCollection<T>(this IEnumerable<T> source) => source switch
     {
-        return (source as ICollection<T>) ?? source.ToList();
-    }
+        ICollection<T> collection => collection,
+        MaterializingEnumerable<T> materializingEnumerable => materializingEnumerable.GetList(),
+        _ => source.ToList()
+    };
 
-    public static IList<T> ConvertOrCastToList<T>(this IEnumerable<T> source)
+    public static IList<T> ConvertOrCastToList<T>(this IEnumerable<T> source) => source switch
     {
-        return (source as IList<T>) ?? source.ToList();
-    }
+        IList<T> list => list,
+        MaterializingEnumerable<T> materializingEnumerable => materializingEnumerable.GetList(),
+        _ => source.ToList()
+    };
 
     /// <summary>
     /// Searches for the first different element in two sequences using specified <paramref name="equalityComparison" />
