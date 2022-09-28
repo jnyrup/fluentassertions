@@ -131,7 +131,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
 
         var comparands = new Comparands
         {
-            Subject = Subject,
+            Subject = Materializing,
             Expectation = expectation,
             CompileTimeType = typeof(IEnumerable<string>),
         };
@@ -182,7 +182,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
     {
         Guard.ThrowIfArgumentIsNull(config, nameof(config));
 
-        string[] repeatedExpectation = RepeatAsManyAs(expectation, Subject).ToArray();
+        string[] repeatedExpectation = RepeatAsManyAs(expectation, Materializing).ToArray();
 
         // Because we have just manually created the collection based on single element
         // we are sure that we can force strict ordering, because ordering does not matter in terms
@@ -243,7 +243,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
 
         bool success = Execute.Assertion
             .BecauseOf(because, becauseArgs)
-            .ForCondition(Subject is not null)
+            .ForCondition(Materializing is not null)
             .FailWith("Expected {context:collection} to contain a match of {0}{reason}, but found <null>.", wildcardPattern);
 
         IEnumerable<string> matched = new List<string>(0);
@@ -253,7 +253,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
                 .ForCondition(ContainsMatch(wildcardPattern))
-                .FailWith("Expected {context:collection} {0} to contain a match of {1}{reason}.", Subject, wildcardPattern);
+                .FailWith("Expected {context:collection} {0} to contain a match of {1}{reason}.", Materializing, wildcardPattern);
 
             matched = AllThatMatch(wildcardPattern);
         }
@@ -264,7 +264,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
     private bool ContainsMatch(string wildcardPattern)
     {
         using var scope = new AssertionScope();
-        return Subject.Any(item =>
+        return Materializing.Any(item =>
         {
             item.Should().Match(wildcardPattern);
             return !scope.Discard().Any();
@@ -273,7 +273,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
 
     private IEnumerable<string> AllThatMatch(string wildcardPattern)
     {
-        return Subject.Where(item =>
+        return Materializing.Where(item =>
         {
             using var scope = new AssertionScope();
             item.Should().Match(wildcardPattern);
@@ -328,7 +328,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
 
         bool success = Execute.Assertion
             .BecauseOf(because, becauseArgs)
-            .ForCondition(Subject is not null)
+            .ForCondition(Materializing is not null)
             .FailWith("Did not expect {context:collection} to contain a match of {0}{reason}, but found <null>.", wildcardPattern);
 
         if (success)
@@ -336,7 +336,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
                 .ForCondition(NotContainsMatch(wildcardPattern))
-                .FailWith("Did not expect {context:collection} {0} to contain a match of {1}{reason}.", Subject, wildcardPattern);
+                .FailWith("Did not expect {context:collection} {0} to contain a match of {1}{reason}.", Materializing, wildcardPattern);
         }
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -345,7 +345,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
     private bool NotContainsMatch(string wildcardPattern)
     {
         using var scope = new AssertionScope();
-        return Subject.All(item =>
+        return Materializing.All(item =>
         {
             item.Should().NotMatch(wildcardPattern);
             return !scope.Discard().Any();
