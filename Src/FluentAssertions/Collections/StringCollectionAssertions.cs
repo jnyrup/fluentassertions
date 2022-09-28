@@ -131,7 +131,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> :
 
         var comparands = new Comparands
         {
-            Subject = Materializing,
+            Subject = Materializing, // TODO: does this break combining BeEquivalentTo and BeSameAs?
             Expectation = expectation,
             CompileTimeType = typeof(IEnumerable<string>),
         };
