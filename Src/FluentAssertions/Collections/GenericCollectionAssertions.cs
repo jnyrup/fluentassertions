@@ -1389,7 +1389,12 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
             .Then
 
             // TODO: consider if we should implement Enumerable.AtLeast(k) to avoid unnecessary enumeration?
-            // collection is ICollection { Count: >= k} || collection.Skip(k).Any()
+            // AtLeast(k):
+            // * .NET 6: enumerable.TryGetNonEnumeratedCount(out var count) >= k || enumerable.Skip(k).Any()
+            // * older: enumerable switch
+            // *** ICollection<T> c => c.Count >= k,
+            // *** ICollection c => c.Count >= k,
+            // *** _ => enumerable.Skip(k).Any()
             .Given(subject => subject.Count())
             .ForCondition(actualCount => actualCount >= expected)
             .FailWith("but found {0}: {1}.", actualCount => actualCount, _ => Materializing)
