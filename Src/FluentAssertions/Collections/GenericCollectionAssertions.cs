@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
+//using System.Linq;
 using System.Linq.Expressions;
 using FluentAssertions.Collections.MaximumMatching;
 using FluentAssertions.Common;
@@ -1304,6 +1304,16 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
 
         if (success)
         {
+            // TODO: for each call to LINQ methods, check we have a test using OneTimeEnumerable<int>/TrackingTestEnumerable/CountingGenericEnumerable
+            // Count()
+            // Take()
+            // Skip()
+            // All()
+            // Any()
+            // Intersect()
+            // Last()
+            // First()
+            // Single()
             int actualCount = Materializing.Count();
 
             Execute.Assertion
@@ -1377,6 +1387,9 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
             .ForCondition(subject => subject is not null)
             .FailWith("but found <null>.")
             .Then
+
+            // TODO: consider if we should implement Enumerable.AtLeast(k) to avoid unnecessary enumeration?
+            // collection is ICollection { Count: >= k} || collection.Skip(k).Any()
             .Given(subject => subject.Count())
             .ForCondition(actualCount => actualCount >= expected)
             .FailWith("but found {0}: {1}.", actualCount => actualCount, _ => Materializing)
