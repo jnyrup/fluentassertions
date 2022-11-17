@@ -108,9 +108,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
     /// <summary>
     /// Asserts that the current <see cref="Func{Task}"/> throws an exception of the exact type <typeparamref name="TException"/> (and not a derived exception type).
     /// </summary>
-    /// <typeparam name="TException">
-    /// The type of the exception it should throw.
-    /// </typeparam>
+    /// <typeparam name="TException">The type of exception expected to be thrown.</typeparam>
     /// <param name="because">
     /// A formatted phrase as is supported by <see cref="string.Format(string,object[])" /> explaining why the assertion
     /// is needed. If the phrase does not start with the word <i>because</i>, it is prepended automatically.
@@ -147,6 +145,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
     /// <summary>
     /// Asserts that the current <see cref="Func{Task}"/> throws an exception of type <typeparamref name="TException"/>.
     /// </summary>
+    /// <typeparam name="TException">The type of exception expected to be thrown.</typeparam>
     /// <param name="because">
     /// A formatted phrase as is supported by <see cref="string.Format(string,object[])" /> explaining why the assertion
     /// is needed. If the phrase does not start with the word <i>because</i>, it is prepended automatically.
@@ -170,6 +169,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
     /// <summary>
     /// Asserts that the current <see cref="Func{Task}"/> throws an exception of type <typeparamref name="TException"/>.
     /// </summary>
+    /// <typeparam name="TException">The type of exception expected to be thrown.</typeparam>
     /// <param name="timeSpan">The allowed time span for the operation.</param>
     /// <param name="because">
     /// A formatted phrase as is supported by <see cref="string.Format(string,object[])" /> explaining why the assertion
@@ -224,6 +224,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
     /// <summary>
     /// Asserts that the current <see cref="Func{Task}"/> does not throw an exception of type <typeparamref name="TException"/>.
     /// </summary>
+    /// <typeparam name="TException">The type of exception expected to not be thrown.</typeparam>
     /// <param name="because">
     /// A formatted phrase as is supported by <see cref="string.Format(string,object[])" /> explaining why the assertion
     /// is needed. If the phrase does not start with the word <i>because</i>, it is prepended automatically.
