@@ -130,7 +130,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to throw exactly {0}{reason}, but found <null>.", expectedType);
 
-        Exception exception = await InvokeWithInterceptionAsync(Subject, TimeSpan.MaxValue);
+        Exception exception = await InvokeWithInterceptionAsync(Subject);
 
         Execute.Assertion
             .ForCondition(exception is not null)
@@ -162,8 +162,8 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} to throw {0}{reason}, but found <null>.", typeof(TException));
 
-        Exception exception = await InvokeWithInterceptionAsync(Subject, TimeSpan.MaxValue);
-        return ThrowInternal<TException>(exception, TimeSpan.MaxValue, because, becauseArgs);
+        Exception exception = await InvokeWithInterceptionAsync(Subject);
+        return ThrowInternal<TException>(exception, because, becauseArgs);
     }
 
     /// <summary>
@@ -188,7 +188,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
             .FailWith("Expected {context} to throw {0} within {1}{reason}, but found <null>.",
                 typeof(TException), timeSpan);
 
-        Exception exception = await InvokeWithInterceptionAsync(Subject, timeSpan);
+        Exception exception = await InvokeWithInterceptionAsync(timeSpan);
         return ThrowInternal<TException>(exception, timeSpan, because, becauseArgs);
     }
 
@@ -303,7 +303,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
 
             while (invocationEndTime is null || invocationEndTime < waitTime)
             {
-                exception = await InvokeWithInterceptionAsync(Subject, TimeSpan.MaxValue);
+                exception = await InvokeWithInterceptionAsync(Subject);
                 if (exception is null)
                 {
                     return new AndConstraint<TAssertions>((TAssertions)this);
@@ -353,7 +353,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         return true;
     }
 
-    private async Task<Exception> InvokeWithInterceptionAsync(Func<Task> action, TimeSpan timeSpan)
+    private static async Task<Exception> InvokeWithInterceptionAsync(Func<Task> action)
     {
         try
         {
@@ -369,30 +369,50 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
                     ? CallerIdentifier.OverrideStackSearchUsingCurrentScope()
                     : default)
             {
-                if (timeSpan == TimeSpan.MaxValue)
+                await action();
+            }
+
+            return null;
+        }
+        catch (Exception exception)
+        {
+            return exception;
+        }
+    }
+
+    private async Task<Exception> InvokeWithInterceptionAsync(TimeSpan timeSpan)
+    {
+        try
+        {
+            // For the duration of this nested invocation, configure CallerIdentifier
+            // to match the contents of the subject rather than our own call site.
+            //
+            //   Func<Task> action = async () => await subject.Should().BeSomething();
+            //   await action.Should().ThrowAsync<Exception>();
+            //
+            // If an assertion failure occurs, we want the message to talk about "subject"
+            // not "await action".
+            using (CallerIdentifier.OnlyOneFluentAssertionScopeOnCallStack()
+                    ? CallerIdentifier.OverrideStackSearchUsingCurrentScope()
+                    : default)
+            {
+                (TTask result, TimeSpan remainingTime) = InvokeWithTimer(timeSpan);
+                if (remainingTime < TimeSpan.Zero)
                 {
-                    await action();
+                    // timeout reached without exception
+                    return null;
                 }
-                else
+
+                if (result.IsFaulted)
                 {
-                    (TTask result, TimeSpan remainingTime) = InvokeWithTimer(timeSpan);
-                    if (remainingTime < TimeSpan.Zero)
-                    {
-                        // timeout reached without exception
-                        return null;
-                    }
+                    // exception in synchronous portion
+                    return result.Exception;
+                }
 
-                    if (result.IsFaulted)
-                    {
-                        // exception in synchronous portion
-                        return result.Exception;
-                    }
-
-                    if (await CompletesWithinTimeoutAsync(result, remainingTime))
-                    {
-                        // completed without exception
-                        return null;
-                    }
+                if (await CompletesWithinTimeoutAsync(result, remainingTime))
+                {
+                    // completed without exception
+                    return null;
                 }
             }
 

@@ -45,7 +45,7 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
 
         FailIfSubjectIsAsyncVoid();
         Exception exception = InvokeSubjectWithInterception();
-        return ThrowInternal<TException>(exception, TimeSpan.MaxValue, because, becauseArgs);
+        return ThrowInternal<TException>(exception, because, becauseArgs);
     }
 
     /// <summary>

@@ -12,9 +12,8 @@ namespace FluentAssertions.Specialized;
 /// Contains a number of methods to assert that a method yields the expected result.
 /// </summary>
 [DebuggerNonUserCode]
-public abstract class
-    DelegateAssertionsBase<TDelegate, TAssertions> : ReferenceTypeAssertions<TDelegate,
-        DelegateAssertionsBase<TDelegate, TAssertions>>
+public abstract class DelegateAssertionsBase<TDelegate, TAssertions> :
+    ReferenceTypeAssertions<TDelegate, DelegateAssertionsBase<TDelegate, TAssertions>>
     where TDelegate : Delegate
     where TAssertions : DelegateAssertionsBase<TDelegate, TAssertions>
 {
@@ -29,21 +28,37 @@ public abstract class
 
     private protected IClock Clock { get; }
 
-    protected ExceptionAssertions<TException> ThrowInternal<TException>(
-        Exception exception, TimeSpan timeSpan, string because, object[] becauseArgs)
+    private protected ExceptionAssertions<TException> ThrowInternal<TException>(Exception exception, TimeSpan timeSpan, string because, object[] becauseArgs)
         where TException : Exception
     {
         TException[] expectedExceptions = extractor.OfType<TException>(exception).ToArray();
 
-        AssertionScope becauseOf = Execute.Assertion
-            .BecauseOf(because, becauseArgs);
-        AssertionScope expectation =
-            timeSpan == TimeSpan.MaxValue
-                ? becauseOf.WithExpectation("Expected a <{0}> to be thrown{reason}, ",
-                    typeof(TException))
-                : becauseOf.WithExpectation("Expected a <{0}> to be thrown within {1}{reason}, ",
-                    typeof(TException), timeSpan);
-        expectation
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected a <{0}> to be thrown within {1}{reason}, ",
+                typeof(TException), timeSpan)
+            .ForCondition(exception is not null)
+            .FailWith("but no exception was thrown.")
+            .Then
+            .ForCondition(expectedExceptions.Any())
+            .FailWith("but found <{0}>: {1}{2}.",
+                exception?.GetType(),
+                Environment.NewLine,
+                exception)
+            .Then
+            .ClearExpectation();
+
+        return new ExceptionAssertions<TException>(expectedExceptions);
+    }
+
+    protected ExceptionAssertions<TException> ThrowInternal<TException>(Exception exception, string because, object[] becauseArgs)
+        where TException : Exception
+    {
+        TException[] expectedExceptions = extractor.OfType<TException>(exception).ToArray();
+
+        Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation("Expected a <{0}> to be thrown{reason}, ", typeof(TException))
             .ForCondition(exception is not null)
             .FailWith("but no exception was thrown.")
             .Then
