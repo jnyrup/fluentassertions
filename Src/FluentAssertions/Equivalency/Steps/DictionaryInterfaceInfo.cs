@@ -49,7 +49,7 @@ internal class DictionaryInterfaceInfo
                 $"use for equivalence.{Environment.NewLine}The following IDictionary interfaces are implemented: {string.Join(", ", (IEnumerable<DictionaryInterfaceInfo>)interfaces)}");
         }
 
-        if (interfaces.Length == 1)
+        if (interfaces.Length is 1)
         {
             result = interfaces.Single();
 
@@ -84,7 +84,7 @@ internal class DictionaryInterfaceInfo
             return false;
         }
 
-        if (suitableDictionaryInterfaces.Length == 0)
+        if (suitableDictionaryInterfaces.Length is 0)
         {
             return false;
         }

@@ -135,7 +135,7 @@ internal class MaximumMatchingSolver<TValue>
 
         public bool TryDequeueUnMatchedPredicate(out Predicate<TValue> unmatchedPredicate)
         {
-            if (unmatchedPredicatesQueue.Count == 0)
+            if (unmatchedPredicatesQueue.Count is 0)
             {
                 unmatchedPredicate = null;
                 return false;

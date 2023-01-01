@@ -68,7 +68,7 @@ internal static class Guard
 
     public static void ThrowIfArgumentIsEmpty(string str, string paramName, string message)
     {
-        if (str.Length == 0)
+        if (str.Length is 0)
         {
             throw new ArgumentException(message, paramName);
         }

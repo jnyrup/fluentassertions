@@ -35,7 +35,7 @@ internal sealed class Node
             }
         }
 
-        if (resultBuilder.Length == 0)
+        if (resultBuilder.Length is 0)
         {
             return "/";
         }

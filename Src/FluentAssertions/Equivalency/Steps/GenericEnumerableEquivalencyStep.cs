@@ -26,7 +26,7 @@ public class GenericEnumerableEquivalencyStep : IEquivalencyStep
         Type[] interfaceTypes = GetIEnumerableInterfaces(expectedType);
 
         AssertionScope.Current
-            .ForCondition(interfaceTypes.Length == 1)
+            .ForCondition(interfaceTypes.Length is 1)
             .FailWith(() => new FailReason("{context:Expectation} implements {0}, so cannot determine which one " +
                 "to use for asserting the equivalency of the collection. ",
                 interfaceTypes.Select(type => "IEnumerable<" + type.GetGenericArguments().Single() + ">")));

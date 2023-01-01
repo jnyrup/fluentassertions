@@ -212,7 +212,7 @@ public class ConstraintEquivalencyStep : EquivalencyStep<Constraint>
         {
             failureMessage.Append("Expected {context:constraint} to include ");
 
-            if (missingColumnNames.Count == 1)
+            if (missingColumnNames.Count is 1)
             {
                 failureMessage.Append("column ").Append(missingColumnNames.Single());
             }
@@ -222,7 +222,7 @@ public class ConstraintEquivalencyStep : EquivalencyStep<Constraint>
             }
 
             failureMessage.Append("{reason}, but constraint does not include ");
-            failureMessage.Append((missingColumnNames.Count == 1)
+            failureMessage.Append((missingColumnNames.Count is 1)
                 ? "that column. "
                 : "these columns. ");
         }
@@ -231,7 +231,7 @@ public class ConstraintEquivalencyStep : EquivalencyStep<Constraint>
         {
             failureMessage.Append("Did not expect {context:constraint} to include ");
 
-            if (extraColumnNames.Count == 1)
+            if (extraColumnNames.Count is 1)
             {
                 failureMessage.Append("column ").Append(extraColumnNames.Single());
             }
@@ -243,7 +243,7 @@ public class ConstraintEquivalencyStep : EquivalencyStep<Constraint>
             failureMessage.Append("{reason}, but it does.");
         }
 
-        bool successful = failureMessage.Length == 0;
+        bool successful = failureMessage.Length is 0;
 
         AssertionScope.Current
             .ForCondition(successful)

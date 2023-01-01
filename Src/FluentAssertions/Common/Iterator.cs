@@ -44,7 +44,7 @@ internal class Iterator<T> : IEnumerator<T>
 
     public int Index { get; private set; }
 
-    public bool IsFirst => Index == 0;
+    public bool IsFirst => Index is 0;
 
     public bool IsLast => (hasCurrent && !hasNext) || HasReachedMaxItems;
 

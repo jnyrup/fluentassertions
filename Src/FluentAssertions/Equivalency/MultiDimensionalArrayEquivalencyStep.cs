@@ -13,14 +13,14 @@ internal class MultiDimensionalArrayEquivalencyStep : IEquivalencyStep
 {
     public EquivalencyResult Handle(Comparands comparands, IEquivalencyValidationContext context, IEquivalencyValidator nestedValidator)
     {
-        if (comparands.Expectation is not Array expectationAsArray || expectationAsArray?.Rank == 1)
+        if (comparands.Expectation is not Array expectationAsArray || expectationAsArray?.Rank is 1)
         {
             return EquivalencyResult.ContinueWithNext;
         }
 
         if (AreComparable(comparands, expectationAsArray))
         {
-            if (expectationAsArray.Length == 0)
+            if (expectationAsArray.Length is 0)
             {
                 return EquivalencyResult.AssertionCompleted;
             }

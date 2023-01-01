@@ -22,7 +22,7 @@ public class MultidimensionalArrayFormatter : IValueFormatter
     {
         var arr = (Array)value;
 
-        if (arr.Length == 0)
+        if (arr.Length is 0)
         {
             formattedGraph.AddFragment("{empty}");
             return;

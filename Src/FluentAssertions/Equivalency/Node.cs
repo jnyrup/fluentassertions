@@ -50,7 +50,7 @@ public class Node : INode
         {
             // If the root is a collection, we need treat the objects in that collection as the root of the graph because all options
             // refer to the type of the collection items.
-            return PathAndName.Length == 0 || (RootIsCollection && IsFirstIndex);
+            return PathAndName.Length is 0 || (RootIsCollection && IsFirstIndex);
         }
     }
 

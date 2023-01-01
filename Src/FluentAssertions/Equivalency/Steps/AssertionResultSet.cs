@@ -56,5 +56,5 @@ internal class AssertionResultSet
     /// <summary>
     /// Gets a value indicating whether this collection contains a set without any failures at all.
     /// </summary>
-    public bool ContainsSuccessfulSet() => set.Values.Any(v => v.Length == 0);
+    public bool ContainsSuccessfulSet() => set.Values.Any(v => v.Length is 0);
 }

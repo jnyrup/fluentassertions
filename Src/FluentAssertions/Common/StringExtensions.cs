@@ -78,12 +78,12 @@ internal static class StringExtensions
     /// </remarks>
     public static string Combine(this string @this, string other, string separator = ".")
     {
-        if (@this.Length == 0)
+        if (@this.Length is 0)
         {
             return (other.Length != 0) ? other : string.Empty;
         }
 
-        if (other.Length == 0)
+        if (other.Length is 0)
         {
             return @this;
         }
@@ -101,7 +101,7 @@ internal static class StringExtensions
     /// </summary>
     public static string Capitalize(this string @this)
     {
-        if (@this.Length == 0)
+        if (@this.Length is 0)
         {
             return @this;
         }

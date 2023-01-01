@@ -76,7 +76,7 @@ public class ConversionSelector
 
     public bool RequiresConversion(Comparands comparands, INode currentNode)
     {
-        if (inclusions.Count == 0)
+        if (inclusions.Count is 0)
         {
             return false;
         }
@@ -88,7 +88,7 @@ public class ConversionSelector
 
     public override string ToString()
     {
-        if (inclusions.Count == 0 && exclusions.Count == 0)
+        if (inclusions.Count is 0 && exclusions.Count is 0)
         {
             return "Without automatic conversion.";
         }

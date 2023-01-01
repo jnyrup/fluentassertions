@@ -45,7 +45,7 @@ internal class StringEqualityValidator : StringValidator
         int indexOfMismatch = Subject.IndexOfFirstMismatch(Expected, comparisonMode);
 
         // If there is no difference it means that expected starts with subject and subject is shorter than expected
-        if (indexOfMismatch == -1)
+        if (indexOfMismatch is -1)
         {
             // Subject is shorter so we point at its last character.
             // We would like to point at next character as it is the real

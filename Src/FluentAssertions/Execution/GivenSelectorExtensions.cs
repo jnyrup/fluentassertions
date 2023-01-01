@@ -19,10 +19,10 @@ internal static class GivenSelectorExtensions
         this GivenSelector<ICollection<T>> givenSelector, int length)
     {
         return givenSelector
-            .ForCondition(items => (items.Count > 0) || (length == 0))
+            .ForCondition(items => (items.Count > 0) || (length is 0))
             .FailWith("but found empty collection.")
             .Then
-            .ForCondition(items => (items.Count == 0) || (length > 0))
+            .ForCondition(items => (items.Count is 0) || (length > 0))
             .FailWith("but found {0}.", items => items);
     }
 
@@ -65,7 +65,7 @@ internal static class GivenSelectorExtensions
     {
         return givenSelector
             .Given<ICollection<TActual>>(actual => new CollectionWithIndex<TActual>(actual, findIndex(actual, expected)))
-            .ForCondition(diff => diff.As<CollectionWithIndex<TActual>>().Index == -1)
+            .ForCondition(diff => diff.As<CollectionWithIndex<TActual>>().Index is -1)
             .FailWith("but {0} differs at index {1}.",
                 diff => diff.As<CollectionWithIndex<TActual>>().Items,
                 diff => diff.As<CollectionWithIndex<TActual>>().Index);

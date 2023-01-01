@@ -931,7 +931,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
                 T expectedItem = expectedItems[index];
                 subjectIndex = IndexOf(actualItems, expectedItem, startIndex: subjectIndex);
 
-                if (subjectIndex == -1)
+                if (subjectIndex is -1)
                 {
                     Execute.Assertion
                         .BecauseOf(because, becauseArgs)
@@ -985,7 +985,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
         {
             IList<T> expectedItems = expected.ConvertOrCastToList();
 
-            if (expectedItems.Count == 0)
+            if (expectedItems.Count is 0)
             {
                 return new AndConstraint<TAssertions>((TAssertions)this);
             }
@@ -2284,7 +2284,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
                         .WithExpectation("Expected {context:collection} {0} not to contain equivalent of {1}{reason}, ", Subject, unexpected)
                         .AddReportable("configuration", () => options.ToString());
 
-                    if (foundIndices.Count == 1)
+                    if (foundIndices.Count is 1)
                     {
                         Execute.Assertion
                             .FailWith("but found one at index {0}.", foundIndices[0]);
@@ -2353,7 +2353,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
             {
                 subjectIndex = IndexOf(actualItems, unexpectedItem, startIndex: subjectIndex);
 
-                if (subjectIndex == -1)
+                if (subjectIndex is -1)
                 {
                     return new AndConstraint<TAssertions>((TAssertions)this);
                 }
@@ -2482,7 +2482,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
 
             Execute.Assertion
                 .BecauseOf(because, becauseArgs)
-                .ForCondition(values.Length == 0)
+                .ForCondition(values.Length is 0)
                 .FailWith("Expected {context:collection} not to contain <null>s on {0}{reason}, but found {1}.",
                     predicate.Body, values);
         }
@@ -3246,7 +3246,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
     {
         string orderString = propertyExpression.GetMemberPath().ToString();
 
-        orderString = orderString == "\"\"" ? string.Empty : "by " + orderString;
+        orderString = orderString is "\"\"" ? string.Empty : "by " + orderString;
 
         return orderString;
     }
@@ -3472,7 +3472,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> :
             int previousSubjectIndex = startIndex;
             startIndex = IndexOf(actualItems, unexpectedItem, startIndex: startIndex);
 
-            if (startIndex == -1 || !previousSubjectIndex.IsConsecutiveTo(startIndex))
+            if (startIndex is -1 || !previousSubjectIndex.IsConsecutiveTo(startIndex))
             {
                 return index;
             }

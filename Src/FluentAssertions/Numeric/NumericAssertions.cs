@@ -58,7 +58,7 @@ public class NumericAssertions<T, TAssertions>
     public AndConstraint<TAssertions> Be(T expected, string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
-            .ForCondition(Subject?.CompareTo(expected) == 0)
+            .ForCondition(Subject?.CompareTo(expected) is 0)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context:value} to be {0}{reason}, but found {1}" + GenerateDifferenceMessage(expected), expected, Subject);
 
@@ -79,7 +79,7 @@ public class NumericAssertions<T, TAssertions>
     public AndConstraint<TAssertions> Be(T? expected, string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
-            .ForCondition(expected is T value ? Subject?.CompareTo(value) == 0 : !Subject.HasValue)
+            .ForCondition(expected is T value ? Subject?.CompareTo(value) is 0 : !Subject.HasValue)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context:value} to be {0}{reason}, but found {1}" + GenerateDifferenceMessage(expected), expected, Subject);
 

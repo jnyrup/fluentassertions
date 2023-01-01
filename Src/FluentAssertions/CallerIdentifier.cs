@@ -161,7 +161,7 @@ public static class CallerIdentifier
 
     private static bool IsCompilerServices(StackFrame frame)
     {
-        return frame.GetMethod()?.DeclaringType?.Namespace == "System.Runtime.CompilerServices";
+        return frame.GetMethod()?.DeclaringType?.Namespace is "System.Runtime.CompilerServices";
     }
 
     private static string ExtractVariableNameFrom(StackFrame frame)
@@ -187,7 +187,7 @@ public static class CallerIdentifier
         string fileName = frame.GetFileName();
         int expectedLineNumber = frame.GetFileLineNumber();
 
-        if (string.IsNullOrEmpty(fileName) || (expectedLineNumber == 0))
+        if (string.IsNullOrEmpty(fileName) || (expectedLineNumber is 0))
         {
             return null;
         }

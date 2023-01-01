@@ -44,7 +44,7 @@ public class TimeSpanValueFormatter : IValueFormatter
 
         string sign = (timeSpan.Ticks >= 0) ? string.Empty : "-";
 
-        if (fragments.Count == 1)
+        if (fragments.Count is 1)
         {
             formattedGraph.AddFragment(sign + fragments.Single());
         }

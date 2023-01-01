@@ -1220,7 +1220,7 @@ public class StringAssertions<TAssertions> : ReferenceTypeAssertions<string, TAs
     public AndConstraint<TAssertions> BeEmpty(string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
-            .ForCondition(Subject?.Length == 0)
+            .ForCondition(Subject?.Length is 0)
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context:string} to be empty{reason}, but found {0}.", Subject);
 
