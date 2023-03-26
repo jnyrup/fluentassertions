@@ -51,6 +51,10 @@ class Build : NukeBuild
     [Secret]
     readonly string NuGetApiKey;
 
+    [Parameter("The key to push to Stryker")]
+    [Secret]
+    readonly string StrykerApiKey;
+
     [Solution(GenerateProjects = true)]
     readonly Solution Solution;
 
@@ -261,6 +265,38 @@ class Build : NukeBuild
             Information($"Code coverage report: \x1b]8;;file://{link.Replace('\\', '/')}\x1b\\{link}\x1b]8;;\x1b\\");
         });
 
+    Target MutationTests => _ => _
+        .OnlyWhenDynamic(() => EnvironmentInfo.IsWin && (RunAllTargets || HasSourceChanges))
+        .Executes(() =>
+        {
+            var strykerPath = ToolPathResolver.GetPackageExecutable("dotnet-stryker", "Stryker.CLI.dll", framework: "net6.0");
+            string arguments =
+                $"{strykerPath}" +
+                $" --project {Solution.Core.FluentAssertions}" +
+                $" --test-project {Solution.Specs.FluentAssertions_Specs}" +
+                $" --test-project {Solution.Specs.FluentAssertions_Equivalency_Specs}" +
+                $" --config-file {BuildProjectDirectory / "stryker-config.json"}";
+
+            if (IsPullRequest)
+            {
+                arguments +=
+                    " --reporter dashboard" +
+                    $" --dashboard-api-key {StrykerApiKey}";
+                    //$" --version {GitHubActions.Sha}"+
+                    //$" --with-baseline:{GitHubActions.Sha}";
+            }
+            else
+            {
+                arguments +=
+                    " --reporter html" +
+                    " --reporter progress" +
+                    $" --output {Solution.Directory / "StrykerOutput"}";
+            }
+
+            DotNet(arguments,
+                workingDirectory: Solution.Core.FluentAssertions.Directory);
+        });
+
     Target TestFrameworks => _ => _
         .DependsOn(Compile)
         .OnlyWhenDynamic(() => RunAllTargets || HasSourceChanges)
@@ -310,6 +346,7 @@ class Build : NukeBuild
         .DependsOn(TestFrameworks)
         .DependsOn(UnitTests)
         .DependsOn(CodeCoverage)
+        .DependsOn(MutationTests)
         .DependsOn(CalculateNugetVersion)
         .OnlyWhenDynamic(() => RunAllTargets || HasSourceChanges)
         .Executes(() =>
