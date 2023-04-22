@@ -28,6 +28,7 @@ jobs:
       run: ./build.ps1
       env:
         NuGetApiKey: ${{ secrets.NUGETAPIKEY }}
+        StrykerApiKey: ${{ secrets.STRYKERAPIKEY }}
 
     - name: Check for 'lcov.info' existence
       id: check_files

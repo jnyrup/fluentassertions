@@ -1,0 +1,21 @@
+{
+    "stryker-config": {
+        "project-info": {
+            "name": "github.com/jnyrup/fluentassertions"
+        },
+        "mutation-level": "Basic",
+        "ignore-methods": [
+        ],
+        "ignore-mutations": [
+            "Arithmetic",
+            "Block",
+            "Equality",
+            "Logical"
+        ],
+        "target-framework": "net6.0",
+        "thresholds": {
+            "high": 100,
+            "low": 100
+        }
+    }
+}

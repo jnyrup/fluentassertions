@@ -78,6 +78,7 @@
               "Clean",
               "CodeCoverage",
               "Compile",
+              "MutationTests",
               "Pack",
               "Push",
               "Restore",
@@ -93,6 +94,11 @@
           "type": "string",
           "description": "Path to a solution file that is automatically loaded"
         },
+        "StrykerApiKey": {
+          "type": "string",
+          "description": "The key to push to Stryker",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
         "Target": {
           "type": "array",
           "description": "List of targets to be invoked. Default is '{default_target}'",
@@ -104,6 +110,7 @@
               "Clean",
               "CodeCoverage",
               "Compile",
+              "MutationTests",
               "Pack",
               "Push",
               "Restore",
