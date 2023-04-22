@@ -266,7 +266,8 @@ class Build : NukeBuild
         });
 
     Target MutationTests => _ => _
-        .OnlyWhenDynamic(() => EnvironmentInfo.IsWin && (RunAllTargets || HasSourceChanges))
+        .After(CodeCoverage)
+        .OnlyWhenDynamic(() => RunAllTargets || HasSourceChanges)
         .Executes(() =>
         {
             var strykerPath = ToolPathResolver.GetPackageExecutable("dotnet-stryker", "Stryker.CLI.dll", framework: "net6.0");
@@ -277,24 +278,37 @@ class Build : NukeBuild
                 $" --test-project {Solution.Specs.FluentAssertions_Equivalency_Specs}" +
                 $" --config-file {BuildProjectDirectory / "stryker-config.json"}";
 
+            // push to develop: dashboard
+            // PR: dashboard + --with-baseline
+            // local: write to disk
+
+            // TODO: how to get FA Stryker API key?
+            // TODO: remove project from stryker-config.json
+
             if (IsPullRequest)
             {
                 arguments +=
                     " --reporter dashboard" +
                     $" --dashboard-api-key {StrykerApiKey}";
-                    //$" --version {GitHubActions.Sha}"+
-                    //$" --with-baseline:{GitHubActions.Sha}";
+                //$" --version {GitHubActions.Sha}"+
+                //$" --with-baseline:{GitHubActions.Sha}";
             }
             else
             {
                 arguments +=
                     " --reporter html" +
-                    " --reporter progress" +
                     $" --output {Solution.Directory / "StrykerOutput"}";
             }
 
-            DotNet(arguments,
-                workingDirectory: Solution.Core.FluentAssertions.Directory);
+            DotNet(arguments, workingDirectory: Solution.Core.FluentAssertions.Directory, customLogger: (type, msg) =>
+            {
+                // [MemberData] does not generate perfect data for Stryker, which generates a lot of noise in the output
+                // https://github.com/stryker-mutator/stryker-net/issues/843
+                if (!msg.Contains("Some mutations were executed outside any test"))
+                {
+                    DotNetTasks.DotNetLogger(type, msg);
+                }
+            });
         });
 
     Target TestFrameworks => _ => _
