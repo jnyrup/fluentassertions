@@ -50,6 +50,7 @@ sidebar:
 * One overload of the `AssertionScope` constructor would not create an actual scope associated with the thread - [#2607](https://github.com/fluentassertions/fluentassertions/pull/2607)
 * Fixed `ThrowWithinAsync` not respecting `OperationCanceledException` - [#2614](https://github.com/fluentassertions/fluentassertions/pull/2614)
 * Fixed using `BeEquivalentTo` with an `IEqualityComparer` targeting nullable types - [#2648](https://github.com/fluentassertions/fluentassertions/pull/2648)
+* Fixed dictionary keys containing curly braces not being formattable - [#TEST](https://github.com/fluentassertions/fluentassertions/pull/TEST)
 
 ### Breaking Changes (for users)
 * Moved support for `DataSet`, `DataTable`, `DataRow` and `DataColumn` into a new package `FluentAssertions.DataSet` - [#2267](https://github.com/fluentassertions/fluentassertions/pull/2267)

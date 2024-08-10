@@ -1277,6 +1277,36 @@ public class DictionarySpecs
 
         subject.Should().BeEquivalentTo(expected);
     }
+
+    [Fact]
+    public void Can_format_a_key_containing_curly_braces_when_value_is_null()
+    {
+        // Arrange
+        var subject = new Dictionary<string, string> { ["{}"] = null };
+        var expected = new Dictionary<string, string> { ["{}"] = "" };
+
+        // Act
+        var act = () => subject.Should().BeEquivalentTo(expected);
+
+        // Assert
+        act.Should().Throw<XunitException>()
+            .WithMessage("Expected subject[{}] to be \"\", but found <null>*");
+    }
+
+    [Fact]
+    public void Can_format_a_key_containing_curly_braces_when_value_is_not_a_string()
+    {
+        // Arrange
+        var subject = new Dictionary<string, object> { ["{}"] = new object() };
+        var expected = new Dictionary<string, object> { ["{}"] = "a" };
+
+        // Act
+        var act = () => subject.Should().BeEquivalentTo(expected);
+
+        // Assert
+        act.Should().Throw<XunitException>()
+            .WithMessage("Expected subject[{}] to be System.String, but found System.Object*");
+    }
 }
 
 internal class NonGenericChildDictionary : Dictionary<string, int>

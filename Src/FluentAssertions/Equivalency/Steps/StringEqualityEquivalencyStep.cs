@@ -76,8 +76,9 @@ public class StringEqualityEquivalencyStep : IEquivalencyStep
 
         if (onlyOneNull)
         {
+            AssertionScope.Current.AddNonReportable("ValidateAgainstNulls", currentNode.Description);
             AssertionScope.Current.FailWith(
-                $"Expected {currentNode.Description} to be {{0}}{{reason}}, but found {{1}}.", expected, subject);
+                "Expected {ValidateAgainstNulls} to be {0}{reason}, but found {1}.", expected, subject);
 
             return false;
         }
@@ -92,9 +93,11 @@ public class StringEqualityEquivalencyStep : IEquivalencyStep
             return true;
         }
 
+        AssertionScope.Current.AddNonReportable("ValidateSubjectIsString", currentNode);
+
         return
             AssertionScope.Current
-                .FailWith($"Expected {currentNode} to be {{0}}, but found {{1}}.",
+                .FailWith("Expected {ValidateSubjectIsString} to be {0}{reason}, but found {1}.",
                     comparands.RuntimeType, comparands.Subject.GetType());
     }
 }
