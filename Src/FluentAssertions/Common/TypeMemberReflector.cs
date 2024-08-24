@@ -16,65 +16,84 @@ internal sealed class TypeMemberReflector
 
     public TypeMemberReflector(Type typeToReflect, MemberVisibility visibility)
     {
-        NonPrivateProperties = LoadNonPrivateProperties(typeToReflect, visibility);
-        NonPrivateFields = LoadNonPrivateFields(typeToReflect, visibility);
-        NonPrivateMembers = NonPrivateProperties.Concat<MemberInfo>(NonPrivateFields).ToArray();
+        Properties = LoadProperties(typeToReflect, visibility);
+        Fields = LoadFields(typeToReflect, visibility);
+        Members = Properties.Concat<MemberInfo>(Fields).ToArray();
     }
 
-    public MemberInfo[] NonPrivateMembers { get; }
+    public MemberInfo[] Members { get; }
 
-    public PropertyInfo[] NonPrivateProperties { get; }
+    public PropertyInfo[] Properties { get; }
 
-    public FieldInfo[] NonPrivateFields { get; }
+    public FieldInfo[] Fields { get; }
 
-    private static PropertyInfo[] LoadNonPrivateProperties(Type typeToReflect, MemberVisibility visibility)
+    private static PropertyInfo[] LoadProperties(Type typeToReflect, MemberVisibility visibility)
     {
-        IEnumerable<PropertyInfo> query =
-            from propertyInfo in GetPropertiesFromHierarchy(typeToReflect, visibility)
-            where HasNonPrivateGetter(propertyInfo)
-            where !propertyInfo.IsIndexer()
-            select propertyInfo;
+        List<PropertyInfo> query = GetPropertiesFromHierarchy(typeToReflect, visibility);
 
         return query.ToArray();
     }
 
     private static List<PropertyInfo> GetPropertiesFromHierarchy(Type typeToReflect, MemberVisibility memberVisibility)
     {
-        bool includeInternals = memberVisibility.HasFlag(MemberVisibility.Internal);
+        bool includeInternal = memberVisibility.HasFlag(MemberVisibility.Internal);
+        bool includeExplicitlyImplemented = memberVisibility.HasFlag(MemberVisibility.ExplicitlyImplemented);
 
         return GetMembersFromHierarchy(typeToReflect, type =>
         {
-            return type
-                .GetProperties(AllInstanceMembersFlag | BindingFlags.DeclaredOnly)
-                .Where(property => property.GetMethod?.IsPrivate == false)
-                .Where(property => includeInternals || property.GetMethod is { IsAssembly: false, IsFamilyOrAssembly: false })
-                .ToArray();
+            return
+                from p in type.GetProperties(AllInstanceMembersFlag | BindingFlags.DeclaredOnly)
+                where p.GetMethod is { } getMethod
+                    && (IsPublic(getMethod) || (includeExplicitlyImplemented && IsExplicitlyImplemented(getMethod)))
+                    && (includeInternal || !IsInternal(getMethod))
+                    && !p.IsIndexer()
+                orderby IsExplicitImplementation(p)
+                select p;
         });
     }
 
-    private static FieldInfo[] LoadNonPrivateFields(Type typeToReflect, MemberVisibility visibility)
+    private static bool IsPublic(MethodBase getMethod) =>
+        !getMethod.IsPrivate && !getMethod.IsFamily && !getMethod.IsFamilyAndAssembly;
+
+    private static bool IsExplicitlyImplemented(MethodBase getMethod) =>
+        getMethod.IsPrivate && getMethod.IsFinal;
+
+    private static bool IsInternal(MethodBase getMethod) =>
+        getMethod.IsAssembly || getMethod.IsFamilyOrAssembly;
+
+    private static bool IsExplicitImplementation(PropertyInfo property)
     {
-        IEnumerable<FieldInfo> query =
-            from fieldInfo in GetFieldsFromHierarchy(typeToReflect, visibility)
-            where !fieldInfo.IsPrivate
-            where !fieldInfo.IsFamily
-            select fieldInfo;
+        return property.GetMethod!.IsPrivate &&
+            property.SetMethod?.IsPrivate != false &&
+            property.Name.Contains('.', StringComparison.Ordinal);
+    }
+
+    private static FieldInfo[] LoadFields(Type typeToReflect, MemberVisibility visibility)
+    {
+        List<FieldInfo> query = GetFieldsFromHierarchy(typeToReflect, visibility);
 
         return query.ToArray();
     }
 
     private static List<FieldInfo> GetFieldsFromHierarchy(Type typeToReflect, MemberVisibility memberVisibility)
     {
-        bool includeInternals = memberVisibility.HasFlag(MemberVisibility.Internal);
+        bool includeInternal = memberVisibility.HasFlag(MemberVisibility.Internal);
 
         return GetMembersFromHierarchy(typeToReflect, type =>
         {
             return type
                 .GetFields(AllInstanceMembersFlag)
-                .Where(field => !field.IsPrivate)
-                .Where(field => includeInternals || (!field.IsAssembly && !field.IsFamilyOrAssembly))
-                .ToArray();
+                .Where(field => IsPublic(field))
+                .Where(field => includeInternal || !IsInternal(field));
         });
+    }
+
+    private static bool IsPublic(FieldInfo field) =>
+        !field.IsPrivate && !field.IsFamily && !field.IsFamilyAndAssembly;
+
+    private static bool IsInternal(FieldInfo field)
+    {
+        return field.IsAssembly || field.IsFamilyOrAssembly;
     }
 
     private static List<TMemberInfo> GetMembersFromHierarchy<TMemberInfo>(
@@ -146,11 +165,5 @@ internal sealed class TypeMemberReflector
         }
 
         return members;
-    }
-
-    private static bool HasNonPrivateGetter(PropertyInfo propertyInfo)
-    {
-        MethodInfo getMethod = propertyInfo.GetGetMethod(nonPublic: true);
-        return getMethod is { IsPrivate: false, IsFamily: false };
     }
 }

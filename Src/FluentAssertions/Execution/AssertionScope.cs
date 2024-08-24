@@ -28,7 +28,9 @@ public sealed class AssertionScope : IAssertionScope
 
     private static readonly AsyncLocal<AssertionScope> CurrentScope = new();
     private Func<string> callerIdentityProvider = () => CallerIdentifier.DetermineCallerIdentity();
+#pragma warning disable CA2213
     private AssertionScope parent;
+#pragma warning restore CA2213
     private Func<string> expectation;
     private string fallbackIdentifier = "object";
     private bool? succeeded;
@@ -48,25 +50,23 @@ public sealed class AssertionScope : IAssertionScope
     #endregion
 
     /// <summary>
-    /// Starts a named scope within which multiple assertions can be executed
-    /// and which will not throw until the scope is disposed.
-    /// </summary>
-    public AssertionScope(string context)
-        : this()
-    {
-        if (!string.IsNullOrEmpty(context))
-        {
-            Context = new Lazy<string>(() => context);
-        }
-    }
-
-    /// <summary>
     /// Starts an unnamed scope within which multiple assertions can be executed
     /// and which will not throw until the scope is disposed.
     /// </summary>
     public AssertionScope()
-        : this(new CollectingAssertionStrategy())
+        : this(new CollectingAssertionStrategy(), context: null)
     {
+        SetCurrentAssertionScope(this);
+    }
+
+    /// <summary>
+    /// Starts a named scope within which multiple assertions can be executed
+    /// and which will not throw until the scope is disposed.
+    /// </summary>
+    public AssertionScope(string context)
+        : this(new CollectingAssertionStrategy(), new Lazy<string>(() => context))
+    {
+        SetCurrentAssertionScope(this);
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public sealed class AssertionScope : IAssertionScope
     /// <param name="assertionStrategy">The assertion strategy for this scope.</param>
     /// <exception cref="ArgumentNullException"><paramref name="assertionStrategy"/> is <see langword="null"/>.</exception>
     public AssertionScope(IAssertionStrategy assertionStrategy)
-        : this(assertionStrategy, GetCurrentAssertionScope())
+        : this(assertionStrategy, context: null)
     {
         SetCurrentAssertionScope(this);
     }
@@ -85,30 +85,49 @@ public sealed class AssertionScope : IAssertionScope
     /// and which will not throw until the scope is disposed.
     /// </summary>
     public AssertionScope(Lazy<string> context)
-        : this()
+        : this(new CollectingAssertionStrategy(), context)
     {
-        Context = context;
+        SetCurrentAssertionScope(this);
     }
 
     /// <summary>
     /// Starts a new scope based on the given assertion strategy and parent assertion scope
     /// </summary>
     /// <param name="assertionStrategy">The assertion strategy for this scope.</param>
-    /// <param name="parent">The parent assertion scope for this scope.</param>
     /// <exception cref="ArgumentNullException"><paramref name="assertionStrategy"/> is <see langword="null"/>.</exception>
-    private AssertionScope(IAssertionStrategy assertionStrategy, AssertionScope parent)
+    private AssertionScope(IAssertionStrategy assertionStrategy, Lazy<string> context)
     {
         this.assertionStrategy = assertionStrategy
             ?? throw new ArgumentNullException(nameof(assertionStrategy));
 
-        this.parent = parent;
+        parent = GetCurrentAssertionScope();
 
         if (parent is not null)
         {
             contextData.Add(parent.contextData);
-            Context = parent.Context;
+            reason = parent.reason;
             callerIdentityProvider = parent.callerIdentityProvider;
+            FormattingOptions = parent.FormattingOptions.Clone();
+            Context = JoinContexts(parent.Context, context);
         }
+        else
+        {
+            Context = context;
+        }
+    }
+
+    private static Lazy<string> JoinContexts(Lazy<string> outer, Lazy<string> inner)
+    {
+        return (outer, inner) switch
+        {
+            (null, null) => null,
+            ({ } a, null) => a,
+            (null, { } b) => b,
+            ({ } a, { } b) => Join(a, b)
+        };
+
+        static Lazy<string> Join(Lazy<string> outer, Lazy<string> inner) =>
+            new(() => outer.Value + "/" + inner.Value);
     }
 
     /// <summary>
@@ -126,7 +145,7 @@ public sealed class AssertionScope : IAssertionScope
 #pragma warning disable CA2000 // AssertionScope should not be disposed here
         get
         {
-            return GetCurrentAssertionScope() ?? new AssertionScope(new DefaultAssertionStrategy(), parent: null);
+            return GetCurrentAssertionScope() ?? new AssertionScope(new DefaultAssertionStrategy(), context: null);
         }
 #pragma warning restore CA2000
         private set => SetCurrentAssertionScope(value);
@@ -147,10 +166,7 @@ public sealed class AssertionScope : IAssertionScope
     /// </summary>
     public FormattingOptions FormattingOptions { get; } = AssertionOptions.FormattingOptions.Clone();
 
-    internal bool Succeeded
-    {
-        get => succeeded == true;
-    }
+    internal bool Succeeded => succeeded == true;
 
     /// <summary>
     /// Adds an explanation of why the assertion is supposed to succeed to the scope.

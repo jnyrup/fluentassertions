@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using FluentAssertions.Common;
+using JetBrains.Annotations;
 using Xunit;
 using Xunit.Sdk;
 
@@ -14,6 +15,64 @@ public class SelectionRulesSpecs
 {
     public class Basic
     {
+        [Fact]
+        public void Property_names_are_case_sensitive()
+        {
+            // Arrange
+            var subject = new
+            {
+                Name = "John"
+            };
+
+            var other = new
+            {
+                name = "John"
+            };
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(other);
+
+            // Assert
+            act.Should().Throw<XunitException>().WithMessage(
+                "Expectation*subject.name**other*not have*");
+        }
+
+        [Fact]
+        public void Field_names_are_case_sensitive()
+        {
+            // Arrange
+            var subject = new ClassWithFieldInUpperCase
+            {
+                Name = "John"
+            };
+
+            var other = new ClassWithFieldInLowerCase
+            {
+                name = "John"
+            };
+
+            // Act
+            Action act = () => subject.Should().BeEquivalentTo(other);
+
+            // Assert
+            act.Should().Throw<XunitException>().WithMessage(
+                "Expectation*subject.name**other*not have*");
+        }
+
+        private class ClassWithFieldInLowerCase
+        {
+            [UsedImplicitly]
+#pragma warning disable SA1307
+            public string name;
+#pragma warning restore SA1307
+        }
+
+        private class ClassWithFieldInUpperCase
+        {
+            [UsedImplicitly]
+            public string Name;
+        }
+
         [Fact]
         public void When_a_property_is_an_indexer_it_should_be_ignored()
         {
@@ -37,6 +96,7 @@ public class SelectionRulesSpecs
 
         public class ClassWithIndexer
         {
+            [UsedImplicitly]
             public object Foo { get; set; }
 
             public string this[int n] =>
@@ -231,8 +291,10 @@ public class SelectionRulesSpecs
 
         internal class BaseClassPointingToClassWithoutProperties
         {
+            [UsedImplicitly]
             public string Name { get; set; }
 
+            [UsedImplicitly]
             public ClassWithoutProperty ClassWithoutProperty { get; } = new();
         }
 
@@ -395,6 +457,7 @@ public class SelectionRulesSpecs
 
         public class CustomType
         {
+            [UsedImplicitly]
             public string Name { get; set; }
         }
 
@@ -847,13 +910,14 @@ public class SelectionRulesSpecs
                 "internal", "protected-internal", "private", "private-protected");
 
             var expected = new ClassWithAllAccessModifiersForMembers("public", "protected",
-                "ignored-internal", "ignored-protected-internal", "private", "ignore-private-protected");
+                "ignored-internal", "ignored-protected-internal", "private", "private-protected");
 
             // Act
-            Action act = () => subject.Should().BeEquivalentTo(expected, config =>
-                config.Excluding(ctx => ctx.WhichGetterHas(CSharpAccessModifier.Internal) ||
-                    ctx.WhichGetterHas(CSharpAccessModifier.ProtectedInternal) ||
-                    ctx.WhichGetterHas(CSharpAccessModifier.PrivateProtected)));
+            Action act = () => subject.Should().BeEquivalentTo(expected, config => config
+                .IncludingInternalFields()
+                .Excluding(ctx =>
+                    ctx.WhichGetterHas(CSharpAccessModifier.Internal) ||
+                    ctx.WhichGetterHas(CSharpAccessModifier.ProtectedInternal)));
 
             // Assert
             act.Should().NotThrow();
@@ -867,14 +931,15 @@ public class SelectionRulesSpecs
                 "internal", "protected-internal", "private", "private-protected");
 
             var expected = new ClassWithAllAccessModifiersForMembers("public", "protected",
-                "ignored-internal", "ignored-protected-internal", "ignored-private", "ignore-private-protected");
+                "ignored-internal", "ignored-protected-internal", "ignored-private", "private-protected");
 
             // Act
-            Action act = () => subject.Should().BeEquivalentTo(expected, config =>
-                config.Excluding(ctx => ctx.WhichSetterHas(CSharpAccessModifier.Internal) ||
+            Action act = () => subject.Should().BeEquivalentTo(expected, config => config
+                .IncludingInternalFields()
+                .Excluding(ctx =>
+                    ctx.WhichSetterHas(CSharpAccessModifier.Internal) ||
                     ctx.WhichSetterHas(CSharpAccessModifier.ProtectedInternal) ||
-                    ctx.WhichSetterHas(CSharpAccessModifier.Private) ||
-                    ctx.WhichSetterHas(CSharpAccessModifier.PrivateProtected)));
+                    ctx.WhichSetterHas(CSharpAccessModifier.Private)));
 
             // Assert
             act.Should().NotThrow();
@@ -1300,10 +1365,13 @@ public class SelectionRulesSpecs
 
         private class ClassWithInternalProperty
         {
+            [UsedImplicitly]
             public string PublicProperty { get; set; }
 
+            [UsedImplicitly]
             internal string InternalProperty { get; set; }
 
+            [UsedImplicitly]
             protected internal string ProtectedInternalProperty { get; set; }
         }
 
@@ -1356,10 +1424,13 @@ public class SelectionRulesSpecs
 
         private class ClassWithInternalField
         {
+            [UsedImplicitly]
             public string PublicField;
 
+            [UsedImplicitly]
             internal string InternalField;
 
+            [UsedImplicitly]
             protected internal string ProtectedInternalField;
         }
 
@@ -1383,6 +1454,58 @@ public class SelectionRulesSpecs
 
             // Act / Assert
             actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void Private_protected_properties_are_ignored()
+        {
+            // Arrange
+            var subject = new ClassWithPrivateProtectedProperty("Name", 13);
+            var other = new ClassWithPrivateProtectedProperty("Name", 37);
+
+            // Act/Assert
+            subject.Should().BeEquivalentTo(other);
+        }
+
+        private class ClassWithPrivateProtectedProperty
+        {
+            public ClassWithPrivateProtectedProperty(string name, int value)
+            {
+                Name = name;
+                Value = value;
+            }
+
+            [UsedImplicitly]
+            public string Name { get; }
+
+            [UsedImplicitly]
+            private protected int Value { get; }
+        }
+
+        [Fact]
+        public void Private_protected_fields_are_ignored()
+        {
+            // Arrange
+            var subject = new ClassWithPrivateProtectedField("Name", 13);
+            var other = new ClassWithPrivateProtectedField("Name", 37);
+
+            // Act/Assert
+            subject.Should().BeEquivalentTo(other);
+        }
+
+        private class ClassWithPrivateProtectedField
+        {
+            public ClassWithPrivateProtectedField(string name, int value)
+            {
+                Name = name;
+                this.value = value;
+            }
+
+            [UsedImplicitly]
+            public string Name;
+
+            [UsedImplicitly]
+            private protected int value;
         }
     }
 
@@ -1524,26 +1647,31 @@ public class SelectionRulesSpecs
 
         private class BaseWithProperty
         {
+            [UsedImplicitly]
             public object Property { get; set; }
         }
 
         private class SubclassAHidingProperty<T> : BaseWithProperty
         {
+            [UsedImplicitly]
             public new T Property { get; set; }
         }
 
         private class BaseWithStringProperty
         {
+            [UsedImplicitly]
             public string Property { get; set; }
         }
 
         private class SubclassHidingStringProperty : BaseWithStringProperty
         {
+            [UsedImplicitly]
             public new string Property { get; set; }
         }
 
         private class AnotherBaseWithProperty
         {
+            [UsedImplicitly]
             public object Property { get; set; }
         }
 
@@ -1672,21 +1800,25 @@ public class SelectionRulesSpecs
 
         private class BaseWithField
         {
+            [UsedImplicitly]
             public string Field;
         }
 
         private class SubclassAHidingField : BaseWithField
         {
+            [UsedImplicitly]
             public new string Field;
         }
 
         private class AnotherBaseWithField
         {
+            [UsedImplicitly]
             public string Field;
         }
 
         private class SubclassBHidingField : AnotherBaseWithField
         {
+            [UsedImplicitly]
             public new string Field;
         }
     }
@@ -1763,7 +1895,95 @@ public class SelectionRulesSpecs
         }
 
         [Fact]
-        public void When_respecting_declared_types_explicit_interface_member_on_interfaced_subject_should_be_used()
+        public void Explicitly_implemented_subject_properties_are_ignored_if_a_normal_property_exists_with_the_same_name()
+        {
+            // Arrange
+            IVehicle expected = new Vehicle
+            {
+                VehicleId = 1
+            };
+
+            IVehicle subject = new ExplicitVehicle
+            {
+                VehicleId = 2 // normal property
+            };
+
+            subject.VehicleId = 1; // explicitly implemented property
+
+            // Act
+            Action action = () => subject.Should().BeEquivalentTo(expected);
+
+            // Assert
+            action.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void Explicitly_implemented_read_only_subject_properties_are_ignored_if_a_normal_property_exists_with_the_same_name()
+        {
+            // Arrange
+            IReadOnlyVehicle subject = new ExplicitReadOnlyVehicle(explicitValue: 1)
+            {
+                VehicleId = 2 // normal property
+            };
+
+            var expected = new Vehicle
+            {
+                VehicleId = 1
+            };
+
+            // Act
+            Action action = () => subject.Should().BeEquivalentTo(expected);
+
+            // Assert
+            action.Should().Throw<XunitException>();
+        }
+
+        [Fact]
+        public void Explicitly_implemented_subject_properties_are_ignored_if_only_fields_are_included()
+        {
+            // Arrange
+            var expected = new VehicleWithField
+            {
+                VehicleId = 1 // A field named like a property
+            };
+
+            var subject = new ExplicitVehicle
+            {
+                VehicleId = 2 // A real property
+            };
+
+            // Act
+            Action action = () => subject.Should().BeEquivalentTo(expected, opt => opt
+                .IncludingFields()
+                .ExcludingProperties());
+
+            // Assert
+            action.Should().Throw<XunitException>().WithMessage("*field*VehicleId*other*");
+        }
+
+        [Fact]
+        public void Explicitly_implemented_subject_properties_are_ignored_if_only_fields_are_included_and_they_may_be_missing()
+        {
+            // Arrange
+            var expected = new VehicleWithField
+            {
+                VehicleId = 1 // A field named like a property
+            };
+
+            var subject = new ExplicitVehicle
+            {
+                VehicleId = 2 // A real property
+            };
+
+            // Act / Assert
+            subject.Should().BeEquivalentTo(expected, opt => opt
+                .IncludingFields()
+                .ExcludingProperties()
+                .ExcludingMissingMembers());
+        }
+
+        [Fact]
+        public void Excluding_missing_members_does_not_affect_how_explicitly_implemented_subject_properties_are_dealt_with()
         {
             // Arrange
             IVehicle expected = new Vehicle
@@ -1779,10 +1999,10 @@ public class SelectionRulesSpecs
             subject.VehicleId = 1; // interface member
 
             // Act
-            Action action = () => subject.Should().BeEquivalentTo(expected, opt => opt.RespectingDeclaredTypes());
+            Action action = () => subject.Should().BeEquivalentTo(expected, opt => opt.ExcludingMissingMembers());
 
             // Assert
-            action.Should().NotThrow();
+            action.Should().Throw<XunitException>();
         }
 
         [Fact]
@@ -1855,29 +2075,6 @@ public class SelectionRulesSpecs
         }
 
         [Fact]
-        public void When_respecting_declared_types_explicit_interface_member_on_subject_should_not_be_used()
-        {
-            // Arrange
-            var expected = new Vehicle
-            {
-                VehicleId = 1
-            };
-
-            var subject = new ExplicitVehicle
-            {
-                VehicleId = 2
-            };
-
-            ((IVehicle)subject).VehicleId = 1;
-
-            // Act
-            Action action = () => subject.Should().BeEquivalentTo(expected, opt => opt.RespectingDeclaredTypes());
-
-            // Assert
-            action.Should().Throw<XunitException>();
-        }
-
-        [Fact]
         public void When_respecting_declared_types_explicit_interface_member_on_expectation_should_not_be_used()
         {
             // Arrange
@@ -1894,56 +2091,31 @@ public class SelectionRulesSpecs
             };
 
             // Act
-            Action action = () => subject.Should().BeEquivalentTo(expected, opt => opt.RespectingDeclaredTypes());
+            Action action = () => subject.Should().BeEquivalentTo(expected);
 
             // Assert
             action.Should().Throw<XunitException>();
         }
 
         [Fact]
-        public void When_respecting_runtime_types_explicit_interface_member_on_subject_should_not_be_used()
+        public void Can_find_explicitly_implemented_property_on_the_subject()
         {
             // Arrange
-            var expected = new Vehicle
-            {
-                VehicleId = 1
-            };
+            IPerson person = new Person();
+            person.Name = "Bob";
 
-            var subject = new ExplicitVehicle
-            {
-                VehicleId = 2
-            };
-
-            ((IVehicle)subject).VehicleId = 1;
-
-            // Act
-            Action action = () => subject.Should().BeEquivalentTo(expected, opt => opt.RespectingRuntimeTypes());
-
-            // Assert
-            action.Should().Throw<XunitException>();
+            // Act / Assert
+            person.Should().BeEquivalentTo(new { Name = "Bob" });
         }
 
-        [Fact]
-        public void When_respecting_runtime_types_explicit_interface_member_on_expectation_should_not_be_used()
+        private interface IPerson
         {
-            // Arrange
-            var expected = new ExplicitVehicle
-            {
-                VehicleId = 2
-            };
+            string Name { get; set; }
+        }
 
-            ((IVehicle)expected).VehicleId = 1;
-
-            var subject = new Vehicle
-            {
-                VehicleId = 1
-            };
-
-            // Act
-            Action action = () => subject.Should().BeEquivalentTo(expected, opt => opt.RespectingRuntimeTypes());
-
-            // Assert
-            action.Should().Throw<XunitException>();
+        private class Person : IPerson
+        {
+            string IPerson.Name { get; set; }
         }
 
         [Fact]
@@ -2085,11 +2257,13 @@ public class SelectionRulesSpecs
 
         private class BaseWithProperty
         {
+            [UsedImplicitly]
             public string BaseProperty { get; set; }
         }
 
         private class DerivedWithProperty : BaseWithProperty
         {
+            [UsedImplicitly]
             public string DerivedProperty { get; set; }
         }
 
@@ -2102,6 +2276,7 @@ public class SelectionRulesSpecs
         {
             public override DerivedWithProperty Property { get; }
 
+            [UsedImplicitly]
             public string OtherProp { get; set; }
 
             public DerivedWithCovariantOverride(DerivedWithProperty prop)
@@ -2649,45 +2824,59 @@ public class SelectionRulesSpecs
 
         private class ClassWithNonBrowsableMembers
         {
+            [UsedImplicitly]
             public int BrowsableField = -1;
 
+            [UsedImplicitly]
             public int BrowsableProperty { get; set; }
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Always)]
             public int ExplicitlyBrowsableField = -1;
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Always)]
             public int ExplicitlyBrowsableProperty { get; set; }
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Advanced)]
             public int AdvancedBrowsableField = -1;
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Advanced)]
             public int AdvancedBrowsableProperty { get; set; }
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Never)]
             public int NonBrowsableField = -1;
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Never)]
             public int NonBrowsableProperty { get; set; }
         }
 
         private class ClassWhereMemberThatCouldBeNonBrowsableIsBrowsable
         {
+            [UsedImplicitly]
             public int BrowsableProperty { get; set; }
 
+            [UsedImplicitly]
             public int FieldThatMightBeNonBrowsable = -1;
 
+            [UsedImplicitly]
             public int PropertyThatMightBeNonBrowsable { get; set; }
         }
 
         private class ClassWhereMemberThatCouldBeNonBrowsableIsNonBrowsable
         {
+            [UsedImplicitly]
             public int BrowsableProperty { get; set; }
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Never)]
             public int FieldThatMightBeNonBrowsable = -1;
 
+            [UsedImplicitly]
             [EditorBrowsable(EditorBrowsableState.Never)]
             public int PropertyThatMightBeNonBrowsable { get; set; }
         }

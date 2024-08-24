@@ -286,15 +286,16 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> : Referenc
     /// </param>
     public AndConstraint<TAssertions> BeEmpty(string because = "", params object[] becauseArgs)
     {
+        var singleItemArray = Subject?.Take(1).ToArray();
         Execute.Assertion
             .BecauseOf(because, becauseArgs)
             .WithExpectation("Expected {context:collection} to be empty{reason}, ")
-            .Given(() => Subject)
+            .Given(() => singleItemArray)
             .ForCondition(subject => subject is not null)
             .FailWith("but found <null>.")
             .Then
-            .ForCondition(subject => !subject.Any())
-            .FailWith("but found {0}.", Subject)
+            .ForCondition(subject => subject.Length == 0)
+            .FailWith("but found at least one item {0}.", singleItemArray)
             .Then
             .ClearExpectation();
 
@@ -639,13 +640,14 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> : Referenc
     /// </param>
     public AndConstraint<TAssertions> BeNullOrEmpty(string because = "", params object[] becauseArgs)
     {
-        var nullOrEmpty = Subject is null || !Subject.Any();
+        var singleItemArray = Subject?.Take(1).ToArray();
+        var nullOrEmpty = singleItemArray is null || singleItemArray.Length == 0;
 
         Execute.Assertion.ForCondition(nullOrEmpty)
             .BecauseOf(because, becauseArgs)
             .FailWith(
-                "Expected {context:collection} to be null or empty{reason}, but found {0}.",
-                Subject);
+                "Expected {context:collection} to be null or empty{reason}, but found at least one item {0}.",
+                singleItemArray);
 
         return new AndConstraint<TAssertions>((TAssertions)this);
     }
@@ -811,13 +813,18 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> : Referenc
     }
 
     /// <summary>
-    /// Asserts that a collection of objects contains at least one object equivalent to another object.
+    /// Asserts that at least one element in the collection is equivalent to <paramref name="expectation"/>.
     /// </summary>
     /// <remarks>
-    /// Objects within the collection are equivalent to the expected object when both object graphs have equally named properties with the same
-    /// value, irrespective of the type of those objects. Two properties are also equal if one type can be converted to another
-    /// and the result is equal.
+    /// <para>
+    /// <b>Important:</b> You cannot use this method to assert whether a subset of the collection is equivalent to the <paramref name="expectation"/>.
+    /// This usually means that the expectation is meant to be a <i>single</i> item.
+    /// </para>
+    /// <para>
+    /// By default, objects within the collection are seen as equivalent to the expected object when both object graphs have equally named properties with the same
+    /// value, irrespective of the type of those objects.
     /// Notice that actual behavior is determined by the global defaults managed by <see cref="AssertionOptions"/>.
+    /// </para>
     /// </remarks>
     /// <param name="expectation">The expected element.</param>
     /// <param name="because">
@@ -834,13 +841,18 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> : Referenc
     }
 
     /// <summary>
-    /// Asserts that a collection of objects contains at least one object equivalent to another object.
+    /// Asserts that at least one element in the collection is equivalent to <paramref name="expectation"/>.
     /// </summary>
     /// <remarks>
-    /// Objects within the collection are equivalent to the expected object when both object graphs have equally named properties with the same
-    /// value, irrespective of the type of those objects. Two properties are also equal if one type can be converted to another
-    /// and the result is equal.
+    /// <para>
+    /// <b>Important:</b> You cannot use this method to assert whether a subset of the collection is equivalent to the <paramref name="expectation"/>.
+    /// This usually means that the expectation is meant to be a <i>single</i> item.
+    /// </para>
+    /// <para>
+    /// By default, objects within the collection are seen as equivalent to the expected object when both object graphs have equally named properties with the same
+    /// value, irrespective of the type of those objects.
     /// Notice that actual behavior is determined by the global defaults managed by <see cref="AssertionOptions"/>.
+    /// </para>
     /// </remarks>
     /// <param name="expectation">The expected element.</param>
     /// <param name="config">
@@ -1844,7 +1856,7 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> : Referenc
 
         using (var scope = new AssertionScope())
         {
-            Subject.Should().BeEquivalentTo(unexpected, config);
+            BeEquivalentTo(unexpected, config);
 
             failures = scope.Discard();
         }
@@ -2292,13 +2304,18 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> : Referenc
     }
 
     /// <summary>
-    /// Asserts that a collection of objects does not contain any object equivalent to another object.
+    /// Asserts that no element in the collection is equivalent to <paramref name="unexpected"/>.
     /// </summary>
     /// <remarks>
-    /// Objects within the collection are equivalent to the expected object when both object graphs have equally named properties with the same
-    /// value, irrespective of the type of those objects. Two properties are also equal if one type can be converted to another
-    /// and the result is equal.
+    /// <para>
+    /// <b>Important:</b> You cannot use this method to assert whether a subset of the collection is not equivalent to the <paramref name="unexpected"/>.
+    /// This usually means that the expectation is meant to be a <i>single</i> item.
+    /// </para>
+    /// <para>
+    /// By default, objects within the collection are seen as not equivalent to the expected object when both object graphs have unequally named properties with the same
+    /// value, irrespective of the type of those objects.
     /// Notice that actual behavior is determined by the global defaults managed by <see cref="AssertionOptions"/>.
+    /// </para>
     /// </remarks>
     /// <param name="unexpected">The unexpected element.</param>
     /// <param name="because">
@@ -2315,13 +2332,18 @@ public class GenericCollectionAssertions<TCollection, T, TAssertions> : Referenc
     }
 
     /// <summary>
-    /// Asserts that a collection of objects does not contain any object equivalent to another object.
+    /// Asserts that no element in the collection is equivalent to <paramref name="unexpected"/>.
     /// </summary>
     /// <remarks>
-    /// Objects within the collection are equivalent to the expected object when both object graphs have equally named properties with the same
-    /// value, irrespective of the type of those objects. Two properties are also equal if one type can be converted to another
-    /// and the result is equal.
+    /// <para>
+    /// <b>Important:</b> You cannot use this method to assert whether a subset of the collection is not equivalent to the <paramref name="unexpected"/>.
+    /// This usually means that the expectation is meant to be a <i>single</i> item.
+    /// </para>
+    /// <para>
+    /// By default, objects within the collection are seen as not equivalent to the expected object when both object graphs have unequally named properties with the same
+    /// value, irrespective of the type of those objects.
     /// Notice that actual behavior is determined by the global defaults managed by <see cref="AssertionOptions"/>.
+    /// </para>
     /// </remarks>
     /// <param name="unexpected">The unexpected element.</param>
     /// <param name="config">

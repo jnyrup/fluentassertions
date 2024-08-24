@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using FluentAssertions.Equivalency;
 using FluentAssertions.Execution;
 using FluentAssertions.Extensions;
 using Xunit;
@@ -548,6 +549,28 @@ namespace FluentAssertions.Specs.Execution
             act.Should().Throw<XunitException>()
                 .WithMessage("Expected object to be*");
         }
+
+        [Fact]
+        public void All_core_code_anywhere_in_the_stack_trace_is_ignored()
+        {
+            /*
+             We want to test this specific scenario.
+
+                1. CallerIdentifier.DetermineCallerIdentity
+                2. FluentAssertions code
+                3. Custom extension <--- pointed to by lastUserStackFrameBeforeFluentAssertionsCodeIndex
+                4. FluentAssertions code  <--- this is where DetermineCallerIdentity tried to get the variable name from before the fix
+                5. Test
+             */
+
+            var node = Node.From<Foo>(GetSubjectId);
+
+            // Assert
+            node.Description.Should().StartWith("node.Description");
+        }
+
+        [CustomAssertion]
+        private string GetSubjectId() => AssertionScope.Current.CallerIdentity;
     }
 
 #pragma warning disable IDE0060, RCS1163 // Remove unused parameter
