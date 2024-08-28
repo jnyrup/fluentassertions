@@ -138,12 +138,15 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         {
             Exception exception = await InvokeWithInterceptionAsync(Subject);
 
-            Execute.Assertion
+            success = Execute.Assertion
                 .ForCondition(exception is not null)
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected {0}{reason}, but no exception was thrown.", expectedType);
 
-            exception.Should().BeOfType(expectedType, because, becauseArgs);
+            if (success)
+            {
+                exception.Should().BeOfType(expectedType, because, becauseArgs);
+            }
 
             return new ExceptionAssertions<TException>(new[] { exception as TException });
         }
@@ -300,7 +303,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         {
             try
             {
-                await Subject.Invoke();
+                await Subject!.Invoke();
             }
             catch (Exception exception)
             {
@@ -334,7 +337,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         {
             try
             {
-                await Subject.Invoke();
+                await Subject!.Invoke();
             }
             catch (Exception exception)
             {
@@ -432,8 +435,8 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
     {
         using var delayCancellationTokenSource = new CancellationTokenSource();
 
-        Task completedTask =
-            await Task.WhenAny(target, Clock.DelayAsync(remainingTime, delayCancellationTokenSource.Token));
+        Task delayTask = Clock.DelayAsync(remainingTime, delayCancellationTokenSource.Token);
+        Task completedTask = await Task.WhenAny(target, delayTask);
 
         if (completedTask.IsFaulted)
         {
@@ -445,6 +448,12 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         {
             // The monitored task did not complete.
             return false;
+        }
+
+        if (target.IsCanceled)
+        {
+            // Rethrow the exception causing the task be canceled.
+            await target;
         }
 
         // The monitored task is completed, we shall cancel the clock.

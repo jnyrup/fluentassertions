@@ -16,8 +16,16 @@ public class EqualityComparerEquivalencyStep<T> : IEquivalencyStep
     public EquivalencyResult Handle(Comparands comparands, IEquivalencyValidationContext context,
         IEquivalencyValidator nestedValidator)
     {
-        if (comparands.GetExpectedType(context.Options) != typeof(T))
+        var expectedType = context.Options.UseRuntimeTyping ? comparands.RuntimeType : comparands.CompileTimeType;
+
+        if (expectedType != typeof(T))
         {
+            return EquivalencyResult.ContinueWithNext;
+        }
+
+        if (comparands.Subject is null || comparands.Expectation is null)
+        {
+            // The later check for `comparands.Subject is T` leads to a failure even if the expectation is null.
             return EquivalencyResult.ContinueWithNext;
         }
 
