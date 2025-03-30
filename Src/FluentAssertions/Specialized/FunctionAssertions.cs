@@ -14,13 +14,13 @@ public class FunctionAssertions<T> : DelegateAssertions<Func<T>, FunctionAsserti
 {
     private readonly AssertionChain assertionChain;
 
-    public FunctionAssertions(Func<T> subject, IExtractExceptions extractor, AssertionChain assertionChain)
+    public FunctionAssertions(Func<T>? subject, IExtractExceptions extractor, AssertionChain assertionChain)
         : base(subject, extractor, assertionChain)
     {
         this.assertionChain = assertionChain;
     }
 
-    public FunctionAssertions(Func<T> subject, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
+    public FunctionAssertions(Func<T>? subject, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
         : base(subject, extractor, assertionChain, clock)
     {
         this.assertionChain = assertionChain;
@@ -50,7 +50,7 @@ public class FunctionAssertions<T> : DelegateAssertions<Func<T>, FunctionAsserti
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} not to throw{reason}, but found <null>.");
 
-        T result = default;
+        T? result = default;
 
         if (assertionChain.Succeeded)
         {
@@ -102,11 +102,11 @@ public class FunctionAssertions<T> : DelegateAssertions<Func<T>, FunctionAsserti
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context} not to throw any exceptions after {0}{reason}, but found <null>.", waitTime);
 
-        T result = default;
+        T? result = default;
 
         if (assertionChain.Succeeded)
         {
-            result = NotThrowAfter(Subject, Clock, waitTime, pollInterval, because, becauseArgs);
+            result = NotThrowAfter(Subject!, Clock, waitTime, pollInterval, because, becauseArgs);
         }
 
         return new AndWhichConstraint<FunctionAssertions<T>, T>(this, result, assertionChain, ".Result");
@@ -119,7 +119,7 @@ public class FunctionAssertions<T> : DelegateAssertions<Func<T>, FunctionAsserti
         Guard.ThrowIfArgumentIsNegative(pollInterval);
 
         TimeSpan? invocationEndTime = null;
-        Exception exception = null;
+        Exception? exception = null;
         ITimer timer = clock.StartTimer();
 
         while (invocationEndTime is null || invocationEndTime < waitTime)

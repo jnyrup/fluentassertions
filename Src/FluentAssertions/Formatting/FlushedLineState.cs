@@ -33,7 +33,7 @@ internal class FlushedLineState(string content) : ILineState
         content = content.Insert(startIndex, fragment);
     }
 
-    public Line Truncate(int characterIndex, int indentation, int whitespaceOffset)
+    public Line? Truncate(int characterIndex, int indentation, int whitespaceOffset)
     {
         string truncatedContent = content.Substring(characterIndex + whitespaceOffset);
 

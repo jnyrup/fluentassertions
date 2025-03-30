@@ -18,13 +18,13 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
 {
     private readonly AssertionChain assertionChain;
 
-    protected DelegateAssertions(TDelegate @delegate, IExtractExceptions extractor, AssertionChain assertionChain)
+    protected DelegateAssertions(TDelegate? @delegate, IExtractExceptions extractor, AssertionChain assertionChain)
         : base(@delegate, extractor, assertionChain, new Clock())
     {
         this.assertionChain = assertionChain;
     }
 
-    private protected DelegateAssertions(TDelegate @delegate, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
+    private protected DelegateAssertions(TDelegate? @delegate, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
         : base(@delegate, extractor, assertionChain, clock)
     {
         this.assertionChain = assertionChain;
@@ -138,7 +138,7 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
 
     private protected Exception InvokeSubjectWithInterception()
     {
-        Exception actualException = null;
+        Exception? actualException = null;
 
         try
         {

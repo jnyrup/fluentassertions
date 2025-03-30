@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using FluentAssertions.Common;
-using JetBrains.Annotations;
 
 namespace FluentAssertions.Equivalency;
 
@@ -14,8 +13,7 @@ internal sealed class EqualityStrategyProvider
     private readonly List<Type> valueTypes = [];
     private readonly ConcurrentDictionary<Type, EqualityStrategy> typeCache = new();
 
-    [CanBeNull]
-    private readonly Func<Type, EqualityStrategy> defaultStrategy;
+    private readonly Func<Type, EqualityStrategy>? defaultStrategy;
 
     private bool? compareRecordsByValue;
 

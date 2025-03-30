@@ -10,7 +10,7 @@ public interface IAssertionContext<TSubject>
     /// Gets the <see cref="IMember"/> of the member that returned the current object, or <see langword="null"/> if the current
     /// object represents the root object.
     /// </summary>
-    INode SelectedNode { get; }
+    INode? SelectedNode { get; }
 
     /// <summary>
     /// Gets the value of the <see cref="SelectedNode" />

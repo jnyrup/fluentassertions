@@ -90,8 +90,8 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
     public AndConstraint<XDocumentAssertions> BeEquivalentTo(XDocument expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
-        using (XmlReader subjectReader = Subject?.CreateReader())
-        using (XmlReader otherReader = expected?.CreateReader())
+        using (XmlReader? subjectReader = Subject?.CreateReader())
+        using (XmlReader? otherReader = expected?.CreateReader())
         {
             var xmlReaderValidator = new XmlReaderValidator(assertionChain, subjectReader, otherReader, because, becauseArgs);
             xmlReaderValidator.Validate(shouldBeEquivalent: true);
@@ -115,8 +115,8 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
     public AndConstraint<XDocumentAssertions> NotBeEquivalentTo(XDocument unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
-        using (XmlReader subjectReader = Subject?.CreateReader())
-        using (XmlReader otherReader = unexpected?.CreateReader())
+        using (XmlReader? subjectReader = Subject?.CreateReader())
+        using (XmlReader? otherReader = unexpected?.CreateReader())
         {
             var xmlReaderValidator = new XmlReaderValidator(assertionChain, subjectReader, otherReader, because, becauseArgs);
             xmlReaderValidator.Validate(shouldBeEquivalent: false);
@@ -172,7 +172,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
         Guard.ThrowIfArgumentIsNull(expected, nameof(expected),
             "Cannot assert the document has a root element if the expected name is <null>.");
 
-        XElement root = Subject.Root;
+        XElement? root = Subject.Root;
 
         assertionChain
             .ForCondition(root is not null && root.Name == expected)
@@ -269,7 +269,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
                 "Expected {context:subject} to have root element with child {0}{reason}, but it has no root element.",
                 expected.ToString());
 
-        XElement xElement = null;
+        XElement? xElement = null;
 
         if (assertionChain.Succeeded)
         {

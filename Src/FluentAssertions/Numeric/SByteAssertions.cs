@@ -15,7 +15,7 @@ internal class SByteAssertions : NumericAssertions<sbyte>
     {
     }
 
-    private protected override string CalculateDifferenceForFailureMessage(sbyte subject, sbyte expected)
+    private protected override string? CalculateDifferenceForFailureMessage(sbyte subject, sbyte expected)
     {
         int difference = subject - expected;
         return difference != 0 ? difference.ToString(CultureInfo.InvariantCulture) : null;

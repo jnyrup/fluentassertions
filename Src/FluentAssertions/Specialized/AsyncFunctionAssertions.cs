@@ -21,7 +21,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
 {
     private readonly AssertionChain assertionChain;
 
-    protected AsyncFunctionAssertions(Func<TTask> subject, IExtractExceptions extractor, AssertionChain assertionChain,
+    protected AsyncFunctionAssertions(Func<TTask>? subject, IExtractExceptions extractor, AssertionChain assertionChain,
         IClock clock)
         : base(subject, extractor, assertionChain, clock)
     {
@@ -94,7 +94,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
 
         if (assertionChain.Succeeded)
         {
-            Exception exception = await InvokeWithInterceptionAsync(Subject);
+            Exception? exception = await InvokeWithInterceptionAsync(Subject!);
 
             assertionChain
                 .ForCondition(exception is not null)
@@ -103,7 +103,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
 
             if (assertionChain.Succeeded)
             {
-                exception.Should().BeOfType(expectedType, because, becauseArgs);
+                exception!.Should().BeOfType(expectedType, because, becauseArgs);
             }
 
             return new ExceptionAssertions<TException>([exception as TException], assertionChain);
@@ -134,7 +134,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
 
         if (assertionChain.Succeeded)
         {
-            Exception exception = await InvokeWithInterceptionAsync(Subject);
+            Exception? exception = await InvokeWithInterceptionAsync(Subject!);
             return ThrowInternal<TException>(exception, because, becauseArgs);
         }
 
@@ -166,7 +166,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
 
         if (assertionChain.Succeeded)
         {
-            Exception caughtException = await InvokeWithInterceptionAsync(timeSpan);
+            Exception? caughtException = await InvokeWithInterceptionAsync(timeSpan);
             return AssertThrows<TException>(caughtException, timeSpan, because, becauseArgs);
         }
 
@@ -174,7 +174,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
     }
 
     private ExceptionAssertions<TException> AssertThrows<TException>(
-        Exception exception, TimeSpan timeSpan,
+        Exception? exception, TimeSpan timeSpan,
         [StringSyntax("CompositeFormat")] string because, object[] becauseArgs)
         where TException : Exception
     {
@@ -194,7 +194,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         return new ExceptionAssertions<TException>(expectedExceptions, assertionChain);
     }
 
-    private async Task<Exception> InvokeWithInterceptionAsync(TimeSpan timeout)
+    private async Task<Exception?> InvokeWithInterceptionAsync(TimeSpan timeout)
     {
         try
         {
@@ -318,7 +318,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
         return true;
     }
 
-    private protected static async Task<Exception> InvokeWithInterceptionAsync(Func<Task> action)
+    private protected static async Task<Exception?> InvokeWithInterceptionAsync(Func<Task> action)
     {
         try
         {

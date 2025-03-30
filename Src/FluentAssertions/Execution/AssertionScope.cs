@@ -18,12 +18,12 @@ namespace FluentAssertions.Execution;
 public sealed class AssertionScope : IDisposable
 {
     private readonly IAssertionStrategy assertionStrategy;
-    private static readonly AsyncLocal<AssertionScope> CurrentScope = new();
+    private static readonly AsyncLocal<AssertionScope?> CurrentScope = new();
     private readonly Func<string> callerIdentityProvider = () => CallerIdentifier.DetermineCallerIdentity();
     private readonly ContextDataDictionary reportableData = new();
     private readonly StringBuilder tracing = new();
 
-    private AssertionScope parent;
+    private AssertionScope? parent;
 
     /// <summary>
     /// Starts an unnamed scope within which multiple assertions can be executed
@@ -57,7 +57,7 @@ public sealed class AssertionScope : IDisposable
     /// Starts a named scope within which multiple assertions can be executed
     /// and which will not throw until the scope is disposed.
     /// </summary>
-    public AssertionScope(Func<string> name)
+    public AssertionScope(Func<string?> name)
         : this(name, new CollectingAssertionStrategy())
     {
     }
@@ -67,7 +67,7 @@ public sealed class AssertionScope : IDisposable
     /// </summary>
     /// <param name="assertionStrategy">The assertion strategy for this scope.</param>
     /// <exception cref="ArgumentNullException"><paramref name="assertionStrategy"/> is <see langword="null"/>.</exception>
-    private AssertionScope(Func<string> name, IAssertionStrategy assertionStrategy)
+    private AssertionScope(Func<string?> name, IAssertionStrategy assertionStrategy)
     {
         parent = CurrentScope.Value;
         CurrentScope.Value = this;
@@ -111,7 +111,7 @@ public sealed class AssertionScope : IDisposable
     /// The context is provided by a <see cref="Lazy{String}"/> which
     /// only gets evaluated when its value is actually needed (in most cases during a failure).
     /// </remarks>
-    public Func<string> Name { get; }
+    public Func<string?> Name { get; }
 
     /// <summary>
     /// Gets the current thread-specific assertion scope.

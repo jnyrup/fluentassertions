@@ -20,13 +20,13 @@ public sealed class AssertionChain
     private readonly ContextDataDictionary contextData = new();
     private readonly SubjectIdentificationBuilder identifierBuilder;
     private string fallbackIdentifier = "object";
-    private Func<string> reason;
+    private Func<string>? reason;
     private bool? succeeded;
 
     // We need to keep track of this because we don't want the second successful assertion hide the first unsuccessful assertion
-    private Func<string> expectation;
+    private Func<string>? expectation;
 
-    private static readonly AsyncLocal<AssertionChain> Instance = new();
+    private static readonly AsyncLocal<AssertionChain?> Instance = new();
 
     /// <summary>
     /// Ensures that the next call to <see cref="GetOrCreate"/> will reuse the current instance.
@@ -110,7 +110,7 @@ public sealed class AssertionChain
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AssertionChain BecauseOf([StringSyntax("CompositeFormat")] string because, params object[] becauseArgs)
+    public AssertionChain BecauseOf([StringSyntax("CompositeFormat")] string because, params object?[] becauseArgs)
     {
         reason = () =>
         {
@@ -155,12 +155,12 @@ public sealed class AssertionChain
         return this;
     }
 
-    public Continuation WithExpectation(string message, object arg1, Action<AssertionChain> chain)
+    public Continuation WithExpectation(string message, object? arg1, Action<AssertionChain> chain)
     {
         return WithExpectation(message, chain, arg1);
     }
 
-    public Continuation WithExpectation(string message, object arg1, object arg2, Action<AssertionChain> chain)
+    public Continuation WithExpectation(string message, object? arg1, object? arg2, Action<AssertionChain> chain)
     {
         return WithExpectation(message, chain, arg1, arg2);
     }
@@ -170,7 +170,7 @@ public sealed class AssertionChain
         return WithExpectation(message, chain, []);
     }
 
-    private Continuation WithExpectation(string message, Action<AssertionChain> chain, params object[] args)
+    private Continuation WithExpectation(string message, Action<AssertionChain> chain, params object?[] args)
     {
         if (PreviousAssertionSucceeded)
         {
@@ -214,7 +214,7 @@ public sealed class AssertionChain
         return FailWith(() => new FailReason(message));
     }
 
-    public Continuation FailWith(string message, params object[] args)
+    public Continuation FailWith(string message, params object?[] args)
     {
         return FailWith(() => new FailReason(message, args));
     }

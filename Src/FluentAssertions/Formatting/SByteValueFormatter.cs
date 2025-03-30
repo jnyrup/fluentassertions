@@ -11,13 +11,13 @@ public class SByteValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is sbyte;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        formattedGraph.AddFragment(((sbyte)value).ToString(CultureInfo.InvariantCulture) + "y");
+        formattedGraph.AddFragment(((sbyte)value!).ToString(CultureInfo.InvariantCulture) + "y");
     }
 }

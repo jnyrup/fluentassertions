@@ -12,14 +12,14 @@ public class DoubleValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is double;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        formattedGraph.AddFragment(Format(value));
+        formattedGraph.AddFragment(Format(value!));
     }
 
     private static string Format(object value)

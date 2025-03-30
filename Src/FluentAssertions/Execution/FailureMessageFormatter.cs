@@ -79,7 +79,7 @@ internal class FailureMessageFormatter(FormattingOptions formattingOptions)
         return this;
     }
 
-    public string Format(string message, object[] messageArgs)
+    public string Format(string message, object?[] messageArgs)
     {
         message = message.Replace("{reason}", reason, StringComparison.Ordinal);
 
@@ -92,7 +92,7 @@ internal class FailureMessageFormatter(FormattingOptions formattingOptions)
         return message;
     }
 
-    private static string SubstituteIdentifier(string message, string identifier, string fallbackIdentifier)
+    private static string SubstituteIdentifier(string message, string? identifier, string fallbackIdentifier)
     {
         const string pattern = @"(?:\s|^)\{context(?:\:(?<default>[a-zA-Z\s]+))?\}";
 
@@ -131,13 +131,13 @@ internal class FailureMessageFormatter(FormattingOptions formattingOptions)
         {
             string key = match.Groups["key"].Value;
             string contextualTags = contextData.AsStringOrDefault(key);
-            string contextualTagsSubstituted = contextualTags?.EscapePlaceholders();
+            string? contextualTagsSubstituted = contextualTags?.EscapePlaceholders();
 
             return contextualTagsSubstituted ?? match.Groups["default"].Value;
         });
     }
 
-    private string FormatArgumentPlaceholders(string failureMessage, object[] failureArgs)
+    private string FormatArgumentPlaceholders(string failureMessage, object?[] failureArgs)
     {
         object[] values = failureArgs.Select(object (a) => Formatter.ToString(a, formattingOptions)).ToArray();
 

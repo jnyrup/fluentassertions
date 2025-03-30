@@ -11,7 +11,7 @@ public record Pathway
 
     private readonly string path = string.Empty;
     private string name = string.Empty;
-    private string pathAndName;
+    private string? pathAndName;
 
     private readonly GetDescription getDescription;
 

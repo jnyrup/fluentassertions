@@ -313,7 +313,7 @@ public class DateOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.Year == expected)
+                .ForCondition(Subject!.Value.Year == expected)
                 .FailWith(", but found {0}.", Subject.Value.Year));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -339,7 +339,7 @@ public class DateOnlyAssertions<TAssertions>
             .FailWith("Did not expect the year part of {context:the date} to be {0}{reason}, but found a <null> DateOnly.",
                 unexpected)
             .Then
-            .ForCondition(Subject.Value.Year != unexpected)
+            .ForCondition(Subject!.Value.Year != unexpected)
             .FailWith("Did not expect the year part of {context:the date} to be {0}{reason}, but it was.", unexpected,
                 Subject.Value.Year);
 
@@ -366,7 +366,7 @@ public class DateOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> DateOnly.")
                 .Then
-                .ForCondition(Subject.Value.Month == expected)
+                .ForCondition(Subject!.Value.Month == expected)
                 .FailWith(", but found {0}.", Subject.Value.Month));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -392,7 +392,7 @@ public class DateOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> DateOnly.")
                 .Then
-                .ForCondition(Subject.Value.Month != unexpected)
+                .ForCondition(Subject!.Value.Month != unexpected)
                 .FailWith(", but it was."));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -418,7 +418,7 @@ public class DateOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> DateOnly.")
                 .Then
-                .ForCondition(Subject.Value.Day == expected)
+                .ForCondition(Subject!.Value.Day == expected)
                 .FailWith(", but found {0}.", Subject.Value.Day));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -444,7 +444,7 @@ public class DateOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> DateOnly.")
                 .Then
-                .ForCondition(Subject.Value.Day != unexpected)
+                .ForCondition(Subject!.Value.Day != unexpected)
                 .FailWith(", but it was."));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -516,7 +516,7 @@ public class DateOnlyAssertions<TAssertions>
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) =>
+    public override bool Equals(object? obj) =>
         throw new NotSupportedException("Equals is not part of Fluent Assertions. Did you mean Be() instead?");
 }
 

@@ -55,4 +55,6 @@ internal static class EnumerableExtensions
             index++;
         }
     }
+
+    internal static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> source) => source.WhereNotNull();
 }

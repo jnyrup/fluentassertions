@@ -4,14 +4,14 @@ namespace FluentAssertions.Formatting;
 
 public class XDocumentValueFormatter : IValueFormatter
 {
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is XDocument;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        var document = (XDocument)value;
+        var document = (XDocument)value!;
 
         if (document.Root is not null)
         {

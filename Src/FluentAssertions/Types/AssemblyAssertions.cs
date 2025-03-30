@@ -93,7 +93,7 @@ public class AssemblyAssertions : ReferenceTypeAssertions<Assembly, AssemblyAsse
         {
             var subjectName = Subject!.GetName().Name;
 
-            IEnumerable<string> references = Subject.GetReferencedAssemblies().Select(x => x.Name);
+            IEnumerable<string?> references = Subject.GetReferencedAssemblies().Select(x => x.Name);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -129,7 +129,7 @@ public class AssemblyAssertions : ReferenceTypeAssertions<Assembly, AssemblyAsse
             .FailWith("Expected assembly to define type {0}.{1}{reason}, but {context:assembly} is <null>.",
                 @namespace, name);
 
-        Type foundType = null;
+        Type? foundType = null;
 
         if (assertionChain.Succeeded)
         {

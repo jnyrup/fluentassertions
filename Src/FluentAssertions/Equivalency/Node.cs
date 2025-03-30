@@ -12,7 +12,7 @@ internal class Node : INode
 
     private GetSubjectId subjectIdProvider;
 
-    private string cachedSubjectId;
+    private string? cachedSubjectId;
     private Pathway subject;
 
     public GetSubjectId GetSubjectId
@@ -23,7 +23,7 @@ internal class Node : INode
 
     public Type Type { get; protected set; }
 
-    public Type ParentType { get; protected set; }
+    public Type? ParentType { get; protected set; }
 
     public Pathway Subject
     {
@@ -123,7 +123,7 @@ internal class Node : INode
         };
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is null)
         {

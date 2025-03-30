@@ -5,9 +5,9 @@ namespace FluentAssertions.Configuration;
 
 public class GlobalFormattingOptions : FormattingOptions
 {
-    private string valueFormatterAssembly;
+    private string? valueFormatterAssembly;
 
-    public string ValueFormatterAssembly
+    public string? ValueFormatterAssembly
     {
         get => valueFormatterAssembly;
         set

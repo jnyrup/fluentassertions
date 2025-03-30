@@ -30,9 +30,9 @@ internal class MultiDimensionalArrayEquivalencyStep : IEquivalencyStep
             do
             {
                 int[] indices = digit.GetIndices();
-                object subject = ((Array)comparands.Subject).GetValue(indices);
+                object? subject = ((Array)comparands.Subject).GetValue(indices);
                 string listOfIndices = string.Join(",", indices);
-                object expectation = expectationAsArray.GetValue(indices);
+                object? expectation = expectationAsArray.GetValue(indices);
 
                 IEquivalencyValidationContext itemContext = context.AsCollectionItem<object>(listOfIndices);
 

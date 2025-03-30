@@ -16,7 +16,7 @@ public class PropertyInfoAssertions : MemberInfoAssertions<PropertyInfo, Propert
 {
     private readonly AssertionChain assertionChain;
 
-    public PropertyInfoAssertions(PropertyInfo propertyInfo, AssertionChain assertionChain)
+    public PropertyInfoAssertions(PropertyInfo? propertyInfo, AssertionChain assertionChain)
         : base(propertyInfo, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -40,7 +40,7 @@ public class PropertyInfoAssertions : MemberInfoAssertions<PropertyInfo, Propert
             .ForCondition(Subject is not null)
             .FailWith("Expected property to be virtual{reason}, but {context:property} is <null>.")
             .Then
-            .ForCondition(Subject.IsVirtual())
+            .ForCondition(Subject!.IsVirtual())
             .BecauseOf(because, becauseArgs)
             .FailWith(() =>
             {
@@ -72,7 +72,7 @@ public class PropertyInfoAssertions : MemberInfoAssertions<PropertyInfo, Propert
             .ForCondition(Subject is not null)
             .FailWith("Expected property not to be virtual{reason}, but {context:property} is <null>.")
             .Then
-            .ForCondition(!Subject.IsVirtual())
+            .ForCondition(!Subject!.IsVirtual())
             .BecauseOf(because, becauseArgs)
             .FailWith(() =>
             {

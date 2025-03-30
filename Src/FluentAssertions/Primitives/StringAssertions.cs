@@ -2022,7 +2022,7 @@ public class StringAssertions<TAssertions> : ReferenceTypeAssertions<string, TAs
         return new AndConstraint<TAssertions>((TAssertions)this);
     }
 
-    private static bool Contains(string actual, string expected, StringComparison comparison)
+    private static bool Contains(string? actual, string? expected, StringComparison comparison)
     {
         return (actual ?? string.Empty).Contains(expected ?? string.Empty, comparison);
     }

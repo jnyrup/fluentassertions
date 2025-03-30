@@ -12,15 +12,15 @@ public class EnumValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public virtual bool CanHandle(object value)
+    public virtual bool CanHandle(object? value)
     {
         return value is Enum;
     }
 
     /// <inheritdoc />
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        string typePart = value.GetType().Name;
+        string typePart = value!.GetType().Name;
         string namePart = value.ToString().Replace(", ", "|", StringComparison.Ordinal);
 
         string valuePart = Convert.ToDecimal(value, CultureInfo.InvariantCulture)

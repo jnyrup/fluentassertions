@@ -27,7 +27,7 @@ public class FailReason
     /// <remarks>
     /// <inheritdoc cref="FailReason"/>
     /// </remarks>
-    public FailReason(string message, params object[] args)
+    public FailReason(string message, params object?[] args)
     {
         Message = message;
         Args = args;
@@ -42,5 +42,5 @@ public class FailReason
     /// <summary>
     /// Arguments for the numbered <see cref="string.Format(string,object[])"/>-style placeholders of <see cref="Message"/>.
     /// </summary>
-    public object[] Args { get; }
+    public object?[] Args { get; }
 }

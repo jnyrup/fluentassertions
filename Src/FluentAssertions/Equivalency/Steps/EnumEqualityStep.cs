@@ -95,7 +95,7 @@ public class EnumEqualityStep : IEquivalencyStep
             });
     }
 
-    private static string GetDisplayNameForEnumComparison(object o, decimal? v)
+    private static string GetDisplayNameForEnumComparison(object? o, decimal? v)
     {
         if (o is null || v is null)
         {
@@ -108,7 +108,7 @@ public class EnumEqualityStep : IEquivalencyStep
         return $"{typePart}.{namePart} {{value: {valuePart}}}";
     }
 
-    private static decimal? ExtractDecimal(object o)
+    private static decimal? ExtractDecimal(object? o)
     {
         return o is not null ? Convert.ToDecimal(o, CultureInfo.InvariantCulture) : null;
     }

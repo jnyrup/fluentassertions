@@ -26,8 +26,8 @@ public class StringEqualityEquivalencyStep : IEquivalencyStep
 
         if (subjectIsString)
         {
-            string subject = (string)comparands.Subject;
-            string expectation = (string)comparands.Expectation;
+            string subject = (string)comparands.Subject!;
+            string expectation = (string)comparands.Expectation!;
 
             assertionChain.ReuseOnce();
             subject.Should()

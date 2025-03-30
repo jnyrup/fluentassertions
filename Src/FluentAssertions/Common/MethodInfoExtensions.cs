@@ -29,10 +29,10 @@ internal static class MethodInfoExtensions
 
         if (typeof(TAttribute) == typeof(MethodImplAttribute) && memberInfo is MethodBase methodBase)
         {
-            (bool success, MethodImplAttribute methodImplAttribute) = RecreateMethodImplAttribute(methodBase);
-            if (success)
+            MethodImplAttribute? methodImplAttribute = RecreateMethodImplAttribute(methodBase);
+            if (methodImplAttribute is { })
             {
-                customAttributes.Add(methodImplAttribute as TAttribute);
+                customAttributes.Add((methodImplAttribute as TAttribute)!);
             }
         }
 
@@ -45,7 +45,7 @@ internal static class MethodInfoExtensions
         return !method.IsVirtual || method.IsFinal;
     }
 
-    private static (bool success, MethodImplAttribute attribute) RecreateMethodImplAttribute(MethodBase methodBase)
+    private static MethodImplAttribute? RecreateMethodImplAttribute(MethodBase methodBase)
     {
         MethodImplAttributes implementationFlags = methodBase.MethodImplementationFlags;
 
@@ -56,9 +56,9 @@ internal static class MethodInfoExtensions
 
         if (implementationOptions != default)
         {
-            return (true, new MethodImplAttribute(implementationOptions));
+            return new MethodImplAttribute(implementationOptions);
         }
 
-        return (false, null);
+        return null;
     }
 }

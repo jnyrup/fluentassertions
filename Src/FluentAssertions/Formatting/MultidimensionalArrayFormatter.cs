@@ -14,15 +14,15 @@ public class MultidimensionalArrayFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is Array { Rank: >= 2 };
     }
 
     [SuppressMessage("Design", "MA0051:Method is too long", Justification = "Required refactoring")]
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        var arr = (Array)value;
+        var arr = (Array)value!;
 
         if (arr.Length == 0)
         {

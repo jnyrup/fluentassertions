@@ -22,7 +22,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
     /// <summary>
     /// Initializes a new instance of the <see cref="TypeAssertions"/> class.
     /// </summary>
-    public TypeAssertions(Type type, AssertionChain assertionChain)
+    public TypeAssertions(Type? type, AssertionChain assertionChain)
         : base(type, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -170,7 +170,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
     /// An empty <see cref="string"/> if the two specified types are the same, or an error message that describes that
     /// the two specified types are not the same.
     /// </returns>
-    private static string GetFailureMessageIfTypesAreDifferent(Type actual, Type expected)
+    private static string GetFailureMessageIfTypesAreDifferent(Type? actual, Type? expected)
     {
         if (actual == expected)
         {
@@ -697,7 +697,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
-                .ForCondition(Subject.IsCSharpSealed())
+                .ForCondition(Subject!.IsCSharpSealed())
                 .FailWith("Expected type {0} to be sealed{reason}.", Subject);
         }
 
@@ -730,7 +730,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
-                .ForCondition(!Subject.IsCSharpSealed())
+                .ForCondition(!Subject!.IsCSharpSealed())
                 .FailWith("Expected type {0} not to be sealed{reason}.", Subject);
         }
 
@@ -763,7 +763,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
-                .ForCondition(Subject.IsCSharpAbstract())
+                .ForCondition(Subject!.IsCSharpAbstract())
                 .FailWith("Expected {context:type} {0} to be abstract{reason}.", Subject);
         }
 
@@ -796,7 +796,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
-                .ForCondition(!Subject.IsCSharpAbstract())
+                .ForCondition(!Subject!.IsCSharpAbstract())
                 .FailWith("Expected type {0} not to be abstract{reason}.", Subject);
         }
 
@@ -829,7 +829,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
-                .ForCondition(Subject.IsCSharpStatic())
+                .ForCondition(Subject!.IsCSharpStatic())
                 .FailWith("Expected type {0} to be static{reason}.", Subject);
         }
 
@@ -862,7 +862,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
-                .ForCondition(!Subject.IsCSharpStatic())
+                .ForCondition(!Subject!.IsCSharpStatic())
                 .FailWith("Expected type {0} not to be static{reason}.", Subject);
         }
 
@@ -898,11 +898,11 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
             .FailWith(
                 $"Cannot determine if a type has a property named {name} if the type is <null>.");
 
-        PropertyInfo propertyInfo = null;
+        PropertyInfo? propertyInfo = null;
 
         if (assertionChain.Succeeded)
         {
-            propertyInfo = Subject.FindPropertyByName(name);
+            propertyInfo = Subject!.FindPropertyByName(name);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -917,7 +917,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                         $"Expected {subjectDescription} to have a property {name} of type {propertyType.Name}{{reason}}, but it does not.");
                 })
                 .Then
-                .ForCondition(propertyInfo.PropertyType == propertyType)
+                .ForCondition(propertyInfo!.PropertyType == propertyType)
                 .FailWith($"Expected property {propertyInfo.Name} to be of type {propertyType}{{reason}}, but it is not.",
                     propertyInfo);
         }
@@ -971,7 +971,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded)
         {
-            PropertyInfo propertyInfo = Subject.FindPropertyByName(name);
+            PropertyInfo? propertyInfo = Subject!.FindPropertyByName(name);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1021,7 +1021,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded && AssertSubjectImplements(interfaceType, because, becauseArgs))
         {
-            var explicitlyImplementsProperty = Subject.HasExplicitlyImplementedProperty(interfaceType, name);
+            var explicitlyImplementsProperty = Subject!.HasExplicitlyImplementedProperty(interfaceType, name);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1088,7 +1088,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded && AssertSubjectImplements(interfaceType, because, becauseArgs))
         {
-            var explicitlyImplementsProperty = Subject.HasExplicitlyImplementedProperty(interfaceType, name);
+            var explicitlyImplementsProperty = Subject!.HasExplicitlyImplementedProperty(interfaceType, name);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1159,7 +1159,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded && AssertSubjectImplements(interfaceType, because, becauseArgs))
         {
-            var explicitlyImplementsMethod = Subject.HasMethod($"{interfaceType}.{name}", parameterTypes);
+            var explicitlyImplementsMethod = Subject!.HasMethod($"{interfaceType}.{name}", parameterTypes);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1232,7 +1232,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded && AssertSubjectImplements(interfaceType, because, becauseArgs))
         {
-            var explicitlyImplementsMethod = Subject.HasMethod($"{interfaceType}.{name}", parameterTypes);
+            var explicitlyImplementsMethod = Subject!.HasMethod($"{interfaceType}.{name}", parameterTypes);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1301,11 +1301,11 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                 $"Expected {indexerType.Name} {{context:type}}[{parameterString}] to exist{{reason}}" +
                 ", but {context:type} is <null>.");
 
-        PropertyInfo propertyInfo = null;
+        PropertyInfo? propertyInfo = null;
 
         if (assertionChain.Succeeded)
         {
-            propertyInfo = Subject.GetIndexerByParameterTypes(parameterTypes);
+            propertyInfo = Subject!.GetIndexerByParameterTypes(parameterTypes);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1314,7 +1314,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                     $"Expected {indexerType.Name} {Subject}[{parameterString}] to exist{{reason}}" +
                     ", but it does not.")
                 .Then
-                .ForCondition(propertyInfo.PropertyType == indexerType)
+                .ForCondition(propertyInfo!.PropertyType == indexerType)
                 .FailWith("Expected {0} to be of type {1}{reason}, but it is not.", propertyInfo, indexerType);
         }
 
@@ -1350,7 +1350,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded)
         {
-            PropertyInfo propertyInfo = Subject.GetIndexerByParameterTypes(parameterTypes);
+            PropertyInfo? propertyInfo = Subject!.GetIndexerByParameterTypes(parameterTypes);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1393,11 +1393,11 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                 $"Expected method {{context:type}}.{name}({GetParameterString(parameterTypes)}) to exist{{reason}}" +
                 ", but {context:type} is <null>.");
 
-        MethodInfo methodInfo = null;
+        MethodInfo? methodInfo = null;
 
         if (assertionChain.Succeeded)
         {
-            methodInfo = Subject.GetMethod(name, parameterTypes);
+            methodInfo = Subject!.GetMethod(name, parameterTypes);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1442,7 +1442,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded)
         {
-            MethodInfo methodInfo = Subject.GetMethod(name, parameterTypes);
+            MethodInfo? methodInfo = Subject!.GetMethod(name, parameterTypes);
             var methodInfoDescription = MethodInfoAssertions.GetDescriptionFor(methodInfo);
 
             assertionChain
@@ -1481,11 +1481,11 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                 $"Expected constructor {{context:type}}({GetParameterString(parameterTypes)}) to exist{{reason}}" +
                 ", but {context:type} is <null>.");
 
-        ConstructorInfo constructorInfo = null;
+        ConstructorInfo? constructorInfo = null;
 
         if (assertionChain.Succeeded)
         {
-            constructorInfo = Subject.GetConstructor(parameterTypes);
+            constructorInfo = Subject!.GetConstructor(parameterTypes);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1539,11 +1539,11 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                 $"Expected constructor {{context:type}}({GetParameterString(parameterTypes)}) not to exist{{reason}}" +
                 ", but {context:type} is <null>.");
 
-        ConstructorInfo constructorInfo = null;
+        ConstructorInfo? constructorInfo = null;
 
         if (assertionChain.Succeeded)
         {
-            constructorInfo = Subject.GetConstructor(parameterTypes);
+            constructorInfo = Subject!.GetConstructor(parameterTypes);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1603,7 +1603,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded)
         {
-            CSharpAccessModifier subjectAccessModifier = Subject.GetCSharpAccessModifier();
+            CSharpAccessModifier subjectAccessModifier = Subject!.GetCSharpAccessModifier();
 
             assertionChain.ForCondition(accessModifier == subjectAccessModifier)
                 .BecauseOf(because, becauseArgs)
@@ -1642,7 +1642,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded)
         {
-            CSharpAccessModifier subjectAccessModifier = Subject.GetCSharpAccessModifier();
+            CSharpAccessModifier subjectAccessModifier = Subject!.GetCSharpAccessModifier();
 
             assertionChain
                 .ForCondition(accessModifier != subjectAccessModifier)
@@ -1701,11 +1701,11 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
             .FailWith("Expected public static implicit {0}({1}) to exist{reason}, but {context:type} is <null>.",
                 targetType, sourceType);
 
-        MethodInfo methodInfo = null;
+        MethodInfo? methodInfo = null;
 
         if (assertionChain.Succeeded)
         {
-            methodInfo = Subject.GetImplicitConversionOperator(sourceType, targetType);
+            methodInfo = Subject!.GetImplicitConversionOperator(sourceType, targetType);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1766,7 +1766,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded)
         {
-            MethodInfo methodInfo = Subject.GetImplicitConversionOperator(sourceType, targetType);
+            MethodInfo? methodInfo = Subject!.GetImplicitConversionOperator(sourceType, targetType);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1825,11 +1825,11 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
             .FailWith("Expected public static explicit {0}({1}) to exist{reason}, but {context:type} is <null>.",
                 targetType, sourceType);
 
-        MethodInfo methodInfo = null;
+        MethodInfo? methodInfo = null;
 
         if (assertionChain.Succeeded)
         {
-            methodInfo = Subject.GetExplicitConversionOperator(sourceType, targetType);
+            methodInfo = Subject!.GetExplicitConversionOperator(sourceType, targetType);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -1890,7 +1890,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
 
         if (assertionChain.Succeeded)
         {
-            MethodInfo methodInfo = Subject.GetExplicitConversionOperator(sourceType, targetType);
+            MethodInfo? methodInfo = Subject!.GetExplicitConversionOperator(sourceType, targetType);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)

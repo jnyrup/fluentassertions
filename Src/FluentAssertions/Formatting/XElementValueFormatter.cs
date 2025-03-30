@@ -13,14 +13,14 @@ public class XElementValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is XElement;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        var element = (XElement)value;
+        var element = (XElement)value!;
 
         formattedGraph.AddFragment(element.HasElements
             ? FormatElementWithChildren(element)

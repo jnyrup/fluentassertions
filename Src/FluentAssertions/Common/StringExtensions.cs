@@ -66,7 +66,7 @@ internal static class StringExtensions
     /// Any string that is empty or null (including the original string) is ignored. Also, if the second
     /// string starts with an index operator, the separator is omitted.
     /// </remarks>
-    public static string Combine(this string @this, string other, string separator = ".")
+    public static string Combine(this string? @this, string? other, string separator = ".")
     {
         if (@this.IsNullOrEmpty())
         {
@@ -127,7 +127,7 @@ internal static class StringExtensions
     /// <summary>
     /// Counts the number of times the <paramref name="substring"/> appears within a string by using the specified <paramref name="comparer"/>.
     /// </summary>
-    public static int CountSubstring(this string str, string substring, IEqualityComparer<string> comparer)
+    public static int CountSubstring(this string? str, string? substring, IEqualityComparer<string> comparer)
     {
         string actual = str ?? string.Empty;
         string search = substring ?? string.Empty;
@@ -154,7 +154,7 @@ internal static class StringExtensions
         return value.Length > humanReadableLength || value.Contains(Environment.NewLine, StringComparison.Ordinal);
     }
 
-    public static bool IsNullOrEmpty([NotNullWhen(false)] this string value)
+    public static bool IsNullOrEmpty([NotNullWhen(false)] this string? value)
     {
         return string.IsNullOrEmpty(value);
     }

@@ -41,7 +41,7 @@ public class MethodInfoAssertions : MethodBaseAssertions<MethodInfo, MethodInfoA
         if (assertionChain.Succeeded)
         {
             assertionChain
-                .ForCondition(!Subject.IsNonVirtual())
+                .ForCondition(!Subject!.IsNonVirtual())
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected method " + SubjectDescription + " to be virtual{reason}, but it is not virtual.");
         }
@@ -69,7 +69,7 @@ public class MethodInfoAssertions : MethodBaseAssertions<MethodInfo, MethodInfoA
         if (assertionChain.Succeeded)
         {
             assertionChain
-                .ForCondition(Subject.IsNonVirtual())
+                .ForCondition(Subject!.IsNonVirtual())
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected method " + SubjectDescription + " not to be virtual{reason}, but it is.");
         }
@@ -97,7 +97,7 @@ public class MethodInfoAssertions : MethodBaseAssertions<MethodInfo, MethodInfoA
         if (assertionChain.Succeeded)
         {
             assertionChain
-                .ForCondition(Subject.IsAsync())
+                .ForCondition(Subject!.IsAsync())
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected method " + SubjectDescription + " to be async{reason}, but it is not.");
         }
@@ -125,7 +125,7 @@ public class MethodInfoAssertions : MethodBaseAssertions<MethodInfo, MethodInfoA
         if (assertionChain.Succeeded)
         {
             assertionChain
-                .ForCondition(!Subject.IsAsync())
+                .ForCondition(!Subject!.IsAsync())
                 .BecauseOf(because, becauseArgs)
                 .FailWith("Expected method " + SubjectDescription + " not to be async{reason}, but it is.");
         }
@@ -295,7 +295,7 @@ public class MethodInfoAssertions : MethodBaseAssertions<MethodInfo, MethodInfoA
         return NotReturn(typeof(TReturn), because, becauseArgs);
     }
 
-    internal static string GetDescriptionFor(MethodInfo method)
+    internal static string GetDescriptionFor(MethodInfo? method)
     {
         if (method is null)
         {

@@ -21,7 +21,7 @@ public abstract class MemberInfoAssertions<TSubject, TAssertions> : ReferenceTyp
 {
     private readonly AssertionChain assertionChain;
 
-    protected MemberInfoAssertions(TSubject subject, AssertionChain assertionChain)
+    protected MemberInfoAssertions(TSubject? subject, AssertionChain assertionChain)
         : base(subject, assertionChain)
     {
         this.assertionChain = assertionChain;

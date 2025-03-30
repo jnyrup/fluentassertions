@@ -14,13 +14,13 @@ public class DateTimeOffsetValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is DateTime or DateTimeOffset;
     }
 
     [SuppressMessage("Design", "MA0051:Method is too long", Justification = "Needs to be refactored")]
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
         DateTimeOffset dateTimeOffset;
         bool significantOffset = false;
@@ -31,7 +31,7 @@ public class DateTimeOffsetValueFormatter : IValueFormatter
         }
         else
         {
-            dateTimeOffset = (DateTimeOffset)value;
+            dateTimeOffset = (DateTimeOffset)value!;
             significantOffset = true;
         }
 

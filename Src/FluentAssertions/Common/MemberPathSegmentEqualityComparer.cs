@@ -22,7 +22,7 @@ internal class MemberPathSegmentEqualityComparer : IEqualityComparer<string>
     /// <param name="x">Left part of the comparison.</param>
     /// <param name="y">Right part of the comparison.</param>
     /// <returns>True if segments are equal, false if not.</returns>
-    public bool Equals(string x, string y)
+    public bool Equals(string? x, string? y)
     {
         if (x == AnyIndexQualifier)
         {

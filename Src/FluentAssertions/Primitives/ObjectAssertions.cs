@@ -15,7 +15,7 @@ public class ObjectAssertions : ObjectAssertions<object, ObjectAssertions>
 {
     private readonly AssertionChain assertionChain;
 
-    public ObjectAssertions(object value, AssertionChain assertionChain)
+    public ObjectAssertions(object? value, AssertionChain assertionChain)
         : base(value, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -124,7 +124,7 @@ public class ObjectAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<T
 {
     private readonly AssertionChain assertionChain;
 
-    public ObjectAssertions(TSubject value, AssertionChain assertionChain)
+    public ObjectAssertions(TSubject? value, AssertionChain assertionChain)
         : base(value, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -141,7 +141,7 @@ public class ObjectAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<T
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<TAssertions> Be(TSubject expected,
+    public AndConstraint<TAssertions> Be(TSubject? expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain
@@ -168,7 +168,7 @@ public class ObjectAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<T
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
     /// <exception cref="ArgumentNullException"><paramref name="comparer"/> is <see langword="null"/>.</exception>
-    public AndConstraint<TAssertions> Be(TSubject expected, IEqualityComparer<TSubject> comparer,
+    public AndConstraint<TAssertions> Be(TSubject expected, IEqualityComparer<TSubject?> comparer,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         Guard.ThrowIfArgumentIsNull(comparer);
@@ -221,7 +221,7 @@ public class ObjectAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<T
     /// Zero or more objects to format using the placeholders in <paramref name="because"/>.
     /// </param>
     /// <exception cref="ArgumentNullException"><paramref name="comparer"/> is <see langword="null"/>.</exception>
-    public AndConstraint<TAssertions> NotBe(TSubject unexpected, IEqualityComparer<TSubject> comparer,
+    public AndConstraint<TAssertions> NotBe(TSubject unexpected, IEqualityComparer<TSubject?> comparer,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         Guard.ThrowIfArgumentIsNull(comparer);
@@ -437,7 +437,7 @@ public class ObjectAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<T
     /// <exception cref="ArgumentNullException"><paramref name="validValues"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="comparer"/> is <see langword="null"/>.</exception>
     public AndConstraint<TAssertions> BeOneOf(IEnumerable<TSubject> validValues,
-        IEqualityComparer<TSubject> comparer,
+        IEqualityComparer<TSubject?> comparer,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         Guard.ThrowIfArgumentIsNull(validValues);
@@ -452,7 +452,7 @@ public class ObjectAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<T
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) =>
+    public override bool Equals(object? obj) =>
         throw new NotSupportedException("Equals is not part of Fluent Assertions. Did you mean Be() or BeSameAs() instead?");
 
     /// <summary>

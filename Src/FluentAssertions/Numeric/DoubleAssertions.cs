@@ -17,7 +17,7 @@ internal class DoubleAssertions : NumericAssertions<double>
 
     private protected override bool IsNaN(double value) => double.IsNaN(value);
 
-    private protected override string CalculateDifferenceForFailureMessage(double subject, double expected)
+    private protected override string? CalculateDifferenceForFailureMessage(double subject, double expected)
     {
         var difference = subject - expected;
         return difference != 0 ? difference.ToString("R", CultureInfo.InvariantCulture) : null;

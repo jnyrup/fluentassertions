@@ -25,7 +25,7 @@ internal static class TestFrameworkFactory
 
     public static ITestFramework GetFramework(TestFramework? testFrameWork)
     {
-        ITestFramework framework = null;
+        ITestFramework? framework = null;
 
         if (testFrameWork is not null)
         {
@@ -39,7 +39,7 @@ internal static class TestFrameworkFactory
 
     private static ITestFramework AttemptToDetectUsingSetting(TestFramework framework)
     {
-        if (!Frameworks.TryGetValue(framework, out ITestFramework implementation))
+        if (!Frameworks.TryGetValue(framework, out ITestFramework? implementation))
         {
             string frameworks = string.Join(", ", Frameworks.Keys);
             var message =
@@ -67,7 +67,7 @@ internal static class TestFrameworkFactory
         return implementation;
     }
 
-    private static ITestFramework AttemptToDetectUsingDynamicScanning()
+    private static ITestFramework? AttemptToDetectUsingDynamicScanning()
     {
         return Frameworks.Values.FirstOrDefault(framework => framework.IsAvailable);
     }

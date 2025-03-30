@@ -10,7 +10,7 @@ public interface IMonitor<T> : IDisposable
     /// <summary>
     /// Gets the object that is being monitored or <see langword="null"/> if the object has been GCed.
     /// </summary>
-    T Subject { get; }
+    T? Subject { get; }
 
     /// <summary>
     /// Clears all recorded events from the monitor and continues monitoring.

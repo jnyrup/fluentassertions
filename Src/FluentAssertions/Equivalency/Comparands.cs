@@ -12,7 +12,7 @@ public class Comparands
     {
     }
 
-    public Comparands(object subject, object expectation, Type compileTimeType)
+    public Comparands(object? subject, object? expectation, Type compileTimeType)
     {
         this.compileTimeType = compileTimeType;
         Subject = subject;
@@ -22,12 +22,12 @@ public class Comparands
     /// <summary>
     /// Gets the value of the subject object graph.
     /// </summary>
-    public object Subject { get; set; }
+    public object? Subject { get; set; }
 
     /// <summary>
     /// Gets the value of the expected object graph.
     /// </summary>
-    public object Expectation { get; set; }
+    public object? Expectation { get; set; }
 
     public Type CompileTimeType
     {

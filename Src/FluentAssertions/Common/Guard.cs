@@ -4,11 +4,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
+using NotNullAttribute = System.Diagnostics.CodeAnalysis.NotNullAttribute;
+
 namespace FluentAssertions.Common;
 
 internal static class Guard
 {
-    public static void ThrowIfArgumentIsNull<T>([ValidatedNotNull][NoEnumeration] T obj,
+    public static void ThrowIfArgumentIsNull<T>([NotNull][NoEnumeration] T? obj,
         [CallerArgumentExpression(nameof(obj))]
         string paramName = "")
     {
@@ -18,7 +20,7 @@ internal static class Guard
         }
     }
 
-    public static void ThrowIfArgumentIsNull<T>([ValidatedNotNull][NoEnumeration] T obj, string paramName, string message)
+    public static void ThrowIfArgumentIsNull<T>([NotNull][NoEnumeration] T? obj, string paramName, string message)
     {
         if (obj is null)
         {
@@ -26,7 +28,7 @@ internal static class Guard
         }
     }
 
-    public static void ThrowIfArgumentIsNullOrEmpty([ValidatedNotNull] string str,
+    public static void ThrowIfArgumentIsNullOrEmpty(string? str,
         [CallerArgumentExpression(nameof(str))]
         string paramName = "")
     {
@@ -37,7 +39,7 @@ internal static class Guard
         }
     }
 
-    public static void ThrowIfArgumentIsNullOrEmpty([ValidatedNotNull] string str, string paramName, string message)
+    public static void ThrowIfArgumentIsNullOrEmpty(string? str, string paramName, string message)
     {
         if (string.IsNullOrEmpty(str))
         {
@@ -114,11 +116,4 @@ internal static class Guard
             throw new ArgumentOutOfRangeException(paramName, "The value must be non-negative.");
         }
     }
-
-    /// <summary>
-    /// Workaround to make dotnet_code_quality.null_check_validation_methods work
-    /// https://github.com/dotnet/roslyn-analyzers/issues/3451#issuecomment-606690452
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
-    private sealed class ValidatedNotNullAttribute : Attribute;
 }

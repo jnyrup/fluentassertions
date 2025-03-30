@@ -1,5 +1,4 @@
 using System;
-using JetBrains.Annotations;
 
 namespace FluentAssertions.Equivalency;
 
@@ -20,8 +19,7 @@ public interface IObjectInfo
     /// <value>
     /// Is <see langword="null"/> for the root object.
     /// </value>
-    [CanBeNull]
-    Type ParentType { get; }
+    Type? ParentType { get; }
 
     /// <summary>
     /// Gets the full path from the root object until the current node separated by dots.

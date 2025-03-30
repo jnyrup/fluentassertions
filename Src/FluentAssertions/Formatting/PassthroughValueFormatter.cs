@@ -8,10 +8,10 @@ namespace FluentAssertions.Formatting;
 /// </summary>
 internal class PassthroughValueFormatter : IValueFormatter
 {
-    public bool CanHandle(object value) => value is WithoutFormattingWrapper;
+    public bool CanHandle(object? value) => value is WithoutFormattingWrapper;
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        formattedGraph.AddFragment(((WithoutFormattingWrapper)value).ToString());
+        formattedGraph.AddFragment(((WithoutFormattingWrapper)value!).ToString());
     }
 }

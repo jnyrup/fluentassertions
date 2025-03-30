@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace FluentAssertions.Collections.MaximumMatching;
@@ -134,7 +135,7 @@ internal class MaximumMatchingSolver<TValue>
             this.originalMatches = originalMatches;
         }
 
-        public bool TryDequeueUnMatchedPredicate(out Predicate<TValue> unmatchedPredicate)
+        public bool TryDequeueUnMatchedPredicate([MaybeNullWhen(false)] out Predicate<TValue> unmatchedPredicate)
         {
             if (unmatchedPredicatesQueue.Count == 0)
             {

@@ -22,7 +22,7 @@ public abstract class DelegateAssertionsBase<TDelegate, TAssertions>
 
     private protected IExtractExceptions Extractor { get; }
 
-    private protected DelegateAssertionsBase(TDelegate @delegate, IExtractExceptions extractor, AssertionChain assertionChain,
+    private protected DelegateAssertionsBase(TDelegate? @delegate, IExtractExceptions extractor, AssertionChain assertionChain,
         IClock clock)
         : base(@delegate, assertionChain)
     {
@@ -34,7 +34,7 @@ public abstract class DelegateAssertionsBase<TDelegate, TAssertions>
     private protected IClock Clock { get; }
 
     protected ExceptionAssertions<TException> ThrowInternal<TException>(
-        Exception exception,
+        Exception? exception,
         [StringSyntax("CompositeFormat")] string because, object[] becauseArgs)
         where TException : Exception
     {

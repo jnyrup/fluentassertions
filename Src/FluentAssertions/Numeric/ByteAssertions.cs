@@ -15,7 +15,7 @@ internal class ByteAssertions : NumericAssertions<byte>
     {
     }
 
-    private protected override string CalculateDifferenceForFailureMessage(byte subject, byte expected)
+    private protected override string? CalculateDifferenceForFailureMessage(byte subject, byte expected)
     {
         int difference = subject - expected;
         return difference != 0 ? difference.ToString(CultureInfo.InvariantCulture) : null;

@@ -9,13 +9,13 @@ namespace FluentAssertions.Equivalency.Matching;
 /// </summary>
 internal class MustMatchByNameRule : IMemberMatchingRule
 {
-    public IMember Match(IMember expectedMember, object subject, INode parent, IEquivalencyOptions options, AssertionChain assertionChain)
+    public IMember? Match(IMember expectedMember, object subject, INode parent, IEquivalencyOptions options, AssertionChain assertionChain)
     {
-        IMember subjectMember = null;
+        IMember? subjectMember = null;
 
         if (options.IncludedProperties != MemberVisibility.None)
         {
-            PropertyInfo propertyInfo = subject.GetType().FindProperty(
+            PropertyInfo? propertyInfo = subject.GetType().FindProperty(
                 expectedMember.Subject.Name,
                 options.IncludedProperties | MemberVisibility.ExplicitlyImplemented | MemberVisibility.DefaultInterfaceProperties);
 
@@ -24,7 +24,7 @@ internal class MustMatchByNameRule : IMemberMatchingRule
 
         if (subjectMember is null && options.IncludedFields != MemberVisibility.None)
         {
-            FieldInfo fieldInfo = subject.GetType().FindField(
+            FieldInfo? fieldInfo = subject.GetType().FindField(
                 expectedMember.Subject.Name,
                 options.IncludedFields);
 

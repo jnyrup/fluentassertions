@@ -10,13 +10,13 @@ namespace FluentAssertions.Xml.Equivalency;
 internal class XmlReaderValidator
 {
     private readonly AssertionChain assertionChain;
-    private readonly XmlReader subjectReader;
-    private readonly XmlReader expectationReader;
-    private XmlIterator subjectIterator;
-    private XmlIterator expectationIterator;
+    private readonly XmlReader? subjectReader;
+    private readonly XmlReader? expectationReader;
+    private XmlIterator? subjectIterator;
+    private XmlIterator? expectationIterator;
     private Node currentNode = Node.CreateRoot();
 
-    public XmlReaderValidator(AssertionChain assertionChain, XmlReader subjectReader, XmlReader expectationReader,
+    public XmlReaderValidator(AssertionChain assertionChain, XmlReader? subjectReader, XmlReader? expectationReader,
         [StringSyntax("CompositeFormat")] string because, object[] becauseArgs)
     {
         this.assertionChain = assertionChain;
@@ -28,7 +28,7 @@ internal class XmlReaderValidator
 
     public void Validate(bool shouldBeEquivalent)
     {
-        Failure failure = Validate();
+        Failure? failure = Validate();
 
         if (shouldBeEquivalent && failure is not null)
         {
@@ -42,7 +42,7 @@ internal class XmlReaderValidator
     }
 
 #pragma warning disable MA0051
-    private Failure Validate()
+    private Failure? Validate()
 #pragma warning restore MA0051
     {
         if (subjectReader is null && expectationReader is null)
@@ -50,7 +50,7 @@ internal class XmlReaderValidator
             return null;
         }
 
-        Failure failure = ValidateAgainstNulls();
+        Failure? failure = ValidateAgainstNulls();
 
         if (failure is not null)
         {
@@ -157,14 +157,14 @@ internal class XmlReaderValidator
         return null;
     }
 
-    private Failure ValidateAttributes()
+    private Failure? ValidateAttributes()
     {
         IList<AttributeData> expectedAttributes = expectationIterator.GetAttributes();
         IList<AttributeData> subjectAttributes = subjectIterator.GetAttributes();
 
         foreach (AttributeData subjectAttribute in subjectAttributes)
         {
-            AttributeData expectedAttribute = expectedAttributes.SingleOrDefault(
+            AttributeData? expectedAttribute = expectedAttributes.SingleOrDefault(
                 ea => ea.NamespaceUri == subjectAttribute.NamespaceUri
                     && ea.LocalName == subjectAttribute.LocalName);
 
@@ -198,7 +198,7 @@ internal class XmlReaderValidator
         return null;
     }
 
-    private Failure ValidateStartElement()
+    private Failure? ValidateStartElement()
     {
         if (subjectIterator.LocalName != expectationIterator.LocalName)
         {
@@ -218,7 +218,7 @@ internal class XmlReaderValidator
         return null;
     }
 
-    private Failure ValidateText()
+    private Failure? ValidateText()
     {
         string subject = subjectIterator.Value;
         string expected = expectationIterator.Value;
@@ -233,7 +233,7 @@ internal class XmlReaderValidator
         return null;
     }
 
-    private Failure ValidateAgainstNulls()
+    private Failure? ValidateAgainstNulls()
     {
         if (expectationReader is null != subjectReader is null)
         {

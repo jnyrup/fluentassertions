@@ -16,16 +16,16 @@ public static class MemberFactory
         };
     }
 
-    internal static IMember Find(object target, string memberName, INode parent)
+    internal static IMember? Find(object target, string memberName, INode parent)
     {
-        PropertyInfo property = target.GetType().FindProperty(memberName, MemberVisibility.Public | MemberVisibility.ExplicitlyImplemented);
+        PropertyInfo? property = target.GetType().FindProperty(memberName, MemberVisibility.Public | MemberVisibility.ExplicitlyImplemented);
 
         if (property is not null && !property.IsIndexer())
         {
             return new Property(property, parent);
         }
 
-        FieldInfo field = target.GetType().FindField(memberName, MemberVisibility.Public);
+        FieldInfo? field = target.GetType().FindField(memberName, MemberVisibility.Public);
         return field is not null ? new Field(field, parent) : null;
     }
 }

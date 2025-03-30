@@ -15,7 +15,7 @@ internal class NullableInt64Assertions : NullableNumericAssertions<long>
     {
     }
 
-    private protected override string CalculateDifferenceForFailureMessage(long subject, long expected)
+    private protected override string? CalculateDifferenceForFailureMessage(long subject, long expected)
     {
         if (subject is > 0 and < 10 && expected is > 0 and < 10)
         {

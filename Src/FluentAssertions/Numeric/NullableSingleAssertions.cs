@@ -17,7 +17,7 @@ internal class NullableSingleAssertions : NullableNumericAssertions<float>
 
     private protected override bool IsNaN(float value) => float.IsNaN(value);
 
-    private protected override string CalculateDifferenceForFailureMessage(float subject, float expected)
+    private protected override string? CalculateDifferenceForFailureMessage(float subject, float expected)
     {
         float difference = subject - expected;
         return difference != 0 ? difference.ToString("R", CultureInfo.InvariantCulture) : null;

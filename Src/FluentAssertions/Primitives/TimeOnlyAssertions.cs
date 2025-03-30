@@ -398,7 +398,7 @@ public class TimeOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found <null>.")
                 .Then
-                .ForCondition(Subject.Value.Hour == expected)
+                .ForCondition(Subject!.Value.Hour == expected)
                 .FailWith(", but found {0}.", Subject.Value.Hour));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -424,7 +424,7 @@ public class TimeOnlyAssertions<TAssertions>
             .FailWith("Did not expect the hours part of {context:the time} to be {0}{reason}, but found a <null> TimeOnly.",
                 unexpected)
             .Then
-            .ForCondition(Subject.Value.Hour != unexpected)
+            .ForCondition(Subject!.Value.Hour != unexpected)
             .FailWith("Did not expect the hours part of {context:the time} to be {0}{reason}, but it was.", unexpected,
                 Subject.Value.Hour);
 
@@ -451,7 +451,7 @@ public class TimeOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> TimeOnly.")
                 .Then
-                .ForCondition(Subject.Value.Minute == expected)
+                .ForCondition(Subject!.Value.Minute == expected)
                 .FailWith(", but found {0}.", Subject.Value.Minute));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -477,7 +477,7 @@ public class TimeOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> TimeOnly.")
                 .Then
-                .ForCondition(Subject.Value.Minute != unexpected)
+                .ForCondition(Subject!.Value.Minute != unexpected)
                 .FailWith(", but it was."));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -503,7 +503,7 @@ public class TimeOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> TimeOnly.")
                 .Then
-                .ForCondition(Subject.Value.Second == expected)
+                .ForCondition(Subject!.Value.Second == expected)
                 .FailWith(", but found {0}.", Subject.Value.Second));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -529,7 +529,7 @@ public class TimeOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> TimeOnly.")
                 .Then
-                .ForCondition(Subject.Value.Second != unexpected)
+                .ForCondition(Subject!.Value.Second != unexpected)
                 .FailWith(", but it was."));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -555,7 +555,7 @@ public class TimeOnlyAssertions<TAssertions>
                 .ForCondition(Subject.HasValue)
                 .FailWith(", but found a <null> TimeOnly.")
                 .Then
-                .ForCondition(Subject.Value.Millisecond == expected)
+                .ForCondition(Subject!.Value.Millisecond == expected)
                 .FailWith(", but found {0}.", Subject.Value.Millisecond));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -582,7 +582,7 @@ public class TimeOnlyAssertions<TAssertions>
                     .ForCondition(Subject.HasValue)
                     .FailWith(", but found a <null> TimeOnly.")
                     .Then
-                    .ForCondition(Subject.Value.Millisecond != unexpected)
+                    .ForCondition(Subject!.Value.Millisecond != unexpected)
                     .FailWith(", but it was."));
 
         return new AndConstraint<TAssertions>((TAssertions)this);
@@ -654,7 +654,7 @@ public class TimeOnlyAssertions<TAssertions>
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) =>
+    public override bool Equals(object? obj) =>
         throw new NotSupportedException("Equals is not part of Fluent Assertions. Did you mean Be() instead?");
 }
 

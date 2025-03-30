@@ -9,4 +9,4 @@
 /// <param name="value">
 /// The child value to format with the configured <see cref="IValueFormatter"/>s.
 /// </param>
-public delegate void FormatChild(string childPath, object value, FormattedObjectGraph formattedGraph);
+public delegate void FormatChild(string childPath, object? value, FormattedObjectGraph formattedGraph);

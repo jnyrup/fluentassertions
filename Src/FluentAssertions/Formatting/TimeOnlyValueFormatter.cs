@@ -14,14 +14,14 @@ public class TimeOnlyValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is TimeOnly;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        var timeOnly = (TimeOnly)value;
+        var timeOnly = (TimeOnly)value!;
         formattedGraph.AddFragment(timeOnly.ToString("<HH:mm:ss.fff>", CultureInfo.InvariantCulture));
     }
 }

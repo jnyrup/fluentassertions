@@ -20,7 +20,7 @@ internal interface ILineState
 
     void InsertAt(int startIndex, string fragment);
 
-    Line Truncate(int characterIndex, int indentation, int whitespaceOffset);
+    Line? Truncate(int characterIndex, int indentation, int whitespaceOffset);
 
     string Render();
 }

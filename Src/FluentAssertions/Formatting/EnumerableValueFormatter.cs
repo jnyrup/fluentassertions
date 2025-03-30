@@ -22,20 +22,20 @@ public class EnumerableValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public virtual bool CanHandle(object value)
+    public virtual bool CanHandle(object? value)
     {
         return value is IEnumerable;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        IEnumerable<object> collection = ((IEnumerable)value).Cast<object>();
+        IEnumerable<object> collection = ((IEnumerable)value!).Cast<object>();
 
         using var iterator = new Iterator<object>(collection, MaxItems);
 
         var startingAnchor = formattedGraph.GetAnchor();
         startingAnchor.UseLineBreaks = context.UseLineBreaks;
-        Anchor commaSeparatorAnchor = null;
+        Anchor? commaSeparatorAnchor = null;
 
         while (iterator.MoveNext())
         {

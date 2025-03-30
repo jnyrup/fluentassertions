@@ -19,7 +19,7 @@ public class FormattedObjectGraph
     /// <summary>
     /// The current line that is being written to, or <see langword="null"/> if there is no active line.
     /// </summary>
-    private Line currentLine;
+    private Line? currentLine;
 
     /// <summary>
     /// This class is used by the <see cref="Formatter"/> class to collect all the output of the (nested calls of an) <see cref="IValueFormatter"/> into

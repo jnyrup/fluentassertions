@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace FluentAssertions.Common;
@@ -45,7 +46,7 @@ internal static class DictionaryHelpers
         }
     }
 
-    public static bool TryGetValue<TCollection, TKey, TValue>(this TCollection collection, TKey key, out TValue value)
+    public static bool TryGetValue<TCollection, TKey, TValue>(this TCollection collection, TKey key, [MaybeNullWhen(false)] out TValue value)
         where TCollection : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         return collection switch
@@ -55,7 +56,7 @@ internal static class DictionaryHelpers
             _ => TryGetValue(collection, key, out value),
         };
 
-        static bool TryGetValue(TCollection collection, TKey key, out TValue value)
+        static bool TryGetValue(TCollection collection, TKey key, [MaybeNullWhen(false)] out TValue value)
         {
             Func<TKey, TKey, bool> areSameOrEqual = ObjectExtensions.GetComparer<TKey>();
 

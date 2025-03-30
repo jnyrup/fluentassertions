@@ -35,7 +35,7 @@ internal class EnumerableEquivalencyValidator
 
     public OrderingRuleCollection OrderingRules { get; init; }
 
-    public void Execute<T>(object[] subject, T[] expectation)
+    public void Execute<T>(object[]? subject, T[]? expectation)
     {
         if (AssertIsNotNull(expectation, subject) && AssertCollectionsHaveSameCount(subject, expectation))
         {
@@ -57,7 +57,7 @@ internal class EnumerableEquivalencyValidator
         }
     }
 
-    private bool AssertIsNotNull(object expectation, object[] subject)
+    private bool AssertIsNotNull(object? expectation, object[]? subject)
     {
         assertionChain
             .ForCondition(expectation is not null)

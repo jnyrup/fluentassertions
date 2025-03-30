@@ -34,7 +34,7 @@ internal abstract class LateBoundTestFramework : ITestFramework
         }
     }
 
-    private Assembly FindExceptionAssembly()
+    private Assembly? FindExceptionAssembly()
     {
         var assembly = Array.Find(AppDomain.CurrentDomain.GetAssemblies(), a => a.GetName().Name == AssemblyName);
 

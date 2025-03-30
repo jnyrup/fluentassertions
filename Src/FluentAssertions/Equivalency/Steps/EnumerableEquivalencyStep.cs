@@ -40,7 +40,7 @@ public class EnumerableEquivalencyStep : IEquivalencyStep
         if (assertionChain.Succeeded)
         {
             assertionChain
-                .ForCondition(IsCollection(subject.GetType()))
+                .ForCondition(IsCollection(subject!.GetType()))
                 .FailWith("Expected a collection, but {context:Subject} is of a non-collection type.");
         }
 
@@ -52,7 +52,7 @@ public class EnumerableEquivalencyStep : IEquivalencyStep
         return !typeof(string).IsAssignableFrom(type) && typeof(IEnumerable).IsAssignableFrom(type);
     }
 
-    internal static object[] ToArray(object value)
+    internal static object[]? ToArray(object value)
     {
         if (value == null)
         {

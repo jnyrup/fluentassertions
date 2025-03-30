@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -162,7 +163,7 @@ internal static class TypeExtensions
 
     public static bool OverridesEquals(this Type type)
     {
-        MethodInfo method = type
+        MethodInfo? method = type
             .GetMethod("Equals", [typeof(object)]);
 
         return method is not null
@@ -179,7 +180,7 @@ internal static class TypeExtensions
     /// <returns>
     /// Returns <see langword="null"/> if no such property exists.
     /// </returns>
-    public static PropertyInfo FindProperty(this Type type, string propertyName, MemberVisibility memberVisibility)
+    public static PropertyInfo? FindProperty(this Type type, string propertyName, MemberVisibility memberVisibility)
     {
         var properties = type.GetProperties(memberVisibility.ToMemberKind());
 
@@ -193,7 +194,7 @@ internal static class TypeExtensions
     /// <returns>
     /// Returns <see langword="null"/> if no such field exists.
     /// </returns>
-    public static FieldInfo FindField(this Type type, string fieldName, MemberVisibility memberVisibility)
+    public static FieldInfo? FindField(this Type type, string fieldName, MemberVisibility memberVisibility)
     {
         var fields = type.GetFields(memberVisibility.ToMemberKind());
 
@@ -227,7 +228,7 @@ internal static class TypeExtensions
         return type.IsSealed && type.IsAbstract;
     }
 
-    public static MethodInfo GetMethod(this Type type, string methodName, IEnumerable<Type> parameterTypes)
+    public static MethodInfo? GetMethod(this Type type, string methodName, IEnumerable<Type> parameterTypes)
     {
         return type.GetMethods(AllStaticAndInstanceMembersFlag)
             .SingleOrDefault(m =>
@@ -239,12 +240,12 @@ internal static class TypeExtensions
         return type.GetMethod(methodName, parameterTypes) is not null;
     }
 
-    public static MethodInfo GetParameterlessMethod(this Type type, string methodName)
+    public static MethodInfo? GetParameterlessMethod(this Type type, string methodName)
     {
         return type.GetMethod(methodName, Enumerable.Empty<Type>());
     }
 
-    public static PropertyInfo FindPropertyByName(this Type type, string propertyName)
+    public static PropertyInfo? FindPropertyByName(this Type type, string propertyName)
     {
         return type.GetProperty(propertyName, AllStaticAndInstanceMembersFlag);
     }
@@ -266,7 +267,7 @@ internal static class TypeExtensions
         return type.GetParameterlessMethod(methodName) is not null;
     }
 
-    public static PropertyInfo GetIndexerByParameterTypes(this Type type, IEnumerable<Type> parameterTypes)
+    public static PropertyInfo? GetIndexerByParameterTypes(this Type type, IEnumerable<Type> parameterTypes)
     {
         return type.GetProperties(AllStaticAndInstanceMembersFlag)
             .SingleOrDefault(p =>
@@ -278,7 +279,7 @@ internal static class TypeExtensions
         return member.GetIndexParameters().Length != 0;
     }
 
-    public static ConstructorInfo GetConstructor(this Type type, IEnumerable<Type> parameterTypes)
+    public static ConstructorInfo? GetConstructor(this Type type, IEnumerable<Type> parameterTypes)
     {
         const BindingFlags allInstanceMembersFlag =
             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
@@ -339,7 +340,7 @@ internal static class TypeExtensions
         }
 
         // check subject and its base types against definition
-        for (Type baseType = type;
+        for (Type? baseType = type;
              baseType is not null;
              baseType = baseType.BaseType)
         {
@@ -352,16 +353,22 @@ internal static class TypeExtensions
         return false;
     }
 
-    public static bool IsUnderNamespace(this Type type, string @namespace)
+    public static bool IsUnderNamespace(this Type type, string? @namespace)
     {
-        return IsGlobalNamespace()
-            || IsExactNamespace()
-            || IsParentNamespace();
+        return IsGlobalNamespace(@namespace)
+            || IsExactNamespace(type, @namespace)
+            || IsParentNamespace(type, @namespace);
 
-        bool IsGlobalNamespace() => @namespace is null;
-        bool IsExactNamespace() => IsNamespacePrefix() && type.Namespace.Length == @namespace.Length;
-        bool IsParentNamespace() => IsNamespacePrefix() && type.Namespace[@namespace.Length] is '.';
-        bool IsNamespacePrefix() => type.Namespace?.StartsWith(@namespace, StringComparison.Ordinal) == true;
+        static bool IsGlobalNamespace([NotNullWhen(false)] string? @namespace) => @namespace is null;
+
+        static bool IsExactNamespace(Type type, string @namespace) =>
+            IsNamespacePrefix(type.Namespace, @namespace) && type.Namespace.Length == @namespace.Length;
+
+        static bool IsParentNamespace(Type type, string @namespace) =>
+            IsNamespacePrefix(type.Namespace, @namespace) && type.Namespace[@namespace.Length] is '.';
+
+        static bool IsNamespacePrefix([NotNullWhen(true)] string? typeNameSpace, string @namespace) =>
+            typeNameSpace?.StartsWith(@namespace, StringComparison.Ordinal) == true;
     }
 
     public static bool IsSameOrInherits(this Type actualType, Type expectedType)
@@ -370,14 +377,14 @@ internal static class TypeExtensions
             expectedType.IsAssignableFrom(actualType);
     }
 
-    public static MethodInfo GetExplicitConversionOperator(this Type type, Type sourceType, Type targetType)
+    public static MethodInfo? GetExplicitConversionOperator(this Type type, Type sourceType, Type targetType)
     {
         return type
             .GetConversionOperators(sourceType, targetType, name => name is "op_Explicit")
             .SingleOrDefault();
     }
 
-    public static MethodInfo GetImplicitConversionOperator(this Type type, Type sourceType, Type targetType)
+    public static MethodInfo? GetImplicitConversionOperator(this Type type, Type sourceType, Type targetType)
     {
         return type
             .GetConversionOperators(sourceType, targetType, name => name is "op_Implicit")
@@ -426,7 +433,7 @@ internal static class TypeExtensions
 
     private static bool IsAnonymous(this Type type)
     {
-        bool nameContainsAnonymousType = type.FullName.Contains("AnonymousType", StringComparison.Ordinal);
+        bool nameContainsAnonymousType = type.FullName?.Contains("AnonymousType", StringComparison.Ordinal) == true;
 
         if (!nameContainsAnonymousType)
         {

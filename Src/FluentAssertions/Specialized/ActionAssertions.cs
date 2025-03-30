@@ -92,7 +92,7 @@ public class ActionAssertions : DelegateAssertions<Action, ActionAssertions>
             FailIfSubjectIsAsyncVoid();
 
             TimeSpan? invocationEndTime = null;
-            Exception exception = null;
+            Exception? exception = null;
             ITimer timer = Clock.StartTimer();
 
             while (invocationEndTime is null || invocationEndTime < waitTime)

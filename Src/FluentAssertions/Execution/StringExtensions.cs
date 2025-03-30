@@ -7,7 +7,7 @@ internal static class StringExtensions
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static WithoutFormattingWrapper AsNonFormattable(this string value)
+    public static WithoutFormattingWrapper AsNonFormattable(this string? value)
     {
         return new WithoutFormattingWrapper(value);
     }
@@ -17,7 +17,7 @@ internal static class StringExtensions
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static WithoutFormattingWrapper AsNonFormattable(this object value)
+    public static WithoutFormattingWrapper AsNonFormattable(this object? value)
     {
         return new WithoutFormattingWrapper(value?.ToString());
     }

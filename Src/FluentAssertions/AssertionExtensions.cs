@@ -120,7 +120,7 @@ public static class AssertionExtensions
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <see langword="null"/>.</exception>
     [MustUseReturnValue /* do not use Pure because this method executes the action before returning to the caller */]
     public static MemberExecutionTime<T> ExecutionTimeOf<T>(this T subject, Expression<Action<T>> action,
-        StartTimer createTimer = null)
+        StartTimer? createTimer = null)
     {
         Guard.ThrowIfArgumentIsNull(subject);
         Guard.ThrowIfArgumentIsNull(action);
@@ -139,7 +139,7 @@ public static class AssertionExtensions
     /// </returns>
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <see langword="null"/>.</exception>
     [MustUseReturnValue /* do not use Pure because this method executes the action before returning to the caller */]
-    public static ExecutionTime ExecutionTime(this Action action, StartTimer createTimer = null)
+    public static ExecutionTime ExecutionTime(this Action action, StartTimer? createTimer = null)
     {
         createTimer ??= () => new StopwatchTimer();
 
@@ -174,7 +174,7 @@ public static class AssertionExtensions
     /// current <see cref="Assembly"/>.
     /// </summary>
     [Pure]
-    public static AssemblyAssertions Should([NotNull] this Assembly assembly)
+    public static AssemblyAssertions Should([NotNull] this Assembly? assembly)
     {
         return new AssemblyAssertions(assembly, AssertionChain.GetOrCreate());
     }
@@ -184,7 +184,7 @@ public static class AssertionExtensions
     /// current <see cref="XElement"/>.
     /// </summary>
     [Pure]
-    public static XDocumentAssertions Should([NotNull] this XDocument actualValue)
+    public static XDocumentAssertions Should([NotNull] this XDocument? actualValue)
     {
         return new XDocumentAssertions(actualValue, AssertionChain.GetOrCreate());
     }
@@ -194,7 +194,7 @@ public static class AssertionExtensions
     /// current <see cref="XElement"/>.
     /// </summary>
     [Pure]
-    public static XElementAssertions Should([NotNull] this XElement actualValue)
+    public static XElementAssertions Should([NotNull] this XElement? actualValue)
     {
         return new XElementAssertions(actualValue, AssertionChain.GetOrCreate());
     }
@@ -204,7 +204,7 @@ public static class AssertionExtensions
     /// current <see cref="XAttribute"/>.
     /// </summary>
     [Pure]
-    public static XAttributeAssertions Should([NotNull] this XAttribute actualValue)
+    public static XAttributeAssertions Should([NotNull] this XAttribute? actualValue)
     {
         return new XAttributeAssertions(actualValue, AssertionChain.GetOrCreate());
     }
@@ -214,7 +214,7 @@ public static class AssertionExtensions
     /// current <see cref="Stream"/>.
     /// </summary>
     [Pure]
-    public static StreamAssertions Should([NotNull] this Stream actualValue)
+    public static StreamAssertions Should([NotNull] this Stream? actualValue)
     {
         return new StreamAssertions(actualValue, AssertionChain.GetOrCreate());
     }
@@ -224,7 +224,7 @@ public static class AssertionExtensions
     /// current <see cref="BufferedStream"/>.
     /// </summary>
     [Pure]
-    public static BufferedStreamAssertions Should([NotNull] this BufferedStream actualValue)
+    public static BufferedStreamAssertions Should([NotNull] this BufferedStream? actualValue)
     {
         return new BufferedStreamAssertions(actualValue, AssertionChain.GetOrCreate());
     }
@@ -281,7 +281,7 @@ public static class AssertionExtensions
     /// current <see cref="object"/>.
     /// </summary>
     [Pure]
-    public static ObjectAssertions Should([NotNull] this object actualValue)
+    public static ObjectAssertions Should([NotNull] this object? actualValue)
     {
         return new ObjectAssertions(actualValue, AssertionChain.GetOrCreate());
     }
@@ -331,7 +331,7 @@ public static class AssertionExtensions
     /// current <see cref="IEnumerable{T}"/>.
     /// </summary>
     [Pure]
-    public static GenericCollectionAssertions<T> Should<T>([NotNull] this IEnumerable<T> actualValue)
+    public static GenericCollectionAssertions<T> Should<T>([NotNull] this IEnumerable<T>? actualValue)
     {
         return new GenericCollectionAssertions<T>(actualValue, AssertionChain.GetOrCreate());
     }
@@ -341,7 +341,7 @@ public static class AssertionExtensions
     /// current <see cref="IEnumerable{T}"/>.
     /// </summary>
     [Pure]
-    public static StringCollectionAssertions Should([NotNull] this IEnumerable<string> @this)
+    public static StringCollectionAssertions Should([NotNull] this IEnumerable<string>? @this)
     {
         return new StringCollectionAssertions(@this, AssertionChain.GetOrCreate());
     }
@@ -352,7 +352,7 @@ public static class AssertionExtensions
     /// </summary>
     [Pure]
     public static GenericDictionaryAssertions<IDictionary<TKey, TValue>, TKey, TValue> Should<TKey, TValue>(
-        [NotNull] this IDictionary<TKey, TValue> actualValue)
+        [NotNull] this IDictionary<TKey, TValue>? actualValue)
     {
         return new GenericDictionaryAssertions<IDictionary<TKey, TValue>, TKey, TValue>(actualValue, AssertionChain.GetOrCreate());
     }
@@ -363,7 +363,7 @@ public static class AssertionExtensions
     /// </summary>
     [Pure]
     public static GenericDictionaryAssertions<IEnumerable<KeyValuePair<TKey, TValue>>, TKey, TValue> Should<TKey, TValue>(
-        [NotNull] this IEnumerable<KeyValuePair<TKey, TValue>> actualValue)
+        [NotNull] this IEnumerable<KeyValuePair<TKey, TValue>>? actualValue)
     {
         return new GenericDictionaryAssertions<IEnumerable<KeyValuePair<TKey, TValue>>, TKey, TValue>(actualValue,
             AssertionChain.GetOrCreate());
@@ -375,7 +375,7 @@ public static class AssertionExtensions
     /// </summary>
     [Pure]
     public static GenericDictionaryAssertions<TCollection, TKey, TValue> Should<TCollection, TKey, TValue>(
-        [NotNull] this TCollection actualValue)
+        [NotNull] this TCollection? actualValue)
         where TCollection : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         return new GenericDictionaryAssertions<TCollection, TKey, TValue>(actualValue, AssertionChain.GetOrCreate());
@@ -469,7 +469,7 @@ public static class AssertionExtensions
     /// current <see cref="IComparable{T}"/>.
     /// </summary>
     [Pure]
-    public static ComparableTypeAssertions<T> Should<T>([NotNull] this IComparable<T> comparableValue)
+    public static ComparableTypeAssertions<T> Should<T>([NotNull] this IComparable<T>? comparableValue)
     {
         return new ComparableTypeAssertions<T>(comparableValue, AssertionChain.GetOrCreate());
     }
@@ -699,7 +699,7 @@ public static class AssertionExtensions
     /// current <see cref="string"/>.
     /// </summary>
     [Pure]
-    public static StringAssertions Should([NotNull] this string actualValue)
+    public static StringAssertions Should([NotNull] this string? actualValue)
     {
         return new StringAssertions(actualValue, AssertionChain.GetOrCreate());
     }
@@ -729,7 +729,7 @@ public static class AssertionExtensions
     /// current <see cref="System.Type"/>.
     /// </summary>
     [Pure]
-    public static TypeAssertions Should([NotNull] this Type subject)
+    public static TypeAssertions Should([NotNull] this Type? subject)
     {
         return new TypeAssertions(subject, AssertionChain.GetOrCreate());
     }
@@ -744,7 +744,7 @@ public static class AssertionExtensions
     {
         Guard.ThrowIfArgumentIsNull(typeSelector);
 
-        return new TypeSelectorAssertions(AssertionChain.GetOrCreate(),  typeSelector.ToArray());
+        return new TypeSelectorAssertions(AssertionChain.GetOrCreate(), typeSelector.ToArray());
     }
 
     /// <summary>
@@ -753,7 +753,7 @@ public static class AssertionExtensions
     /// </summary>
     /// <seealso cref="TypeAssertions"/>
     [Pure]
-    public static ConstructorInfoAssertions Should([NotNull] this ConstructorInfo constructorInfo)
+    public static ConstructorInfoAssertions Should([NotNull] this ConstructorInfo? constructorInfo)
     {
         return new ConstructorInfoAssertions(constructorInfo, AssertionChain.GetOrCreate());
     }
@@ -763,7 +763,7 @@ public static class AssertionExtensions
     /// </summary>
     /// <seealso cref="TypeAssertions"/>
     [Pure]
-    public static MethodInfoAssertions Should([NotNull] this MethodInfo methodInfo)
+    public static MethodInfoAssertions Should([NotNull] this MethodInfo? methodInfo)
     {
         return new MethodInfoAssertions(methodInfo, AssertionChain.GetOrCreate());
     }
@@ -788,7 +788,7 @@ public static class AssertionExtensions
     /// </summary>
     /// <seealso cref="TypeAssertions"/>
     [Pure]
-    public static PropertyInfoAssertions Should([NotNull] this PropertyInfo propertyInfo)
+    public static PropertyInfoAssertions Should([NotNull] this PropertyInfo? propertyInfo)
     {
         return new PropertyInfoAssertions(propertyInfo, AssertionChain.GetOrCreate());
     }
@@ -812,7 +812,7 @@ public static class AssertionExtensions
     /// current <see cref="System.Action"/>.
     /// </summary>
     [Pure]
-    public static ActionAssertions Should([NotNull] this Action action)
+    public static ActionAssertions Should([NotNull] this Action? action)
     {
         return new ActionAssertions(action, Extractor, AssertionChain.GetOrCreate());
     }
@@ -822,7 +822,7 @@ public static class AssertionExtensions
     /// current <see cref="System.Func{Task}"/>.
     /// </summary>
     [Pure]
-    public static NonGenericAsyncFunctionAssertions Should([NotNull] this Func<Task> action)
+    public static NonGenericAsyncFunctionAssertions Should([NotNull] this Func<Task>? action)
     {
         return new NonGenericAsyncFunctionAssertions(action, Extractor, AssertionChain.GetOrCreate());
     }
@@ -832,7 +832,7 @@ public static class AssertionExtensions
     /// current <see><cref>System.Func{Task{T}}</cref></see>.
     /// </summary>
     [Pure]
-    public static GenericAsyncFunctionAssertions<T> Should<T>([NotNull] this Func<Task<T>> action)
+    public static GenericAsyncFunctionAssertions<T> Should<T>([NotNull] this Func<Task<T>>? action)
     {
         return new GenericAsyncFunctionAssertions<T>(action, Extractor, AssertionChain.GetOrCreate());
     }
@@ -842,7 +842,7 @@ public static class AssertionExtensions
     /// current <see cref="System.Func{T}"/>.
     /// </summary>
     [Pure]
-    public static FunctionAssertions<T> Should<T>([NotNull] this Func<T> func)
+    public static FunctionAssertions<T> Should<T>([NotNull] this Func<T>? func)
     {
         return new FunctionAssertions<T>(func, Extractor, AssertionChain.GetOrCreate());
     }
@@ -909,7 +909,7 @@ public static class AssertionExtensions
     /// </remarks>
     /// <typeparam name="TTo">The <see cref="Type"/> to cast <paramref name="subject"/> to</typeparam>
     [Pure]
-    public static TTo As<TTo>(this object subject)
+    public static TTo? As<TTo>(this object subject)
     {
         return subject is TTo to ? to : default;
     }

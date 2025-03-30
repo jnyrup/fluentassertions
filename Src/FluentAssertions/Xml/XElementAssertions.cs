@@ -93,8 +93,8 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
     public AndConstraint<XElementAssertions> BeEquivalentTo(XElement expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
-        using (XmlReader subjectReader = Subject?.CreateReader())
-        using (XmlReader expectedReader = expected?.CreateReader())
+        using (XmlReader? subjectReader = Subject?.CreateReader())
+        using (XmlReader? expectedReader = expected?.CreateReader())
         {
             var xmlReaderValidator = new XmlReaderValidator(assertionChain, subjectReader, expectedReader, because, becauseArgs);
             xmlReaderValidator.Validate(shouldBeEquivalent: true);
@@ -119,8 +119,8 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
     public AndConstraint<XElementAssertions> NotBeEquivalentTo(XElement unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
-        using (XmlReader subjectReader = Subject?.CreateReader())
-        using (XmlReader otherReader = unexpected?.CreateReader())
+        using (XmlReader? subjectReader = Subject?.CreateReader())
+        using (XmlReader? otherReader = unexpected?.CreateReader())
         {
             var xmlReaderValidator = new XmlReaderValidator(assertionChain, subjectReader, otherReader, because, becauseArgs);
             xmlReaderValidator.Validate(shouldBeEquivalent: false);
@@ -462,7 +462,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
                 "Expected the element to have child element {0}{reason}, but {context:member} is <null>.",
                 expected.ToString().EscapePlaceholders());
 
-        XElement xElement = null;
+        XElement? xElement = null;
 
         if (assertionChain.Succeeded)
         {

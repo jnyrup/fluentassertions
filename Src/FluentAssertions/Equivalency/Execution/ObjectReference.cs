@@ -11,12 +11,12 @@ namespace FluentAssertions.Equivalency.Execution;
 /// </summary>
 internal class ObjectReference
 {
-    private readonly object @object;
+    private readonly object? @object;
     private readonly string path;
     private readonly bool? compareByMembers;
-    private string[] pathElements;
+    private string[]? pathElements;
 
-    public ObjectReference(object @object, string path, bool? compareByMembers = null)
+    public ObjectReference(object? @object, string path, bool? compareByMembers = null)
     {
         this.@object = @object;
         this.path = path;
@@ -31,7 +31,7 @@ internal class ObjectReference
     /// </returns>
     /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="object"/>. </param>
     /// <filterpriority>2</filterpriority>
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return obj is ObjectReference other
             && ReferenceEquals(@object, other.@object) && IsParentOrChildOf(other);

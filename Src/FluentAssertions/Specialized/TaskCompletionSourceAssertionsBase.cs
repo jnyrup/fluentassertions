@@ -21,7 +21,7 @@ public class TaskCompletionSourceAssertionsBase
 
     /// <inheritdoc/>
     [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations")]
-    public override bool Equals(object obj) =>
+    public override bool Equals(object? obj) =>
         throw new NotSupportedException("Equals is not part of Fluent Assertions. Did you mean CompleteWithinAsync() instead?");
 
     /// <summary>

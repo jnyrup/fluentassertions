@@ -8,7 +8,7 @@ namespace FluentAssertions;
 
 public class AggregateExceptionExtractor : IExtractExceptions
 {
-    public IEnumerable<T> OfType<T>(Exception actualException)
+    public IEnumerable<T> OfType<T>(Exception? actualException)
         where T : Exception
     {
         if (typeof(T).IsSameOrInherits(typeof(AggregateException)))
@@ -19,7 +19,7 @@ public class AggregateExceptionExtractor : IExtractExceptions
         return GetExtractedExceptions<T>(actualException);
     }
 
-    private static List<T> GetExtractedExceptions<T>(Exception actualException)
+    private static List<T> GetExtractedExceptions<T>(Exception? actualException)
         where T : Exception
     {
         var exceptions = new List<T>();

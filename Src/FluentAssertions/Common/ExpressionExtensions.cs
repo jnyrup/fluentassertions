@@ -16,7 +16,7 @@ internal static class ExpressionExtensions
     {
         Guard.ThrowIfArgumentIsNull(expression, nameof(expression), "Expected a property expression, but found <null>.");
 
-        MemberInfo memberInfo = AttemptToGetMemberInfoFromExpression(expression);
+        MemberInfo? memberInfo = AttemptToGetMemberInfoFromExpression(expression);
 
         if (memberInfo is not PropertyInfo propertyInfo)
         {
@@ -27,7 +27,7 @@ internal static class ExpressionExtensions
         return propertyInfo;
     }
 
-    private static MemberInfo AttemptToGetMemberInfoFromExpression<T, TValue>(Expression<Func<T, TValue>> expression) =>
+    private static MemberInfo? AttemptToGetMemberInfoFromExpression<T, TValue>(Expression<Func<T, TValue>> expression) =>
         (((expression.Body as UnaryExpression)?.Operand ?? expression.Body) as MemberExpression)?.Member;
 
     /// <summary>
@@ -44,10 +44,10 @@ internal static class ExpressionExtensions
     {
         Guard.ThrowIfArgumentIsNull(expression, nameof(expression), "Expected an expression, but found <null>.");
 
-        string singlePath = null;
+        string? singlePath = null;
         List<string> selectors = [];
         List<Type> declaringTypes = [];
-        Expression node = expression;
+        Expression? node = expression;
 
         while (node is not null)
         {
@@ -157,7 +157,7 @@ internal static class ExpressionExtensions
     {
         Guard.ThrowIfArgumentIsNull(expression, nameof(expression), "Expected an expression, but found <null>.");
 
-        Expression node = expression;
+        Expression? node = expression;
 
         while (node is not null)
         {

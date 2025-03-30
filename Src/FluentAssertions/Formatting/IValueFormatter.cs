@@ -16,7 +16,7 @@ public interface IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    bool CanHandle(object value);
+    bool CanHandle(object? value);
 
     /// <summary>
     /// Returns a human-readable representation of <paramref name="value"/>.
@@ -37,5 +37,5 @@ public interface IValueFormatter
     /// Also, the <see cref="FormattedObjectGraph"/> may throw
     /// an <see cref="MaxLinesExceededException"/> that must be ignored by implementations of this interface.
     /// </remarks>
-    void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild);
+    void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild);
 }

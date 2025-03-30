@@ -68,12 +68,12 @@ public class GenericEnumerableEquivalencyStep : IEquivalencyStep
     {
         assertionChain
             .ForCondition(subject is not null)
-            .FailWith("Expected {context:subject} not to be {0}.", new object[] { null });
+            .FailWith("Expected {context:subject} not to be {0}.", new object?[] { null });
 
         if (assertionChain.Succeeded)
         {
             assertionChain
-                .ForCondition(IsCollection(subject.GetType()))
+                .ForCondition(IsCollection(subject!.GetType()))
                 .FailWith("Expected {context:subject} to be a collection, but it was a {0}", subject.GetType());
         }
 

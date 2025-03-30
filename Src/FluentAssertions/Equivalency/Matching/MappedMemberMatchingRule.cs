@@ -32,7 +32,7 @@ internal class MappedMemberMatchingRule<TExpectation, TSubject> : IMemberMatchin
     private static bool IsNestedPath(string path) =>
         path.Contains('.', StringComparison.Ordinal) || path.Contains('[', StringComparison.Ordinal) || path.Contains(']', StringComparison.Ordinal);
 
-    public IMember Match(IMember expectedMember, object subject, INode parent, IEquivalencyOptions options, AssertionChain assertionChain)
+    public IMember? Match(IMember expectedMember, object subject, INode parent, IEquivalencyOptions options, AssertionChain assertionChain)
     {
         if (parent.Type.IsSameOrInherits(typeof(TExpectation)) && subject is TSubject &&
             expectedMember.Subject.Name == expectationMemberName)

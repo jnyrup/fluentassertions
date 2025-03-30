@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions.Configuration;
@@ -15,7 +16,7 @@ namespace FluentAssertions;
 public static class AssertionEngine
 {
     private static readonly object Lockable = new();
-    private static ITestFramework testFramework;
+    private static ITestFramework? testFramework;
     private static bool isInitialized;
 
     static AssertionEngine()
@@ -26,6 +27,7 @@ public static class AssertionEngine
     /// <summary>
     /// Gets or sets the run-time test framework used for throwing assertion exceptions.
     /// </summary>
+    [AllowNull]
     public static ITestFramework TestFramework
     {
         get
@@ -143,12 +145,7 @@ public static class AssertionEngine
 
     private static bool IsFramework(Assembly assembly)
     {
-#if NET6_0_OR_GREATER
-        return assembly!.FullName?.StartsWith("Microsoft.", StringComparison.OrdinalIgnoreCase) == true ||
+        return assembly.FullName?.StartsWith("Microsoft.", StringComparison.OrdinalIgnoreCase) == true ||
             assembly.FullName?.StartsWith("System.", StringComparison.OrdinalIgnoreCase) == true;
-#else
-        return assembly.FullName.StartsWith("Microsoft.", StringComparison.OrdinalIgnoreCase) ||
-            assembly.FullName.StartsWith("System.", StringComparison.OrdinalIgnoreCase);
-#endif
     }
 }

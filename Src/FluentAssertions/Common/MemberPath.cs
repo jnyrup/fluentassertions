@@ -12,10 +12,10 @@ namespace FluentAssertions.Common;
 internal class MemberPath
 {
     private readonly string dottedPath;
-    private readonly Type reflectedType;
-    private readonly Type declaringType;
+    private readonly Type? reflectedType;
+    private readonly Type? declaringType;
 
-    private string[] segments;
+    private string[]? segments;
 
     private static readonly MemberPathSegmentEqualityComparer MemberPathSegmentEqualityComparer = new();
 
@@ -28,7 +28,7 @@ internal class MemberPath
     /// Initializes a new instance of the <see cref="MemberPath"/> class.
     /// </summary>
     /// <exception cref="ArgumentNullException"><paramref name="dottedPath"/> is <see langword="null"/>.</exception>
-    public MemberPath(Type reflectedType, Type declaringType, string dottedPath)
+    public MemberPath(Type? reflectedType, Type? declaringType, string dottedPath)
         : this(dottedPath)
     {
         this.reflectedType = reflectedType;

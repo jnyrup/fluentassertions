@@ -19,7 +19,7 @@ public class GenericAsyncFunctionAssertions<TResult>
     /// <summary>
     /// Initializes a new instance of the <see cref="GenericAsyncFunctionAssertions{TResult}"/> class.
     /// </summary>
-    public GenericAsyncFunctionAssertions(Func<Task<TResult>> subject, IExtractExceptions extractor, AssertionChain assertionChain)
+    public GenericAsyncFunctionAssertions(Func<Task<TResult>>? subject, IExtractExceptions extractor, AssertionChain assertionChain)
         : this(subject, extractor, assertionChain, new Clock())
     {
         this.assertionChain = assertionChain;
@@ -28,7 +28,7 @@ public class GenericAsyncFunctionAssertions<TResult>
     /// <summary>
     /// Initializes a new instance of the <see cref="GenericAsyncFunctionAssertions{TResult}"/> class with custom <see cref="IClock"/>.
     /// </summary>
-    public GenericAsyncFunctionAssertions(Func<Task<TResult>> subject, IExtractExceptions extractor, AssertionChain assertionChain,
+    public GenericAsyncFunctionAssertions(Func<Task<TResult>>? subject, IExtractExceptions extractor, AssertionChain assertionChain,
         IClock clock)
         : base(subject, extractor, assertionChain, clock)
     {
@@ -157,14 +157,14 @@ public class GenericAsyncFunctionAssertions<TResult>
             async Task<AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>> AssertionTaskAsync()
             {
                 TimeSpan? invocationEndTime = null;
-                Exception exception = null;
+                Exception? exception = null;
                 ITimer timer = Clock.StartTimer();
 
                 while (invocationEndTime is null || invocationEndTime < waitTime)
                 {
                     try
                     {
-                        TResult result = await Subject.Invoke();
+                        TResult result = await Subject!.Invoke();
                         return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, result, assertionChain, ".Result");
                     }
                     catch (Exception ex)

@@ -7,12 +7,12 @@ namespace FluentAssertions.Common;
 
 internal static class ObjectExtensions
 {
-    public static Func<T, T, bool> GetComparer<T>()
+    public static Func<T?, T?, bool> GetComparer<T>()
     {
         if (typeof(T).IsValueType)
         {
             // Avoid causing any boxing for value types
-            return (actual, expected) => EqualityComparer<T>.Default.Equals(actual, expected);
+            return (actual, expected) => EqualityComparer<T?>.Default.Equals(actual, expected);
         }
 
         if (typeof(T) != typeof(object))
@@ -82,7 +82,7 @@ internal static class ObjectExtensions
     /// <summary>
     /// Convenience method to format an object to a string using the <see cref="Formatter"/> class.
     /// </summary>
-    public static string ToFormattedString(this object source)
+    public static string ToFormattedString(this object? source)
     {
         return Formatter.ToString(source);
     }

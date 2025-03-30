@@ -22,15 +22,15 @@ public class DictionaryValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if the current <see cref="IValueFormatter"/> can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public virtual bool CanHandle(object value)
+    public virtual bool CanHandle(object? value)
     {
         return value is IDictionary;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
         int startCount = formattedGraph.LineCount;
-        IEnumerable<KeyValuePair<object, object>> collection = AsEnumerable((IDictionary)value);
+        IEnumerable<KeyValuePair<object, object>> collection = AsEnumerable((IDictionary)value!);
 
         using var iterator = new Iterator<KeyValuePair<object, object>>(collection, MaxItems);
 

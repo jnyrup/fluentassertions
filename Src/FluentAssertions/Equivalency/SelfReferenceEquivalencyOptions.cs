@@ -56,7 +56,7 @@ public abstract class SelfReferenceEquivalencyOptions<TSelf> : IEquivalencyOptio
     private bool ignoreNonBrowsableOnSubject;
     private bool excludeNonBrowsableOnExpectation;
 
-    private IEqualityComparer<string> stringComparer;
+    private IEqualityComparer<string>? stringComparer;
 
     #endregion
 
@@ -194,7 +194,7 @@ public abstract class SelfReferenceEquivalencyOptions<TSelf> : IEquivalencyOptio
 
     public bool IgnoreNewlineStyle { get; private set; }
 
-    public ITraceWriter TraceWriter { get; private set; }
+    public ITraceWriter? TraceWriter { get; private set; }
 
     /// <summary>
     /// Causes inclusion of only public properties of the subject as far as they are defined on the declared type.
@@ -686,7 +686,7 @@ public abstract class SelfReferenceEquivalencyOptions<TSelf> : IEquivalencyOptio
     /// <summary>
     /// Enables tracing the steps the equivalency validation followed to compare two graphs.
     /// </summary>
-    public TSelf WithTracing(ITraceWriter writer = null)
+    public TSelf WithTracing(ITraceWriter? writer = null)
     {
         TraceWriter = writer ?? new StringBuilderTraceWriter();
         return (TSelf)this;

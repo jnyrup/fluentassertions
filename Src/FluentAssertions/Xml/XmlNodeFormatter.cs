@@ -6,14 +6,14 @@ namespace FluentAssertions.Xml;
 
 public class XmlNodeFormatter : IValueFormatter
 {
-    public bool CanHandle(object value)
+    public bool CanHandle(object? value)
     {
         return value is XmlNode;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        string outerXml = ((XmlNode)value).OuterXml;
+        string outerXml = ((XmlNode)value!).OuterXml;
 
         const int maxLength = 20;
 

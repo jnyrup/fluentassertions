@@ -107,7 +107,7 @@ public static class EventRaisingExtensions
     /// </remarks>
     public static IEventRecording WithArgs<T>(this IEventRecording eventRecording, params Expression<Func<T, bool>>[] predicates)
     {
-        Func<T, bool>[] compiledPredicates = predicates.Select(p => p?.Compile()).ToArray();
+        Func<T, bool>?[] compiledPredicates = predicates.Select(p => p?.Compile()).ToArray();
 
         var eventsWithMatchingPredicate = new List<OccurredEvent>();
 

@@ -16,7 +16,7 @@ internal class DecimalAssertions : NumericAssertions<decimal>
     {
     }
 
-    private protected override string CalculateDifferenceForFailureMessage(decimal subject, decimal expected)
+    private protected override string? CalculateDifferenceForFailureMessage(decimal subject, decimal expected)
     {
         try
         {

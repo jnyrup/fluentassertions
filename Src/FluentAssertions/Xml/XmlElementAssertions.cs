@@ -91,7 +91,7 @@ public class XmlElementAssertions : XmlNodeAssertions<XmlElement, XmlElementAsse
         string expectedValue,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
-        XmlAttribute attribute = Subject.Attributes[expectedName, expectedNamespace];
+        XmlAttribute? attribute = Subject.Attributes[expectedName, expectedNamespace];
 
         string expectedFormattedName =
             (string.IsNullOrEmpty(expectedNamespace) ? string.Empty : $"{{{expectedNamespace}}}")
@@ -152,7 +152,7 @@ public class XmlElementAssertions : XmlNodeAssertions<XmlElement, XmlElementAsse
     /// </param>
     public AndWhichConstraint<XmlElementAssertions, XmlElement> HaveElementWithNamespace(
         string expectedName,
-        string expectedNamespace,
+        string? expectedNamespace,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         XmlElement element = expectedNamespace == null ? Subject[expectedName] : Subject[expectedName, expectedNamespace];

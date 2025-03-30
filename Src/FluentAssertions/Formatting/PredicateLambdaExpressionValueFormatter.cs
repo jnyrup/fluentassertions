@@ -11,11 +11,11 @@ namespace FluentAssertions.Formatting;
 /// </summary>
 public class PredicateLambdaExpressionValueFormatter : IValueFormatter
 {
-    public bool CanHandle(object value) => value is LambdaExpression;
+    public bool CanHandle(object? value) => value is LambdaExpression;
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        var lambdaExpression = (LambdaExpression)value;
+        var lambdaExpression = (LambdaExpression)value!;
 
         var reducedExpression = ReduceConstantSubExpressions(lambdaExpression.Body);
 
@@ -70,7 +70,7 @@ public class PredicateLambdaExpressionValueFormatter : IValueFormatter
     {
         public bool HasParameters { get; private set; }
 
-        public override Expression Visit(Expression node)
+        public override Expression? Visit(Expression? node)
         {
             // As soon as at least one parameter was found in the expression tree we should stop iterating (this is achieved by not calling base.Visit).
             return HasParameters ? node : base.Visit(node);
@@ -88,7 +88,7 @@ public class PredicateLambdaExpressionValueFormatter : IValueFormatter
     /// </summary>
     private sealed class ConstantSubExpressionReductionVisitor : ExpressionVisitor
     {
-        public override Expression Visit(Expression node)
+        public override Expression? Visit(Expression? node)
         {
             if (node is null)
             {
@@ -132,7 +132,7 @@ public class PredicateLambdaExpressionValueFormatter : IValueFormatter
     {
         public List<Expression> AndChain { get; } = [];
 
-        public override Expression Visit(Expression node)
+        public override Expression? Visit(Expression? node)
         {
             if (node!.NodeType == ExpressionType.AndAlso)
             {

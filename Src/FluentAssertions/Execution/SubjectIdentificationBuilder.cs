@@ -17,7 +17,7 @@ internal class SubjectIdentificationBuilder
     private readonly Func<string> getScopeName;
     private readonly Lazy<string[]> identifiersExtractedFromTheCode;
     private int identifierIndex;
-    private Func<string> getSubject;
+    private Func<string?> getSubject;
 
     public SubjectIdentificationBuilder(Func<string[]> getCallerIdentifiers, Func<string> getScopeName)
     {
@@ -52,7 +52,7 @@ internal class SubjectIdentificationBuilder
     /// <summary>
     /// Completely overrides the construction process with the specified lazy-evaluated identifier.
     /// </summary>
-    public void OverrideSubjectIdentifier(Func<string> getSubject)
+    public void OverrideSubjectIdentifier(Func<string?> getSubject)
     {
         HasOverriddenIdentifier = true;
         this.getSubject = getSubject;
@@ -95,7 +95,7 @@ internal class SubjectIdentificationBuilder
         }
     }
 
-    private string GetIdentifier(int index)
+    private string? GetIdentifier(int index)
     {
         return identifiersExtractedFromTheCode.Value.Length > index ? identifiersExtractedFromTheCode.Value[index] : null;
     }

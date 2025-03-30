@@ -92,7 +92,7 @@ public interface IEquivalencyOptions
     /// <summary>
     /// Gets the currently configured tracer, or <see langword="null"/> if no tracing was configured.
     /// </summary>
-    ITraceWriter TraceWriter { get; }
+    ITraceWriter? TraceWriter { get; }
 
     /// <summary>
     /// Determines the right strategy for evaluating the equality of objects of this type.

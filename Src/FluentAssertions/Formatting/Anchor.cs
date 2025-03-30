@@ -8,10 +8,10 @@ internal class Anchor
     private readonly FormattedObjectGraph parent;
     private readonly int indentation;
     private readonly int characterIndex;
-    private readonly Line line;
+    private readonly Line? line;
     private readonly bool lineWasEmptyAtCreation;
 
-    public Anchor(FormattedObjectGraph parent, Line line)
+    public Anchor(FormattedObjectGraph parent, Line? line)
     {
         indentation = parent.Indentation;
         this.parent = parent;
@@ -68,7 +68,7 @@ internal class Anchor
             }
             else
             {
-                parent.AddLineAfter(line, fragmentWithWhitespace);
+                parent.AddLineAfter(line!, fragmentWithWhitespace);
             }
         }
     }

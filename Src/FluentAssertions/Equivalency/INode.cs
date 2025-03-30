@@ -25,7 +25,7 @@ public interface INode
     /// <value>
     /// Is <see langword="null"/> for the root object.
     /// </value>
-    Type ParentType { get; }
+    Type? ParentType { get; }
 
     /// <summary>
     /// Gets the path from the root of the subject upto and including the current node.

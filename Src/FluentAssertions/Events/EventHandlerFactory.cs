@@ -28,7 +28,7 @@ internal static class EventHandlerFactory
             module);
 
         MethodInfo methodToCall = typeof(EventRecorder).GetMethod(nameof(EventRecorder.RecordEvent),
-            BindingFlags.Instance | BindingFlags.Public);
+            BindingFlags.Instance | BindingFlags.Public)!;
 
         ILGenerator ilGen = eventHandler.GetILGenerator();
 
@@ -128,7 +128,7 @@ internal static class EventHandlerFactory
             return false;
         }
 
-        MethodInfo invoke = d.GetMethod("Invoke");
+        MethodInfo? invoke = d.GetMethod("Invoke");
         return invoke is not null;
     }
 
@@ -142,7 +142,7 @@ internal static class EventHandlerFactory
             throw new ArgumentException("Type is not a Delegate!", nameof(d));
         }
 
-        MethodInfo invoke = d.GetMethod("Invoke");
+        MethodInfo invoke = d.GetMethod("Invoke")!;
         return invoke;
     }
 }

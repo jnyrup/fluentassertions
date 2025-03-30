@@ -15,7 +15,7 @@ internal class StringValidator
         this.assertionChain = assertionChain.BecauseOf(because, becauseArgs);
     }
 
-    public void Validate(string subject, string expected)
+    public void Validate(string? subject, string? expected)
     {
         if (expected is null && subject is null)
         {
@@ -35,7 +35,7 @@ internal class StringValidator
         comparisonStrategy.ValidateAgainstMismatch(assertionChain, subject, expected);
     }
 
-    private bool ValidateAgainstNulls(string subject, string expected)
+    private bool ValidateAgainstNulls(string? subject, string? expected)
     {
         if (expected is null == subject is null)
         {

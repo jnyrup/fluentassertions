@@ -86,7 +86,7 @@ public static class Formatter
     /// <returns>
     /// A <see cref="string" /> that represents this instance.
     /// </returns>
-    public static string ToString(object value, FormattingOptions options = null)
+    public static string ToString(object? value, FormattingOptions? options = null)
     {
         options ??= new FormattingOptions();
 
@@ -127,7 +127,7 @@ public static class Formatter
         }
     }
 
-    private static void FormatChild(string path, object value, FormattedObjectGraph output, FormattingContext context,
+    private static void FormatChild(string path, object? value, FormattedObjectGraph output, FormattingContext context,
         FormattingOptions options, ObjectGraph graph)
     {
         try
@@ -158,7 +158,7 @@ public static class Formatter
         }
     }
 
-    private static void Format(object value, FormattedObjectGraph output, FormattingContext context, FormatChild formatChild)
+    private static void Format(object? value, FormattedObjectGraph output, FormattingContext context, FormatChild formatChild)
     {
         IValueFormatter firstFormatterThatCanHandleValue = Formatters.First(f => f.CanHandle(value));
         firstFormatterThatCanHandleValue.Format(value, output, context, formatChild);
@@ -203,14 +203,14 @@ public static class Formatter
         private readonly CyclicReferenceDetector tracker;
         private readonly Stack<string> pathStack;
 
-        public ObjectGraph(object rootObject)
+        public ObjectGraph(object? rootObject)
         {
             tracker = new CyclicReferenceDetector();
             pathStack = new Stack<string>();
             TryPush("root", rootObject);
         }
 
-        public bool TryPush(string path, object value)
+        public bool TryPush(string path, object? value)
         {
             pathStack.Push(path);
 

@@ -68,7 +68,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
 
         if (assertionChain.Succeeded)
         {
-            IEnumerable<TKey> subjectKeys = GetKeys(Subject);
+            IEnumerable<TKey> subjectKeys = GetKeys(Subject!);
             IEnumerable<TKey> expectedKeys = GetKeys(expected);
             IEnumerable<TKey> missingKeys = expectedKeys.Except(subjectKeys);
             IEnumerable<TKey> additionalKeys = subjectKeys.Except(expectedKeys);
@@ -95,7 +95,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
             foreach (var key in expectedKeys)
             {
                 assertionChain
-                    .ForCondition(areSameOrEqual(GetValue(Subject, key), GetValue(expected, key)))
+                    .ForCondition(areSameOrEqual(GetValue(Subject!, key), GetValue(expected, key)))
                     .BecauseOf(because, becauseArgs)
                     .FailWith("Expected {context:dictionary} to be equal to {0}{reason}, but {1} differs at key {2}.",
                         expected, Subject, key);
@@ -139,7 +139,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
                     .FailWith("Expected dictionaries not to be equal{reason}, but they both reference the same object.");
             }
 
-            IEnumerable<TKey> subjectKeys = GetKeys(Subject);
+            IEnumerable<TKey> subjectKeys = GetKeys(Subject!);
             IEnumerable<TKey> unexpectedKeys = GetKeys(unexpected);
             IEnumerable<TKey> missingKeys = unexpectedKeys.Except(subjectKeys);
             IEnumerable<TKey> additionalKeys = subjectKeys.Except(unexpectedKeys);
@@ -148,7 +148,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
 
             bool foundDifference = missingKeys.Any()
                 || additionalKeys.Any()
-                || subjectKeys.Any(key => !areSameOrEqual(GetValue(Subject, key), GetValue(unexpected, key)));
+                || subjectKeys.Any(key => !areSameOrEqual(GetValue(Subject!, key), GetValue(unexpected, key)));
 
             if (!foundDifference)
             {
@@ -260,7 +260,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
     {
         AndConstraint<TAssertions> andConstraint = ContainKeys([expected], because, becauseArgs);
 
-        _ = TryGetValue(Subject, expected, out TValue value);
+        _ = TryGetValue(Subject, expected, out TValue? value);
 
         return new WhoseValueConstraint<TCollection, TKey, TValue, TAssertions>(andConstraint.And, value);
     }
@@ -305,7 +305,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
 
         if (assertionChain.Succeeded)
         {
-            IEnumerable<TKey> missingKeys = expectedKeys.Where(key => !ContainsKey(Subject, key));
+            IEnumerable<TKey> missingKeys = expectedKeys.Where(key => !ContainsKey(Subject!, key));
 
             if (missingKeys.Any())
             {
@@ -354,7 +354,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context:dictionary} not to contain key {0}{reason}, but found <null>.", unexpected);
 
-        if (assertionChain.Succeeded && ContainsKey(Subject, unexpected))
+        if (assertionChain.Succeeded && ContainsKey(Subject!, unexpected))
         {
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -407,7 +407,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
 
         if (assertionChain.Succeeded)
         {
-            IEnumerable<TKey> foundKeys = unexpectedKeys.Where(key => ContainsKey(Subject, key));
+            IEnumerable<TKey> foundKeys = unexpectedKeys.Where(key => ContainsKey(Subject!, key));
 
             if (foundKeys.Any())
             {
@@ -557,7 +557,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
             .BecauseOf(because, becauseArgs)
             .FailWith("Expected {context:dictionary} not to contain value {0}{reason}, but found <null>.", unexpected);
 
-        if (assertionChain.Succeeded && GetValues(Subject).Contains(unexpected))
+        if (assertionChain.Succeeded && GetValues(Subject!).Contains(unexpected))
         {
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -685,7 +685,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
         if (assertionChain.Succeeded)
         {
             TKey[] expectedKeys = expectedKeyValuePairs.Select(keyValuePair => keyValuePair.Key).ToArray();
-            IEnumerable<TKey> missingKeys = expectedKeys.Where(key => !ContainsKey(Subject, key));
+            IEnumerable<TKey> missingKeys = expectedKeys.Where(key => !ContainsKey(Subject!, key));
 
             if (missingKeys.Any())
             {
@@ -709,7 +709,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
             Func<TValue, TValue, bool> areSameOrEqual = ObjectExtensions.GetComparer<TValue>();
 
             KeyValuePair<TKey, TValue>[] keyValuePairsNotSameOrEqualInSubject = expectedKeyValuePairs
-                .Where(keyValuePair => !areSameOrEqual(GetValue(Subject, keyValuePair.Key), keyValuePair.Value)).ToArray();
+                .Where(keyValuePair => !areSameOrEqual(GetValue(Subject!, keyValuePair.Key), keyValuePair.Value)).ToArray();
 
             if (keyValuePairsNotSameOrEqualInSubject.Length > 0)
             {
@@ -724,7 +724,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
                 else
                 {
                     KeyValuePair<TKey, TValue> expectedKeyValuePair = keyValuePairsNotSameOrEqualInSubject[0];
-                    TValue actual = GetValue(Subject, expectedKeyValuePair.Key);
+                    TValue actual = GetValue(Subject!, expectedKeyValuePair.Key);
 
                     assertionChain
                         .BecauseOf(because, becauseArgs)
@@ -782,7 +782,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
 
         if (assertionChain.Succeeded)
         {
-            if (TryGetValue(Subject, key, out TValue actual))
+            if (TryGetValue(Subject!, key, out TValue? actual))
             {
                 Func<TValue, TValue, bool> areSameOrEqual = ObjectExtensions.GetComparer<TValue>();
 
@@ -854,14 +854,14 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
         if (assertionChain.Succeeded)
         {
             KeyValuePair<TKey, TValue>[] keyValuePairsFound =
-                keyValuePairs.Where(keyValuePair => ContainsKey(Subject, keyValuePair.Key)).ToArray();
+                keyValuePairs.Where(keyValuePair => ContainsKey(Subject!, keyValuePair.Key)).ToArray();
 
             if (keyValuePairsFound.Length > 0)
             {
                 Func<TValue, TValue, bool> areSameOrEqual = ObjectExtensions.GetComparer<TValue>();
 
                 KeyValuePair<TKey, TValue>[] keyValuePairsSameOrEqualInSubject = keyValuePairsFound
-                    .Where(keyValuePair => areSameOrEqual(GetValue(Subject, keyValuePair.Key), keyValuePair.Value)).ToArray();
+                    .Where(keyValuePair => areSameOrEqual(GetValue(Subject!, keyValuePair.Key), keyValuePair.Value)).ToArray();
 
                 if (keyValuePairsSameOrEqualInSubject.Length > 0)
                 {
@@ -933,7 +933,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
             .FailWith("Expected {context:dictionary} not to contain value {0} at key {1}{reason}, but dictionary is <null>.",
                 value, key);
 
-        if (assertionChain.Succeeded && TryGetValue(Subject, key, out TValue actual))
+        if (assertionChain.Succeeded && TryGetValue(Subject!, key, out TValue? actual))
         {
             assertionChain
                 .ForCondition(!ObjectExtensions.GetComparer<TValue>()(actual, value))
@@ -965,7 +965,7 @@ public class GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
     private static bool ContainsKey(TCollection collection, TKey key) =>
         collection.ContainsKey<TCollection, TKey, TValue>(key);
 
-    private static bool TryGetValue(TCollection collection, TKey key, out TValue value) =>
+    private static bool TryGetValue(TCollection collection, TKey key, [MaybeNullWhen(false)] out TValue value) =>
         collection.TryGetValue(key, out value);
 
     private static TValue GetValue(TCollection collection, TKey key) =>

@@ -57,18 +57,18 @@ public class GivenSelector<T>
         return FailWith(message, Array.Empty<object>());
     }
 
-    public ContinuationOfGiven<T> FailWith(string message, params Func<T, object>[] args)
+    public ContinuationOfGiven<T> FailWith(string message, params Func<T, object?>[] args)
     {
         if (assertionChain.PreviousAssertionSucceeded)
         {
-            object[] mappedArguments = args.Select(a => a(selector)).ToArray();
+            object?[] mappedArguments = args.Select(a => a(selector)).ToArray();
             return FailWith(message, mappedArguments);
         }
 
         return new ContinuationOfGiven<T>(this);
     }
 
-    public ContinuationOfGiven<T> FailWith(string message, params object[] args)
+    public ContinuationOfGiven<T> FailWith(string message, params object?[] args)
     {
         assertionChain.FailWith(message, args);
         return new ContinuationOfGiven<T>(this);

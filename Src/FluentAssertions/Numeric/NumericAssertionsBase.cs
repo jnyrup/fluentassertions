@@ -386,7 +386,7 @@ public abstract class NumericAssertionsBase<T, TSubject, TAssertions>
     {
         Guard.ThrowIfArgumentIsNull(expectedType);
 
-        Type subjectType = Subject?.GetType();
+        Type? subjectType = Subject?.GetType();
 
         if (expectedType.IsGenericTypeDefinition && subjectType?.IsGenericType == true)
         {
@@ -459,7 +459,7 @@ public abstract class NumericAssertionsBase<T, TSubject, TAssertions>
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) =>
+    public override bool Equals(object? obj) =>
         throw new NotSupportedException("Equals is not part of Fluent Assertions. Did you mean Be() instead?");
 
     private protected virtual bool IsNaN(T value) => false;
@@ -473,7 +473,7 @@ public abstract class NumericAssertionsBase<T, TSubject, TAssertions>
     /// Returns the difference between a number value and the <paramref name="expected" /> value.
     /// Returns `null` if the compared numbers are small enough that a difference message is irrelevant.
     /// </returns>
-    private protected virtual string CalculateDifferenceForFailureMessage(T subject, T expected) => null;
+    private protected virtual string? CalculateDifferenceForFailureMessage(T subject, T expected) => null;
 
     private string GenerateDifferenceMessage(T? expected)
     {

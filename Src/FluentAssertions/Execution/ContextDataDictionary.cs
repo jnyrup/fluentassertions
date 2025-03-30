@@ -16,9 +16,9 @@ internal class ContextDataDictionary
         return items.Where(item => item.Reportable).ToDictionary(item => item.Key, item => item.Value);
     }
 
-    public string AsStringOrDefault(string key)
+    public string? AsStringOrDefault(string key)
     {
-        DataItem item = items.SingleOrDefault(i => i.Key == key);
+        DataItem? item = items.SingleOrDefault(i => i.Key == key);
 
         if (item is not null)
         {

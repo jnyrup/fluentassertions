@@ -64,12 +64,12 @@ public class GenericDictionaryEquivalencyStep : IEquivalencyStep
     {
         assertionChain
             .ForCondition(subject is not null)
-            .FailWith("Expected {context:Subject} not to be {0}{reason}.", new object[] { null });
+            .FailWith("Expected {context:Subject} not to be {0}{reason}.", new object?[] { null });
 
         return assertionChain.Succeeded;
     }
 
-    private static DictionaryInterfaceInfo EnsureSubjectIsOfTheExpectedDictionaryType(AssertionChain assertionChain,
+    private static DictionaryInterfaceInfo? EnsureSubjectIsOfTheExpectedDictionaryType(AssertionChain assertionChain,
         Comparands comparands,
         DictionaryInterfaceInfo expectedDictionary)
     {
@@ -181,7 +181,7 @@ public class GenericDictionaryEquivalencyStep : IEquivalencyStep
         {
             foreach (TExpectedKey key in expectation.Keys)
             {
-                if (subject.TryGetValue(key, out TSubjectValue subjectValue))
+                if (subject.TryGetValue(key, out TSubjectValue? subjectValue))
                 {
                     if (options.IsRecursive)
                     {

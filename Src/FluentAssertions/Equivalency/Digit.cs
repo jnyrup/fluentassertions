@@ -5,10 +5,10 @@ namespace FluentAssertions.Equivalency;
 internal class Digit
 {
     private readonly int length;
-    private readonly Digit nextDigit;
+    private readonly Digit? nextDigit;
     private int index;
 
-    public Digit(int length, Digit nextDigit)
+    public Digit(int length, Digit? nextDigit)
     {
         this.length = length;
         this.nextDigit = nextDigit;
@@ -18,7 +18,7 @@ internal class Digit
     {
         var indices = new List<int>();
 
-        Digit digit = this;
+        Digit? digit = this;
 
         while (digit is not null)
         {

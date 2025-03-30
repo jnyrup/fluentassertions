@@ -10,7 +10,7 @@ namespace FluentAssertions.Equivalency;
 /// </summary>
 public class EquivalencyValidationContext : IEquivalencyValidationContext
 {
-    private Tracer tracer;
+    private Tracer? tracer;
 
     public EquivalencyValidationContext(INode root, IEquivalencyOptions options)
     {
@@ -78,7 +78,7 @@ public class EquivalencyValidationContext : IEquivalencyValidationContext
         return CyclicReferenceDetector.IsCyclicReference(reference);
     }
 
-    public ITraceWriter TraceWriter { get; set; }
+    public ITraceWriter? TraceWriter { get; set; }
 
     public override string ToString()
     {

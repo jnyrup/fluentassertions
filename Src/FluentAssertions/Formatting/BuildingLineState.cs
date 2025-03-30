@@ -13,7 +13,7 @@ internal class BuildingLineState : ILineState
     public ILineState Flush()
     {
         var newState = new FlushedLineState(builder.ToString());
-        builder = null;
+        builder = new();
 
         return newState;
     }
@@ -35,7 +35,7 @@ internal class BuildingLineState : ILineState
         builder.Insert(startIndex, fragment);
     }
 
-    public Line Truncate(int characterIndex, int indentation, int whitespaceOffset)
+    public Line? Truncate(int characterIndex, int indentation, int whitespaceOffset)
     {
         return null;
     }

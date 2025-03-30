@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FluentAssertions.Common;
 
@@ -14,8 +15,8 @@ internal sealed class Iterator<T> : IEnumerator<T>
     private readonly IEnumerable<T> enumerable;
     private readonly int? maxItems;
     private IEnumerator<T> enumerator;
-    private T current;
-    private T next;
+    private T? current;
+    private T? next;
 
     private bool hasNext;
     private bool hasCurrent;
@@ -30,6 +31,7 @@ internal sealed class Iterator<T> : IEnumerator<T>
         Reset();
     }
 
+    [MemberNotNull(nameof(enumerator))]
     public void Reset()
     {
         Index = InitialIndex;

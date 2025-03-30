@@ -17,7 +17,7 @@ internal sealed class EventRecorder : IEventRecording, IDisposable
     private readonly Func<DateTime> utcNow;
     private readonly BlockingCollection<RecordedEvent> raisedEvents = [];
     private readonly object lockable = new();
-    private Action cleanup;
+    private Action? cleanup;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EventRecorder"/> class.
@@ -65,7 +65,7 @@ internal sealed class EventRecorder : IEventRecording, IDisposable
 
     public void Dispose()
     {
-        Action localCleanup = cleanup;
+        Action? localCleanup = cleanup;
         if (localCleanup is not null)
         {
             localCleanup();

@@ -17,7 +17,7 @@ public class NonGenericAsyncFunctionAssertions : AsyncFunctionAssertions<Task, N
     /// <summary>
     /// Initializes a new instance of the <see cref="NonGenericAsyncFunctionAssertions"/> class.
     /// </summary>
-    public NonGenericAsyncFunctionAssertions(Func<Task> subject, IExtractExceptions extractor, AssertionChain assertionChain)
+    public NonGenericAsyncFunctionAssertions(Func<Task>? subject, IExtractExceptions extractor, AssertionChain assertionChain)
         : this(subject, extractor, assertionChain, new Clock())
     {
         this.assertionChain = assertionChain;
@@ -26,7 +26,7 @@ public class NonGenericAsyncFunctionAssertions : AsyncFunctionAssertions<Task, N
     /// <summary>
     /// Initializes a new instance of the <see cref="NonGenericAsyncFunctionAssertions"/> class with custom <see cref="IClock"/>.
     /// </summary>
-    public NonGenericAsyncFunctionAssertions(Func<Task> subject, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
+    public NonGenericAsyncFunctionAssertions(Func<Task>? subject, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
         : base(subject, extractor, assertionChain, clock)
     {
         this.assertionChain = assertionChain;
@@ -148,12 +148,12 @@ public class NonGenericAsyncFunctionAssertions : AsyncFunctionAssertions<Task, N
             async Task<AndConstraint<NonGenericAsyncFunctionAssertions>> AssertionTaskAsync()
             {
                 TimeSpan? invocationEndTime = null;
-                Exception exception = null;
+                Exception? exception = null;
                 ITimer timer = Clock.StartTimer();
 
                 while (invocationEndTime is null || invocationEndTime < waitTime)
                 {
-                    exception = await InvokeWithInterceptionAsync(Subject);
+                    exception = await InvokeWithInterceptionAsync(Subject!);
 
                     if (exception is null)
                     {

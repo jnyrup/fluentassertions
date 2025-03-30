@@ -18,7 +18,7 @@ internal static class TypeReflector
 
     private static bool IsRelevant(Assembly ass)
     {
-        string assemblyName = ass.GetName().Name;
+        string? assemblyName = ass.GetName().Name;
 
         return
             assemblyName is not null &&
@@ -44,7 +44,7 @@ internal static class TypeReflector
         }
         catch (ReflectionTypeLoadException ex)
         {
-            return ex.Types;
+            return ex.Types.WhereNotNull();
         }
         catch (FileLoadException)
         {

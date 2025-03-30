@@ -17,7 +17,7 @@ namespace FluentAssertions.Primitives;
 public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
     where TAssertions : ReferenceTypeAssertions<TSubject, TAssertions>
 {
-    protected ReferenceTypeAssertions(TSubject subject, AssertionChain assertionChain)
+    protected ReferenceTypeAssertions(TSubject? subject, AssertionChain assertionChain)
     {
         CurrentAssertionChain = assertionChain;
         Subject = subject;
@@ -26,7 +26,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
     /// <summary>
     /// Gets the object whose value is being asserted.
     /// </summary>
-    public TSubject Subject { get; }
+    public TSubject? Subject { get; }
 
     /// <summary>
     /// Asserts that the current object has not been initialized yet.
@@ -133,7 +133,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
     {
         BeOfType(typeof(T), because, becauseArgs);
 
-        T typedSubject = Subject is T type
+        T? typedSubject = Subject is T type
             ? type
             : default;
 
@@ -167,7 +167,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
 
         if (CurrentAssertionChain.Succeeded)
         {
-            Type subjectType = Subject.GetType();
+            Type subjectType = Subject!.GetType();
 
             if (expectedType.IsGenericTypeDefinition && subjectType.IsGenericType)
             {
@@ -228,7 +228,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
 
         if (CurrentAssertionChain.Succeeded)
         {
-            Type subjectType = Subject.GetType();
+            Type subjectType = Subject!.GetType();
 
             if (unexpectedType.IsGenericTypeDefinition && subjectType.IsGenericType)
             {
@@ -270,10 +270,10 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
                 .ForCondition(Subject is T)
                 .BecauseOf(because, becauseArgs)
                 .WithDefaultIdentifier(Identifier)
-                .FailWith("Expected {context} to be assignable to {0}{reason}, but {1} is not.", typeof(T), Subject.GetType());
+                .FailWith("Expected {context} to be assignable to {0}{reason}, but {1} is not.", typeof(T), Subject!.GetType());
         }
 
-        T typedSubject = Subject is T type
+        T? typedSubject = Subject is T type
             ? type
             : default;
 
@@ -307,8 +307,8 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
         if (CurrentAssertionChain.Succeeded)
         {
             bool isAssignable = type.IsGenericTypeDefinition
-                ? Subject.GetType().IsAssignableToOpenGeneric(type)
-                : type.IsAssignableFrom(Subject.GetType());
+                ? Subject!.GetType().IsAssignableToOpenGeneric(type)
+                : type.IsAssignableFrom(Subject!.GetType());
 
             CurrentAssertionChain
                 .ForCondition(isAssignable)
@@ -367,8 +367,8 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
         if (CurrentAssertionChain.Succeeded)
         {
             bool isAssignable = type.IsGenericTypeDefinition
-                ? Subject.GetType().IsAssignableToOpenGeneric(type)
-                : type.IsAssignableFrom(Subject.GetType());
+                ? Subject!.GetType().IsAssignableToOpenGeneric(type)
+                : type.IsAssignableFrom(Subject!.GetType());
 
             CurrentAssertionChain
                 .ForCondition(!isAssignable)
@@ -456,7 +456,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
 
             using (var assertionScope = new AssertionScope())
             {
-                assertion((T)Subject);
+                assertion((T)Subject!);
                 failuresFromInspector = assertionScope.Discard();
             }
 
@@ -483,7 +483,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
     protected abstract string Identifier { get; }
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) =>
+    public override bool Equals(object? obj) =>
         throw new NotSupportedException("Equals is not part of Fluent Assertions. Did you mean BeSameAs() instead?");
 
     /// <summary>

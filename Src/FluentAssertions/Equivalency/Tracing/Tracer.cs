@@ -9,9 +9,9 @@ namespace FluentAssertions.Equivalency.Tracing;
 public class Tracer
 {
     private readonly INode currentNode;
-    private readonly ITraceWriter traceWriter;
+    private readonly ITraceWriter? traceWriter;
 
-    internal Tracer(INode currentNode, ITraceWriter traceWriter)
+    internal Tracer(INode currentNode, ITraceWriter? traceWriter)
     {
         this.currentNode = currentNode;
         this.traceWriter = traceWriter;

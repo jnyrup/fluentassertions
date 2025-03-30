@@ -72,7 +72,7 @@ internal sealed class EventMonitor<T> : IMonitor<T>
 
     public IEventRecording GetRecordingFor(string eventName)
     {
-        if (!recorderMap.TryGetValue(eventName, out EventRecorder recorder))
+        if (!recorderMap.TryGetValue(eventName, out EventRecorder? recorder))
         {
             throw new InvalidOperationException($"Not monitoring any events named \"{eventName}\".");
         }

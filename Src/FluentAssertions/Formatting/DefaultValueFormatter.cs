@@ -15,14 +15,14 @@ public class DefaultValueFormatter : IValueFormatter
     /// <returns>
     /// <see langword="true"/> if this instance can handle the specified value; otherwise, <see langword="false"/>.
     /// </returns>
-    public virtual bool CanHandle(object value)
+    public virtual bool CanHandle(object? value)
     {
         return true;
     }
 
-    public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+    public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
-        if (value.GetType() == typeof(object))
+        if (value!.GetType() == typeof(object))
         {
             formattedGraph.AddFragment($"System.Object (HashCode={value.GetHashCode()})");
             return;
@@ -62,7 +62,7 @@ public class DefaultValueFormatter : IValueFormatter
 
     private static bool HasDefaultToStringImplementation(object value)
     {
-        string str = value.ToString();
+        string? str = value.ToString();
 
         return str is null || str == value.GetType().ToString();
     }
@@ -123,7 +123,7 @@ public class DefaultValueFormatter : IValueFormatter
     private static void WriteMemberValueTextFor(object value, MemberInfo member, FormattedObjectGraph formattedGraph,
         FormatChild formatChild)
     {
-        object memberValue;
+        object? memberValue;
 
         try
         {

@@ -43,7 +43,7 @@ internal class MappedPathMatchingRule : IMemberMatchingRule
         }
     }
 
-    public IMember Match(IMember expectedMember, object subject, INode parent, IEquivalencyOptions options, AssertionChain assertionChain)
+    public IMember? Match(IMember expectedMember, object subject, INode parent, IEquivalencyOptions options, AssertionChain assertionChain)
     {
         MemberPath path = expectationPath;
 
