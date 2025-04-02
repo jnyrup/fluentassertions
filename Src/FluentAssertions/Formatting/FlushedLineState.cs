@@ -18,12 +18,12 @@ internal class FlushedLineState(string content) : ILineState
 
     public int Length => content.Length;
 
-    public void Append(string fragment)
+    public void Append(string? fragment)
     {
         content += fragment;
     }
 
-    public void InsertAtStart(string fragment)
+    public void InsertAtStart(string? fragment)
     {
         content = fragment + content;
     }

@@ -7,7 +7,7 @@ namespace FluentAssertions.Equivalency;
 /// </summary>
 public record Pathway
 {
-    public delegate string GetDescription(string pathAndName);
+    public delegate string? GetDescription(string pathAndName);
 
     private readonly string path = string.Empty;
     private string name = string.Empty;
@@ -67,7 +67,7 @@ public record Pathway
     /// <summary>
     /// Gets the display representation of this path.
     /// </summary>
-    public string Description => getDescription(PathAndName);
+    public string? Description => getDescription(PathAndName);
 
-    public override string ToString() => Description;
+    public override string? ToString() => Description;
 }

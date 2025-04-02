@@ -14,12 +14,12 @@ namespace FluentAssertions.Execution;
 /// </remarks>
 internal class SubjectIdentificationBuilder
 {
-    private readonly Func<string> getScopeName;
+    private readonly Func<string?> getScopeName;
     private readonly Lazy<string[]> identifiersExtractedFromTheCode;
     private int identifierIndex;
     private Func<string?> getSubject;
 
-    public SubjectIdentificationBuilder(Func<string[]> getCallerIdentifiers, Func<string> getScopeName)
+    public SubjectIdentificationBuilder(Func<string[]> getCallerIdentifiers, Func<string?> getScopeName)
     {
         this.getScopeName = getScopeName;
 

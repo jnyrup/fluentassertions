@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions.Execution;
@@ -49,7 +50,7 @@ public class GenericDictionaryEquivalencyStep : IEquivalencyStep
         return EquivalencyResult.EquivalencyProven;
     }
 
-    private static bool IsNonGenericDictionary(object subject)
+    private static bool IsNonGenericDictionary(object? subject)
     {
         if (subject is not IDictionary)
         {
@@ -60,7 +61,7 @@ public class GenericDictionaryEquivalencyStep : IEquivalencyStep
             @interface.IsGenericType && @interface.GetGenericTypeDefinition() == typeof(IDictionary<,>));
     }
 
-    private static bool IsNotNull(AssertionChain assertionChain, object subject)
+    private static bool IsNotNull(AssertionChain assertionChain, [NotNullWhen(true)] object? subject)
     {
         assertionChain
             .ForCondition(subject is not null)

@@ -30,9 +30,9 @@ public class DictionaryValueFormatter : IValueFormatter
     public void Format(object? value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
     {
         int startCount = formattedGraph.LineCount;
-        IEnumerable<KeyValuePair<object, object>> collection = AsEnumerable((IDictionary)value!);
+        IEnumerable<KeyValuePair<object, object?>> collection = AsEnumerable((IDictionary)value!);
 
-        using var iterator = new Iterator<KeyValuePair<object, object>>(collection, MaxItems);
+        using var iterator = new Iterator<KeyValuePair<object, object?>>(collection, MaxItems);
 
         while (iterator.MoveNext())
         {
@@ -84,7 +84,7 @@ public class DictionaryValueFormatter : IValueFormatter
         }
     }
 
-    private static IEnumerable<KeyValuePair<object, object>> AsEnumerable(IDictionary dictionary)
+    private static IEnumerable<KeyValuePair<object, object?>> AsEnumerable(IDictionary dictionary)
     {
         IDictionaryEnumerator iterator = dictionary.GetEnumerator();
 
@@ -92,7 +92,7 @@ public class DictionaryValueFormatter : IValueFormatter
         {
             while (iterator.MoveNext())
             {
-                yield return new KeyValuePair<object, object>(iterator.Key, iterator.Value);
+                yield return new KeyValuePair<object, object?>(iterator.Key, iterator.Value);
             }
         }
     }

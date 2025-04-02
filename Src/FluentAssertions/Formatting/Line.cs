@@ -60,12 +60,12 @@ internal class Line
     /// </summary>
     public int LengthWithoutOffset => Length - whitespaceOffset;
 
-    public void Append(string fragment)
+    public void Append(string? fragment)
     {
         state.Append(fragment);
     }
 
-    public void InsertAtStart(string fragment)
+    public void InsertAtStart(string? fragment)
     {
         state.InsertAtStart(fragment);
     }
@@ -100,7 +100,7 @@ internal class Line
     /// Truncates the current line at the specified character index and returns the remainder as a new line.
     /// Returns <see langword="null"/> if the remainder is empty.
     /// </summary>
-    public Line Truncate(int characterIndex)
+    public Line? Truncate(int characterIndex)
     {
         Flush();
 

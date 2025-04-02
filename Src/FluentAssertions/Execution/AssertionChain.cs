@@ -272,7 +272,7 @@ public sealed class AssertionChain
     /// Allows overriding the caller identifier for the next call to one of the `FailWith` overloads instead
     /// of relying on the automatic behavior that extracts the variable names from the C# code.
     /// </summary>
-    public void OverrideCallerIdentifier(Func<string> getCallerIdentifier)
+    public void OverrideCallerIdentifier(Func<string?> getCallerIdentifier)
     {
         identifierBuilder.OverrideSubjectIdentifier(getCallerIdentifier);
     }
@@ -322,7 +322,7 @@ public sealed class AssertionChain
     /// <summary>
     /// Fluent alternative for <see cref="AddReportable(string,string)"/>
     /// </summary>
-    public AssertionChain WithReportable(string name, Func<string> content)
+    public AssertionChain WithReportable(string name, Func<string?> content)
     {
         getCurrentScope().AddReportable(name, content);
         return this;

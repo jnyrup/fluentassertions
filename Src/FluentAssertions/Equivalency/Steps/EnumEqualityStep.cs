@@ -75,8 +75,8 @@ public class EnumEqualityStep : IEquivalencyStep
 
     private static void HandleByName(AssertionChain assertionChain, Comparands comparands, Reason reason)
     {
-        string subject = comparands.Subject.ToString();
-        string expected = comparands.Expectation.ToString();
+        string subject = comparands.Subject.ToString()!;
+        string expected = comparands.Expectation.ToString()!;
 
         assertionChain
             .ForCondition(subject == expected)
@@ -103,7 +103,7 @@ public class EnumEqualityStep : IEquivalencyStep
         }
 
         string typePart = o.GetType().Name;
-        string namePart = o.ToString().Replace(", ", "|", StringComparison.Ordinal);
+        string namePart = o.ToString()!.Replace(", ", "|", StringComparison.Ordinal);
         string valuePart = v.Value.ToString(CultureInfo.InvariantCulture);
         return $"{typePart}.{namePart} {{value: {valuePart}}}";
     }

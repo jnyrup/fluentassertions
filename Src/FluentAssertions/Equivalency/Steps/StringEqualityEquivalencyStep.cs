@@ -71,8 +71,8 @@ public class StringEqualityEquivalencyStep : IEquivalencyStep
 
     private static bool ValidateAgainstNulls(AssertionChain assertionChain, Comparands comparands, INode currentNode)
     {
-        object expected = comparands.Expectation;
-        object subject = comparands.Subject;
+        object? expected = comparands.Expectation;
+        object? subject = comparands.Subject;
 
         bool onlyOneNull = expected is null != subject is null;
 

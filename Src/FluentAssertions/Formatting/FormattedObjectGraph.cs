@@ -60,7 +60,7 @@ public class FormattedObjectGraph
     /// Starts a new line with the provided text fragment. Additional text can be added to
     /// that same line through <see cref="AddFragment"/>.
     /// </summary>
-    public void AddFragmentOnNewLine(string fragment)
+    public void AddFragmentOnNewLine(string? fragment)
     {
         FlushCurrentLine();
         GetCurrentLine().Append(fragment);
@@ -70,7 +70,7 @@ public class FormattedObjectGraph
     /// If there's only one line, adds a fragment to that line. If there are more lines, adds the fragment as
     /// a new line that does not allow any further fragments.
     /// </summary>
-    public void AddLineOrFragment(string fragment)
+    public void AddLineOrFragment(string? fragment)
     {
         if (lines.Count == 1)
         {
@@ -86,7 +86,7 @@ public class FormattedObjectGraph
     /// Starts a new line with the provided text that does not allow adding more
     /// fragments of text.
     /// </summary>
-    public void AddLine(string content)
+    public void AddLine(string? content)
     {
         FlushCurrentLine();
 
@@ -97,7 +97,7 @@ public class FormattedObjectGraph
     /// <summary>
     /// Adds a new fragment of text to the current line.
     /// </summary>
-    public void AddFragment(string fragment)
+    public void AddFragment(string? fragment)
     {
         GetCurrentLine().Append(fragment);
     }

@@ -8,12 +8,12 @@ namespace FluentAssertions.Xml.Equivalency;
 internal sealed class Node
 {
     private readonly List<Node> children = [];
-    private readonly string name;
+    private readonly string? name;
     private int count;
 
     public static Node CreateRoot() => new(null, null);
 
-    private Node(Node parent, string name)
+    private Node(Node? parent, string? name)
     {
         Parent = parent;
         this.name = name;
@@ -54,7 +54,7 @@ internal sealed class Node
         }
     }
 
-    public Node Parent { get; }
+    public Node? Parent { get; }
 
     public Node Push(string localName)
     {

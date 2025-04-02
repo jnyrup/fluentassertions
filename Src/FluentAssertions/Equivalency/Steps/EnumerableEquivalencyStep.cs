@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions.Execution;
 
@@ -31,7 +32,7 @@ public class EnumerableEquivalencyStep : IEquivalencyStep
         return EquivalencyResult.EquivalencyProven;
     }
 
-    private static bool AssertSubjectIsCollection(AssertionChain assertionChain, object subject)
+    private static bool AssertSubjectIsCollection(AssertionChain assertionChain, [NotNullWhen(true)] object? subject)
     {
         assertionChain
             .ForCondition(subject is not null)

@@ -4,7 +4,7 @@ namespace FluentAssertions.Equivalency.Steps;
 
 internal sealed class AssertionContext<TSubject> : IAssertionContext<TSubject>
 {
-    private AssertionContext(INode currentNode, TSubject subject, TSubject expectation,
+    private AssertionContext(INode? currentNode, TSubject? subject, TSubject? expectation,
         [StringSyntax("CompositeFormat")] string because, object[] becauseArgs)
     {
         SelectedNode = currentNode;
@@ -14,11 +14,11 @@ internal sealed class AssertionContext<TSubject> : IAssertionContext<TSubject>
         BecauseArgs = becauseArgs;
     }
 
-    public INode SelectedNode { get; }
+    public INode? SelectedNode { get; }
 
-    public TSubject Subject { get; }
+    public TSubject? Subject { get; }
 
-    public TSubject Expectation { get; }
+    public TSubject? Expectation { get; }
 
     public string Because { get; set; }
 
@@ -28,8 +28,8 @@ internal sealed class AssertionContext<TSubject> : IAssertionContext<TSubject>
     {
         return new AssertionContext<TSubject>(
             context.CurrentNode,
-            (TSubject)comparands.Subject,
-            (TSubject)comparands.Expectation,
+            (TSubject?)comparands.Subject,
+            (TSubject?)comparands.Expectation,
             context.Reason.FormattedMessage,
             context.Reason.Arguments);
     }

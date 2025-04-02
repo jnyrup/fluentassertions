@@ -15,12 +15,12 @@ public interface IAssertionContext<TSubject>
     /// <summary>
     /// Gets the value of the <see cref="SelectedNode" />
     /// </summary>
-    TSubject Subject { get; }
+    TSubject? Subject { get; }
 
     /// <summary>
     /// Gets the value of the expectation object that was matched with the subject using a <see cref="IMemberMatchingRule"/>.
     /// </summary>
-    TSubject Expectation { get; }
+    TSubject? Expectation { get; }
 
     /// <summary>
     /// A formatted phrase as is supported by <see cref="string.Format(string,object[])"/> explaining why the assertion

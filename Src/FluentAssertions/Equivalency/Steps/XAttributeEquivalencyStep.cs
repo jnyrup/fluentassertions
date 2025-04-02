@@ -9,8 +9,8 @@ public class XAttributeEquivalencyStep : EquivalencyStep<XAttribute>
         IEquivalencyValidationContext context,
         IValidateChildNodeEquivalency nestedValidator)
     {
-        var subject = (XAttribute)comparands.Subject;
-        var expectation = (XAttribute)comparands.Expectation;
+        var subject = (XAttribute?)comparands.Subject;
+        var expectation = (XAttribute?)comparands.Expectation;
 
         AssertionChain.GetOrCreate().For(context).ReuseOnce();
 

@@ -102,7 +102,7 @@ public class EventAssertions<T> : ReferenceTypeAssertions<T, EventAssertions<T>>
     public IEventRecording RaisePropertyChangeFor(Expression<Func<T, object>> propertyExpression,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
-        string propertyName = propertyExpression?.GetPropertyInfo().Name;
+        string? propertyName = propertyExpression?.GetPropertyInfo().Name;
 
         IEventRecording recording = Monitor.GetRecordingFor(PropertyChangedEventName);
 
@@ -128,7 +128,7 @@ public class EventAssertions<T> : ReferenceTypeAssertions<T, EventAssertions<T>>
                     Monitor.Subject, PropertyChangedEventName, propertyName, actualPropertyNames);
         }
 
-        return recording.WithPropertyChangeFor(propertyName);
+        return recording.WithPropertyChangeFor(propertyName!);
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ public class EventAssertions<T> : ReferenceTypeAssertions<T, EventAssertions<T>>
     {
         IEventRecording recording = Monitor.GetRecordingFor(PropertyChangedEventName);
 
-        string propertyName = propertyExpression?.GetPropertyInfo().Name;
+        string? propertyName = propertyExpression?.GetPropertyInfo().Name;
 
         if (propertyName is null)
         {

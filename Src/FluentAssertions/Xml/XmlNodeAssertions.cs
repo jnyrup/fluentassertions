@@ -29,7 +29,7 @@ public class XmlNodeAssertions<TSubject, TAssertions> : ReferenceTypeAssertions<
 {
     private readonly AssertionChain assertionChain;
 
-    public XmlNodeAssertions(TSubject xmlNode, AssertionChain assertionChain)
+    public XmlNodeAssertions(TSubject? xmlNode, AssertionChain assertionChain)
         : base(xmlNode, assertionChain)
     {
         this.assertionChain = assertionChain;

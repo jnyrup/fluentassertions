@@ -425,7 +425,7 @@ public abstract class NumericAssertionsBase<T, TSubject, TAssertions>
 
         if (CurrentAssertionChain.Succeeded)
         {
-            Subject.GetType().Should().NotBe(unexpectedType, because, becauseArgs);
+            Subject!.GetType().Should().NotBe(unexpectedType, because, becauseArgs);
         }
 
         return new AndConstraint<TAssertions>((TAssertions)this);

@@ -766,7 +766,7 @@ public static class NumericAssertionsExtensions
 
         if (assertion.Succeeded)
         {
-            var nonNullableAssertions = new SingleAssertions(parent.Subject.Value, assertion);
+            var nonNullableAssertions = new SingleAssertions(parent.Subject!.Value, assertion);
             nonNullableAssertions.BeApproximately(expectedValue, precision, because, becauseArgs);
         }
 
@@ -814,7 +814,7 @@ public static class NumericAssertionsExtensions
         if (assertion.Succeeded)
         {
             // ReSharper disable once PossibleInvalidOperationException
-            parent.BeApproximately(expectedValue.Value, precision, because, becauseArgs);
+            parent.BeApproximately(expectedValue!.Value, precision, because, becauseArgs);
         }
 
         return new AndConstraint<NullableNumericAssertions<float>>(parent);
@@ -904,7 +904,7 @@ public static class NumericAssertionsExtensions
 
         if (assertion.Succeeded)
         {
-            var nonNullableAssertions = new DoubleAssertions(parent.Subject.Value, assertion);
+            var nonNullableAssertions = new DoubleAssertions(parent.Subject!.Value, assertion);
             BeApproximately(nonNullableAssertions, expectedValue, precision, because, becauseArgs);
         }
 
@@ -952,7 +952,7 @@ public static class NumericAssertionsExtensions
         if (assertion.Succeeded)
         {
             // ReSharper disable once PossibleInvalidOperationException
-            parent.BeApproximately(expectedValue.Value, precision, because, becauseArgs);
+            parent.BeApproximately(expectedValue!.Value, precision, because, becauseArgs);
         }
 
         return new AndConstraint<NullableNumericAssertions<double>>(parent);
@@ -1043,7 +1043,7 @@ public static class NumericAssertionsExtensions
 
         if (assertion.Succeeded)
         {
-            var nonNullableAssertions = new DecimalAssertions(parent.Subject.Value, assertion);
+            var nonNullableAssertions = new DecimalAssertions(parent.Subject!.Value, assertion);
             BeApproximately(nonNullableAssertions, expectedValue, precision, because, becauseArgs);
         }
 
@@ -1092,7 +1092,7 @@ public static class NumericAssertionsExtensions
         if (assertion.Succeeded)
         {
             // ReSharper disable once PossibleInvalidOperationException
-            parent.BeApproximately(expectedValue.Value, precision, because, becauseArgs);
+            parent.BeApproximately(expectedValue!.Value, precision, because, becauseArgs);
         }
 
         return new AndConstraint<NullableNumericAssertions<decimal>>(parent);
@@ -1223,7 +1223,7 @@ public static class NumericAssertionsExtensions
         if (assertion.Succeeded)
         {
             // ReSharper disable once PossibleInvalidOperationException
-            parent.NotBeApproximately(unexpectedValue.Value, precision, because, becauseArgs);
+            parent.NotBeApproximately(unexpectedValue!.Value, precision, because, becauseArgs);
         }
 
         return new AndConstraint<NullableNumericAssertions<float>>(parent);
@@ -1355,7 +1355,7 @@ public static class NumericAssertionsExtensions
         if (assertionChain.Succeeded)
         {
             // ReSharper disable once PossibleInvalidOperationException
-            parent.NotBeApproximately(unexpectedValue.Value, precision, because, becauseArgs);
+            parent.NotBeApproximately(unexpectedValue!.Value, precision, because, becauseArgs);
         }
 
         return new AndConstraint<NullableNumericAssertions<double>>(parent);
@@ -1487,7 +1487,7 @@ public static class NumericAssertionsExtensions
         if (assertion.Succeeded)
         {
             // ReSharper disable once PossibleInvalidOperationException
-            parent.NotBeApproximately(unexpectedValue.Value, precision, because, becauseArgs);
+            parent.NotBeApproximately(unexpectedValue!.Value, precision, because, becauseArgs);
         }
 
         return new AndConstraint<NullableNumericAssertions<decimal>>(parent);

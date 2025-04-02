@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions.Common;
@@ -64,7 +65,7 @@ public class GenericEnumerableEquivalencyStep : IEquivalencyStep
     private static void HandleImpl<T>(EnumerableEquivalencyValidator validator, object[] subject, IEnumerable<T> expectation) =>
         validator.Execute(subject, ToArray(expectation));
 
-    private static bool AssertSubjectIsCollection(AssertionChain assertionChain, object subject)
+    private static bool AssertSubjectIsCollection(AssertionChain assertionChain, [NotNullWhen(true)] object? subject)
     {
         assertionChain
             .ForCondition(subject is not null)
@@ -112,7 +113,7 @@ public class GenericEnumerableEquivalencyStep : IEquivalencyStep
         return interfaceType.GetGenericArguments().Single();
     }
 
-    private static T[] ToArray<T>(IEnumerable<T> value)
+    private static T[]? ToArray<T>(IEnumerable<T> value)
     {
         try
         {

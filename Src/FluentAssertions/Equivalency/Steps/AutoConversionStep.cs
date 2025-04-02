@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentAssertions.Common;
 using static System.FormattableString;
@@ -34,7 +35,7 @@ public class AutoConversionStep : IEquivalencyStep
             return EquivalencyResult.ContinueWithNext;
         }
 
-        if (TryChangeType(comparands.Subject, expectationType, out object convertedSubject))
+        if (TryChangeType(comparands.Subject, expectationType, out object? convertedSubject))
         {
             context.Tracer.WriteLine(member =>
                 Invariant($"Converted subject {comparands.Subject} at {member.Subject} to {expectationType}"));
@@ -50,7 +51,7 @@ public class AutoConversionStep : IEquivalencyStep
         return EquivalencyResult.ContinueWithNext;
     }
 
-    private static bool TryChangeType(object subject, Type expectationType, out object conversionResult)
+    private static bool TryChangeType(object subject, Type expectationType, [MaybeNullWhen(false)] out object conversionResult)
     {
         conversionResult = null;
 

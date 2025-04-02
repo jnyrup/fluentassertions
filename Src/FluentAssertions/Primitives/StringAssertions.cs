@@ -20,7 +20,7 @@ public class StringAssertions : StringAssertions<StringAssertions>
     /// <summary>
     /// Initializes a new instance of the <see cref="StringAssertions"/> class.
     /// </summary>
-    public StringAssertions(string value, AssertionChain assertionChain)
+    public StringAssertions(string? value, AssertionChain assertionChain)
         : base(value, assertionChain)
     {
     }
@@ -38,7 +38,7 @@ public class StringAssertions<TAssertions> : ReferenceTypeAssertions<string, TAs
     /// <summary>
     /// Initializes a new instance of the <see cref="StringAssertions{TAssertions}"/> class.
     /// </summary>
-    public StringAssertions(string value, AssertionChain assertionChain)
+    public StringAssertions(string? value, AssertionChain assertionChain)
         : base(value, assertionChain)
     {
         this.assertionChain = assertionChain;

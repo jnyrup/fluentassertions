@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions.Equivalency.Execution;
 using FluentAssertions.Equivalency.Tracing;
@@ -57,7 +58,7 @@ internal class EnumerableEquivalencyValidator
         }
     }
 
-    private bool AssertIsNotNull(object? expectation, object[]? subject)
+    private bool AssertIsNotNull([NotNullWhen(true)] object? expectation, object[]? subject)
     {
         assertionChain
             .ForCondition(expectation is not null)

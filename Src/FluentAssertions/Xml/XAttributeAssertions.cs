@@ -17,7 +17,7 @@ public class XAttributeAssertions : ReferenceTypeAssertions<XAttribute, XAttribu
     /// <summary>
     /// Initializes a new instance of the <see cref="XAttributeAssertions" /> class.
     /// </summary>
-    public XAttributeAssertions(XAttribute attribute, AssertionChain assertionChain)
+    public XAttributeAssertions(XAttribute? attribute, AssertionChain assertionChain)
         : base(attribute, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -34,7 +34,7 @@ public class XAttributeAssertions : ReferenceTypeAssertions<XAttribute, XAttribu
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XAttributeAssertions> Be(XAttribute expected,
+    public AndConstraint<XAttributeAssertions> Be(XAttribute? expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain
@@ -57,7 +57,7 @@ public class XAttributeAssertions : ReferenceTypeAssertions<XAttribute, XAttribu
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XAttributeAssertions> NotBe(XAttribute unexpected,
+    public AndConstraint<XAttributeAssertions> NotBe(XAttribute? unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain

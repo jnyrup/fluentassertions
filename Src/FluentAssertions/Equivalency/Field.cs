@@ -18,7 +18,7 @@ internal class Field : Node, IMember
         this.fieldInfo = fieldInfo;
         DeclaringType = fieldInfo.DeclaringType;
         ReflectedType = fieldInfo.ReflectedType;
-        Subject = new Pathway(parent.Subject.PathAndName, fieldInfo.Name,  pathAndName => $"field {parent.GetSubjectId().Combine(pathAndName)}");
+        Subject = new Pathway(parent.Subject.PathAndName, fieldInfo.Name, pathAndName => $"field {parent.GetSubjectId().Combine(pathAndName)}");
         Expectation = new Pathway(parent.Expectation.PathAndName, fieldInfo.Name, pathAndName => $"field {pathAndName}");
         GetSubjectId = parent.GetSubjectId;
         Type = fieldInfo.FieldType;
@@ -28,7 +28,7 @@ internal class Field : Node, IMember
 
     public Type ReflectedType { get; }
 
-    public object GetValue(object obj)
+    public object? GetValue(object obj)
     {
         return fieldInfo.GetValue(obj);
     }

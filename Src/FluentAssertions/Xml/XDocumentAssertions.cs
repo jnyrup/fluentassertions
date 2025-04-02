@@ -23,7 +23,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
     /// <summary>
     /// Initializes a new instance of the <see cref="XDocumentAssertions" /> class.
     /// </summary>
-    public XDocumentAssertions(XDocument document, AssertionChain assertionChain)
+    public XDocumentAssertions(XDocument? document, AssertionChain assertionChain)
         : base(document, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -41,7 +41,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XDocumentAssertions> Be(XDocument expected,
+    public AndConstraint<XDocumentAssertions> Be(XDocument? expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain
@@ -64,7 +64,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XDocumentAssertions> NotBe(XDocument unexpected,
+    public AndConstraint<XDocumentAssertions> NotBe(XDocument? unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain
@@ -87,7 +87,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XDocumentAssertions> BeEquivalentTo(XDocument expected,
+    public AndConstraint<XDocumentAssertions> BeEquivalentTo(XDocument? expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         using (XmlReader? subjectReader = Subject?.CreateReader())
@@ -112,7 +112,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XDocumentAssertions> NotBeEquivalentTo(XDocument unexpected,
+    public AndConstraint<XDocumentAssertions> NotBeEquivalentTo(XDocument? unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         using (XmlReader? subjectReader = Subject?.CreateReader())
@@ -181,7 +181,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
                 "Expected {context:subject} to have root element {0}{reason}, but found {1}.",
                 expected.ToString(), Subject);
 
-        return new AndWhichConstraint<XDocumentAssertions, XElement>(this, root, assertionChain, $"/{expected}");
+        return new AndWhichConstraint<XDocumentAssertions, XElement>(this, root!, assertionChain, $"/{expected}");
     }
 
     /// <summary>
@@ -283,7 +283,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
                     expected.ToString());
         }
 
-        return new AndWhichConstraint<XDocumentAssertions, XElement>(this, xElement, assertionChain, "/" + expected);
+        return new AndWhichConstraint<XDocumentAssertions, XElement>(this, xElement!, assertionChain, "/" + expected);
     }
 
     /// <summary>
@@ -472,7 +472,7 @@ public class XDocumentAssertions : ReferenceTypeAssertions<XDocument, XDocumentA
                     .ForCondition(collection => collection.Any(e => e.Value == expectedValue))
                     .FailWith("but the element {0} does not have such a value.", expectedElement));
 
-        return new AndWhichConstraint<XDocumentAssertions, XElement>(this, xElements.FirstOrDefault());
+        return new AndWhichConstraint<XDocumentAssertions, XElement>(this, xElements.FirstOrDefault()!);
     }
 
     /// <summary>

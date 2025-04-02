@@ -59,7 +59,7 @@ public class StructuralEqualityEquivalencyStep : IEquivalencyStep
     {
         var assertionChain = AssertionChain.GetOrCreate().For(context);
 
-        IMember matchingMember = FindMatchFor(selectedMember, context.CurrentNode, comparands.Subject, options, assertionChain);
+        IMember? matchingMember = FindMatchFor(selectedMember, context.CurrentNode, comparands.Subject, options, assertionChain);
         if (matchingMember is not null)
         {
             var nestedComparands = new Comparands
@@ -77,7 +77,7 @@ public class StructuralEqualityEquivalencyStep : IEquivalencyStep
         }
     }
 
-    private static IMember FindMatchFor(IMember selectedMember, INode currentNode, object subject,
+    private static IMember? FindMatchFor(IMember selectedMember, INode currentNode, object subject,
         IEquivalencyOptions config, AssertionChain assertionChain)
     {
         IEnumerable<IMember> query =

@@ -67,10 +67,10 @@ internal static class GivenSelectorExtensions
     {
         return givenSelector
             .Given<ICollection<TActual>>(actual => new CollectionWithIndex<TActual>(actual, findIndex(actual, expected)))
-            .ForCondition(diff => diff.As<CollectionWithIndex<TActual>>().Index == -1)
+            .ForCondition(diff => diff.As<CollectionWithIndex<TActual>>()!.Index == -1)
             .FailWith("but {0} differs at index {1}.",
-                diff => diff.As<CollectionWithIndex<TActual>>().Items,
-                diff => diff.As<CollectionWithIndex<TActual>>().Index);
+                diff => diff.As<CollectionWithIndex<TActual>>()!.Items,
+                diff => diff.As<CollectionWithIndex<TActual>>()!.Index);
     }
 
     private sealed class CollectionWithIndex<T> : ICollection<T>

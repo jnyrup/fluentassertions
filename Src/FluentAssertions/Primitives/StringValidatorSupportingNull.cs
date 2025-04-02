@@ -16,7 +16,7 @@ internal class StringValidatorSupportingNull
         this.assertionChain = assertionChain.BecauseOf(because, becauseArgs);
     }
 
-    public void Validate(string subject, string expected)
+    public void Validate(string? subject, string? expected)
     {
         if (expected?.IsLongOrMultiline() == true ||
             subject?.IsLongOrMultiline() == true)

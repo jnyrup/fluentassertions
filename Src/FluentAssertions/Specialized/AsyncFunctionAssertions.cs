@@ -106,7 +106,7 @@ public class AsyncFunctionAssertions<TTask, TAssertions> : DelegateAssertionsBas
                 exception!.Should().BeOfType(expectedType, because, becauseArgs);
             }
 
-            return new ExceptionAssertions<TException>([exception as TException], assertionChain);
+            return new ExceptionAssertions<TException>([(exception as TException)!], assertionChain);
         }
 
         return new ExceptionAssertions<TException>([], assertionChain);

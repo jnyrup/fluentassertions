@@ -61,7 +61,7 @@ public static class ObjectAssertionsExtensions
             EquivalencyOptions<T> defaultOptions = AssertionConfiguration.Current.Equivalency.CloneDefaults<T>()
                 .PreferringRuntimeMemberTypes().IncludingFields().IncludingProperties();
 
-            ((T)deserializedObject).Should().BeEquivalentTo((T)assertions.Subject, _ => options(defaultOptions));
+            ((T?)deserializedObject).Should().BeEquivalentTo((T)assertions.Subject, _ => options(defaultOptions));
         }
         catch (Exception exc)
         {
@@ -76,7 +76,7 @@ public static class ObjectAssertionsExtensions
         return new AndConstraint<ObjectAssertions>(assertions);
     }
 
-    private static object CreateCloneUsingDataContractSerializer(object subject)
+    private static object? CreateCloneUsingDataContractSerializer(object subject)
     {
         using var stream = new MemoryStream();
         var serializer = new DataContractSerializer(subject.GetType());
@@ -102,7 +102,7 @@ public static class ObjectAssertionsExtensions
     {
         try
         {
-            object deserializedObject = CreateCloneUsingXmlSerializer(assertions.Subject);
+            object? deserializedObject = CreateCloneUsingXmlSerializer(assertions.Subject);
 
             deserializedObject.Should().BeEquivalentTo(assertions.Subject,
                 options => options.PreferringRuntimeMemberTypes().IncludingFields().IncludingProperties());
@@ -120,7 +120,7 @@ public static class ObjectAssertionsExtensions
         return new AndConstraint<ObjectAssertions>(assertions);
     }
 
-    private static object CreateCloneUsingXmlSerializer(object subject)
+    private static object? CreateCloneUsingXmlSerializer(object subject)
     {
         using var stream = new MemoryStream();
         var serializer = new XmlSerializer(subject.GetType());

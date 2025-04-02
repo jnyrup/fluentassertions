@@ -14,7 +14,7 @@ internal class CollectionMemberOrderingRuleDecorator : IOrderingRule
         return orderingRule.Evaluate(new CollectionMemberObjectInfo(objectInfo));
     }
 
-    public override string ToString()
+    public override string? ToString()
     {
         return orderingRule.ToString();
     }

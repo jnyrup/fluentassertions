@@ -90,7 +90,7 @@ public class AssertionRuleEquivalencyStep<TSubject> : IEquivalencyStep
             }
 
             // Caller identitification should not get confused about invoking a Should within the assertion action
-            string callerIdentifier = context.CurrentNode.Subject.ToString();
+            string? callerIdentifier = context.CurrentNode.Subject.ToString();
             assertionChain.OverrideCallerIdentifier(() => callerIdentifier);
             assertionChain.ReuseOnce();
 

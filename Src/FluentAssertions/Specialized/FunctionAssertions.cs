@@ -68,7 +68,7 @@ public class FunctionAssertions<T> : DelegateAssertions<Func<T>, FunctionAsserti
             }
         }
 
-        return new AndWhichConstraint<FunctionAssertions<T>, T>(this, result, assertionChain, ".Result");
+        return new AndWhichConstraint<FunctionAssertions<T>, T>(this, result!, assertionChain, ".Result");
     }
 
     /// <summary>
@@ -109,10 +109,10 @@ public class FunctionAssertions<T> : DelegateAssertions<Func<T>, FunctionAsserti
             result = NotThrowAfter(Subject!, Clock, waitTime, pollInterval, because, becauseArgs);
         }
 
-        return new AndWhichConstraint<FunctionAssertions<T>, T>(this, result, assertionChain, ".Result");
+        return new AndWhichConstraint<FunctionAssertions<T>, T>(this, result!, assertionChain, ".Result");
     }
 
-    internal TResult NotThrowAfter<TResult>(Func<TResult> subject, IClock clock, TimeSpan waitTime, TimeSpan pollInterval,
+    internal TResult? NotThrowAfter<TResult>(Func<TResult> subject, IClock clock, TimeSpan waitTime, TimeSpan pollInterval,
         [StringSyntax("CompositeFormat")] string because, object[] becauseArgs)
     {
         Guard.ThrowIfArgumentIsNegative(waitTime);

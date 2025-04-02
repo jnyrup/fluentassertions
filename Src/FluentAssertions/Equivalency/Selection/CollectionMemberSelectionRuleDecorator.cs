@@ -19,7 +19,7 @@ internal class CollectionMemberSelectionRuleDecorator : IMemberSelectionRule
         return selectionRule.SelectMembers(currentNode, selectedMembers, context);
     }
 
-    public override string ToString()
+    public override string? ToString()
     {
         return selectionRule.ToString();
     }

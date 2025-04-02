@@ -130,7 +130,7 @@ internal class FailureMessageFormatter(FormattingOptions formattingOptions)
         return Regex.Replace(message, pattern, match =>
         {
             string key = match.Groups["key"].Value;
-            string contextualTags = contextData.AsStringOrDefault(key);
+            string? contextualTags = contextData.AsStringOrDefault(key);
             string? contextualTagsSubstituted = contextualTags?.EscapePlaceholders();
 
             return contextualTagsSubstituted ?? match.Groups["default"].Value;

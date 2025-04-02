@@ -24,7 +24,7 @@ internal class CollectionMemberObjectInfo : IObjectInfo
 
     public Type Type { get; }
 
-    public Type ParentType { get; }
+    public Type? ParentType { get; }
 
     public string Path { get; set; }
 

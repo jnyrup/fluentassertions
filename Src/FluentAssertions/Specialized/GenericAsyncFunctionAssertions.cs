@@ -74,12 +74,12 @@ public class GenericAsyncFunctionAssertions<TResult>
             }
 
 #pragma warning disable CA1849 // Call async methods when in an async method
-            TResult result = assertionChain.Succeeded ? task.Result : default;
+            TResult? result = assertionChain.Succeeded ? task.Result : default;
 #pragma warning restore CA1849 // Call async methods when in an async method
-            return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, result, assertionChain, ".Result");
+            return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, result!, assertionChain, ".Result");
         }
 
-        return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult));
+        return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult)!);
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class GenericAsyncFunctionAssertions<TResult>
             }
         }
 
-        return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult));
+        return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult)!);
     }
 
     /// <summary>
@@ -179,10 +179,10 @@ public class GenericAsyncFunctionAssertions<TResult>
                     .BecauseOf(because, becauseArgs)
                     .FailWith("Did not expect any exceptions after {0}{reason}, but found {1}.", waitTime, exception);
 
-                return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult));
+                return new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult)!);
             }
         }
 
-        return Task.FromResult(new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult)));
+        return Task.FromResult(new AndWhichConstraint<GenericAsyncFunctionAssertions<TResult>, TResult>(this, default(TResult)!));
     }
 }

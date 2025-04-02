@@ -14,13 +14,13 @@ public class ActionAssertions : DelegateAssertions<Action, ActionAssertions>
 {
     private readonly AssertionChain assertionChain;
 
-    public ActionAssertions(Action subject, IExtractExceptions extractor, AssertionChain assertionChain)
+    public ActionAssertions(Action? subject, IExtractExceptions extractor, AssertionChain assertionChain)
         : base(subject, extractor, assertionChain)
     {
         this.assertionChain = assertionChain;
     }
 
-    public ActionAssertions(Action subject, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
+    public ActionAssertions(Action? subject, IExtractExceptions extractor, AssertionChain assertionChain, IClock clock)
         : base(subject, extractor, assertionChain, clock)
     {
         this.assertionChain = assertionChain;
@@ -46,7 +46,7 @@ public class ActionAssertions : DelegateAssertions<Action, ActionAssertions>
         if (assertionChain.Succeeded)
         {
             FailIfSubjectIsAsyncVoid();
-            Exception exception = InvokeSubjectWithInterception();
+            Exception? exception = InvokeSubjectWithInterception();
             return NotThrowInternal(exception, because, becauseArgs);
         }
 

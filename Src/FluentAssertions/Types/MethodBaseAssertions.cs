@@ -51,7 +51,7 @@ public abstract class MethodBaseAssertions<TSubject, TAssertions> : MemberInfoAs
 
         if (assertionChain.Succeeded)
         {
-            CSharpAccessModifier subjectAccessModifier = Subject.GetCSharpAccessModifier();
+            CSharpAccessModifier subjectAccessModifier = Subject!.GetCSharpAccessModifier();
 
             assertionChain
                 .ForCondition(accessModifier == subjectAccessModifier)
@@ -95,7 +95,7 @@ public abstract class MethodBaseAssertions<TSubject, TAssertions> : MemberInfoAs
 
         if (assertionChain.Succeeded)
         {
-            CSharpAccessModifier subjectAccessModifier = Subject.GetCSharpAccessModifier();
+            CSharpAccessModifier subjectAccessModifier = Subject!.GetCSharpAccessModifier();
 
             assertionChain
                 .ForCondition(accessModifier != subjectAccessModifier)

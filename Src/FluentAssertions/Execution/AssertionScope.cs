@@ -19,7 +19,7 @@ public sealed class AssertionScope : IDisposable
 {
     private readonly IAssertionStrategy assertionStrategy;
     private static readonly AsyncLocal<AssertionScope?> CurrentScope = new();
-    private readonly Func<string> callerIdentityProvider = () => CallerIdentifier.DetermineCallerIdentity();
+    private readonly Func<string?> callerIdentityProvider = () => CallerIdentifier.DetermineCallerIdentity();
     private readonly ContextDataDictionary reportableData = new();
     private readonly StringBuilder tracing = new();
 
@@ -153,7 +153,7 @@ public sealed class AssertionScope : IDisposable
     /// Adds some information to the assertion scope that will be included in the message
     /// that is emitted if an assertion fails. The value is only calculated on failure.
     /// </summary>
-    internal void AddReportable(string key, Func<string> valueFunc)
+    internal void AddReportable(string key, Func<string?> valueFunc)
     {
         reportableData.Add(new ContextDataDictionary.DataItem(key, new DeferredReportable(valueFunc), reportable: true,
             requiresFormatting: false));
@@ -209,10 +209,10 @@ public sealed class AssertionScope : IDisposable
         }
     }
 
-    private sealed class DeferredReportable(Func<string> valueFunc)
+    private sealed class DeferredReportable(Func<string?> valueFunc)
     {
-        private readonly Lazy<string> lazyValue = new(valueFunc);
+        private readonly Lazy<string?> lazyValue = new(valueFunc);
 
-        public override string ToString() => lazyValue.Value;
+        public override string? ToString() => lazyValue.Value;
     }
 }

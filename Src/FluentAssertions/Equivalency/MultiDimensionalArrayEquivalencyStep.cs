@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions.Execution;
 
@@ -30,7 +31,7 @@ internal class MultiDimensionalArrayEquivalencyStep : IEquivalencyStep
             do
             {
                 int[] indices = digit.GetIndices();
-                object? subject = ((Array)comparands.Subject).GetValue(indices);
+                object? subject = ((Array)comparands.Subject!).GetValue(indices);
                 string listOfIndices = string.Join(",", indices);
                 object? expectation = expectationAsArray.GetValue(indices);
 
@@ -50,7 +51,7 @@ internal class MultiDimensionalArrayEquivalencyStep : IEquivalencyStep
         return Enumerable
             .Range(0, subjectAsArray.Rank)
             .Reverse()
-            .Aggregate((Digit)null, (next, rank) => new Digit(subjectAsArray.GetLength(rank), next));
+            .Aggregate((Digit)null!, (next, rank) => new Digit(subjectAsArray.GetLength(rank), next))!;
     }
 
     private static bool AreComparable(Comparands comparands, Array expectationAsArray, AssertionChain assertionChain)
@@ -61,7 +62,7 @@ internal class MultiDimensionalArrayEquivalencyStep : IEquivalencyStep
             HaveSameDimensions(comparands.Subject, expectationAsArray, assertionChain);
     }
 
-    private static bool IsArray(object type, AssertionChain assertionChain)
+    private static bool IsArray([NotNullWhen(true)] object? type, AssertionChain assertionChain)
     {
         assertionChain
             .ForCondition(type is not null)

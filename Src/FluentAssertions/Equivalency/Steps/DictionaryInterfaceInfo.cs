@@ -36,7 +36,7 @@ internal sealed class DictionaryInterfaceInfo
     /// <remarks>>
     /// The <paramref name="role"/> is used to describe the <paramref name="target"/> in failure messages.
     /// </remarks>
-    public static DictionaryInterfaceInfo FindFrom(Type target, string role)
+    public static DictionaryInterfaceInfo? FindFrom(Type target, string role)
     {
         var interfaces = GetDictionaryInterfacesFrom(target);
 
@@ -64,7 +64,7 @@ internal sealed class DictionaryInterfaceInfo
     /// <remarks>>
     /// The <paramref name="role"/> is used to describe the <paramref name="target"/> in failure messages.
     /// </remarks>
-    public static DictionaryInterfaceInfo FindFromWithKey(Type target, string role, Type key)
+    public static DictionaryInterfaceInfo? FindFromWithKey(Type target, string role, Type key)
     {
         var suitableDictionaryInterfaces = GetDictionaryInterfacesFrom(target)
             .Where(info => info.Key.IsAssignableFrom(key))
@@ -107,7 +107,7 @@ internal sealed class DictionaryInterfaceInfo
     /// <returns>
     /// <see langword="true"/> if the conversion succeeded or <see langword="false"/> otherwise.
     /// </returns>
-    public object ConvertFrom(object convertable)
+    public object? ConvertFrom(object convertable)
     {
         Type[] enumerables = convertable.GetType().GetClosedGenericInterfaces(typeof(IEnumerable<>));
 
@@ -129,6 +129,7 @@ internal sealed class DictionaryInterfaceInfo
 
     private static Dictionary<TKey, TValue> ConvertToDictionaryInternal<TKey, TValue>(
         IEnumerable<KeyValuePair<TKey, TValue>> collection)
+        where TKey : notnull
     {
         return collection.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }

@@ -6,14 +6,14 @@ namespace FluentAssertions.Specialized;
 
 public class ExecutionTime
 {
-    private ITimer timer;
+    private ITimer? timer;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ExecutionTime"/> class.
     /// </summary>
     /// <param name="action">The action of which the execution time must be asserted.</param>
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <see langword="null"/>.</exception>
-    public ExecutionTime(Action action, StartTimer createTimer)
+    public ExecutionTime(Action? action, StartTimer createTimer)
         : this(action, "the action", createTimer)
     {
     }
@@ -23,7 +23,7 @@ public class ExecutionTime
     /// </summary>
     /// <param name="action">The action of which the execution time must be asserted.</param>
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <see langword="null"/>.</exception>
-    public ExecutionTime(Func<Task> action, StartTimer createTimer)
+    public ExecutionTime(Func<Task>? action, StartTimer createTimer)
         : this(action, "the action", createTimer)
     {
     }
@@ -34,7 +34,7 @@ public class ExecutionTime
     /// <param name="action">The action of which the execution time must be asserted.</param>
     /// <param name="actionDescription">The description of the action to be asserted.</param>
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <see langword="null"/>.</exception>
-    protected ExecutionTime(Action action, string actionDescription, StartTimer createTimer)
+    protected ExecutionTime(Action? action, string actionDescription, StartTimer createTimer)
     {
         Guard.ThrowIfArgumentIsNull(action);
 
@@ -75,7 +75,7 @@ public class ExecutionTime
     /// and to avoid unnecessary wrapping action in <see cref="Task"/>.
     /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <see langword="null"/>.</exception>
-    protected ExecutionTime(Func<Task> action, string actionDescription, StartTimer createTimer)
+    protected ExecutionTime(Func<Task>? action, string actionDescription, StartTimer createTimer)
     {
         Guard.ThrowIfArgumentIsNull(action);
 
@@ -112,5 +112,5 @@ public class ExecutionTime
 
     internal Task Task { get; }
 
-    internal Exception Exception { get; private set; }
+    internal Exception? Exception { get; private set; }
 }

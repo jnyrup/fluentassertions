@@ -23,7 +23,7 @@ public static class CallerIdentifier
     /// <summary>
     /// Gets the identifier that precedes the first Should call in the chain.
     /// </summary>
-    public static string DetermineCallerIdentity()
+    public static string? DetermineCallerIdentity()
     {
         return DetermineCallerIdentities().FirstOrDefault();
     }
@@ -95,7 +95,7 @@ public static class CallerIdentifier
     {
         public int SkipStackFrameCount { get; }
 
-        private readonly StackFrameReference previousReference;
+        private readonly StackFrameReference? previousReference;
 
         public StackFrameReference()
         {
@@ -123,7 +123,7 @@ public static class CallerIdentifier
         }
     }
 
-    private static readonly AsyncLocal<StackFrameReference> StartStackSearchAfterStackFrame = new();
+    private static readonly AsyncLocal<StackFrameReference?> StartStackSearchAfterStackFrame = new();
 
     internal static IDisposable OverrideStackSearchUsingCurrentScope()
     {
@@ -153,7 +153,7 @@ public static class CallerIdentifier
 
     private static bool IsCustomAssertion(StackFrame frame)
     {
-        MethodBase getMethod = frame.GetMethod();
+        MethodBase? getMethod = frame.GetMethod();
 
         if (getMethod is not null)
         {
@@ -191,7 +191,7 @@ public static class CallerIdentifier
 
     private static IEnumerable<string> ExtractCallersFrom(StackFrame frame)
     {
-        string[] identifiers = GetCallerIdentifiersFrom(frame);
+        string[]? identifiers = GetCallerIdentifiersFrom(frame);
 
         foreach (string identifier in identifiers)
         {
@@ -205,9 +205,9 @@ public static class CallerIdentifier
         }
     }
 
-    private static string[] GetCallerIdentifiersFrom(StackFrame frame)
+    private static string[]? GetCallerIdentifiersFrom(StackFrame frame)
     {
-        string fileName = frame.GetFileName();
+        string? fileName = frame.GetFileName();
         int expectedLineNumber = frame.GetFileLineNumber();
 
         if (string.IsNullOrEmpty(fileName) || expectedLineNumber == 0)
@@ -218,7 +218,7 @@ public static class CallerIdentifier
         try
         {
             using var reader = new StreamReader(File.OpenRead(fileName));
-            string line;
+            string? line;
             int currentLine = 1;
 
             while ((line = reader.ReadLine()) is not null && currentLine < expectedLineNumber)

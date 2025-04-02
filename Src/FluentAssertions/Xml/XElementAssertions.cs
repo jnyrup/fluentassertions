@@ -23,7 +23,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
     /// <summary>
     /// Initializes a new instance of the <see cref="XElementAssertions" /> class.
     /// </summary>
-    public XElementAssertions(XElement xElement, AssertionChain assertionChain)
+    public XElementAssertions(XElement? xElement, AssertionChain assertionChain)
         : base(xElement, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -42,7 +42,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XElementAssertions> Be(XElement expected,
+    public AndConstraint<XElementAssertions> Be(XElement? expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain
@@ -66,7 +66,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XElementAssertions> NotBe(XElement unexpected,
+    public AndConstraint<XElementAssertions> NotBe(XElement? unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain
@@ -90,7 +90,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XElementAssertions> BeEquivalentTo(XElement expected,
+    public AndConstraint<XElementAssertions> BeEquivalentTo(XElement? expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         using (XmlReader? subjectReader = Subject?.CreateReader())
@@ -116,7 +116,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<XElementAssertions> NotBeEquivalentTo(XElement unexpected,
+    public AndConstraint<XElementAssertions> NotBeEquivalentTo(XElement? unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         using (XmlReader? subjectReader = Subject?.CreateReader())
@@ -344,7 +344,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
                     .BecauseOf(because, becauseArgs)
                     .Given(() => Subject!.Attribute(expectedName))
                     .ForCondition(attr => attr!.Value == expectedValue)
-                    .FailWith("but found {0}.", attr => attr.Value));
+                    .FailWith("but found {0}.", attr => attr!.Value));
 
         return new AndConstraint<XElementAssertions>(this);
     }
@@ -476,7 +476,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
                     expected.ToString().EscapePlaceholders());
         }
 
-        return new AndWhichConstraint<XElementAssertions, XElement>(this, xElement, assertionChain, "/" + expected);
+        return new AndWhichConstraint<XElementAssertions, XElement>(this, xElement!, assertionChain, "/" + expected);
     }
 
     /// <summary>
@@ -690,7 +690,7 @@ public class XElementAssertions : ReferenceTypeAssertions<XElement, XElementAsse
                     .ForCondition(elements => elements.Any(e => e.Value == expectedValue))
                     .FailWith("but the element {0} does not have such a value.", expectedElement));
 
-        return new AndWhichConstraint<XElementAssertions, XElement>(this, xElements.FirstOrDefault());
+        return new AndWhichConstraint<XElementAssertions, XElement>(this, xElements.FirstOrDefault()!);
     }
 
     /// <summary>

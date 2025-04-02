@@ -148,7 +148,7 @@ public class BooleanAssertions<TAssertions>
                 chain => chain
                     .FailWith("but found null.")
                     .Then
-                    .ForCondition(!antecedent.Value || consequent)
+                    .ForCondition(!antecedent!.Value || consequent)
                     .FailWith("but it did not."));
 
         return new AndConstraint<TAssertions>((TAssertions)this);

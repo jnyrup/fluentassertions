@@ -14,9 +14,9 @@ internal interface ILineState
 
     int Length { get; }
 
-    void Append(string fragment);
+    void Append(string? fragment);
 
-    void InsertAtStart(string fragment);
+    void InsertAtStart(string? fragment);
 
     void InsertAt(int startIndex, string fragment);
 

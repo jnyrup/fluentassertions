@@ -19,7 +19,7 @@ public class XmlElementAssertions : XmlNodeAssertions<XmlElement, XmlElementAsse
     /// Initializes a new instance of the <see cref="XmlElementAssertions"/> class.
     /// </summary>
     /// <param name="xmlElement"></param>
-    public XmlElementAssertions(XmlElement xmlElement, AssertionChain assertionChain)
+    public XmlElementAssertions(XmlElement? xmlElement, AssertionChain assertionChain)
         : base(xmlElement, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -155,7 +155,7 @@ public class XmlElementAssertions : XmlNodeAssertions<XmlElement, XmlElementAsse
         string? expectedNamespace,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
-        XmlElement element = expectedNamespace == null ? Subject[expectedName] : Subject[expectedName, expectedNamespace];
+        XmlElement? element = expectedNamespace == null ? Subject[expectedName] : Subject[expectedName, expectedNamespace];
 
         string expectedFormattedName =
             (string.IsNullOrEmpty(expectedNamespace) ? string.Empty : $"{{{expectedNamespace}}}")
@@ -168,7 +168,7 @@ public class XmlElementAssertions : XmlNodeAssertions<XmlElement, XmlElementAsse
                 "Expected {context:subject} to have child element {0}{reason}, but no such child element was found.",
                 expectedFormattedName.EscapePlaceholders());
 
-        return new AndWhichConstraint<XmlElementAssertions, XmlElement>(this, element, assertionChain, "/" + expectedName);
+        return new AndWhichConstraint<XmlElementAssertions, XmlElement>(this, element!, assertionChain, "/" + expectedName);
     }
 
     protected override string Identifier => "XML element";

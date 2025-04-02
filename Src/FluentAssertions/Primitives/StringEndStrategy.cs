@@ -20,7 +20,7 @@ internal class StringEndStrategy : IStringComparisonStrategy
     public void ValidateAgainstMismatch(AssertionChain assertionChain, string subject, string expected)
     {
         assertionChain
-            .ForCondition(subject!.Length >= expected.Length)
+            .ForCondition(subject.Length >= expected.Length)
             .FailWith($"{ExpectationDescription}{{0}}{{reason}}, but {{1}} is too short.", expected, subject);
 
         if (!assertionChain.Succeeded)

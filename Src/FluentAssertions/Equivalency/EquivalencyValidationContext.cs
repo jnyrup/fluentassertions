@@ -69,7 +69,7 @@ public class EquivalencyValidationContext : IEquivalencyValidationContext
         };
     }
 
-    public bool IsCyclicReference(object expectation)
+    public bool IsCyclicReference(object? expectation)
     {
         bool compareByMembers = expectation is not null && Options.GetEqualityStrategy(expectation.GetType())
             is EqualityStrategy.Members or EqualityStrategy.ForceMembers;

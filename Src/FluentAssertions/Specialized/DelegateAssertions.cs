@@ -51,7 +51,7 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
         if (assertionChain.Succeeded)
         {
             FailIfSubjectIsAsyncVoid();
-            Exception exception = InvokeSubjectWithInterception();
+            Exception? exception = InvokeSubjectWithInterception();
             return ThrowInternal<TException>(exception, because, becauseArgs);
         }
 
@@ -79,7 +79,7 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
         if (assertionChain.Succeeded)
         {
             FailIfSubjectIsAsyncVoid();
-            Exception exception = InvokeSubjectWithInterception();
+            Exception? exception = InvokeSubjectWithInterception();
             return NotThrowInternal<TException>(exception, because, becauseArgs);
         }
 
@@ -114,7 +114,7 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
         if (assertionChain.Succeeded)
         {
             FailIfSubjectIsAsyncVoid();
-            Exception exception = InvokeSubjectWithInterception();
+            Exception? exception = InvokeSubjectWithInterception();
 
             Type expectedType = typeof(TException);
 
@@ -128,7 +128,7 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
                 exception.Should().BeOfType(expectedType, because, becauseArgs);
             }
 
-            return new ExceptionAssertions<TException>([exception as TException], assertionChain);
+            return new ExceptionAssertions<TException>([(exception as TException)!], assertionChain);
         }
 
         return new ExceptionAssertions<TException>([], assertionChain);
@@ -136,7 +136,7 @@ public abstract class DelegateAssertions<TDelegate, TAssertions> : DelegateAsser
 
     protected abstract void InvokeSubject();
 
-    private protected Exception InvokeSubjectWithInterception()
+    private protected Exception? InvokeSubjectWithInterception()
     {
         Exception? actualException = null;
 

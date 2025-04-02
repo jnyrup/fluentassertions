@@ -22,7 +22,7 @@ public interface IMember : INode
     /// <summary>
     /// Gets the value of the member from the provided <paramref name="obj"/>
     /// </summary>
-    object GetValue(object obj);
+    object? GetValue(object obj);
 
     /// <summary>
     /// Gets the access modifier for the getter of this member.

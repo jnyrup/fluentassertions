@@ -13,7 +13,7 @@ public class StringCollectionAssertions : StringCollectionAssertions<IEnumerable
     /// <summary>
     /// Initializes a new instance of the <see cref="StringCollectionAssertions"/> class.
     /// </summary>
-    public StringCollectionAssertions(IEnumerable<string> actualValue, AssertionChain assertionChain)
+    public StringCollectionAssertions(IEnumerable<string?>? actualValue, AssertionChain assertionChain)
         : base(actualValue, assertionChain)
     {
     }
@@ -21,19 +21,19 @@ public class StringCollectionAssertions : StringCollectionAssertions<IEnumerable
 
 public class StringCollectionAssertions<TCollection>
     : StringCollectionAssertions<TCollection, StringCollectionAssertions<TCollection>>
-    where TCollection : IEnumerable<string>
+    where TCollection : IEnumerable<string?>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="StringCollectionAssertions{TCollection}"/> class.
     /// </summary>
-    public StringCollectionAssertions(TCollection actualValue, AssertionChain assertionChain)
+    public StringCollectionAssertions(TCollection? actualValue, AssertionChain assertionChain)
         : base(actualValue, assertionChain)
     {
     }
 }
 
-public class StringCollectionAssertions<TCollection, TAssertions> : GenericCollectionAssertions<TCollection, string, TAssertions>
-    where TCollection : IEnumerable<string>
+public class StringCollectionAssertions<TCollection, TAssertions> : GenericCollectionAssertions<TCollection, string?, TAssertions>
+    where TCollection : IEnumerable<string?>
     where TAssertions : StringCollectionAssertions<TCollection, TAssertions>
 {
     private readonly AssertionChain assertionChain;
@@ -41,7 +41,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// <summary>
     /// Initializes a new instance of the <see cref="StringCollectionAssertions{TCollection, TAssertions}"/> class.
     /// </summary>
-    public StringCollectionAssertions(TCollection actualValue, AssertionChain assertionChain)
+    public StringCollectionAssertions(TCollection? actualValue, AssertionChain assertionChain)
         : base(actualValue, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -53,7 +53,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// the element order, use <see cref="BeEquivalentTo(string[])"/> instead.
     /// </summary>
     /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-    public new AndConstraint<TAssertions> Equal(params string[] expected)
+    public new AndConstraint<TAssertions> Equal(params string?[] expected)
     {
         return base.Equal(expected.AsEnumerable());
     }
@@ -64,7 +64,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// the element order, use <see cref="BeEquivalentTo(IEnumerable{string}, string, object[])"/> instead.
     /// </summary>
     /// <param name="expected">An <see cref="IEnumerable{T}"/> with the expected elements.</param>
-    public AndConstraint<TAssertions> Equal(IEnumerable<string> expected)
+    public AndConstraint<TAssertions> Equal(IEnumerable<string?>? expected)
     {
         return base.Equal(expected);
     }
@@ -76,7 +76,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// The two collections are equivalent when they both contain the same strings in any order. To assert that the elements
     /// are in the same order, use <see cref="Equal(string[])"/> instead.
     /// </remarks>
-    public AndConstraint<TAssertions> BeEquivalentTo(params string[] expectation)
+    public AndConstraint<TAssertions> BeEquivalentTo(params string?[] expectation)
     {
         return BeEquivalentTo(expectation, config => config);
     }
@@ -96,7 +96,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because"/>.
     /// </param>
-    public AndConstraint<TAssertions> BeEquivalentTo(IEnumerable<string> expectation,
+    public AndConstraint<TAssertions> BeEquivalentTo(IEnumerable<string?>? expectation,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         return BeEquivalentTo(expectation, config => config, because, becauseArgs);
@@ -124,7 +124,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// Zero or more objects to format using the placeholders in <paramref name="because"/>.
     /// </param>
     /// <exception cref="ArgumentNullException"><paramref name="config"/> is <see langword="null"/>.</exception>
-    public AndConstraint<TAssertions> BeEquivalentTo(IEnumerable<string> expectation,
+    public AndConstraint<TAssertions> BeEquivalentTo(IEnumerable<string?>? expectation,
         Func<EquivalencyOptions<string>, EquivalencyOptions<string>> config,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
@@ -163,7 +163,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because"/>.
     /// </param>
-    public AndConstraint<TAssertions> AllBe(string expectation,
+    public AndConstraint<TAssertions> AllBe(string? expectation,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         return AllBe(expectation, options => options, because, becauseArgs);
@@ -187,7 +187,7 @@ public class StringCollectionAssertions<TCollection, TAssertions> : GenericColle
     /// Zero or more objects to format using the placeholders in <paramref name="because"/>.
     /// </param>
     /// <exception cref="ArgumentNullException"><paramref name="config"/> is <see langword="null"/>.</exception>
-    public AndConstraint<TAssertions> AllBe(string expectation,
+    public AndConstraint<TAssertions> AllBe(string? expectation,
         Func<EquivalencyOptions<string>, EquivalencyOptions<string>> config,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {

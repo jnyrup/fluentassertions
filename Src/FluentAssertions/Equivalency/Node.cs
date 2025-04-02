@@ -157,5 +157,5 @@ internal class Node : INode
         }
     }
 
-    public override string ToString() => Subject.Description;
+    public override string? ToString() => Subject.Description;
 }

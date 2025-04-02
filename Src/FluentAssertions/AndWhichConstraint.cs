@@ -12,8 +12,8 @@ namespace FluentAssertions;
 /// </summary>
 public class AndWhichConstraint<TParent, TSubject> : AndConstraint<TParent>
 {
-    private readonly AssertionChain assertionChain;
-    private readonly string pathPostfix;
+    private readonly AssertionChain? assertionChain;
+    private readonly string? pathPostfix;
     private readonly Lazy<TSubject> getSubject;
 
     /// <summary>

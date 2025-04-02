@@ -44,14 +44,14 @@ public class DictionaryEquivalencyStep : EquivalencyStep<IDictionary>
         return EquivalencyResult.EquivalencyProven;
     }
 
-    private static bool PreconditionsAreMet(IDictionary expectation, IDictionary subject, AssertionChain assertionChain)
+    private static bool PreconditionsAreMet([NotNullWhen(true)] IDictionary? expectation, [NotNullWhen(true)] IDictionary? subject, AssertionChain assertionChain)
     {
         return AssertIsDictionary(subject, assertionChain)
             && AssertEitherIsNotNull(expectation, subject, assertionChain)
             && AssertSameLength(expectation, subject, assertionChain);
     }
 
-    private static bool AssertEitherIsNotNull(IDictionary expectation, IDictionary subject, AssertionChain assertionChain)
+    private static bool AssertEitherIsNotNull(IDictionary? expectation, IDictionary? subject, AssertionChain assertionChain)
     {
         assertionChain
             .ForCondition((expectation is null && subject is null) || expectation is not null)
@@ -60,7 +60,7 @@ public class DictionaryEquivalencyStep : EquivalencyStep<IDictionary>
         return assertionChain.Succeeded;
     }
 
-    private static bool AssertIsDictionary(IDictionary subject, AssertionChain assertionChain)
+    private static bool AssertIsDictionary([NotNullWhen(true)] IDictionary? subject, AssertionChain assertionChain)
     {
         assertionChain
             .ForCondition(subject is not null)
@@ -69,7 +69,7 @@ public class DictionaryEquivalencyStep : EquivalencyStep<IDictionary>
         return assertionChain.Succeeded;
     }
 
-    private static bool AssertSameLength(IDictionary expectation, IDictionary subject, AssertionChain assertionChain)
+    private static bool AssertSameLength([NotNullWhen(true)] IDictionary? expectation, IDictionary subject, AssertionChain assertionChain)
     {
         assertionChain
             .ForCondition(expectation is null || subject.Keys.Count == expectation.Keys.Count)

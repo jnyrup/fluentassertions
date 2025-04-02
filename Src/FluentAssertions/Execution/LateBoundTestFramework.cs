@@ -27,7 +27,7 @@ internal abstract class LateBoundTestFramework : ITestFramework
             var exceptionType = assembly?.GetType(ExceptionFullName);
 
             exceptionFactory = exceptionType != null
-                ? message => (Exception)Activator.CreateInstance(exceptionType, message)
+                ? message => (Exception)Activator.CreateInstance(exceptionType, message)!
                 : _ => throw new InvalidOperationException($"{GetType().Name} is not available");
 
             return exceptionType is not null;

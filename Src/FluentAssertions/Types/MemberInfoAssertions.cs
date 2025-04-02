@@ -94,7 +94,7 @@ public abstract class MemberInfoAssertions<TSubject, TAssertions> : ReferenceTyp
 
         if (assertionChain.Succeeded)
         {
-            attributes = Subject.GetMatchingAttributes(isMatchingAttributePredicate);
+            attributes = Subject!.GetMatchingAttributes(isMatchingAttributePredicate);
 
             assertionChain
                 .ForCondition(attributes.Any())
@@ -138,7 +138,7 @@ public abstract class MemberInfoAssertions<TSubject, TAssertions> : ReferenceTyp
 
         if (assertionChain.Succeeded)
         {
-            IEnumerable<TAttribute> attributes = Subject.GetMatchingAttributes(isMatchingAttributePredicate);
+            IEnumerable<TAttribute> attributes = Subject!.GetMatchingAttributes(isMatchingAttributePredicate);
 
             assertionChain
                 .ForCondition(!attributes.Any())

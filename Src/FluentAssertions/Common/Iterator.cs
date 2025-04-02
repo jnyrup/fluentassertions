@@ -18,9 +18,6 @@ internal sealed class Iterator<T> : IEnumerator<T>
     private T? current;
     private T? next;
 
-    private bool hasNext;
-    private bool hasCurrent;
-
     private bool hasCompleted;
 
     public Iterator(IEnumerable<T> enumerable, int maxItems = int.MaxValue)
@@ -37,26 +34,32 @@ internal sealed class Iterator<T> : IEnumerator<T>
         Index = InitialIndex;
 
         enumerator = enumerable.GetEnumerator();
-        hasCurrent = false;
-        hasNext = false;
+        HasCurrent = false;
+        HasNext = false;
         hasCompleted = false;
         current = default;
         next = default;
     }
 
+    [MemberNotNullWhen(true, nameof(current))]
+    private bool HasCurrent { get; set; }
+
+    [MemberNotNullWhen(true, nameof(next))]
+    private bool HasNext { get; set; }
+
     public int Index { get; private set; }
 
     public bool IsFirst => Index == 0;
 
-    public bool IsLast => (hasCurrent && !hasNext) || HasReachedMaxItems;
+    public bool IsLast => (HasCurrent && !HasNext) || HasReachedMaxItems;
 
-    object IEnumerator.Current => Current;
+    object? IEnumerator.Current => Current;
 
     public T Current
     {
         get
         {
-            if (!hasCurrent)
+            if (!HasCurrent)
             {
                 throw new InvalidOperationException($"Please call {nameof(MoveNext)} first");
             }
@@ -67,7 +70,7 @@ internal sealed class Iterator<T> : IEnumerator<T>
         private set
         {
             current = value;
-            hasCurrent = true;
+            HasCurrent = true;
         }
     }
 
@@ -85,7 +88,7 @@ internal sealed class Iterator<T> : IEnumerator<T>
 
     private bool FetchCurrent()
     {
-        if (hasNext && !HasReachedMaxItems)
+        if (HasNext && !HasReachedMaxItems)
         {
             Current = next;
             Index++;
@@ -113,12 +116,12 @@ internal sealed class Iterator<T> : IEnumerator<T>
         if (enumerator.MoveNext())
         {
             next = enumerator.Current;
-            hasNext = true;
+            HasNext = true;
         }
         else
         {
             next = default;
-            hasNext = false;
+            HasNext = false;
         }
     }
 
@@ -126,7 +129,7 @@ internal sealed class Iterator<T> : IEnumerator<T>
     {
         get
         {
-            if (!hasCurrent && !hasCompleted)
+            if (!HasCurrent && !hasCompleted)
             {
                 throw new InvalidOperationException($"Please call {nameof(MoveNext)} first");
             }

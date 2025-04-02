@@ -55,7 +55,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<TypeAssertions> Be(Type expected,
+    public AndConstraint<TypeAssertions> Be(Type? expected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         assertionChain
@@ -216,7 +216,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
     /// <param name="becauseArgs">
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
-    public AndConstraint<TypeAssertions> NotBe(Type unexpected,
+    public AndConstraint<TypeAssertions> NotBe(Type? unexpected,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         string nameOfUnexpectedType = unexpected is not null ? $"[{unexpected.AssemblyQualifiedName}]" : "<null>";
@@ -922,7 +922,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                     propertyInfo);
         }
 
-        return new AndWhichConstraint<TypeAssertions, PropertyInfo>(this, propertyInfo);
+        return new AndWhichConstraint<TypeAssertions, PropertyInfo>(this, propertyInfo!);
     }
 
     /// <summary>
@@ -1318,7 +1318,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                 .FailWith("Expected {0} to be of type {1}{reason}, but it is not.", propertyInfo, indexerType);
         }
 
-        return new AndWhichConstraint<TypeAssertions, PropertyInfo>(this, propertyInfo, assertionChain,
+        return new AndWhichConstraint<TypeAssertions, PropertyInfo>(this, propertyInfo!, assertionChain,
             $"[{parameterString}]");
     }
 
@@ -1495,7 +1495,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                     ", but it does not.");
         }
 
-        return new AndWhichConstraint<TypeAssertions, ConstructorInfo>(this, constructorInfo);
+        return new AndWhichConstraint<TypeAssertions, ConstructorInfo>(this, constructorInfo!);
     }
 
     /// <summary>
@@ -1553,7 +1553,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                     ", but it does.");
         }
 
-        return new AndWhichConstraint<TypeAssertions, ConstructorInfo>(this, constructorInfo);
+        return new AndWhichConstraint<TypeAssertions, ConstructorInfo>(this, constructorInfo!);
     }
 
     /// <summary>
@@ -1609,7 +1609,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                 .BecauseOf(because, becauseArgs)
                 .ForCondition(accessModifier == subjectAccessModifier)
                 .FailWith(
-                    $"Expected {{context:type}} {Subject.Name} to be {accessModifier}{{reason}}" +
+                    $"Expected {{context:type}} {Subject!.Name} to be {accessModifier}{{reason}}" +
                     $", but it is {subjectAccessModifier}.");
         }
 
@@ -1648,7 +1648,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                 .ForCondition(accessModifier != subjectAccessModifier)
                 .BecauseOf(because, becauseArgs)
                 .ForCondition(accessModifier != subjectAccessModifier)
-                .FailWith($"Expected {{context:type}} {Subject.Name} not to be {accessModifier}{{reason}}, but it is.");
+                .FailWith($"Expected {{context:type}} {Subject!.Name} not to be {accessModifier}{{reason}}, but it is.");
         }
 
         return new AndConstraint<TypeAssertions>(this);
@@ -1838,7 +1838,7 @@ public class TypeAssertions : ReferenceTypeAssertions<Type, TypeAssertions>
                     targetType, sourceType);
         }
 
-        return new AndWhichConstraint<TypeAssertions, MethodInfo>(this, methodInfo);
+        return new AndWhichConstraint<TypeAssertions, MethodInfo>(this, methodInfo!);
     }
 
     /// <summary>

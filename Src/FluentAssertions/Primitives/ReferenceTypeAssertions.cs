@@ -137,7 +137,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
             ? type
             : default;
 
-        return new AndWhichConstraint<TAssertions, T>((TAssertions)this, typedSubject);
+        return new AndWhichConstraint<TAssertions, T>((TAssertions)this, typedSubject!);
     }
 
     /// <summary>
@@ -277,7 +277,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
             ? type
             : default;
 
-        return new AndWhichConstraint<TAssertions, T>((TAssertions)this, typedSubject);
+        return new AndWhichConstraint<TAssertions, T>((TAssertions)this, typedSubject!);
     }
 
     /// <summary>
@@ -392,7 +392,7 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
     /// Zero or more objects to format using the placeholders in <paramref name="because" />.
     /// </param>
     /// <returns>An <see cref="AndConstraint{T}" /> which can be used to chain assertions.</returns>
-    public AndConstraint<TAssertions> Match(Expression<Func<TSubject, bool>> predicate,
+    public AndConstraint<TAssertions> Match(Expression<Func<TSubject?, bool>> predicate,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         return Match<TSubject>(predicate, because, becauseArgs);
@@ -411,14 +411,14 @@ public abstract class ReferenceTypeAssertions<TSubject, TAssertions>
     /// </param>
     /// <returns>An <see cref="AndConstraint{T}" /> which can be used to chain assertions.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <see langword="null"/>.</exception>
-    public AndConstraint<TAssertions> Match<T>(Expression<Func<T, bool>> predicate,
+    public AndConstraint<TAssertions> Match<T>(Expression<Func<T?, bool>> predicate,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
         where T : TSubject
     {
         Guard.ThrowIfArgumentIsNull(predicate, nameof(predicate), "Cannot match an object against a <null> predicate.");
 
         CurrentAssertionChain
-            .ForCondition(predicate.Compile()((T)Subject))
+            .ForCondition(predicate.Compile()((T?)Subject))
             .BecauseOf(because, becauseArgs)
             .WithDefaultIdentifier(Identifier)
             .FailWith("Expected {context:object} to match {1}{reason}, but found {0}.", Subject, predicate);

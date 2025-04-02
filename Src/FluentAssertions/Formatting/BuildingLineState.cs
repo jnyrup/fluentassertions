@@ -20,12 +20,12 @@ internal class BuildingLineState : ILineState
 
     public int Length => builder.Length;
 
-    public void Append(string fragment)
+    public void Append(string? fragment)
     {
         builder.Append(fragment);
     }
 
-    public void InsertAtStart(string fragment)
+    public void InsertAtStart(string? fragment)
     {
         builder.Insert(0, fragment);
     }

@@ -4,6 +4,7 @@ namespace FluentAssertions.Collections;
 
 public class WhoseValueConstraint<TCollection, TKey, TValue, TAssertions> : AndConstraint<TAssertions>
     where TCollection : IEnumerable<KeyValuePair<TKey, TValue>>
+    where TKey : notnull
     where TAssertions : GenericDictionaryAssertions<TCollection, TKey, TValue, TAssertions>
 {
     /// <summary>

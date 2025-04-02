@@ -13,15 +13,15 @@ namespace FluentAssertions.Specialized;
 public class TaskCompletionSourceAssertions : TaskCompletionSourceAssertionsBase
 {
     private readonly AssertionChain assertionChain;
-    private readonly TaskCompletionSource subject;
+    private readonly TaskCompletionSource? subject;
 
-    public TaskCompletionSourceAssertions(TaskCompletionSource tcs, AssertionChain assertionChain)
+    public TaskCompletionSourceAssertions(TaskCompletionSource? tcs, AssertionChain assertionChain)
         : this(tcs, assertionChain, new Clock())
     {
         this.assertionChain = assertionChain;
     }
 
-    public TaskCompletionSourceAssertions(TaskCompletionSource tcs, AssertionChain assertionChain, IClock clock)
+    public TaskCompletionSourceAssertions(TaskCompletionSource? tcs, AssertionChain assertionChain, IClock clock)
         : base(clock)
     {
         subject = tcs;
@@ -139,12 +139,12 @@ public class TaskCompletionSourceAssertions<T> : TaskCompletionSourceAssertionsB
                 .FailWith("Expected {context:task} to complete within {0}{reason}.", timeSpan);
 
 #pragma warning disable CA1849 // Call async methods when in an async method
-            T result = subject.Task.IsCompleted ? subject.Task.Result : default;
+            T? result = subject.Task.IsCompleted ? subject.Task.Result : default;
 #pragma warning restore CA1849 // Call async methods when in an async method
-            return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, result, assertionChain, ".Result");
+            return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, result!, assertionChain, ".Result");
         }
 
-        return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, default(T));
+        return new AndWhichConstraint<TaskCompletionSourceAssertions<T>, T>(this, default(T)!);
     }
 
     /// <summary>

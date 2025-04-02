@@ -57,7 +57,7 @@ internal class LineCollection(int maxLines) : IEnumerable<Line>
     {
         int lineIndex = lines.IndexOf(line);
 
-        Line remainder = line.Truncate(characterIndex);
+        Line? remainder = line.Truncate(characterIndex);
         if (remainder is not null)
         {
             Insert(lineIndex + 1, remainder);

@@ -19,7 +19,7 @@ public class AssemblyAssertions : ReferenceTypeAssertions<Assembly, AssemblyAsse
     /// <summary>
     /// Initializes a new instance of the <see cref="AssemblyAssertions" /> class.
     /// </summary>
-    public AssemblyAssertions(Assembly assembly, AssertionChain assertionChain)
+    public AssemblyAssertions(Assembly? assembly, AssertionChain assertionChain)
         : base(assembly, assertionChain)
     {
         this.assertionChain = assertionChain;
@@ -54,7 +54,7 @@ public class AssemblyAssertions : ReferenceTypeAssertions<Assembly, AssemblyAsse
         {
             var subjectName = Subject!.GetName().Name;
 
-            IEnumerable<string> references = Subject.GetReferencedAssemblies().Select(x => x.Name);
+            IEnumerable<string?> references = Subject.GetReferencedAssemblies().Select(x => x.Name);
 
             assertionChain
                 .BecauseOf(because, becauseArgs)
@@ -118,7 +118,7 @@ public class AssemblyAssertions : ReferenceTypeAssertions<Assembly, AssemblyAsse
     /// </param>
     /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-    public AndWhichConstraint<AssemblyAssertions, Type> DefineType(string @namespace, string name,
+    public AndWhichConstraint<AssemblyAssertions, Type> DefineType(string? @namespace, string name,
         [StringSyntax("CompositeFormat")] string because = "", params object[] becauseArgs)
     {
         Guard.ThrowIfArgumentIsNullOrEmpty(name);
@@ -142,7 +142,7 @@ public class AssemblyAssertions : ReferenceTypeAssertions<Assembly, AssemblyAsse
                     Subject.FullName, @namespace, name);
         }
 
-        return new AndWhichConstraint<AssemblyAssertions, Type>(this, foundType);
+        return new AndWhichConstraint<AssemblyAssertions, Type>(this, foundType!);
     }
 
     /// <summary>Asserts that the assembly is unsigned.</summary>
