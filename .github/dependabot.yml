@@ -26,6 +26,8 @@ updates:
 
   - package-ecosystem: "nuget"
     directory: "/"
+    exclude-paths:
+      - "Tests/UWP.Specs/"
     schedule:
       interval: "weekly"
       day: "monday"
