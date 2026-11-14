@@ -1,0 +1,6 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" Condition="'' != $([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+  <ItemGroup Condition="'$(MSBuildProjectExtension)' == '.csproj' AND '$(TargetFramework)' != 'netstandard2.0' AND '@(ProjectReference->Contains('FluentAssertions.csproj'))' != ''">
+    <Compile Include="$(MSBuildThisFileDirectory)\AcceptLicense.cs" Visible="false" />
+  </ItemGroup>
+</Project>
